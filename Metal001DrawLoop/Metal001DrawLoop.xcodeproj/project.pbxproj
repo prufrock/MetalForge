@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AF0E6278E6B248734011E36 /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ECB58CF5B4BCD44EF5CA /* Drawer.swift */; };
 		5AF0EC142756EF27A1ECB290 /* Readme.md in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB9E57D8E5E5B24632C9 /* Readme.md */; };
 		639A0AA52693ABCF000809B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A0AA42693ABCF000809B9 /* AppDelegate.swift */; };
 		639A0AA72693ABCF000809B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A0AA62693ABCF000809B9 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		5AF0EB9E57D8E5E5B24632C9 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
+		5AF0ECB58CF5B4BCD44EF5CA /* Drawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
 		639A0AA12693ABCF000809B9 /* Metal001DrawLoop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal001DrawLoop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		639A0AA42693ABCF000809B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		639A0AA62693ABCF000809B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				639A0AAA2693ABD0000809B9 /* Main.storyboard */,
 				639A0AAD2693ABD0000809B9 /* Info.plist */,
 				639A0AAE2693ABD0000809B9 /* Metal001DrawLoop.entitlements */,
+				5AF0ECB58CF5B4BCD44EF5CA /* Drawer.swift */,
 			);
 			path = Metal001DrawLoop;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 				639A0AA72693ABCF000809B9 /* ViewController.swift in Sources */,
 				639A0AA52693ABCF000809B9 /* AppDelegate.swift in Sources */,
 				5AF0EC142756EF27A1ECB290 /* Readme.md in Sources */,
+				5AF0E6278E6B248734011E36 /* Drawer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
