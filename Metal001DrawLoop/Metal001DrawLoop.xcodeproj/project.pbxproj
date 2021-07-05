@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AF0EC142756EF27A1ECB290 /* Readme.md in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB9E57D8E5E5B24632C9 /* Readme.md */; };
 		639A0AA52693ABCF000809B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A0AA42693ABCF000809B9 /* AppDelegate.swift */; };
 		639A0AA72693ABCF000809B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A0AA62693ABCF000809B9 /* ViewController.swift */; };
 		639A0AA92693ABD0000809B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 639A0AA82693ABD0000809B9 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5AF0EB9E57D8E5E5B24632C9 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		639A0AA12693ABCF000809B9 /* Metal001DrawLoop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal001DrawLoop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		639A0AA42693ABCF000809B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		639A0AA62693ABCF000809B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +41,7 @@
 			children = (
 				639A0AA32693ABCF000809B9 /* Metal001DrawLoop */,
 				639A0AA22693ABCF000809B9 /* Products */,
+				5AF0EB9E57D8E5E5B24632C9 /* Readme.md */,
 			);
 			sourceTree = "<group>";
 		};
@@ -134,6 +137,7 @@
 			files = (
 				639A0AA72693ABCF000809B9 /* ViewController.swift in Sources */,
 				639A0AA52693ABCF000809B9 /* AppDelegate.swift in Sources */,
+				5AF0EC142756EF27A1ECB290 /* Readme.md in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
