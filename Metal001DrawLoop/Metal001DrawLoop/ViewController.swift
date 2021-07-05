@@ -6,13 +6,16 @@
 //
 
 import Cocoa
+import MetalKit
 
 class ViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        guard let view = self.view as? MTKView else {
+            fatalError("Metal view not setup in storyboard.")
+        }
     }
 
     override var representedObject: Any? {
