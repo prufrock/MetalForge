@@ -43,13 +43,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Let's get all the Metal stuff ready.
     private func setupMetalBits() {
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            fatalError("""
+                       I looked in the computer and didn't find a device...sorry =/
+                       """)
+        }
+
+        guard let library = device.makeDefaultLibrary() else {
+            fatalError("""
+                       What in the what?! The library couldn't be loaded.
+                       """)
+        }
+
+
         // Put in something simple to get started with.
         let singlePoint = Vertices(Point(0.5, 0.2, 0.0))
 
         metalBits = MetalBits(
                 device: MTLCreateSystemDefaultDevice()!,
                 pipelines: [:],
-                libraries: [:],
+                libraries: ["Default": library],
                 vertices: ["SinglePoint": singlePoint]
         )
     }
