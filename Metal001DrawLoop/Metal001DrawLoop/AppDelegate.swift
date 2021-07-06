@@ -55,13 +55,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                        """)
         }
 
+        let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.vertexFunction = library.makeFunction(name: "vertex_main")
+        pipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragment_main")
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+
+        let defaultPipelineState = device.makeRenderPipelineState(descriptor: pipelineDescriptor)
 
         // Put in something simple to get started with.
         let singlePoint = Vertices(Point(0.5, 0.2, 0.0))
 
         metalBits = MetalBits(
                 device: MTLCreateSystemDefaultDevice()!,
-                pipelines: [:],
+                pipelines: ["Default": defaultPipelineState],
                 libraries: ["Default": library],
                 vertices: ["SinglePoint": singlePoint]
         )
