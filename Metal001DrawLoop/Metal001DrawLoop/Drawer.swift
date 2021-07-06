@@ -13,10 +13,23 @@ class Drawer: NSObject {
 
         super.init()
 
-        view.clearColor = MTLClearColor(red: 1.0, green: 1.0, blue: 0.8, alpha: 1.0)
         view.delegate = self
 
         mtkView(view, drawableSizeWillChange: view.bounds.size)
+    }
+
+    class Builder {
+        var view: MTKView?
+
+        func build() -> Drawer {
+            guard let view = view else {
+                fatalError("""
+                           Shoot, you forgot to give me a MTKView. I can't build your view now! Crashing...KAPOW!
+                           """)
+            }
+
+            return Drawer(view: view)
+        }
     }
 }
 
