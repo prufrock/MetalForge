@@ -29,6 +29,9 @@ class Drawer: NSObject {
         // The view needs to know the device that it's going to be working with.
         view.device = device
 
+        // Set the clear color(background color of the rendered image) to black because black is cool.
+        view.clearColor = MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+
         // Call mtkView to set the initial size of the viewport. More happens here later.
         mtkView(view, drawableSizeWillChange: view.bounds.size)
     }
