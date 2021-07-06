@@ -16,6 +16,7 @@
 		639A0AA72693ABCF000809B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A0AA62693ABCF000809B9 /* ViewController.swift */; };
 		639A0AA92693ABD0000809B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 639A0AA82693ABD0000809B9 /* Assets.xcassets */; };
 		639A0AAC2693ABD0000809B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 639A0AAA2693ABD0000809B9 /* Main.storyboard */; };
+		639A0AB52694D15D000809B9 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 639A0AB42694D15D000809B9 /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		639A0AAB2693ABD0000809B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		639A0AAD2693ABD0000809B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		639A0AAE2693ABD0000809B9 /* Metal001DrawLoop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Metal001DrawLoop.entitlements; sourceTree = "<group>"; };
+		639A0AB42694D15D000809B9 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				639A0AAD2693ABD0000809B9 /* Info.plist */,
 				639A0AAE2693ABD0000809B9 /* Metal001DrawLoop.entitlements */,
 				5AF0ECB58CF5B4BCD44EF5CA /* Drawer.swift */,
+				639A0AB42694D15D000809B9 /* Shaders.metal */,
 				5AF0EAEAE5AA5566A3302B51 /* TypeAliases.swift */,
 				5AF0EF9874EE526473220A61 /* Point.swift */,
 				5AF0E294212AEACBA9D34A3C /* Vertices.swift */,
@@ -147,6 +150,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				639A0AB52694D15D000809B9 /* Shaders.metal in Sources */,
 				639A0AA72693ABCF000809B9 /* ViewController.swift in Sources */,
 				639A0AA52693ABCF000809B9 /* AppDelegate.swift in Sources */,
 				5AF0EC142756EF27A1ECB290 /* Readme.md in Sources */,
