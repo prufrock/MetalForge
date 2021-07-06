@@ -12,7 +12,7 @@ import AppKit
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Need a place to put the Metal bits once they are ready and to access them when needed.
-    private var metalBits: MetalBits?
+    private var metalBits: AppDelegate.MetalBits?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         print(#function)
@@ -24,6 +24,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // I think this is the best way to get a hold of the first window shown.
         // https://stackoverflow.com/questions/40008141/nsapplicationdelegate-not-working-without-storyboard/41029060
         let viewController = NSApplication.shared.windows.first!.contentViewController as! ViewController
+
+        // Do all of the work to get Metal ready.
+        setupMetalBits()
 
         // Pass the Drawer.Builder into the view controller. This is to allow the Drawer to be initialized with all of
         // the bits it needs to run that could be shared across many "Drawers": MTLDevice, MTLLibrary, MTLPipelines,
@@ -60,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         pipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragment_main")
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
 
-        let defaultPipelineState = device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+        let defaultPipelineState = try! device.makeRenderPipelineState(descriptor: pipelineDescriptor)
 
         // Put in something simple to get started with.
         let singlePoint = Vertices(Point(0.5, 0.2, 0.0))
@@ -74,13 +77,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func configureDrawerBuilder() -> Drawer.Builder {
-        Drawer.Builder()
+        let builder = Drawer.Builder()
+
+        guard let metalBits = metalBits else {
+            fatalError(
+                    """
+                    Oh noes! You forgot to setup metalBits!
+                    """
+            )
+        }
+
+        builder.device = metalBits.device
+        builder.pipeline = metalBits.pipelines["Default"]
+        builder.vertices = metalBits.vertices["SinglePoint"]
+
+        return builder
     }
 
     // All the stuff that could potentially be shared(I think).
     private struct MetalBits {
         let device: MTLDevice
         let pipelines: [String: MTLRenderPipelineState]
+        // I ended up not need the libraries for now because they are in the pipeline state.
         let libraries: [String: MTLLibrary]
         let vertices: [String: Vertices]
     }
