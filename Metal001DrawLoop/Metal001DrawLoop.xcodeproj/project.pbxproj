@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5AF0E6278E6B248734011E36 /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ECB58CF5B4BCD44EF5CA /* Drawer.swift */; };
+		5AF0E7110A5E72CAD9DCB5A4 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF9874EE526473220A61 /* Point.swift */; };
 		5AF0E7B6A2F0585CAC036952 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EAEAE5AA5566A3302B51 /* TypeAliases.swift */; };
 		5AF0EC142756EF27A1ECB290 /* Readme.md in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB9E57D8E5E5B24632C9 /* Readme.md */; };
 		639A0AA52693ABCF000809B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A0AA42693ABCF000809B9 /* AppDelegate.swift */; };
@@ -20,6 +21,7 @@
 		5AF0EAEAE5AA5566A3302B51 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		5AF0EB9E57D8E5E5B24632C9 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		5AF0ECB58CF5B4BCD44EF5CA /* Drawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
+		5AF0EF9874EE526473220A61 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		639A0AA12693ABCF000809B9 /* Metal001DrawLoop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal001DrawLoop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		639A0AA42693ABCF000809B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		639A0AA62693ABCF000809B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				639A0AAE2693ABD0000809B9 /* Metal001DrawLoop.entitlements */,
 				5AF0ECB58CF5B4BCD44EF5CA /* Drawer.swift */,
 				5AF0EAEAE5AA5566A3302B51 /* TypeAliases.swift */,
+				5AF0EF9874EE526473220A61 /* Point.swift */,
 			);
 			path = Metal001DrawLoop;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 				5AF0EC142756EF27A1ECB290 /* Readme.md in Sources */,
 				5AF0E6278E6B248734011E36 /* Drawer.swift in Sources */,
 				5AF0E7B6A2F0585CAC036952 /* TypeAliases.swift in Sources */,
+				5AF0E7110A5E72CAD9DCB5A4 /* Point.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
