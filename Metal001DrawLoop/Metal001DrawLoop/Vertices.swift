@@ -8,6 +8,9 @@
 // a place where I can ideas on.
 struct Vertices {
     let vertices: [Point]
+    var count: Int {
+        vertices.count
+    }
 
     init(_ vertices: [Point]) {
         self.vertices = vertices

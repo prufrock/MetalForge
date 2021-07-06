@@ -83,8 +83,6 @@ extension Drawer: MTKViewDelegate {
     }
 
     func draw(in view: MTKView) {
-        print(#function)
-
         guard let commandQueue = device.makeCommandQueue() else {
             fatalError("""
                        What?! No command queue. Come on!
@@ -104,11 +102,39 @@ extension Drawer: MTKViewDelegate {
                               """)
         }
 
+        // Needs to be assigned to a variable so the pointer can be passed to the shader via setVertexBytes.
+        // This is the base of the transformation matrix used to do any simple transformations to the vertices by the
+        // shader. This is really about the only bit I have in here right now that makes cool GPU stuff happen.
+        var transform = matrix_identity_float4x4
+
         // Make a buffer to hold the vertices
         let buffer = device.makeBuffer(bytes: vertices.toFloat4(), length: vertices.memoryLength(), options: [])
 
         // Pass data into the render encoder so that something is actually rendered to the screen.
+
+        // It needs a pipeline state object
         encoder.setRenderPipelineState(pipeline)
+
+        // Set the vertex buffers which are the buffers used to determine the position of objects in space.
+        // The vertex buffer has to start with the buffer at 0. I assume this lines up with the buffers
+        // referenced in the shaders. I thought I tried that out at some point but now I'm not 100% sure.
+        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+        // Additional data passed to the vertex buffer in this case the matrix used to perform a transformation on the
+        // vertices.
+        encoder.setVertexBytes(&transform, length: MemoryLayout<float4x4>.stride, index: 1)
+
+        // The fragment buffer determines the colors of everything that is rendered. I need to better understand how
+        // this relates to the way pixels are ultimately colored on the screen. I haven't spent much time here yet.
+        // A universal color for every vertex passed in. I'll likely change this later so I can have different color
+        // vertices.
+        var color = float4(1.0, 1.0, 1.0, 1.0)
+        // Pass the vertices to the fragment buffer.
+        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+        // Pass the color information to the fragment buffer
+        encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)
+
+        // Draw the vertices as points on the screen.
+        encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
 
         encoder.endEncoding()
 
