@@ -43,11 +43,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // Let's get all the Metal stuff ready.
     private func setupMetalBits() {
+        // Put in something simple to get started with.
+        let singlePoint = Vertices(Point(0.5, 0.2, 0.0))
+
         metalBits = MetalBits(
                 device: MTLCreateSystemDefaultDevice()!,
                 pipelines: [:],
                 libraries: [:],
-                vertices: [:]
+                vertices: ["SinglePoint": singlePoint]
         )
     }
 
@@ -60,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let device: MTLDevice
         let pipelines: [String: MTLRenderPipelineState]
         let libraries: [String: MTLLibrary]
-        let vertices: [String: [float4]]
+        let vertices: [String: Vertices]
     }
 }
 

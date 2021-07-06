@@ -9,11 +9,11 @@
 struct Vertices {
     let vertices: [Point]
 
-    init(vertices: [Point]) {
+    init(_ vertices: [Point]) {
         self.vertices = vertices
     }
 
-    init(vertices: Point...) {
+    init(_ vertices: Point...) {
         self.vertices = vertices
     }
 }
