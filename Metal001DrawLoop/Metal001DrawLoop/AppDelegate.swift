@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // the bits it needs to run that could be shared across many "Drawers": MTLDevice, MTLLibrary, MTLPipelines,
         // models, etc. It's also helpful to delay attaching to the MTLView as the view delegate. The moment that
         // happens drawing starts and everything needs to be ready for that.
-        viewController.setup(drawerBuilder: Drawer.Builder())
+        viewController.setup(drawerBuilder: configureDrawerBuilder())
         viewController.startDrawing()
     }
 
@@ -36,6 +36,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("""
               Time to close up the shop and head home...
               """)
+    }
+
+    private func configureDrawerBuilder() -> Drawer.Builder {
+        builder = Drawer.Builder()
     }
 }
 
