@@ -8,4 +8,12 @@
 // a place where I can ideas on.
 struct Vertices {
     let vertices: [Point]
+
+    init(vertices: [Point]) {
+        self.vertices = vertices
+    }
+
+    init(vertices: Point...) {
+        self.vertices = vertices
+    }
 }
