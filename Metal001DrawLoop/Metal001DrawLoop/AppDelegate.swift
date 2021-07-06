@@ -11,6 +11,9 @@ import AppKit
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    // Need a place to put the Metal bits once they are ready and to access them when needed.
+    private var metalBits: MetalBits?
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         print(#function)
         print("""
@@ -38,8 +41,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
               """)
     }
 
+    // Let's get all the Metal stuff ready.
+    private func setupMetalBits() {
+        metalBits = MetalBits(
+                device: MTLCreateSystemDefaultDevice()!,
+                pipelines: [:],
+                libraries: [:],
+                vertices: [:]
+        )
+    }
+
     private func configureDrawerBuilder() -> Drawer.Builder {
-        builder = Drawer.Builder()
+        Drawer.Builder()
+    }
+
+    // All the stuff that could potentially be shared(I think).
+    private struct MetalBits {
+        let device: MTLDevice
+        let pipelines: [String: MTLRenderPipelineState]
+        let libraries: [String: MTLLibrary]
+        let vertices: [String: [float4]]
     }
 }
 
