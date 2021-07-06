@@ -104,6 +104,12 @@ extension Drawer: MTKViewDelegate {
                               """)
         }
 
+        // Make a buffer to hold the vertices
+        let buffer = device.makeBuffer(bytes: vertices.toFloat4(), length: vertices.memoryLength(), options: [])
+
+        // Pass data into the render encoder so that something is actually rendered to the screen.
+        encoder.setRenderPipelineState(pipeline)
+
         encoder.endEncoding()
 
         // Need to get the drawable out of the view so the command buffer can commit to it.

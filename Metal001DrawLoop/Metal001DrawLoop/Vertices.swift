@@ -16,4 +16,15 @@ struct Vertices {
     init(_ vertices: Point...) {
         self.vertices = vertices
     }
+
+    // Make Vertices responsible for figuring out the length of the vertices being passed. I think I could make it
+    // possible to pass Vertices into the shader but this seems easier to understand for now.
+    func memoryLength() -> Int {
+        MemoryLayout<float4>.stride * vertices.count
+    }
+
+    // Convert this to a float4. I can't remember whether the w should be 0 or 1 so setting it to 1 for now.
+    func toFloat4() -> [float4] {
+        vertices.map { p in float4(p.rawValue.x, p.rawValue.y, p.rawValue.z, 1) }
+    }
 }
