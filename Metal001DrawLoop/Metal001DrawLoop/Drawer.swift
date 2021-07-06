@@ -102,5 +102,17 @@ extension Drawer: MTKViewDelegate {
         }
 
         encoder.endEncoding()
+
+        // Need to get the drawable out of the view so the command buffer can commit to it.
+        guard let drawable = view.currentDrawable else {
+            fatalError("""
+                       Wakoom! Attempted to get the view's drawable and everything fell apart! Boo!
+                       """)
+        }
+
+        // The command buffer won't do anything with it's output unless it presents to the MTLView's drawable and is
+        // committed.
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
     }
 }
