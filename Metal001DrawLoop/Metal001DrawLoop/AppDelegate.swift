@@ -68,11 +68,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Put in something simple to get started with.
         let singlePoint = Vertices(Point(0.5, 0.2, 0.0))
 
+        let square = Vertices(
+                Point(0.2, 0.2, 0.0),
+                Point(-0.2, 0.2, 0.0),
+                Point(-0.2, 0.2, 0.0),
+                Point(-0.2, -0.2, 0.0),
+                Point(-0.2, -0.2, 0.0),
+                Point(0.2, -0.2, 0.0),
+                Point(0.2, -0.2, 0.0),
+                Point(0.2, 0.2, 0.0),
+                primitiveType: .line
+        )
+
         metalBits = MetalBits(
                 device: MTLCreateSystemDefaultDevice()!,
                 pipelines: ["Default": defaultPipelineState],
                 libraries: ["Default": library],
-                vertices: ["SinglePoint": singlePoint]
+                vertices: [
+                    "SinglePoint": singlePoint,
+                    "Square": square
+                ]
         )
     }
 
@@ -89,7 +104,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         builder.device = metalBits.device
         builder.pipeline = metalBits.pipelines["Default"]
-        builder.vertices = metalBits.vertices["SinglePoint"]
+        builder.vertices = metalBits.vertices["Square"]
 
         return builder
     }

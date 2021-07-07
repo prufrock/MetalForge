@@ -134,7 +134,7 @@ extension Drawer: MTKViewDelegate {
         encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)
 
         // Draw the vertices as points on the screen.
-        encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
+        encoder.drawPrimitives(type: vertices.primitiveType, vertexStart: 0, vertexCount: vertices.count)
 
         encoder.endEncoding()
 
