@@ -10,6 +10,7 @@ class Drawer: NSObject {
     let device: MTLDevice
     let pipeline: MTLRenderPipelineState
     let vertices: Vertices
+    var counter: Double = 0
 
     init(view: MTKView, device: MTLDevice, pipeline: MTLRenderPipelineState, vertices: Vertices) {
         self.view = view
@@ -106,6 +107,9 @@ extension Drawer: MTKViewDelegate {
         // This is the base of the transformation matrix used to do any simple transformations to the vertices by the
         // shader. This is really about the only bit I have in here right now that makes cool GPU stuff happen.
         var transform = matrix_identity_float4x4
+        transform = transform * simd_float4x4.scaleX(Float(sin(0.01 * counter)))
+        // don't let the counter get too big so lets cut it down every time a cycle completes.
+        counter = (counter + 1).truncatingRemainder(dividingBy: 314.0)
 
         // Make a buffer to hold the vertices
         let buffer = device.makeBuffer(bytes: vertices.toFloat4(), length: vertices.memoryLength(), options: [])
