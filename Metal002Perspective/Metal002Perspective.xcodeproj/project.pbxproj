@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AF0E77BAC881D5AB7AC2097 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E4E4314958A848DD6B74 /* Point.swift */; };
+		5AF0E8B0950C8A43AC2A61D7 /* Vertices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB410095B6E0BF0914C9 /* Vertices.swift */; };
+		5AF0E914CED2D3936C335C0A /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E53012D0204CCE53863F /* TypeAliases.swift */; };
 		639A0AC32697DB9E000809B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A0AC22697DB9E000809B9 /* AppDelegate.swift */; };
 		639A0AC52697DB9E000809B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639A0AC42697DB9E000809B9 /* ViewController.swift */; };
 		639A0AC72697DB9F000809B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 639A0AC62697DB9F000809B9 /* Assets.xcassets */; };
@@ -14,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5AF0E4E4314958A848DD6B74 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		5AF0E53012D0204CCE53863F /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
+		5AF0EB410095B6E0BF0914C9 /* Vertices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertices.swift; sourceTree = "<group>"; };
 		639A0ABF2697DB9E000809B9 /* Metal002Perspective.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal002Perspective.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		639A0AC22697DB9E000809B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		639A0AC42697DB9E000809B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +65,9 @@
 				639A0AC82697DB9F000809B9 /* Main.storyboard */,
 				639A0ACB2697DB9F000809B9 /* Info.plist */,
 				639A0ACC2697DB9F000809B9 /* Metal002Perspective.entitlements */,
+				5AF0EB410095B6E0BF0914C9 /* Vertices.swift */,
+				5AF0E4E4314958A848DD6B74 /* Point.swift */,
+				5AF0E53012D0204CCE53863F /* TypeAliases.swift */,
 			);
 			path = Metal002Perspective;
 			sourceTree = "<group>";
@@ -134,6 +143,9 @@
 			files = (
 				639A0AC52697DB9E000809B9 /* ViewController.swift in Sources */,
 				639A0AC32697DB9E000809B9 /* AppDelegate.swift in Sources */,
+				5AF0E8B0950C8A43AC2A61D7 /* Vertices.swift in Sources */,
+				5AF0E77BAC881D5AB7AC2097 /* Point.swift in Sources */,
+				5AF0E914CED2D3936C335C0A /* TypeAliases.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,10 +6,16 @@
 //
 
 import Cocoa
+import MetalKit
 
 @main
 class Application: NSObject {
 
+    private struct MetalBits {
+        let device: MTLDevice
+        let pipelines: [String: MTLRenderPipelineState]
+        let vertices: [String: Vertices]
+    }
 }
 
 extension Application: NSApplicationDelegate {
@@ -21,7 +27,5 @@ extension Application: NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
-
-
 }
 
