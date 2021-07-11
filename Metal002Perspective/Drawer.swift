@@ -95,7 +95,14 @@ extension Drawer: MTKViewDelegate {
                        """)
         }
 
-        var transform = matrix_identity_float4x4 * float4x4.translate(x: 0.0, y: 0.0, z: 0.0) * float4x4.perspectiveProjection(nearPlane: 1.0)
+        // Need to make sure to apply the transformations in the right order otherwise you don't work in the correct
+        // spaces. For instance I was doing the projection and then the translation. This meant the translation was
+        // applied as if the cube was at the center of the world rather than at his translated place.
+        var transform = matrix_identity_float4x4
+                // projection
+                * float4x4.perspectiveProjection(nearPlane: 1.0)
+                // model
+                * float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
 
         let buffer = device.makeBuffer(bytes: vertices.toFloat4(), length: vertices.memoryLength(), options: [])
 

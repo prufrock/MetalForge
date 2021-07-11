@@ -14,13 +14,10 @@ extension float4x4 {
         )
     }
 
-    // It mostly works. I had to discover what column major vs row major means so for a bit I had my columns all mixed
-    // up. The near plane doesn't seem quite right yet for some reason because I pretty much just set "nearPlane" to 1
-    // otherwise things get really small. This make sense, in a way, because I am effectively scaling them down. Also,
-    // unless I'm mistaken about something it doesn't seem like my objects are all sharing a vanishing point. Instead
-    // they all seem to have the same vanishing point at the center of each object. I must need to do a transformation
-    // to move the objects into world space and maybe even camera space. I figured if I used NDC coordinates for the
-    // vertices this wouldn't matter. It seems like the math doesn't quite work out that way though.
+    // I figured out the problem with the perspective always being relative to the objects was because I was applying
+    // my transformations in the wrong order. I still have a problem though where increasing the value of the near plane
+    // moves the object closer when it should be moved further away. I'm a little bit stumped by this one and wonder if
+    // I am not fully understanding how W is involved in the perspective divide.
     static func perspectiveProjection(nearPlane: Float) -> float4x4 {
         float4x4(
                 [nearPlane, 0, 0, 0],
