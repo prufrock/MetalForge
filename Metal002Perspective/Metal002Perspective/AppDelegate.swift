@@ -37,6 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let singlePoint = Vertices(Point(0.5, 0.2, 0.0))
 
         let square = Vertices(
+                // First Square
                 Point(0.2, 0.2, 0.0),
                 Point(-0.2, 0.2, 0.0),
                 Point(-0.2, 0.2, 0.0),
@@ -44,7 +45,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 Point(-0.2, -0.2, 0.0),
                 Point(0.2, -0.2, 0.0),
                 Point(0.2, -0.2, 0.0),
+                // Second Square
                 Point(0.2, 0.2, 0.0),
+                Point(0.2, 0.2, 0.8),
+                Point(-0.2, 0.2, 0.8),
+                Point(-0.2, 0.2, 0.8),
+                Point(-0.2, -0.2, 0.8),
+                Point(-0.2, -0.2, 0.8),
+                Point(0.2, -0.2, 0.8),
+                Point(0.2, -0.2, 0.8),
+                Point(0.2, 0.2, 0.8),
+                // Connecting lines
+                Point(0.2, 0.2, 0.0),
+                Point(0.2, 0.2, 0.8),
+                Point(-0.2, 0.2, 0.0),
+                Point(-0.2, 0.2, 0.8),
+                Point(-0.2, -0.2, 0.0),
+                Point(-0.2, -0.2, 0.8),
+                Point(0.2, -0.2, 0.0),
+                Point(0.2, -0.2, 0.8),
                 primitiveType: .line
         )
 

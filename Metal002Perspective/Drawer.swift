@@ -95,7 +95,7 @@ extension Drawer: MTKViewDelegate {
                        """)
         }
 
-        var transform = matrix_identity_float4x4
+        var transform = matrix_identity_float4x4 * float4x4.translate(x: 0.0, y: 0.0, z: 0.0) * float4x4.perspectiveProjection(nearPlane: 1.0)
 
         let buffer = device.makeBuffer(bytes: vertices.toFloat4(), length: vertices.memoryLength(), options: [])
 
