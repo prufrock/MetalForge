@@ -24,7 +24,7 @@ class Drawer: NSObject {
 
         view.device = device
 
-        view.clearColor = MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        view.clearColor = MTLClearColor(Colors().black)
 
         mtkView(view, drawableSizeWillChange: view.bounds.size)
     }
@@ -110,7 +110,7 @@ extension Drawer: MTKViewDelegate {
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
         encoder.setVertexBytes(&transform, length: MemoryLayout<float4x4>.stride, index: 1)
 
-        var color = float4(1.0, 1.0, 1.0, 1.0)
+        var color = Colors().green
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)
         encoder.drawPrimitives(type: vertices.primitiveType, vertexStart: 0, vertexCount: vertices.count)
