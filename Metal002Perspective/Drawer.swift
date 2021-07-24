@@ -100,7 +100,7 @@ extension Drawer: MTKViewDelegate {
         // applied as if the cube was at the center of the world rather than at his translated place.
         var transform = matrix_identity_float4x4
                 // projection
-                * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 0.9)
+                * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
                 // model
                 * float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
 
