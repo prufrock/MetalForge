@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct MatrixElement: View {
-    @Binding var value: String
+    @Binding var matrix: [String]
+    var index: Int
 
     var body: some View {
-        TextField("", text: $value)
+        TextField("", text: $matrix[index])
             .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
     }
 }
 
 struct MatrixElement_Previews: PreviewProvider {
     static var previews: some View {
-        MatrixElement(value: .constant("0.0"))
+        MatrixElement(matrix: .constant(["0.0"]), index: 0)
     }
 }

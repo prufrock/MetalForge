@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var vOneOne: String = "0.0"
+    @State private var vector: [String] = ["0.0", "0.0", "0.0", "0.0"]
 
     var body: some View {
         VStack{
-            MatrixElement(value: $vOneOne)
-            MatrixElement(value: $vOneOne)
-            MatrixElement(value: $vOneOne)
-            MatrixElement(value: $vOneOne)
+            MatrixElement(matrix: $vector, index: 0)
+            MatrixElement(matrix: $vector, index: 1)
+            MatrixElement(matrix: $vector, index: 2)
+            MatrixElement(matrix: $vector, index: 3)
         }
     }
 }
