@@ -12,14 +12,10 @@ struct ContentView: View {
 
     var body: some View {
         VStack{
-            TextField("", text: $vOneOne)
-                .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-            TextField("", text: $vOneOne)
-                .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-            TextField("", text: $vOneOne)
-               .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-            TextField("", text: $vOneOne)
-                .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            MatrixElement(value: $vOneOne)
+            MatrixElement(value: $vOneOne)
+            MatrixElement(value: $vOneOne)
+            MatrixElement(value: $vOneOne)
         }
     }
 }
