@@ -17,6 +17,10 @@
 		63C9AFB126B0F92F00AF058E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63C9AF8526B0F92F00AF058E /* Assets.xcassets */; };
 		63C9AFC226B0FD1C00AF058E /* MatrixElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9AFC126B0FD1C00AF058E /* MatrixElement.swift */; };
 		63C9AFC326B0FD1C00AF058E /* MatrixElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9AFC126B0FD1C00AF058E /* MatrixElement.swift */; };
+		63D06A4326B245A700203A28 /* MatrixElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D06A4226B245A700203A28 /* MatrixElements.swift */; };
+		63D06A4426B245A700203A28 /* MatrixElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D06A4226B245A700203A28 /* MatrixElements.swift */; };
+		63D06A4626B24AB100203A28 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D06A4526B24AB100203A28 /* Matrix.swift */; };
+		63D06A4726B24AB100203A28 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D06A4526B24AB100203A28 /* Matrix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +56,8 @@
 		63C9AFA926B0F92F00AF058E /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		63C9AFAB26B0F92F00AF058E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63C9AFC126B0FD1C00AF058E /* MatrixElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixElement.swift; sourceTree = "<group>"; };
+		63D06A4226B245A700203A28 /* MatrixElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatrixElements.swift; sourceTree = "<group>"; };
+		63D06A4526B24AB100203A28 /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +165,8 @@
 			isa = PBXGroup;
 			children = (
 				63C9AFC126B0FD1C00AF058E /* MatrixElement.swift */,
+				63D06A4226B245A700203A28 /* MatrixElements.swift */,
+				63D06A4526B24AB100203A28 /* Matrix.swift */,
 			);
 			path = SwiftUIViews;
 			sourceTree = "<group>";
@@ -321,7 +329,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				63C9AFC226B0FD1C00AF058E /* MatrixElement.swift in Sources */,
+				63D06A4626B24AB100203A28 /* Matrix.swift in Sources */,
 				63C9AFAE26B0F92F00AF058E /* ContentView.swift in Sources */,
+				63D06A4326B245A700203A28 /* MatrixElements.swift in Sources */,
 				63C9AFAC26B0F92F00AF058E /* Matrix_CalculatorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,7 +341,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				63C9AFC326B0FD1C00AF058E /* MatrixElement.swift in Sources */,
+				63D06A4726B24AB100203A28 /* Matrix.swift in Sources */,
 				63C9AFAF26B0F92F00AF058E /* ContentView.swift in Sources */,
+				63D06A4426B245A700203A28 /* MatrixElements.swift in Sources */,
 				63C9AFAD26B0F92F00AF058E /* Matrix_CalculatorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
