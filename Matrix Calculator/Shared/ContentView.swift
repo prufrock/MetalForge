@@ -17,11 +17,26 @@ struct ContentView: View {
         ["0.0", "0.0", "0.0", "1.0"]
     ]
 
+    @State private var showingMatrixInput = false
+
+    @State private var inputMatrix = ""
+
+    @State private var showingVectorInput = false
+
+    @State private var inputVector = ""
+
     var body: some View {
         HStack{
             VStack {
                 Group{
                     Matrix(matrix: $vectorFunction)
+                }
+                Button(action: { showingMatrixInput.toggle() }) {
+                    Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                        .renderingMode(.original)
+                }.buttonStyle(DefaultButtonStyle())
+                .sheet(isPresented: $showingMatrixInput) {
+                    EnterLineMatrix(isShowing: $showingMatrixInput, value: $inputMatrix)
                 }
             }.padding(10)
             VStack {
@@ -40,6 +55,13 @@ struct ContentView: View {
             }
             VStack{
                 MatrixElements(matrix: $vector, column: 0)
+                Button(action: { showingMatrixInput.toggle() }) {
+                    Image(systemName: "rectangle.and.pencil.and.ellipsis")
+                        .renderingMode(.original)
+                }.buttonStyle(DefaultButtonStyle())
+                .sheet(isPresented: $showingMatrixInput) {
+                    EnterLineMatrix(isShowing: $showingMatrixInput, value: $inputMatrix)
+                }
             }.padding(10)
         }
     }
