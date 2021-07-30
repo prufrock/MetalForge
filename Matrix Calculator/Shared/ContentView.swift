@@ -19,8 +19,10 @@ struct ContentView: View {
 
     var body: some View {
         HStack{
-            Group{
-                Matrix(matrix: $vectorFunction)
+            VStack {
+                Group{
+                    Matrix(matrix: $vectorFunction)
+                }
             }.padding(10)
             VStack{
                 MatrixElements(matrix: $vector, column: 0)
