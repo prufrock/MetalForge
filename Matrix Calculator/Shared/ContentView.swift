@@ -24,6 +24,20 @@ struct ContentView: View {
                     Matrix(matrix: $vectorFunction)
                 }
             }.padding(10)
+            VStack {
+                Button(action: { 1 + 1 }) {
+                    Image(systemName: "circle")
+                        .renderingMode(.original)
+                }.buttonStyle(DefaultButtonStyle())
+                Button(action: { 1 + 1 }) {
+                    Image(systemName: "arrowshape.turn.up.left")
+                        .renderingMode(.original)
+                }.buttonStyle(DefaultButtonStyle())
+                Button(action: { 1 + 1 }) {
+                    Image(systemName: "arrowshape.turn.up.right")
+                        .renderingMode(.original)
+                }.buttonStyle(DefaultButtonStyle())
+            }
             VStack{
                 MatrixElements(matrix: $vector, column: 0)
             }.padding(10)
