@@ -26,7 +26,7 @@ struct ContentView: View {
             }.padding(10)
             VStack{
                 MatrixElements(matrix: $vector, column: 0)
-            }
+            }.padding(10)
         }
     }
 }
