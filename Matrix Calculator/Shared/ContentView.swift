@@ -30,13 +30,7 @@ struct ContentView: View {
             VStack {
                 Group{
                     Matrix(matrix: $vectorFunction)
-                }
-                Button(action: { showingMatrixInput.toggle() }) {
-                    Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                        .renderingMode(.original)
-                }.buttonStyle(DefaultButtonStyle())
-                .sheet(isPresented: $showingMatrixInput) {
-                    EnterLineMatrix(isShowing: $showingMatrixInput, value: $inputMatrix)
+                    BtnInputMatrix(inputMatrix: $inputMatrix)
                 }
             }.padding(10)
             VStack {
@@ -55,13 +49,7 @@ struct ContentView: View {
             }
             VStack{
                 MatrixElements(matrix: $vector, column: 0)
-                Button(action: { showingMatrixInput.toggle() }) {
-                    Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                        .renderingMode(.original)
-                }.buttonStyle(DefaultButtonStyle())
-                .sheet(isPresented: $showingMatrixInput) {
-                    EnterLineMatrix(isShowing: $showingMatrixInput, value: $inputMatrix)
-                }
+                BtnInputMatrix(inputMatrix: $inputVector)
             }.padding(10)
         }
     }

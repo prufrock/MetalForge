@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63156F5126B59605006C4043 /* BtnInputMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63156F5026B59605006C4043 /* BtnInputMatrix.swift */; };
+		63156F5226B59605006C4043 /* BtnInputMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63156F5026B59605006C4043 /* BtnInputMatrix.swift */; };
 		63C16CF926B3A3BF008F2D93 /* EnterLineMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C16CF826B3A3BF008F2D93 /* EnterLineMatrix.swift */; };
 		63C16CFA26B3A3BF008F2D93 /* EnterLineMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C16CF826B3A3BF008F2D93 /* EnterLineMatrix.swift */; };
 		63C9AF9F26B0F92F00AF058E /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9AF9E26B0F92F00AF058E /* Tests_iOS.swift */; };
@@ -43,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63156F5026B59605006C4043 /* BtnInputMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BtnInputMatrix.swift; sourceTree = "<group>"; };
 		63C16CF826B3A3BF008F2D93 /* EnterLineMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterLineMatrix.swift; sourceTree = "<group>"; };
 		63C9AF8326B0F92E00AF058E /* Matrix_CalculatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix_CalculatorApp.swift; sourceTree = "<group>"; };
 		63C9AF8426B0F92E00AF058E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -171,6 +174,7 @@
 				63D06A4226B245A700203A28 /* MatrixElements.swift */,
 				63D06A4526B24AB100203A28 /* Matrix.swift */,
 				63C16CF826B3A3BF008F2D93 /* EnterLineMatrix.swift */,
+				63156F5026B59605006C4043 /* BtnInputMatrix.swift */,
 			);
 			path = SwiftUIViews;
 			sourceTree = "<group>";
@@ -338,6 +342,7 @@
 				63C16CF926B3A3BF008F2D93 /* EnterLineMatrix.swift in Sources */,
 				63D06A4326B245A700203A28 /* MatrixElements.swift in Sources */,
 				63C9AFAC26B0F92F00AF058E /* Matrix_CalculatorApp.swift in Sources */,
+				63156F5126B59605006C4043 /* BtnInputMatrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +356,7 @@
 				63C16CFA26B3A3BF008F2D93 /* EnterLineMatrix.swift in Sources */,
 				63D06A4426B245A700203A28 /* MatrixElements.swift in Sources */,
 				63C9AFAD26B0F92F00AF058E /* Matrix_CalculatorApp.swift in Sources */,
+				63156F5226B59605006C4043 /* BtnInputMatrix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
