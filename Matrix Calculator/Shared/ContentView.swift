@@ -43,7 +43,7 @@ struct ContentView: View {
                     Image(systemName: "arrowshape.turn.up.left")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
-                .disabled(UndoButton().isDisabled())
+                .disabled(Button().isDisabled())
                 Button(action: { 1 + 1 }) {
                     Image(systemName: "arrowshape.turn.up.right")
                         .renderingMode(.original)
