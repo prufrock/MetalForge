@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		63156F5126B59605006C4043 /* BtnInputMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63156F5026B59605006C4043 /* BtnInputMatrix.swift */; };
 		63156F5226B59605006C4043 /* BtnInputMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63156F5026B59605006C4043 /* BtnInputMatrix.swift */; };
+		633A1F4E26B6F00E00B37902 /* ViewModel in Frameworks */ = {isa = PBXBuildFile; productRef = 633A1F4D26B6F00E00B37902 /* ViewModel */; };
 		63C16CF926B3A3BF008F2D93 /* EnterLineMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C16CF826B3A3BF008F2D93 /* EnterLineMatrix.swift */; };
 		63C16CFA26B3A3BF008F2D93 /* EnterLineMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C16CF826B3A3BF008F2D93 /* EnterLineMatrix.swift */; };
 		63C9AF9F26B0F92F00AF058E /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C9AF9E26B0F92F00AF058E /* Tests_iOS.swift */; };
@@ -78,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				633A1F4E26B6F00E00B37902 /* ViewModel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +100,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		633A1F4C26B6F00E00B37902 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		63C9AF7D26B0F92E00AF058E = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +116,7 @@
 				63C9AF9D26B0F92F00AF058E /* Tests iOS */,
 				63C9AFA826B0F92F00AF058E /* Tests macOS */,
 				63C9AF8B26B0F92F00AF058E /* Products */,
+				633A1F4C26B6F00E00B37902 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -212,6 +222,9 @@
 			dependencies = (
 			);
 			name = "Matrix Calculator (macOS)";
+			packageProductDependencies = (
+				633A1F4D26B6F00E00B37902 /* ViewModel */,
+			);
 			productName = "Matrix Calculator (macOS)";
 			productReference = 63C9AF9226B0F92F00AF058E /* Matrix Calculator.app */;
 			productType = "com.apple.product-type.application";
@@ -734,6 +747,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		633A1F4D26B6F00E00B37902 /* ViewModel */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ViewModel;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 63C9AF7E26B0F92E00AF058E /* Project object */;
 }

@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:ViewModel">
+   </FileRef>
+   <FileRef
       location = "container:Matrix Calculator.xcodeproj">
    </FileRef>
 </Workspace>

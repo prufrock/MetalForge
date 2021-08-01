@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ViewModel
 
 struct ContentView: View {
     @State private var vector: [[String]] = [["0.0", "0.0", "0.0", "0.0"]]
@@ -42,6 +43,7 @@ struct ContentView: View {
                     Image(systemName: "arrowshape.turn.up.left")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
+                .disabled(UndoButton().isDisabled())
                 Button(action: { 1 + 1 }) {
                     Image(systemName: "arrowshape.turn.up.right")
                         .renderingMode(.original)
