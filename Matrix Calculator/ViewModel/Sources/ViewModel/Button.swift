@@ -15,5 +15,7 @@ public struct Button {
 
     }
 
-    public func isDisabled() -> Bool { disabled }
+    public func isDisabled() -> Bool {
+        disabled
+    }
 }
