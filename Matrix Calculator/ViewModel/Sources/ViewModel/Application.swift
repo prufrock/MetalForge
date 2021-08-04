@@ -19,8 +19,20 @@ public struct Application {
         self.elements = elements
     }
 
+    public init (
+            id: UUID,
+            @Builder builder: () -> [Button]
+    ) {
+        self.id = id
+        self.elements = builder()
+    }
+
+    @resultBuilder
     class Builder {
-        public let id: UUID = UUID()
+        static func buildBlock(_ components: Button...) -> [Button] {
+            components.flatMap { [$0] }
+        }
+        public var id: UUID = UUID()
         private var elements: [Button] = []
 
         public func create() -> Application {
@@ -30,7 +42,7 @@ public struct Application {
             )
         }
 
-        public func element(element: Button) {
+        public func element(_ element: Button) {
             elements.append(element)
         }
     }
