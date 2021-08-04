@@ -32,24 +32,7 @@ public struct Application {
         static func buildBlock(_ components: Button...) -> [Button] {
             components.flatMap { [$0] }
         }
-        public var id: UUID = UUID()
+        private var id: UUID = UUID()
         private var elements: [Button] = []
-
-        public func create() -> Application {
-            Application(
-                id: UUID(),
-                elements: elements
-            )
-        }
-
-        public func element(_ element: Button) {
-            elements.append(element)
-        }
     }
-}
-
-func application(id: UUID, using lambda: (Application.Builder) -> Void) -> Application.Builder {
-    let builder = Application.Builder();
-    lambda(builder)
-    return builder
 }
