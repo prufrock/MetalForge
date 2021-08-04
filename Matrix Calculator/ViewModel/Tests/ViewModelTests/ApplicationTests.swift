@@ -7,6 +7,9 @@ import XCTest
 
 final class ApplicationTests: XCTestCase {
     func testIDHasAValue() {
-        XCTAssertTrue(Application().id.uuidString.count > 0)
+        let app = application(UUID()) {
+            $0.id = UUID()
+        }.create()
+        XCTAssertTrue(app.id.uuidString.count > 0)
     }
 }
