@@ -8,14 +8,19 @@
 import Foundation
 
 public struct Button {
-    private let ID: UUID = UUID()
-    private let disabled = true
+    private let id: UUID
+    private let disabled: Bool
 
-    public init() {
-
+    public init(id: UUID, disabled: Bool) {
+        self.id = id
+        self.disabled = disabled
     }
 
     public func isDisabled() -> Bool {
         disabled
+    }
+
+    public func toggle() -> Button {
+        Button(id: self.id, disabled: !disabled)
     }
 }
