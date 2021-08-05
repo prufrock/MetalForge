@@ -29,9 +29,7 @@ public struct Application {
 
     public func getElement(i: Int) -> Button { elements[i] }
     public func setElement(i: Int, element: Button) -> Application {
-        // TODO move to array extension
-        let newElements = Array(elements[0 ..< i]) + [element] + Array(elements[(i+1) ..< (elements.count)])
-        return Application(id: id, elements: newElements)
+        Application(id: id, elements: elements.replace(index: 0, with: element))
     }
 
     @resultBuilder
