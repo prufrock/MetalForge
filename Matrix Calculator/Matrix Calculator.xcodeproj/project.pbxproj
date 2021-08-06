@@ -26,6 +26,7 @@
 		63D06A4426B245A700203A28 /* MatrixElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D06A4226B245A700203A28 /* MatrixElements.swift */; };
 		63D06A4626B24AB100203A28 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D06A4526B24AB100203A28 /* Matrix.swift */; };
 		63D06A4726B24AB100203A28 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D06A4526B24AB100203A28 /* Matrix.swift */; };
+		63DCC14026BCC142005227FA /* ViewModel in Frameworks */ = {isa = PBXBuildFile; productRef = 63DCC13F26BCC142005227FA /* ViewModel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63DCC14026BCC142005227FA /* ViewModel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +207,9 @@
 			dependencies = (
 			);
 			name = "Matrix Calculator (iOS)";
+			packageProductDependencies = (
+				63DCC13F26BCC142005227FA /* ViewModel */,
+			);
 			productName = "Matrix Calculator (iOS)";
 			productReference = 63C9AF8A26B0F92F00AF058E /* Matrix Calculator.app */;
 			productType = "com.apple.product-type.application";
@@ -456,6 +461,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -509,6 +515,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -577,7 +584,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dkanen.Matrix-Calculator";
 				PRODUCT_NAME = "Matrix Calculator";
 				SDKROOT = macosx;
@@ -601,7 +608,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dkanen.Matrix-Calculator";
 				PRODUCT_NAME = "Matrix Calculator";
 				SDKROOT = macosx;
@@ -750,6 +757,10 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		633A1F4D26B6F00E00B37902 /* ViewModel */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ViewModel;
+		};
+		63DCC13F26BCC142005227FA /* ViewModel */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ViewModel;
 		};

@@ -9,7 +9,7 @@ import Foundation
  */
 public struct Application {
     public let id: UUID
-    private let elements: [Button]
+    private var elements: [Button]
 
     public init(
             id: UUID,
@@ -21,7 +21,7 @@ public struct Application {
 
     public init (
             id: UUID,
-            @Builder builder: () -> [Button]
+            @Builder _ builder: () -> [Button]
     ) {
         self.id = id
         self.elements = builder()
@@ -33,8 +33,8 @@ public struct Application {
     }
 
     @resultBuilder
-    class Builder {
-        static func buildBlock(_ components: Button...) -> [Button] {
+    public class Builder {
+        public static func buildBlock(_ components: Button...) -> [Button] {
             components.flatMap { [$0] }
         }
         private var id: UUID = UUID()
