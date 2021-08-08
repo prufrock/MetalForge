@@ -37,7 +37,7 @@ struct ContentView: View {
                 }
             }.padding(10)
             VStack {
-                Button(action: { app = app.setElement(i: 0, element: app.getElement(i: 0).toggle()) }) {
+                Button(action: { app = app.setUndoButton(button: app.getUndoButton().toggle()) }) {
                     Image(systemName: "circle")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
@@ -47,7 +47,7 @@ struct ContentView: View {
                     Image(systemName: "arrowshape.turn.up.left")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
-                .disabled(app.getElement(i: 0).isDisabled())
+                .disabled(app.getUndoButton().isDisabled())
                 Button(action: { 1 + 1 }) {
                     Image(systemName: "arrowshape.turn.up.right")
                         .renderingMode(.original)
@@ -63,8 +63,10 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(app: Application(id: UUID(uuidString: "4e6ecfae-9e8d-4464-ba48-976e7f8ed413")!) {
-            Button(id: UUID(uuidString: "6101a91c-1ebe-47ca-9744-d342e51e96d1")!, disabled: true)
-        })
+        ContentView(app: ViewModel.application(id: UUID(uuidString: "4e6ecfae-9e8d-4464-ba48-976e7f8ed413")!) {
+            return $0.undoButton(
+                Button(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
+            )
+        }.create())
     }
 }

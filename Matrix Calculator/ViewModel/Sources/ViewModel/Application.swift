@@ -52,7 +52,7 @@ public struct Application {
     }
 }
 
-func application(id: UUID, using lambda: (Application.Builder) -> Application.Builder) -> Application.Builder {
+public func application(id: UUID, using lambda: (Application.Builder) -> Application.Builder) -> Application.Builder {
     let builder = Application.Builder(id: id);
     return lambda(builder)
 }
