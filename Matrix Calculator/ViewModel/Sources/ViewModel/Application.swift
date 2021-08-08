@@ -19,7 +19,7 @@ public struct Application {
         self.undoButton = undoButton
     }
 
-    public func getUndoButton(button: Button) -> Button { undoButton }
+    public func getUndoButton() -> Button { undoButton }
     public func setUndoButton(button: Button) -> Application {
         Application(id: id, undoButton: button)
     }
