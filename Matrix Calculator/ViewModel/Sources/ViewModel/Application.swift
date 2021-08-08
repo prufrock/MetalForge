@@ -9,35 +9,50 @@ import Foundation
  */
 public struct Application {
     public let id: UUID
-    private var elements: [Button]
+    private let undoButton: Button
 
     public init(
             id: UUID,
-            elements: [Button]
+            undoButton: Button
     ) {
         self.id = id
-        self.elements = elements
+        self.undoButton = undoButton
     }
 
-    public init (
-            id: UUID,
-            @Builder _ builder: () -> [Button]
-    ) {
-        self.id = id
-        self.elements = builder()
+    public func getUndoButton(button: Button) -> Button { undoButton }
+    public func setUndoButton(button: Button) -> Application {
+        Application(id: id, undoButton: button)
     }
 
-    public func getElement(i: Int) -> Button { elements[i] }
-    public func setElement(i: Int, element: Button) -> Application {
-        Application(id: id, elements: elements.replace(index: 0, with: element))
-    }
+    public struct Builder {
 
-    @resultBuilder
-    public class Builder {
-        public static func buildBlock(_ components: Button...) -> [Button] {
-            components.flatMap { [$0] }
-        }
-        private var id: UUID = UUID()
+        private var id: UUID
         private var elements: [Button] = []
+        private var undoButton: Button?
+
+        public init(id: UUID) {
+            self.id = id
+        }
+
+        private init(id: UUID, undoButton: Button? = nil) {
+            self.id = id
+            self.undoButton = undoButton
+        }
+
+        public func undoButton(_ button:Button) -> Self {
+            return Self(id: id, undoButton: button)
+        }
+
+        public func create() -> Application {
+            Application(
+                id: id,
+                undoButton: undoButton!
+            )
+        }
     }
+}
+
+func application(id: UUID, using lambda: (Application.Builder) -> Application.Builder) -> Application.Builder {
+    let builder = Application.Builder(id: id);
+    return lambda(builder)
 }

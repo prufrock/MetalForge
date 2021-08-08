@@ -6,22 +6,15 @@ import XCTest
 @testable import ViewModel
 
 final class ApplicationTests: XCTestCase {
-    func testMakeApplicationWithResultBuilder() {
-        let app = Application(id: UUID()) {
-            Button(id: UUID(), disabled: true)
-        }
 
-        XCTAssertTrue(app.id.uuidString.count > 0)
-    }
+    func testCreateApplicationWithUndoButton() {
+        let appID = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
+        let app = application(id: appID) {
+            return $0.undoButton(
+                Button(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
+            )
+        }.create()
 
-    func testChangeStateOfButton() {
-        var app = Application(id: UUID()) {
-            Button(id: UUID(uuidString: "fd61a90a-5982-4393-83fb-5615db9a31f5")!, disabled: true)
-        }
-
-        let button = app.getElement(i: 0)
-        app = app.setElement(i: 0, element: button.toggle())
-
-        XCTAssertFalse(app.getElement(i: 0).isDisabled())
+        XCTAssertEqual(appID, app.id)
     }
 }
