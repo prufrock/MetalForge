@@ -11,13 +11,16 @@ import Foundation
 public class Application: ObservableObject {
     public let id: UUID
     @Published private var undoButton: Button
+    @Published private var dotProductButton: Button
 
     public init(
             id: UUID,
-            undoButton: Button
+            undoButton: Button,
+            dotProductButton: Button
     ) {
         self.id = id
         self.undoButton = undoButton
+        self.dotProductButton = dotProductButton
     }
 
     public func getUndoButton() -> Button { undoButton }
@@ -32,24 +35,39 @@ public class Application: ObservableObject {
         private var id: UUID
         private var elements: [Button] = []
         private var undoButton: Button?
+        private var dotProductButton: Button?
 
         public init(id: UUID) {
             self.id = id
         }
 
-        private init(id: UUID, undoButton: Button? = nil) {
+        private init(
+            id: UUID,
+            undoButton: Button? = nil,
+            dotProductButton: Button? = nil
+        ) {
             self.id = id
             self.undoButton = undoButton
+            self.dotProductButton = dotProductButton
         }
 
         public func undoButton(_ button:Button) -> Self {
             return Self(id: id, undoButton: button)
         }
 
+        public func dotProductButton(_ button:Button) -> Self {
+            return Self(
+                id: id,
+                undoButton: undoButton,
+                dotProductButton: button
+            )
+        }
+
         public func create() -> Application {
             Application(
                 id: id,
-                undoButton: undoButton!
+                undoButton: undoButton!,
+                dotProductButton: dotProductButton!
             )
         }
     }
