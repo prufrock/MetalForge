@@ -7,9 +7,10 @@ import Foundation
 /**
  Represents the entire application being presented.
  */
-public struct Application {
+@available(macOS 10.15, *)
+public class Application: ObservableObject {
     public let id: UUID
-    private let undoButton: Button
+    @Published private var undoButton: Button
 
     public init(
             id: UUID,
@@ -21,7 +22,9 @@ public struct Application {
 
     public func getUndoButton() -> Button { undoButton }
     public func setUndoButton(button: Button) -> Application {
-        Application(id: id, undoButton: button)
+        undoButton = button
+
+        return self
     }
 
     public struct Builder {
@@ -52,6 +55,7 @@ public struct Application {
     }
 }
 
+@available(macOS 10.15, *)
 public func application(id: UUID, using lambda: (Application.Builder) -> Application.Builder) -> Application.Builder {
     let builder = Application.Builder(id: id);
     return lambda(builder)

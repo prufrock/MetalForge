@@ -9,7 +9,7 @@ import SwiftUI
 import ViewModel
 
 struct ContentView: View {
-    @State var app: Application
+    @ObservedObject var app: Application
 
     @State private var vector: [[String]] = [["0.0", "0.0", "0.0", "0.0"]]
 
@@ -28,6 +28,10 @@ struct ContentView: View {
 
     @State private var inputVector = ""
 
+    init(app: Application) {
+        self.app = app
+    }
+
     var body: some View {
         HStack{
             VStack {
@@ -37,7 +41,7 @@ struct ContentView: View {
                 }
             }.padding(10)
             VStack {
-                Button(action: { app = app.setUndoButton(button: app.getUndoButton().toggle()) }) {
+                Button(action: { app.setUndoButton(button: app.getUndoButton().toggle()) }) {
                     Image(systemName: "circle")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
