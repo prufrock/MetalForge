@@ -13,22 +13,51 @@ public class Application: ObservableObject {
     @Published private var undoButton: Button
     @Published private var dotProductButton: Button
 
+    private var commands: [String]
+
     public init(
             id: UUID,
             undoButton: Button,
-            dotProductButton: Button
+            dotProductButton: Button,
+            commands: [String] = []
     ) {
         self.id = id
         self.undoButton = undoButton
         self.dotProductButton = dotProductButton
+        self.commands = commands
     }
 
-    public func getUndoButton() -> Button { undoButton }
-    public func setUndoButton(button: Button) -> Application {
-        undoButton = button
+    public func computeDotProduct() -> Application {
+        self.commands.append(UUID().uuidString)
+
+        if (self.commands.count > 0) {
+            enableUndoButton()
+        }
 
         return self
     }
+
+    public func undoLastDotProduct() -> Application {
+        print(self.commands.popLast())
+
+        if (self.commands.count > 0) {
+            enableUndoButton()
+        } else {
+            disableUndoButton()
+        }
+
+        return self
+    }
+
+    private func disableUndoButton() {
+        self.undoButton = self.undoButton.disable()
+    }
+
+    private func enableUndoButton() {
+        self.undoButton = self.undoButton.enable()
+    }
+
+    public func getUndoButton() -> Button { undoButton }
 
     public struct Builder {
 

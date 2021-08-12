@@ -23,4 +23,12 @@ public struct Button {
     public func toggle() -> Button {
         Button(id: self.id, disabled: !disabled)
     }
+
+    public func enable() -> Button {
+        Button(id: self.id, disabled: false)
+    }
+
+    public func disable() -> Button {
+        Button(id: self.id, disabled: true)
+    }
 }

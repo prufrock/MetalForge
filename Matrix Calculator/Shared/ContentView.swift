@@ -41,18 +41,18 @@ struct ContentView: View {
                 }
             }.padding(10)
             VStack {
-                Button(action: { app.setUndoButton(button: app.getUndoButton().toggle()) }) {
+                Button(action: { app.computeDotProduct() }) {
                     Image(systemName: "circle")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
                 Button(action: {
-                    1 + 1
+                    app.undoLastDotProduct()
                 }) {
                     Image(systemName: "arrowshape.turn.up.left")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
                 .disabled(app.getUndoButton().isDisabled())
-                Button(action: { 1 + 1 }) {
+                Button(action: {  }) {
                     Image(systemName: "arrowshape.turn.up.right")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
