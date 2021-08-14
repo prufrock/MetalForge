@@ -13,7 +13,7 @@ public class Application: ObservableObject {
     @Published private var undoButton: Button
     @Published private var dotProductButton: Button
 
-    private var commands: [String]
+    private var state: StatefulApplication
 
     public init(
             id: UUID,
@@ -24,40 +24,42 @@ public class Application: ObservableObject {
         self.id = id
         self.undoButton = undoButton
         self.dotProductButton = dotProductButton
-        self.commands = commands
+        self.state = NoHistory(
+            id: id,
+            undoButton: undoButton,
+            dotProductButton: dotProductButton,
+            commands: commands
+        )
     }
 
     public func computeDotProduct() -> Application {
-        self.commands.append(UUID().uuidString)
+        self.updateState(state: self.state.computeDotProduct())
 
-        if (self.commands.count > 0) {
-            enableUndoButton()
-        }
 
         return self
     }
 
     public func undoLastDotProduct() -> Application {
-        print(self.commands.popLast())
-
-        if (self.commands.count > 0) {
-            enableUndoButton()
-        } else {
-            disableUndoButton()
-        }
+        self.updateState(state: self.state.undoLastDotProduct())
 
         return self
     }
 
-    private func disableUndoButton() {
+    public func disableUndoButton() {
         self.undoButton = self.undoButton.disable()
     }
 
-    private func enableUndoButton() {
+    public func enableUndoButton() {
         self.undoButton = self.undoButton.enable()
     }
 
     public func getUndoButton() -> Button { undoButton }
+
+    private func updateState(state: StatefulApplication) {
+        self.state = state
+        self.undoButton = self.state.undoButton
+        self.dotProductButton = self.state.dotProductButton
+    }
 
     public struct Builder {
 
@@ -106,4 +108,74 @@ public class Application: ObservableObject {
 public func application(id: UUID, using lambda: (Application.Builder) -> Application.Builder) -> Application.Builder {
     let builder = Application.Builder(id: id);
     return lambda(builder)
+}
+
+@available(macOS 10.15, *)
+protocol StatefulApplication {
+    var undoButton: Button { get }
+    var dotProductButton: Button { get }
+
+    func computeDotProduct() -> StatefulApplication
+
+    func undoLastDotProduct() -> StatefulApplication
+
+}
+
+@available(macOS 10.15, *)
+struct NoHistory: StatefulApplication {
+    public let id: UUID
+    public let undoButton: Button
+    public let dotProductButton: Button
+    public let commands: [String]
+
+    func computeDotProduct() -> StatefulApplication {
+
+        return HasHistory(id: id,
+                          undoButton: undoButton.enable(),
+                          dotProductButton: dotProductButton,
+                          commands: commands + [UUID().uuidString])
+    }
+
+    func undoLastDotProduct() -> StatefulApplication {
+        print("NoHistory: do nothing")
+        return self
+    }
+}
+
+@available(macOS 10.15, *)
+struct HasHistory: StatefulApplication {
+    public let id: UUID
+    public let undoButton: Button
+    public let dotProductButton: Button
+    public let commands: [String]
+
+    func computeDotProduct() -> StatefulApplication {
+
+        return HasHistory(id: id,
+                          undoButton: undoButton.enable(),
+                          dotProductButton: dotProductButton,
+                          commands: commands + [UUID().uuidString])
+    }
+
+    func undoLastDotProduct() -> StatefulApplication {
+
+        let undoButton: Button
+
+        if (self.commands.count == 1) {
+            print("HasHistory: remove last")
+
+            undoButton = self.undoButton.disable()
+            return NoHistory(id: id,
+                             undoButton: undoButton,
+                             dotProductButton: dotProductButton,
+                             commands: []
+            )
+        } else {
+            print("HasHistory: an item")
+            return HasHistory(id: id,
+                              undoButton: self.undoButton,
+                              dotProductButton: dotProductButton,
+                              commands: commands.dropLast())
+        }
+    }
 }
