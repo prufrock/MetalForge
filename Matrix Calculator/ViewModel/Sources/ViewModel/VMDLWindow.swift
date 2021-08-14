@@ -8,7 +8,7 @@ import Foundation
  Represents the entire application being presented.
  */
 @available(macOS 10.15, *)
-public class Application: ObservableObject {
+public class VMDLWindow: ObservableObject {
     public let id: UUID
     @Published private var undoButton: Button
     @Published private var dotProductButton: Button
@@ -32,14 +32,14 @@ public class Application: ObservableObject {
         )
     }
 
-    public func computeDotProduct() -> Application {
+    public func computeDotProduct() -> VMDLWindow {
         self.updateState(state: self.state.computeDotProduct())
 
 
         return self
     }
 
-    public func undoLastDotProduct() -> Application {
+    public func undoLastDotProduct() -> VMDLWindow {
         self.updateState(state: self.state.undoLastDotProduct())
 
         return self
@@ -94,8 +94,8 @@ public class Application: ObservableObject {
             )
         }
 
-        public func create() -> Application {
-            Application(
+        public func create() -> VMDLWindow {
+            VMDLWindow(
                 id: id,
                 undoButton: undoButton!,
                 dotProductButton: dotProductButton!
@@ -105,8 +105,8 @@ public class Application: ObservableObject {
 }
 
 @available(macOS 10.15, *)
-public func application(id: UUID, using lambda: (Application.Builder) -> Application.Builder) -> Application.Builder {
-    let builder = Application.Builder(id: id);
+public func application(id: UUID, using lambda: (VMDLWindow.Builder) -> VMDLWindow.Builder) -> VMDLWindow.Builder {
+    let builder = VMDLWindow.Builder(id: id);
     return lambda(builder)
 }
 

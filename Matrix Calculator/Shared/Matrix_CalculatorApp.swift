@@ -10,7 +10,7 @@ import ViewModel
 
 @main
 struct Matrix_CalculatorApp: App {
-    var application: Application
+    var application: VMDLWindow
 
     init() {
         application = ViewModel.application(id: UUID(uuidString: "4e6ecfae-9e8d-4464-ba48-976e7f8ed413")!) {

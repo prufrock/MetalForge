@@ -9,7 +9,7 @@ import SwiftUI
 import ViewModel
 
 struct ContentView: View {
-    @ObservedObject var app: Application
+    @ObservedObject var app: VMDLWindow
 
     @State private var vector: [[String]] = [["0.0", "0.0", "0.0", "0.0"]]
 
@@ -28,7 +28,7 @@ struct ContentView: View {
 
     @State private var inputVector = ""
 
-    init(app: Application) {
+    init(app: VMDLWindow) {
         self.app = app
     }
 
