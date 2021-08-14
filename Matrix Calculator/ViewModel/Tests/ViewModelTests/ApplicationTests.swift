@@ -12,6 +12,8 @@ final class ApplicationTests: XCTestCase {
         var app = application(id: appID) {
             return $0.undoButton(
                 VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
+            ).dotProductButton(
+                VMDLButton(id: UUID(uuidString: "663c9bf7-e004-4de4-8588-283b3f1c3745")!, disabled: true)
             )
         }.create()
 
@@ -23,10 +25,12 @@ final class ApplicationTests: XCTestCase {
         var app = application(id: appID) {
             return $0.undoButton(
                 VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
+            ).dotProductButton(
+                VMDLButton(id: UUID(uuidString: "70415f15-ce34-4cce-8200-8d7647e2ec71")!, disabled: true)
             )
         }.create()
 
-        app = app.setUndoButton(button: app.getUndoButton().toggle())
+        app.computeDotProduct()
         XCTAssertFalse(app.getUndoButton().isDisabled())
     }
 }
