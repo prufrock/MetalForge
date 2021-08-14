@@ -13,7 +13,7 @@ public class Application: ObservableObject {
     @Published private var undoButton: Button
     @Published private var dotProductButton: Button
 
-    private var state: StatefulApplication
+    private var state: MatrixWindowState
 
     public init(
             id: UUID,
@@ -55,7 +55,7 @@ public class Application: ObservableObject {
 
     public func getUndoButton() -> Button { undoButton }
 
-    private func updateState(state: StatefulApplication) {
+    private func updateState(state: MatrixWindowState) {
         self.state = state
         self.undoButton = self.state.undoButton
         self.dotProductButton = self.state.dotProductButton
@@ -111,24 +111,24 @@ public func application(id: UUID, using lambda: (Application.Builder) -> Applica
 }
 
 @available(macOS 10.15, *)
-protocol StatefulApplication {
+protocol MatrixWindowState {
     var undoButton: Button { get }
     var dotProductButton: Button { get }
 
-    func computeDotProduct() -> StatefulApplication
+    func computeDotProduct() -> MatrixWindowState
 
-    func undoLastDotProduct() -> StatefulApplication
+    func undoLastDotProduct() -> MatrixWindowState
 
 }
 
 @available(macOS 10.15, *)
-struct NoHistory: StatefulApplication {
+struct NoHistory: MatrixWindowState {
     public let id: UUID
     public let undoButton: Button
     public let dotProductButton: Button
     public let commands: [String]
 
-    func computeDotProduct() -> StatefulApplication {
+    func computeDotProduct() -> MatrixWindowState {
 
         return HasHistory(id: id,
                           undoButton: undoButton.enable(),
@@ -136,20 +136,20 @@ struct NoHistory: StatefulApplication {
                           commands: commands + [UUID().uuidString])
     }
 
-    func undoLastDotProduct() -> StatefulApplication {
+    func undoLastDotProduct() -> MatrixWindowState {
         print("NoHistory: do nothing")
         return self
     }
 }
 
 @available(macOS 10.15, *)
-struct HasHistory: StatefulApplication {
+struct HasHistory: MatrixWindowState {
     public let id: UUID
     public let undoButton: Button
     public let dotProductButton: Button
     public let commands: [String]
 
-    func computeDotProduct() -> StatefulApplication {
+    func computeDotProduct() -> MatrixWindowState {
 
         return HasHistory(id: id,
                           undoButton: undoButton.enable(),
@@ -157,7 +157,7 @@ struct HasHistory: StatefulApplication {
                           commands: commands + [UUID().uuidString])
     }
 
-    func undoLastDotProduct() -> StatefulApplication {
+    func undoLastDotProduct() -> MatrixWindowState {
 
         let undoButton: Button
 
