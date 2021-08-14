@@ -11,7 +11,7 @@ final class ApplicationTests: XCTestCase {
         let appID = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
         var app = application(id: appID) {
             return $0.undoButton(
-                Button(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
+                VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
             )
         }.create()
 
@@ -22,7 +22,7 @@ final class ApplicationTests: XCTestCase {
         let appID = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
         var app = application(id: appID) {
             return $0.undoButton(
-                Button(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
+                VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
             )
         }.create()
 

@@ -10,15 +10,15 @@ import Foundation
 @available(macOS 10.15, *)
 public class VMDLWindow: ObservableObject {
     public let id: UUID
-    @Published private var undoButton: Button
-    @Published private var dotProductButton: Button
+    @Published private var undoButton: VMDLButton
+    @Published private var dotProductButton: VMDLButton
 
     private var state: MatrixWindowState
 
     public init(
             id: UUID,
-            undoButton: Button,
-            dotProductButton: Button,
+            undoButton: VMDLButton,
+            dotProductButton: VMDLButton,
             commands: [String] = []
     ) {
         self.id = id
@@ -53,7 +53,7 @@ public class VMDLWindow: ObservableObject {
         self.undoButton = self.undoButton.enable()
     }
 
-    public func getUndoButton() -> Button { undoButton }
+    public func getUndoButton() -> VMDLButton { undoButton }
 
     private func updateState(state: MatrixWindowState) {
         self.state = state
@@ -64,9 +64,9 @@ public class VMDLWindow: ObservableObject {
     public struct Builder {
 
         private var id: UUID
-        private var elements: [Button] = []
-        private var undoButton: Button?
-        private var dotProductButton: Button?
+        private var elements: [VMDLButton] = []
+        private var undoButton: VMDLButton?
+        private var dotProductButton: VMDLButton?
 
         public init(id: UUID) {
             self.id = id
@@ -74,19 +74,19 @@ public class VMDLWindow: ObservableObject {
 
         private init(
             id: UUID,
-            undoButton: Button? = nil,
-            dotProductButton: Button? = nil
+            undoButton: VMDLButton? = nil,
+            dotProductButton: VMDLButton? = nil
         ) {
             self.id = id
             self.undoButton = undoButton
             self.dotProductButton = dotProductButton
         }
 
-        public func undoButton(_ button:Button) -> Self {
+        public func undoButton(_ button:VMDLButton) -> Self {
             return Self(id: id, undoButton: button)
         }
 
-        public func dotProductButton(_ button:Button) -> Self {
+        public func dotProductButton(_ button:VMDLButton) -> Self {
             return Self(
                 id: id,
                 undoButton: undoButton,
@@ -112,8 +112,8 @@ public func application(id: UUID, using lambda: (VMDLWindow.Builder) -> VMDLWind
 
 @available(macOS 10.15, *)
 protocol MatrixWindowState {
-    var undoButton: Button { get }
-    var dotProductButton: Button { get }
+    var undoButton: VMDLButton { get }
+    var dotProductButton: VMDLButton { get }
 
     func computeDotProduct() -> MatrixWindowState
 
@@ -124,8 +124,8 @@ protocol MatrixWindowState {
 @available(macOS 10.15, *)
 struct NoHistory: MatrixWindowState {
     public let id: UUID
-    public let undoButton: Button
-    public let dotProductButton: Button
+    public let undoButton: VMDLButton
+    public let dotProductButton: VMDLButton
     public let commands: [String]
 
     func computeDotProduct() -> MatrixWindowState {
@@ -145,8 +145,8 @@ struct NoHistory: MatrixWindowState {
 @available(macOS 10.15, *)
 struct HasHistory: MatrixWindowState {
     public let id: UUID
-    public let undoButton: Button
-    public let dotProductButton: Button
+    public let undoButton: VMDLButton
+    public let dotProductButton: VMDLButton
     public let commands: [String]
 
     func computeDotProduct() -> MatrixWindowState {
@@ -159,7 +159,7 @@ struct HasHistory: MatrixWindowState {
 
     func undoLastDotProduct() -> MatrixWindowState {
 
-        let undoButton: Button
+        let undoButton: VMDLButton
 
         if (self.commands.count == 1) {
             print("HasHistory: remove last")

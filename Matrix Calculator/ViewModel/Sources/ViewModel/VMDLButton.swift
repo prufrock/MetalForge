@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Button {
+public struct VMDLButton {
     private let id: UUID
     private let disabled: Bool
 
@@ -20,15 +20,15 @@ public struct Button {
         disabled
     }
 
-    public func toggle() -> Button {
-        Button(id: self.id, disabled: !disabled)
+    public func toggle() -> VMDLButton {
+        VMDLButton(id: self.id, disabled: !disabled)
     }
 
-    public func enable() -> Button {
-        Button(id: self.id, disabled: false)
+    public func enable() -> VMDLButton {
+        VMDLButton(id: self.id, disabled: false)
     }
 
-    public func disable() -> Button {
-        Button(id: self.id, disabled: true)
+    public func disable() -> VMDLButton {
+        VMDLButton(id: self.id, disabled: true)
     }
 }

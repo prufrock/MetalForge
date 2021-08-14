@@ -3,6 +3,6 @@ import XCTest
 
 final class ButtonTests: XCTestCase {
     func testDisabled() {
-        XCTAssertEqual(Button(id: UUID(), disabled: true).isDisabled(), true)
+        XCTAssertEqual(VMDLButton(id: UUID(), disabled: true).isDisabled(), true)
     }
 }
