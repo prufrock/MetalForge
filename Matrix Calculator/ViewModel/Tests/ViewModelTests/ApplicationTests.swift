@@ -8,8 +8,8 @@ import XCTest
 final class ApplicationTests: XCTestCase {
 
     func testCreateApplicationWithUndoButton() {
-        let appID = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
-        var app = application(id: appID) {
+        let windowID = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
+        var app = application(id: windowID) {
             $0.undoButton(
                 VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
             ).dotProductButton(
@@ -17,7 +17,7 @@ final class ApplicationTests: XCTestCase {
             )
         }.create()
 
-        XCTAssertEqual(appID, app.id)
+        XCTAssertEqual(windowID, app.id)
     }
 
     func testChangeStateOfButton() {
