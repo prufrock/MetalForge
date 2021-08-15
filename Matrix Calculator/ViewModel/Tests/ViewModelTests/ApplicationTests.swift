@@ -48,12 +48,11 @@ final class ApplicationTests: XCTestCase {
             windowId = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
         }
 
-        return application(id: windowId) {
-            $0.undoButton(
-                    VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
-            ).dotProductButton(
-                    VMDLButton(id: UUID(uuidString: "663c9bf7-e004-4de4-8588-283b3f1c3745")!, disabled: true)
-            )
-        }.create()
+        return VMDLMatrixWindow(
+                id: windowId,
+                undoButton: VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true),
+                dotProductButton: VMDLButton(id: UUID(uuidString: "663c9bf7-e004-4de4-8588-283b3f1c3745")!, disabled: true),
+                commands: []
+        )
     }
 }
