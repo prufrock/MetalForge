@@ -34,24 +34,23 @@ public class VMDLMatrixWindow: ObservableObject {
     }
 
     public func computeDotProduct() -> VMDLMatrixWindow {
-        self.updateState(state: self.state.computeDotProduct())
-
+        updateState(state: state.computeDotProduct())
 
         return self
     }
 
     public func undoLastDotProduct() -> VMDLMatrixWindow {
-        self.updateState(state: self.state.undoLastDotProduct())
+        updateState(state: state.undoLastDotProduct())
 
         return self
     }
 
     public func disableUndoButton() {
-        self.undoButton = self.undoButton.disable()
+        undoButton = undoButton.disable()
     }
 
     public func enableUndoButton() {
-        self.undoButton = self.undoButton.enable()
+        undoButton = undoButton.enable()
     }
 
     public func getUndoButton() -> VMDLButton { undoButton }
@@ -84,11 +83,11 @@ public class VMDLMatrixWindow: ObservableObject {
         }
 
         public func undoButton(_ button:VMDLButton) -> Self {
-            return Self(id: id, undoButton: button)
+            Self(id: id, undoButton: button)
         }
 
         public func dotProductButton(_ button:VMDLButton) -> Self {
-            return Self(
+            Self(
                 id: id,
                 undoButton: undoButton,
                 dotProductButton: button
@@ -131,11 +130,12 @@ struct NoHistory: MatrixWindowState {
     public let commands: [String]
 
     func computeDotProduct() -> MatrixWindowState {
-
-        return HasHistory(id: id,
-                          undoButton: undoButton.enable(),
-                          dotProductButton: dotProductButton,
-                          commands: commands + [UUID().uuidString])
+        HasHistory(
+                id: id,
+                undoButton: undoButton.enable(),
+                dotProductButton: dotProductButton,
+                commands: commands + [UUID().uuidString]
+        )
     }
 
     func undoLastDotProduct() -> MatrixWindowState {
@@ -152,32 +152,35 @@ struct HasHistory: MatrixWindowState {
     public let commands: [String]
 
     func computeDotProduct() -> MatrixWindowState {
-
-        return HasHistory(id: id,
-                          undoButton: undoButton.enable(),
-                          dotProductButton: dotProductButton,
-                          commands: commands + [UUID().uuidString])
+        HasHistory(id: id,
+                undoButton: undoButton.enable(),
+                dotProductButton: dotProductButton,
+                commands: commands + [UUID().uuidString]
+        )
     }
 
     func undoLastDotProduct() -> MatrixWindowState {
 
         let undoButton: VMDLButton
 
-        if (self.commands.count == 1) {
+        if (commands.count == 1) {
             print("HasHistory: remove last")
 
             undoButton = self.undoButton.disable()
-            return NoHistory(id: id,
-                             undoButton: undoButton,
-                             dotProductButton: dotProductButton,
-                             commands: []
+            return NoHistory(
+                    id: id,
+                    undoButton: undoButton,
+                    dotProductButton: dotProductButton,
+                    commands: []
             )
         } else {
             print("HasHistory: an item")
-            return HasHistory(id: id,
-                              undoButton: self.undoButton,
-                              dotProductButton: dotProductButton,
-                              commands: commands.dropLast())
+            return HasHistory(
+                    id: id,
+                    undoButton: self.undoButton,
+                    dotProductButton: dotProductButton,
+                    commands: commands.dropLast()
+            )
         }
     }
 }
