@@ -9,7 +9,7 @@ import Foundation
  */
 @available(iOS 13.0, *)
 @available(macOS 10.15, *)
-public class VMDLWindow: ObservableObject {
+public class VMDLMatrixWindow: ObservableObject {
     public let id: UUID
     @Published private var undoButton: VMDLButton
     @Published private var dotProductButton: VMDLButton
@@ -33,14 +33,14 @@ public class VMDLWindow: ObservableObject {
         )
     }
 
-    public func computeDotProduct() -> VMDLWindow {
+    public func computeDotProduct() -> VMDLMatrixWindow {
         self.updateState(state: self.state.computeDotProduct())
 
 
         return self
     }
 
-    public func undoLastDotProduct() -> VMDLWindow {
+    public func undoLastDotProduct() -> VMDLMatrixWindow {
         self.updateState(state: self.state.undoLastDotProduct())
 
         return self
@@ -95,8 +95,8 @@ public class VMDLWindow: ObservableObject {
             )
         }
 
-        public func create() -> VMDLWindow {
-            VMDLWindow(
+        public func create() -> VMDLMatrixWindow {
+            VMDLMatrixWindow(
                 id: id,
                 undoButton: undoButton!,
                 dotProductButton: dotProductButton!
@@ -107,8 +107,8 @@ public class VMDLWindow: ObservableObject {
 
 @available(iOS 13.0, *)
 @available(macOS 10.15, *)
-public func application(id: UUID, using lambda: (VMDLWindow.Builder) -> VMDLWindow.Builder) -> VMDLWindow.Builder {
-    let builder = VMDLWindow.Builder(id: id);
+public func application(id: UUID, using lambda: (VMDLMatrixWindow.Builder) -> VMDLMatrixWindow.Builder) -> VMDLMatrixWindow.Builder {
+    let builder = VMDLMatrixWindow.Builder(id: id);
     return lambda(builder)
 }
 
