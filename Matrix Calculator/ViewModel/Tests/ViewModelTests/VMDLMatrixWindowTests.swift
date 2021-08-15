@@ -15,19 +15,13 @@ final class VMDLMatrixWindowTests: XCTestCase {
     }
 
     func testChangeStateOfButton() {
-        var app = application(id: UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!) {
-            $0.undoButton(
-                VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
-            ).dotProductButton(
-                VMDLButton(id: UUID(uuidString: "70415f15-ce34-4cce-8200-8d7647e2ec71")!, disabled: true)
-            )
-        }.create()
+        let window = createWindow()
 
-        app.computeDotProduct()
-        XCTAssertFalse(app.getUndoButton().isDisabled())
+        window.computeDotProduct()
+        XCTAssertFalse(window.getUndoButton().isDisabled())
     }
 
-    private func createWindow(id: UUID?) -> VMDLMatrixWindow {
+    private func createWindow(id: UUID? = nil) -> VMDLMatrixWindow {
         let windowId: UUID
         if let id = id {
             windowId = id
