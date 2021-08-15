@@ -6,7 +6,7 @@ import Foundation
 
 @available(iOS 13.0, *)
 @available(macOS 10.15, *)
-public class VMDLApplication {
+public struct VMDLApplication {
     public let id: UUID
     public let firstWindow: VMDLMatrixWindow
 
