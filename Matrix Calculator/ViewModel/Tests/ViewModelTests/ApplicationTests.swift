@@ -7,6 +7,13 @@ import XCTest
 
 final class ApplicationTests: XCTestCase {
 
+    func testCreateWindowWithExpectedId() {
+        let windowId = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
+        let window = createWindow(id: windowId)
+
+        XCTAssertEqual(windowId, window.id)
+    }
+
     func testCreateApplicationWithUndoButton() {
         let windowID = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
         var app = application(id: windowID) {
@@ -31,5 +38,22 @@ final class ApplicationTests: XCTestCase {
 
         app.computeDotProduct()
         XCTAssertFalse(app.getUndoButton().isDisabled())
+    }
+
+    private func createWindow(id: UUID?) -> VMDLMatrixWindow {
+        let windowId: UUID
+        if let id = id {
+            windowId = id
+        } else {
+            windowId = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
+        }
+
+        return application(id: windowId) {
+            $0.undoButton(
+                    VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
+            ).dotProductButton(
+                    VMDLButton(id: UUID(uuidString: "663c9bf7-e004-4de4-8588-283b3f1c3745")!, disabled: true)
+            )
+        }.create()
     }
 }
