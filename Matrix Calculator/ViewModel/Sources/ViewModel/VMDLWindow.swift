@@ -7,6 +7,7 @@ import Foundation
 /**
  Represents the entire application being presented.
  */
+@available(iOS 13.0, *)
 @available(macOS 10.15, *)
 public class VMDLWindow: ObservableObject {
     public let id: UUID
@@ -104,6 +105,7 @@ public class VMDLWindow: ObservableObject {
     }
 }
 
+@available(iOS 13.0, *)
 @available(macOS 10.15, *)
 public func application(id: UUID, using lambda: (VMDLWindow.Builder) -> VMDLWindow.Builder) -> VMDLWindow.Builder {
     let builder = VMDLWindow.Builder(id: id);
