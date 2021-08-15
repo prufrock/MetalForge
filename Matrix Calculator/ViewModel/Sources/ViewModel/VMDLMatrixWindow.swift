@@ -104,13 +104,6 @@ public class VMDLMatrixWindow: ObservableObject {
     }
 }
 
-@available(iOS 13.0, *)
-@available(macOS 10.15, *)
-public func application(id: UUID, using lambda: (VMDLMatrixWindow.Builder) -> VMDLMatrixWindow.Builder) -> VMDLMatrixWindow.Builder {
-    let builder = VMDLMatrixWindow.Builder(id: id);
-    return lambda(builder)
-}
-
 @available(macOS 10.15, *)
 protocol MatrixWindowState {
     var undoButton: VMDLButton { get }
