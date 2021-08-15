@@ -5,7 +5,7 @@
 import XCTest
 @testable import ViewModel
 
-final class ApplicationTests: XCTestCase {
+final class VMDLMatrixWindowTests: XCTestCase {
 
     func testCreateWindowWithExpectedId() {
         let windowId = UUID(uuidString: "e3e4d9c2-0a86-4ac1-9847-44d37b67681b")!
