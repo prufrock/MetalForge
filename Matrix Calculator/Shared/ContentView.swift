@@ -9,7 +9,7 @@ import SwiftUI
 import ViewModel
 
 struct ContentView: View {
-    @ObservedObject var app: VMDLMatrixWindow
+    @ObservedObject var window: VMDLMatrixWindow
 
     @State private var vector: [[String]] = [["0.0", "0.0", "0.0", "0.0"]]
 
@@ -28,8 +28,8 @@ struct ContentView: View {
 
     @State private var inputVector = ""
 
-    init(app: VMDLMatrixWindow) {
-        self.app = app
+    init(window: VMDLMatrixWindow) {
+        self.window = window
     }
 
     var body: some View {
@@ -41,17 +41,17 @@ struct ContentView: View {
                 }
             }.padding(10)
             VStack {
-                Button(action: { app.computeDotProduct() }) {
+                Button(action: { window.computeDotProduct() }) {
                     Image(systemName: "circle")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
                 Button(action: {
-                    app.undoLastDotProduct()
+                    window.undoLastDotProduct()
                 }) {
                     Image(systemName: "arrowshape.turn.up.left")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
-                .disabled(app.getUndoButton().isDisabled())
+                .disabled(window.getUndoButton().isDisabled())
                 Button(action: {  }) {
                     Image(systemName: "arrowshape.turn.up.right")
                         .renderingMode(.original)
@@ -67,7 +67,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(app: VMDLMatrixWindow(
+        ContentView(window: VMDLMatrixWindow(
                 id: UUID(),
                 undoButton: VMDLButton(id: UUID(), disabled: true),
                 dotProductButton: VMDLButton(id: UUID(), disabled: true),

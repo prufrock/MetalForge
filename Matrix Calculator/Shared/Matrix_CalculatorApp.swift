@@ -26,7 +26,7 @@ struct Matrix_CalculatorApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(app: application.firstWindow)
+            ContentView(window: application.firstWindow)
         }
     }
 }
