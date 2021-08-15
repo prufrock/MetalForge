@@ -67,10 +67,11 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(app: ViewModel.application(id: UUID(uuidString: "4e6ecfae-9e8d-4464-ba48-976e7f8ed413")!) {
-            $0.undoButton(
-                VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true)
-            )
-        }.create())
+        ContentView(app: VMDLMatrixWindow(
+                id: UUID(),
+                undoButton: VMDLButton(id: UUID(), disabled: true),
+                dotProductButton: VMDLButton(id: UUID(), disabled: true),
+                commands: []
+        ))
     }
 }
