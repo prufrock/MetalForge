@@ -11,7 +11,11 @@ import Foundation
 @available(macOS 10.15, *)
 public class VMDLMatrixWindow: ObservableObject {
     public let id: UUID
-    private var undoButton: VMDLButton
+    private var undoButton: VMDLButton {
+        get {
+            state.undoButton
+        }
+    }
     private var dotProductButton: VMDLButton
 
     @Published private var state: MatrixWindowState
@@ -27,9 +31,6 @@ public class VMDLMatrixWindow: ObservableObject {
         self.dotProductButton = dotProductButton
 
         if commands.count == 1 {
-
-            self.undoButton = undoButton.enable()
-
             self.state = VMDLMatrixWindow.HasHistory(
                 id: id,
                 undoButton: undoButton.enable(),
@@ -37,9 +38,6 @@ public class VMDLMatrixWindow: ObservableObject {
                 commands: commands
             )
         } else {
-
-            self.undoButton = undoButton.disable()
-
             self.state = VMDLMatrixWindow.NoHistory(
                     id: id,
                     undoButton: undoButton.disable(),
@@ -61,19 +59,10 @@ public class VMDLMatrixWindow: ObservableObject {
         return self
     }
 
-    public func disableUndoButton() {
-        undoButton = undoButton.disable()
-    }
-
-    public func enableUndoButton() {
-        undoButton = undoButton.enable()
-    }
-
     public func getUndoButton() -> VMDLButton { undoButton }
 
     private func updateState(state: MatrixWindowState) {
         self.state = state
-        self.undoButton = self.state.undoButton
         self.dotProductButton = self.state.dotProductButton
     }
 
