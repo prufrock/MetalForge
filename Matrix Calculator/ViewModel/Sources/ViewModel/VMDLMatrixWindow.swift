@@ -11,7 +11,7 @@ import Foundation
 @available(macOS 10.15, *)
 public class VMDLMatrixWindow: ObservableObject {
     public let id: UUID
-    private var undoButton: VMDLButton {
+    public var undoButton: VMDLButton {
         get {
             state.undoButton
         }
@@ -58,8 +58,6 @@ public class VMDLMatrixWindow: ObservableObject {
 
         return self
     }
-
-    public func getUndoButton() -> VMDLButton { undoButton }
 
     private func updateState(state: MatrixWindowState) {
         self.state = state

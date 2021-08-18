@@ -51,7 +51,7 @@ struct ContentView: View {
                     Image(systemName: "arrowshape.turn.up.left")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
-                .disabled(window.getUndoButton().isDisabled())
+                .disabled(window.undoButton.isDisabled())
                 Button(action: {  }) {
                     Image(systemName: "arrowshape.turn.up.right")
                         .renderingMode(.original)
