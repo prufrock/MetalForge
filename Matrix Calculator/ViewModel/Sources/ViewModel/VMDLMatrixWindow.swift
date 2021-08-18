@@ -148,7 +148,7 @@ public class VMDLMatrixWindow: ObservableObject {
                 print("HasHistory: remove last")
 
                 undoButton = self.undoButton.disable()
-                return VMDLMatrixWindow.NoHistory(
+                return NoHistory(
                         id: id,
                         undoButton: undoButton,
                         dotProductButton: dotProductButton,
