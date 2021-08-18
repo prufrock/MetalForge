@@ -21,7 +21,7 @@ final class VMDLMatrixWindowTests: XCTestCase {
         XCTAssertFalse(window.getUndoButton().isDisabled())
     }
 
-    private func createWindow(id: UUID? = nil) -> VMDLMatrixWindow {
+    private func createWindow(id: UUID? = nil, commands: [String] = []) -> VMDLMatrixWindow {
         let windowId: UUID
         if let id = id {
             windowId = id
@@ -33,7 +33,7 @@ final class VMDLMatrixWindowTests: XCTestCase {
                 id: windowId,
                 undoButton: VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: true),
                 dotProductButton: VMDLButton(id: UUID(uuidString: "663c9bf7-e004-4de4-8588-283b3f1c3745")!, disabled: true),
-                commands: []
+                commands: commands
         )
     }
 }
