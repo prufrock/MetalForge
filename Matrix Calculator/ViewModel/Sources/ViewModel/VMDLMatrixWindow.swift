@@ -25,7 +25,7 @@ public class VMDLMatrixWindow: ObservableObject {
         self.id = id
         self.undoButton = undoButton
         self.dotProductButton = dotProductButton
-        self.state = NoHistory(
+        self.state = VMDLMatrixWindow.NoHistory(
             id: id,
             undoButton: undoButton,
             dotProductButton: dotProductButton,
@@ -102,6 +102,28 @@ public class VMDLMatrixWindow: ObservableObject {
             )
         }
     }
+
+    @available(macOS 10.15, *)
+    struct NoHistory: MatrixWindowState {
+        public let id: UUID
+        public let undoButton: VMDLButton
+        public let dotProductButton: VMDLButton
+        public let commands: [String]
+
+        func computeDotProduct() -> MatrixWindowState {
+            HasHistory(
+                    id: id,
+                    undoButton: undoButton.enable(),
+                    dotProductButton: dotProductButton,
+                    commands: commands + [UUID().uuidString]
+            )
+        }
+
+        func undoLastDotProduct() -> MatrixWindowState {
+            print("NoHistory: do nothing")
+            return self
+        }
+    }
 }
 
 @available(macOS 10.15, *)
@@ -115,27 +137,7 @@ protocol MatrixWindowState {
 
 }
 
-@available(macOS 10.15, *)
-struct NoHistory: MatrixWindowState {
-    public let id: UUID
-    public let undoButton: VMDLButton
-    public let dotProductButton: VMDLButton
-    public let commands: [String]
 
-    func computeDotProduct() -> MatrixWindowState {
-        HasHistory(
-                id: id,
-                undoButton: undoButton.enable(),
-                dotProductButton: dotProductButton,
-                commands: commands + [UUID().uuidString]
-        )
-    }
-
-    func undoLastDotProduct() -> MatrixWindowState {
-        print("NoHistory: do nothing")
-        return self
-    }
-}
 
 @available(macOS 10.15, *)
 struct HasHistory: MatrixWindowState {
@@ -160,7 +162,7 @@ struct HasHistory: MatrixWindowState {
             print("HasHistory: remove last")
 
             undoButton = self.undoButton.disable()
-            return NoHistory(
+            return VMDLMatrixWindow.NoHistory(
                     id: id,
                     undoButton: undoButton,
                     dotProductButton: dotProductButton,
