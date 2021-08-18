@@ -21,6 +21,12 @@ final class VMDLMatrixWindowTests: XCTestCase {
         XCTAssertFalse(window.getUndoButton().isDisabled())
     }
 
+    func testItsInitializedWithCommandHistory() {
+        let window = createWindow(id: nil, commands: ["first command"])
+
+        XCTAssertFalse(window.getUndoButton().isDisabled())
+    }
+
     private func createWindow(id: UUID? = nil, commands: [String] = []) -> VMDLMatrixWindow {
         let windowId: UUID
         if let id = id {

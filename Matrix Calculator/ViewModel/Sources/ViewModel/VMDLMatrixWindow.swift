@@ -23,14 +23,26 @@ public class VMDLMatrixWindow: ObservableObject {
             commands: [String] = []
     ) {
         self.id = id
-        self.undoButton = undoButton
+
         self.dotProductButton = dotProductButton
-        self.state = VMDLMatrixWindow.NoHistory(
-            id: id,
-            undoButton: undoButton,
-            dotProductButton: dotProductButton,
-            commands: commands
-        )
+
+        if commands.count == 1 {
+            self.state = VMDLMatrixWindow.HasHistory(
+                id: id,
+                undoButton: undoButton.enable(),
+                dotProductButton: dotProductButton,
+                commands: commands
+            )
+        } else {
+            self.state = VMDLMatrixWindow.NoHistory(
+                    id: id,
+                    undoButton: undoButton.disable(),
+                    dotProductButton: dotProductButton,
+                    commands: []
+            )
+        }
+
+        self.undoButton = self.state.undoButton
     }
 
     public func computeDotProduct() -> VMDLMatrixWindow {
