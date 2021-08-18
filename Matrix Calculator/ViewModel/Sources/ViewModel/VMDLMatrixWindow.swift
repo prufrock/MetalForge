@@ -124,6 +124,47 @@ public class VMDLMatrixWindow: ObservableObject {
             return self
         }
     }
+
+    @available(macOS 10.15, *)
+    struct HasHistory: MatrixWindowState {
+        public let id: UUID
+        public let undoButton: VMDLButton
+        public let dotProductButton: VMDLButton
+        public let commands: [String]
+
+        func computeDotProduct() -> MatrixWindowState {
+            HasHistory(id: id,
+                    undoButton: undoButton.enable(),
+                    dotProductButton: dotProductButton,
+                    commands: commands + [UUID().uuidString]
+            )
+        }
+
+        func undoLastDotProduct() -> MatrixWindowState {
+
+            let undoButton: VMDLButton
+
+            if (commands.count == 1) {
+                print("HasHistory: remove last")
+
+                undoButton = self.undoButton.disable()
+                return VMDLMatrixWindow.NoHistory(
+                        id: id,
+                        undoButton: undoButton,
+                        dotProductButton: dotProductButton,
+                        commands: []
+                )
+            } else {
+                print("HasHistory: an item")
+                return HasHistory(
+                        id: id,
+                        undoButton: self.undoButton,
+                        dotProductButton: dotProductButton,
+                        commands: commands.dropLast()
+                )
+            }
+        }
+    }
 }
 
 @available(macOS 10.15, *)
@@ -135,47 +176,4 @@ protocol MatrixWindowState {
 
     func undoLastDotProduct() -> MatrixWindowState
 
-}
-
-
-
-@available(macOS 10.15, *)
-struct HasHistory: MatrixWindowState {
-    public let id: UUID
-    public let undoButton: VMDLButton
-    public let dotProductButton: VMDLButton
-    public let commands: [String]
-
-    func computeDotProduct() -> MatrixWindowState {
-        HasHistory(id: id,
-                undoButton: undoButton.enable(),
-                dotProductButton: dotProductButton,
-                commands: commands + [UUID().uuidString]
-        )
-    }
-
-    func undoLastDotProduct() -> MatrixWindowState {
-
-        let undoButton: VMDLButton
-
-        if (commands.count == 1) {
-            print("HasHistory: remove last")
-
-            undoButton = self.undoButton.disable()
-            return VMDLMatrixWindow.NoHistory(
-                    id: id,
-                    undoButton: undoButton,
-                    dotProductButton: dotProductButton,
-                    commands: []
-            )
-        } else {
-            print("HasHistory: an item")
-            return HasHistory(
-                    id: id,
-                    undoButton: self.undoButton,
-                    dotProductButton: dotProductButton,
-                    commands: commands.dropLast()
-            )
-        }
-    }
 }
