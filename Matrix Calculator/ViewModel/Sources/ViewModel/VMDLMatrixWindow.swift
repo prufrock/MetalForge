@@ -11,8 +11,8 @@ import Foundation
 @available(macOS 10.15, *)
 public class VMDLMatrixWindow: ObservableObject {
     public let id: UUID
-    @Published private var undoButton: VMDLButton
-    @Published private var dotProductButton: VMDLButton
+    private var undoButton: VMDLButton
+    private var dotProductButton: VMDLButton
 
     @Published private var state: MatrixWindowState
 
