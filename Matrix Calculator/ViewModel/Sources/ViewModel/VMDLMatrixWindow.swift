@@ -42,7 +42,7 @@ public class VMDLMatrixWindow: ObservableObject {
                     id: id,
                     undoButton: undoButton.disable(),
                     dotProductButton: dotProductButton,
-                    commands: []
+                    commands: commands.dropLast()
             )
         }
     }
@@ -145,15 +145,12 @@ public class VMDLMatrixWindow: ObservableObject {
 
         func undoLastDotProduct() -> MatrixWindowState {
 
-            let undoButton: VMDLButton
-
             if (commands.count == 1) {
                 print("HasHistory: remove last")
 
-                undoButton = self.undoButton.disable()
                 return NoHistory(
                         id: id,
-                        undoButton: undoButton,
+                        undoButton: self.undoButton.disable(),
                         dotProductButton: dotProductButton,
                         commands: []
                 )
