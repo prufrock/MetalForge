@@ -191,20 +191,3 @@ public class VMDLMatrixWindow: ObservableObject {
         }
     }
 }
-
-@available(macOS 10.15, *)
-protocol MatrixWindowState {
-    var undoButton: VMDLButton { get }
-    var dotProductButton: VMDLButton { get }
-
-    func computeDotProduct() -> MatrixWindowState
-
-    func undoLastDotProduct() -> MatrixWindowState
-
-    func clone(
-            id: UUID?,
-            undoButton: VMDLButton?,
-            dotProductButton: VMDLButton?,
-            commands: [String]?
-    ) -> MatrixWindowState
-}
