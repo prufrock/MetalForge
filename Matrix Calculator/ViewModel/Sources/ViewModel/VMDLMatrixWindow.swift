@@ -125,6 +125,21 @@ public class VMDLMatrixWindow: ObservableObject {
             print("NoHistory: do nothing")
             return self
         }
+
+        func clone(
+                id: UUID? = nil,
+                undoButton: VMDLButton? = nil,
+                dotProductButton: VMDLButton? = nil,
+                commands: [String]? = nil
+        ) -> MatrixWindowState {
+            Self(
+                    id: id ?? self.id,
+                    undoButton: undoButton ?? self.undoButton,
+                    dotProductButton: dotProductButton ?? self.dotProductButton,
+                    commands: commands ?? self.commands
+            )
+
+        }
     }
 
     @available(macOS 10.15, *)
@@ -146,10 +161,8 @@ public class VMDLMatrixWindow: ObservableObject {
 
             if (commands.count == 1) {
                 print("HasHistory: remove last")
-                return NoHistory(
-                        id: id,
+                return clone(
                         undoButton: self.undoButton.disable(),
-                        dotProductButton: dotProductButton,
                         commands: []
                 )
             } else {
@@ -161,6 +174,20 @@ public class VMDLMatrixWindow: ObservableObject {
                         commands: commands.dropLast()
                 )
             }
+        }
+
+        func clone(
+                id: UUID? = nil,
+                undoButton: VMDLButton? = nil,
+                dotProductButton: VMDLButton? = nil,
+                commands: [String]? = nil
+        ) -> MatrixWindowState {
+            Self(
+                id: id ?? self.id,
+                undoButton: undoButton ?? self.undoButton,
+                dotProductButton: dotProductButton ?? self.dotProductButton,
+                commands: commands ?? self.commands
+            )
         }
     }
 }
@@ -174,5 +201,10 @@ protocol MatrixWindowState {
 
     func undoLastDotProduct() -> MatrixWindowState
 
-    func clone() -> MatrixWindowState
+    func clone(
+            id: UUID?,
+            undoButton: VMDLButton?,
+            dotProductButton: VMDLButton?,
+            commands: [String]?
+    ) -> MatrixWindowState
 }
