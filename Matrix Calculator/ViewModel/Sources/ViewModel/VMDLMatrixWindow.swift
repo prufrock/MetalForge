@@ -173,4 +173,6 @@ protocol MatrixWindowState {
     func computeDotProduct() -> MatrixWindowState
 
     func undoLastDotProduct() -> MatrixWindowState
+
+    func clone() -> MatrixWindowState
 }
