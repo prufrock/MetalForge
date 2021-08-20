@@ -36,6 +36,7 @@ protocol MatrixWindowState {
     ) -> MatrixWindowState
 }
 
+@available(macOS 10.15, *)
 extension MatrixWindowState {
     func clone(
             id: UUID? = nil,
