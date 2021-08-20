@@ -4,6 +4,6 @@ import XCTest
 final class MCLCModelTests: XCTestCase {
     func testInitialize() {
         let model = MCLCSingleWindowModel()
-        XCTAssertEqual("", model.snapshot().vectorInput)
+        XCTAssertEqual("", model.snapshot().vectorInput.rawValue)
     }
 }
