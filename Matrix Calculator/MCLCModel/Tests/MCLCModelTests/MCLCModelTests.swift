@@ -6,6 +6,11 @@ final class MCLCModelTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(MCLCModel().text, "Hello, World!")
+        XCTAssertEqual(MCLCSingleWindowModel().text, "Hello, World!")
+    }
+
+    func testInitialize() {
+        let model = MCLCSingleWindowModel()
+        XCTAssertEqual("", model.snapshot().vectorInput)
     }
 }
