@@ -50,7 +50,7 @@ public class VMDLMatrixWindow: ObservableObject {
                     undoButton: undoButton.disable(),
                     redoButton: redoButton.disable(),
                     dotProductButton: dotProductButton,
-                    commands: commands.dropLast()
+                    commands: []
             )
         }
     }
