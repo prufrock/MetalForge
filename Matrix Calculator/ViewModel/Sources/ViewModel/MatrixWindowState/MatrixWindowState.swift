@@ -9,6 +9,7 @@ import Foundation
 
 @available(macOS 10.15, *)
 protocol MatrixWindowState {
+    var id: UUID { get }
     var undoButton: VMDLButton { get }
     var dotProductButton: VMDLButton { get }
 
