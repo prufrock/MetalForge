@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:MCLCModel">
+   </FileRef>
+   <FileRef
       location = "group:ViewModel">
    </FileRef>
    <FileRef
