@@ -70,6 +70,7 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(window: VMDLMatrixWindow(
                 id: UUID(),
                 undoButton: VMDLButton(id: UUID(), disabled: true),
+                redoButton: VMDLButton(id: UUID(), disabled: true),
                 dotProductButton: VMDLButton(id: UUID(), disabled: true),
                 commands: []
         ))

@@ -11,6 +11,7 @@ import Foundation
 protocol MatrixWindowState {
     var id: UUID { get }
     var undoButton: VMDLButton { get }
+    var redoButton: VMDLButton { get }
     var dotProductButton: VMDLButton { get }
 
     func computeDotProduct() -> MatrixWindowState
@@ -20,6 +21,7 @@ protocol MatrixWindowState {
     func clone(
             id: UUID?,
             undoButton: VMDLButton?,
+            redoButton: VMDLButton?,
             dotProductButton: VMDLButton?,
             commands: [String]?
     ) -> MatrixWindowState

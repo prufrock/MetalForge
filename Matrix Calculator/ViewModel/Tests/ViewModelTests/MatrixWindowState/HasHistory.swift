@@ -6,6 +6,7 @@ final class HasHistoryTests: XCTestCase {
         let original = VMDLMatrixWindow.HasHistory(
             id: UUID(),
             undoButton: VMDLButton(id: UUID(), disabled: false),
+            redoButton: VMDLButton(id: UUID(), disabled: false),
             dotProductButton: VMDLButton(id: UUID(), disabled: false),
             commands: []
         )

@@ -16,6 +16,11 @@ public class VMDLMatrixWindow: ObservableObject {
             state.undoButton
         }
     }
+    public var redoButton: VMDLButton {
+        get {
+            state.redoButton
+        }
+    }
     private var dotProductButton: VMDLButton
 
     @Published private var state: MatrixWindowState
@@ -23,6 +28,7 @@ public class VMDLMatrixWindow: ObservableObject {
     public init(
             id: UUID,
             undoButton: VMDLButton,
+            redoButton: VMDLButton,
             dotProductButton: VMDLButton,
             commands: [String] = []
     ) {
@@ -34,6 +40,7 @@ public class VMDLMatrixWindow: ObservableObject {
             self.state = VMDLMatrixWindow.HasHistory(
                 id: id,
                 undoButton: undoButton.enable(),
+                redoButton: redoButton.disable(),
                 dotProductButton: dotProductButton,
                 commands: commands
             )
@@ -41,6 +48,7 @@ public class VMDLMatrixWindow: ObservableObject {
             self.state = VMDLMatrixWindow.NoHistory(
                     id: id,
                     undoButton: undoButton.disable(),
+                    redoButton: redoButton.disable(),
                     dotProductButton: dotProductButton,
                     commands: commands.dropLast()
             )
@@ -68,6 +76,7 @@ public class VMDLMatrixWindow: ObservableObject {
         private var id: UUID
         private var elements: [VMDLButton] = []
         private var undoButton: VMDLButton?
+        private var redoButton: VMDLButton?
         private var dotProductButton: VMDLButton?
 
         public init(id: UUID) {
@@ -77,30 +86,47 @@ public class VMDLMatrixWindow: ObservableObject {
         private init(
             id: UUID,
             undoButton: VMDLButton? = nil,
+            redoButton: VMDLButton? = nil,
             dotProductButton: VMDLButton? = nil
         ) {
             self.id = id
             self.undoButton = undoButton
+            self.redoButton = redoButton
             self.dotProductButton = dotProductButton
         }
 
         public func undoButton(_ button:VMDLButton) -> Self {
-            Self(id: id, undoButton: button)
+            clone(undoButton: button)
+        }
+
+        public func redoButton(_ button:VMDLButton) -> Self {
+            clone(redoButton: button)
         }
 
         public func dotProductButton(_ button:VMDLButton) -> Self {
-            Self(
-                id: id,
-                undoButton: undoButton,
-                dotProductButton: button
-            )
+            clone(dotProductButton: button)
         }
 
         public func create() -> VMDLMatrixWindow {
             VMDLMatrixWindow(
                 id: id,
                 undoButton: undoButton!,
+                redoButton: redoButton!,
                 dotProductButton: dotProductButton!
+            )
+        }
+
+        private func clone(
+            id: UUID? = nil,
+            undoButton: VMDLButton? = nil,
+            redoButton: VMDLButton? = nil,
+            dotProductButton: VMDLButton? = nil
+        ) -> Self {
+            Self(
+                id: id ?? self.id,
+                undoButton: undoButton ?? self.undoButton,
+                redoButton: redoButton ?? self.redoButton,
+                dotProductButton: dotProductButton ?? self.dotProductButton
             )
         }
     }
