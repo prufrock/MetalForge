@@ -30,21 +30,5 @@ extension VMDLMatrixWindow {
             print("NoHistory: do nothing")
             return self
         }
-
-        func clone(
-                id: UUID? = nil,
-                undoButton: VMDLButton? = nil,
-                redoButton: VMDLButton? = nil,
-                dotProductButton: VMDLButton? = nil,
-                commands: [String]? = nil
-        ) -> MatrixWindowState {
-            Self(
-                    id: id ?? self.id,
-                    undoButton: undoButton ?? self.undoButton,
-                    redoButton: redoButton ?? self.redoButton,
-                    dotProductButton: dotProductButton ?? self.dotProductButton,
-                    commands: commands ?? self.commands
-            )
-        }
     }
 }
