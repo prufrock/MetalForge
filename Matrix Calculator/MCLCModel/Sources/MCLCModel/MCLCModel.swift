@@ -1,5 +1,4 @@
 struct MCLCSingleWindowModel: MCLCModel {
-    var text = "Hello, World!"
     let vectorInput: String = ""
 
     public func snapshot() -> MCLCModel {
