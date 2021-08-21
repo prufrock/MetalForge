@@ -1,5 +1,6 @@
 struct MCLCSingleWindowModel: MCLCModel {
     let vectorInput: MatrixInput = MatrixInput("")
+    let matrixInput: MatrixInput = MatrixInput("")
 
     public func snapshot() -> MCLCModel {
         return self
@@ -8,6 +9,7 @@ struct MCLCSingleWindowModel: MCLCModel {
 
 protocol MCLCModel {
     var vectorInput: MatrixInput { get }
+    var matrixInput: MatrixInput { get }
 
     func snapshot() -> MCLCModel
 }
