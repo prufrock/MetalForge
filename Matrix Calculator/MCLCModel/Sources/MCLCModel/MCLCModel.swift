@@ -14,6 +14,10 @@ protocol MCLCModel {
     func snapshot() -> MCLCModel
 }
 
+func mclcModel() -> MCLCModel {
+    MCLCSingleWindowModel()
+}
+
 struct MatrixInput: RawRepresentable {
     var rawValue: String
 
