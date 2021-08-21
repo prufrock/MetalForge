@@ -1,6 +1,7 @@
 struct MCLCSingleWindowModel: MCLCModel {
     let vectorInput: MatrixInput = MatrixInput("")
     let matrixInput: MatrixInput = MatrixInput("")
+    let vector: [Float] = [0.0, 0.0, 0.0, 0.0]
 
     public func snapshot() -> MCLCModel {
         return self
@@ -10,6 +11,7 @@ struct MCLCSingleWindowModel: MCLCModel {
 protocol MCLCModel {
     var vectorInput: MatrixInput { get }
     var matrixInput: MatrixInput { get }
+    var vector: [Float] { get } // eventually double, decimal, or a generic that can be any of those.
 
     func snapshot() -> MCLCModel
 }
