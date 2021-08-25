@@ -3,7 +3,7 @@
 //
 
 import Foundation
-
+import MCLCModel
 /**
  Represents the entire application being presented.
  */
@@ -22,6 +22,9 @@ public class VMDLMatrixWindow: ObservableObject {
         }
     }
     private var dotProductButton: VMDLButton
+    public var vector: [[String]]
+
+    private var model: MCLCModel
 
     @Published private var state: MatrixWindowState
 
@@ -35,6 +38,10 @@ public class VMDLMatrixWindow: ObservableObject {
         self.id = id
 
         self.dotProductButton = dotProductButton
+
+        self.model = mclcModel()
+
+        self.vector = self.model.vectorAsString()
 
         if commands.count == 1 {
             self.state = VMDLMatrixWindow.HasHistory(

@@ -11,7 +11,7 @@ import ViewModel
 struct ContentView: View {
     @ObservedObject var window: VMDLMatrixWindow
 
-    @State private var vector: [[String]] = [["0.0", "0.0", "0.0", "0.0"]]
+    @State private var vector: [[String]] = [["1.0", "1.0", "1.0", "1.0"]]
 
     @State private var vectorFunction: [[String]] = [
         ["1.0", "0.0", "0.0", "0.0"],
@@ -58,7 +58,7 @@ struct ContentView: View {
                 }.buttonStyle(DefaultButtonStyle())
             }
             VStack{
-                MatrixElements(matrix: $vector, column: 0)
+                MatrixElements(matrix: $window.vector, column: 0)
                 BtnInputMatrix(inputMatrix: $inputVector)
             }.padding(10)
         }

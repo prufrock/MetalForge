@@ -12,6 +12,7 @@ final class VMDLMatrixWindowTests: XCTestCase {
         let window = createWindow(id: windowId)
 
         XCTAssertEqual(windowId, window.id)
+        XCTAssertEqual([["0.0", "0.0", "0.0", "0.0"]], window.vector)
     }
 
     func testChangeStateOfButton() {

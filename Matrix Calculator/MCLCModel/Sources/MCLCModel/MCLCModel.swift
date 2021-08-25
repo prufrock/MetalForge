@@ -1,31 +1,38 @@
 struct MCLCSingleWindowModel: MCLCModel {
     let vectorInput: MatrixInput = MatrixInput("")
     let matrixInput: MatrixInput = MatrixInput("")
-    let vector: [Float] = [0.0, 0.0, 0.0, 0.0]
+    let vector: [[Float]] = [[0.0, 0.0, 0.0, 0.0]]
 
     public func snapshot() -> MCLCModel {
         return self
     }
+
+    public func vectorAsString() -> [[String]] {
+        let strings = vector[0].map { String($0) }
+        return [strings]
+    }
 }
 
-protocol MCLCModel {
+public protocol MCLCModel {
     var vectorInput: MatrixInput { get }
     var matrixInput: MatrixInput { get }
-    var vector: [Float] { get } // eventually double, decimal, or a generic that can be any of those.
+    var vector: [[Float]] { get } // eventually double, decimal, or a generic that can be any of those.
+
+    func vectorAsString() -> [[String]]
 
     func snapshot() -> MCLCModel
 }
 
-func mclcModel() -> MCLCModel {
+public func mclcModel() -> MCLCModel {
     MCLCSingleWindowModel()
 }
 
-struct MatrixInput: RawRepresentable {
-    var rawValue: String
+public struct MatrixInput: RawRepresentable {
+    public var rawValue: String
 
-    typealias RawValue = String
+    public typealias RawValue = String
 
-    init(rawValue: String) {
+    public init(rawValue: String) {
         self.rawValue = rawValue
     }
 
