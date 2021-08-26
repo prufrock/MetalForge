@@ -1,7 +1,11 @@
 struct MCLCSingleWindowModel: MCLCModel {
     let vectorInput: MatrixInput = MatrixInput("")
     let matrixInput: MatrixInput = MatrixInput("")
-    let vector: [[Float]] = [[0.0, 0.0, 0.0, 0.0]]
+    let vector: [[Float]]
+
+    public init(vector: [[Float]] = [[0.0, 0.0, 0.0, 0.0]]) {
+        self.vector = vector
+    }
 
     public func snapshot() -> MCLCModel {
         return self
@@ -23,8 +27,8 @@ public protocol MCLCModel {
     func snapshot() -> MCLCModel
 }
 
-public func mclcModel() -> MCLCModel {
-    MCLCSingleWindowModel()
+public func mclcModel(vector: [[Float]] = [[0.0, 0.0, 0.0, 0.0]]) -> MCLCModel {
+    MCLCSingleWindowModel(vector: vector)
 }
 
 public struct MatrixInput: RawRepresentable {
