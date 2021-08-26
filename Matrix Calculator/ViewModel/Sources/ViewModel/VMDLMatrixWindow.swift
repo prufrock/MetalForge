@@ -33,13 +33,14 @@ public class VMDLMatrixWindow: ObservableObject {
             undoButton: VMDLButton,
             redoButton: VMDLButton,
             dotProductButton: VMDLButton,
-            commands: [String] = []
+            commands: [String] = [],
+            model: MCLCModel
     ) {
         self.id = id
 
         self.dotProductButton = dotProductButton
 
-        self.model = mclcModel()
+        self.model = model
 
         self.vector = self.model.vectorAsString()
 
@@ -85,6 +86,7 @@ public class VMDLMatrixWindow: ObservableObject {
         private var undoButton: VMDLButton?
         private var redoButton: VMDLButton?
         private var dotProductButton: VMDLButton?
+        private var model: MCLCModel?
 
         public init(id: UUID) {
             self.id = id
@@ -94,12 +96,14 @@ public class VMDLMatrixWindow: ObservableObject {
             id: UUID,
             undoButton: VMDLButton? = nil,
             redoButton: VMDLButton? = nil,
-            dotProductButton: VMDLButton? = nil
+            dotProductButton: VMDLButton? = nil,
+            model: MCLCModel? = nil
         ) {
             self.id = id
             self.undoButton = undoButton
             self.redoButton = redoButton
             self.dotProductButton = dotProductButton
+            self.model = model
         }
 
         public func undoButton(_ button:VMDLButton) -> Self {
@@ -114,12 +118,17 @@ public class VMDLMatrixWindow: ObservableObject {
             clone(dotProductButton: button)
         }
 
+        public func model(_ model:MCLCModel) -> Self {
+            clone(model: model)
+        }
+
         public func create() -> VMDLMatrixWindow {
             VMDLMatrixWindow(
                 id: id,
                 undoButton: undoButton!,
                 redoButton: redoButton!,
-                dotProductButton: dotProductButton!
+                dotProductButton: dotProductButton!,
+                model: model!
             )
         }
 
@@ -127,13 +136,15 @@ public class VMDLMatrixWindow: ObservableObject {
             id: UUID? = nil,
             undoButton: VMDLButton? = nil,
             redoButton: VMDLButton? = nil,
-            dotProductButton: VMDLButton? = nil
+            dotProductButton: VMDLButton? = nil,
+            model: MCLCModel? = nil
         ) -> Self {
             Self(
                 id: id ?? self.id,
                 undoButton: undoButton ?? self.undoButton,
                 redoButton: redoButton ?? self.redoButton,
-                dotProductButton: dotProductButton ?? self.dotProductButton
+                dotProductButton: dotProductButton ?? self.dotProductButton,
+                model: model ?? self.model
             )
         }
     }

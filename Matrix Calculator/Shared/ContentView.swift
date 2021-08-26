@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ViewModel
+import MCLCModel
 
 struct ContentView: View {
     @ObservedObject var window: VMDLMatrixWindow
@@ -72,7 +73,8 @@ struct ContentView_Previews: PreviewProvider {
                 undoButton: VMDLButton(id: UUID(), disabled: true),
                 redoButton: VMDLButton(id: UUID(), disabled: true),
                 dotProductButton: VMDLButton(id: UUID(), disabled: true),
-                commands: []
+                commands: [],
+                model: mclcModel()
         ))
     }
 }

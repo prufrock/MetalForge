@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ViewModel
+import MCLCModel
 
 @main
 struct Matrix_CalculatorApp: App {
@@ -22,6 +23,8 @@ struct Matrix_CalculatorApp: App {
                     VMDLButton(id: UUID(uuidString: "32ee82a5-0b75-4689-847d-f49d0cef4a18")!, disabled: true)
                 ).dotProductButton(
                     VMDLButton(id: UUID(uuidString: "a14fbeec-3c91-4e30-8d25-91b237de41a4")!, disabled: false)
+                ).model(
+                    mclcModel(vector: [[5.0, 6.0, 7.0, 8.0]])
                 )
             }
         }.create()
