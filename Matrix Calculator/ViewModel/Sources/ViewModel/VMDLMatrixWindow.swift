@@ -24,7 +24,7 @@ public class VMDLMatrixWindow: ObservableObject {
     private var dotProductButton: VMDLButton
     @Published public var vector: [[String]]
 
-    public var model: MCLCModel
+    private var model: MCLCModel
 
     @Published private var state: MatrixWindowState
 
@@ -64,6 +64,17 @@ public class VMDLMatrixWindow: ObservableObject {
     }
 
     public func updateVector(vector: [[String]]) -> VMDLMatrixWindow {
+        // simple double validation for now
+        let valid: [[Bool]] = vector.map {
+            $0.filter{ Float($0) != nil }
+            .map{ $0.count >= 3}
+            .filter{ $0 }
+        }
+        if valid[0].count != 4 {
+            print("don't update model")
+            return self
+        }
+        print("update model")
         self.model = model.update(vector: vector.map{$0.map{Float($0)!}})
         self.vector = self.model.vectorAsString()
 
