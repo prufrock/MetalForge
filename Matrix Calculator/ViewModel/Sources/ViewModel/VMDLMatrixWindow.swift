@@ -64,7 +64,7 @@ public class VMDLMatrixWindow: ObservableObject {
     }
 
     public func updateVector(vector: [[String]]) -> VMDLMatrixWindow {
-        self.model = model.snapshot()
+        self.model = model.update(vector: vector.map{$0.map{Float($0)!}})
         self.vector = self.model.vectorAsString()
 
         return self

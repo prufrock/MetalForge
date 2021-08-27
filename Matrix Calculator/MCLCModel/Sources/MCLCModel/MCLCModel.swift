@@ -11,6 +11,14 @@ struct MCLCSingleWindowModel: MCLCModel {
         return self
     }
 
+    public func update(
+            vector: [[Float]]?
+    ) -> MCLCModel {
+        Self(
+                vector: vector ?? self.vector
+        )
+    }
+
     public func vectorAsString() -> [[String]] {
         let strings = vector[0].map { String($0) }
         return [strings]
@@ -25,6 +33,10 @@ public protocol MCLCModel {
     func vectorAsString() -> [[String]]
 
     func snapshot() -> MCLCModel
+
+    func update(
+        vector: [[Float]]?
+    ) -> MCLCModel
 }
 
 public func mclcModel(vector: [[Float]] = [[0.0, 0.0, 0.0, 0.0]]) -> MCLCModel {
