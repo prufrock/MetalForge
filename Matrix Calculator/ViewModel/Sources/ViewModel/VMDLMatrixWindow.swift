@@ -22,9 +22,9 @@ public class VMDLMatrixWindow: ObservableObject {
         }
     }
     private var dotProductButton: VMDLButton
-    public var vector: [[String]]
+    @Published public var vector: [[String]]
 
-    private var model: MCLCModel
+    public var model: MCLCModel
 
     @Published private var state: MatrixWindowState
 
@@ -61,6 +61,13 @@ public class VMDLMatrixWindow: ObservableObject {
                     commands: []
             )
         }
+    }
+
+    public func updateVector(vector: [[String]]) -> VMDLMatrixWindow {
+        self.model = model.snapshot()
+        self.vector = self.model.vectorAsString()
+
+        return self
     }
 
     public func computeDotProduct() -> VMDLMatrixWindow {

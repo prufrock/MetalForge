@@ -60,6 +60,9 @@ struct ContentView: View {
             }
             VStack{
                 MatrixElements(matrix: $window.vector, column: 0)
+                    .onChange(of: window.vector) { newValue in
+                        _ = window.updateVector(vector: newValue)
+                    }
                 BtnInputMatrix(inputMatrix: $inputVector)
             }.padding(10)
         }
