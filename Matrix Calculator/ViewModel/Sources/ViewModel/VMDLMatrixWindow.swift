@@ -21,7 +21,11 @@ public class VMDLMatrixWindow: ObservableObject {
             state.redoButton
         }
     }
-    private var dotProductButton: VMDLButton
+    public var dotProductButton: VMDLButton {
+        get {
+            state.dotProductButton
+        }
+    }
     @Published public var vector: [[String]]
 
     private var model: MCLCModel
@@ -38,8 +42,6 @@ public class VMDLMatrixWindow: ObservableObject {
     ) {
         self.id = id
 
-        self.dotProductButton = dotProductButton
-
         self.model = model
 
         self.vector = self.model.vectorAsString()
@@ -50,7 +52,8 @@ public class VMDLMatrixWindow: ObservableObject {
                 undoButton: undoButton.enable(),
                 redoButton: redoButton.disable(),
                 dotProductButton: dotProductButton,
-                commands: commands
+                commands: commands,
+                vectorState: VectorStates.ValidVector
             )
         } else {
             self.state = VMDLMatrixWindow.NoHistory(
@@ -58,7 +61,8 @@ public class VMDLMatrixWindow: ObservableObject {
                     undoButton: undoButton.disable(),
                     redoButton: redoButton.disable(),
                     dotProductButton: dotProductButton,
-                    commands: []
+                    commands: [],
+                    vectorState: VectorStates.ValidVector
             )
         }
     }
@@ -71,10 +75,12 @@ public class VMDLMatrixWindow: ObservableObject {
             .filter{ $0 }
         }
         if valid[0].count != 4 {
-            print("don't update model")
+            print("vector invalid")
+            self.state = updateInResponseToChange(vectorState: .InvalidVector)
             return self
         }
-        print("update model")
+        print("vector valid model")
+        self.state = updateInResponseToChange(vectorState: .ValidVector)
         self.model = model.update(vector: vector.map{$0.map{Float($0)!}})
         self.vector = self.model.vectorAsString()
 
@@ -93,9 +99,28 @@ public class VMDLMatrixWindow: ObservableObject {
         return self
     }
 
+    /**
+     Evaluate the current state to determine how the new MatrixWindowState
+     should be configured.
+
+     Long name for now while I work this out.
+     */
+    private func updateInResponseToChange(vectorState: VectorStates) -> MatrixWindowState {
+        let newDotProductButton: VMDLButton
+        switch vectorState {
+        case .InvalidVector:
+            newDotProductButton = state.dotProductButton.disable()
+        case .ValidVector:
+            newDotProductButton = state.dotProductButton.enable()
+        }
+
+
+        return state.clone(dotProductButton: newDotProductButton, vectorState: vectorState)
+    }
+
     private func updateState(state: MatrixWindowState) {
+
         self.state = state
-        self.dotProductButton = self.state.dotProductButton
     }
 
     public struct Builder {
@@ -165,5 +190,10 @@ public class VMDLMatrixWindow: ObservableObject {
                 model: model ?? self.model
             )
         }
+    }
+
+    internal enum VectorStates {
+        case ValidVector
+        case InvalidVector
     }
 }

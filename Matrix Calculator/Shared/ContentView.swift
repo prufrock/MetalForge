@@ -46,6 +46,8 @@ struct ContentView: View {
                     Image(systemName: "circle")
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
+                .disabled(window.dotProductButton.isDisabled())
+
                 Button(action: {
                     window.undoLastDotProduct()
                 }) {
@@ -53,6 +55,7 @@ struct ContentView: View {
                         .renderingMode(.original)
                 }.buttonStyle(DefaultButtonStyle())
                 .disabled(window.undoButton.isDisabled())
+
                 Button(action: {  }) {
                     Image(systemName: "arrowshape.turn.up.right")
                         .renderingMode(.original)

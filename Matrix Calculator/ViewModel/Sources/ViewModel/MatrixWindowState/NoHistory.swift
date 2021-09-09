@@ -15,6 +15,7 @@ extension VMDLMatrixWindow {
         public let redoButton: VMDLButton
         public let dotProductButton: VMDLButton
         public let commands: [String]
+        public let vectorState: VMDLMatrixWindow.VectorStates
 
         func computeDotProduct() -> MatrixWindowState {
             HasHistory(
@@ -22,13 +23,26 @@ extension VMDLMatrixWindow {
                     undoButton: undoButton.enable(),
                     redoButton: redoButton.disable(),
                     dotProductButton: dotProductButton,
-                    commands: commands + [UUID().uuidString]
+                    commands: commands + [UUID().uuidString],
+                    vectorState: vectorState
             )
         }
 
         func undoLastDotProduct() -> MatrixWindowState {
             print("NoHistory: do nothing")
             return self
+        }
+
+        private func updateDotProductButton() -> VMDLButton {
+            let newDotProductButton: VMDLButton
+            switch vectorState {
+            case .InvalidVector:
+                newDotProductButton = dotProductButton.disable()
+            case .ValidVector:
+                newDotProductButton = dotProductButton.enable()
+            }
+
+            return newDotProductButton
         }
     }
 }

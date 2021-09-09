@@ -14,13 +14,15 @@ protocol MatrixWindowState {
     var redoButton: VMDLButton { get }
     var dotProductButton: VMDLButton { get }
     var commands: [String] { get }
+    var vectorState: VMDLMatrixWindow.VectorStates { get }
 
     init(
         id: UUID,
         undoButton: VMDLButton,
         redoButton: VMDLButton,
         dotProductButton: VMDLButton,
-        commands: [String]
+        commands: [String],
+        vectorState: VMDLMatrixWindow.VectorStates
     )
 
     func computeDotProduct() -> MatrixWindowState
@@ -32,7 +34,8 @@ protocol MatrixWindowState {
             undoButton: VMDLButton?,
             redoButton: VMDLButton?,
             dotProductButton: VMDLButton?,
-            commands: [String]?
+            commands: [String]?,
+            vectorState: VMDLMatrixWindow.VectorStates?
     ) -> MatrixWindowState
 }
 
@@ -43,14 +46,16 @@ extension MatrixWindowState {
             undoButton: VMDLButton? = nil,
             redoButton: VMDLButton? = nil,
             dotProductButton: VMDLButton? = nil,
-            commands: [String]? = nil
+            commands: [String]? = nil,
+            vectorState: VMDLMatrixWindow.VectorStates?
     ) -> MatrixWindowState {
         Self(
                 id: id ?? self.id,
                 undoButton: undoButton ?? self.undoButton,
                 redoButton: redoButton ?? self.redoButton,
                 dotProductButton: dotProductButton ?? self.dotProductButton,
-                commands: commands ?? self.commands
+                commands: commands ?? self.commands,
+                vectorState: vectorState ?? self.vectorState
         )
     }
 }
