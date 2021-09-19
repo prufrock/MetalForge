@@ -1,0 +1,587 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		63AB629A26F7DD5C00312DAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB629926F7DD5C00312DAB /* AppDelegate.swift */; };
+		63AB629C26F7DD5C00312DAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB629B26F7DD5C00312DAB /* ViewController.swift */; };
+		63AB629E26F7DD5D00312DAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63AB629D26F7DD5D00312DAB /* Assets.xcassets */; };
+		63AB62A126F7DD5D00312DAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63AB629F26F7DD5D00312DAB /* Main.storyboard */; };
+		63AB62AD26F7DD5D00312DAB /* Metal003GameLoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB62AC26F7DD5D00312DAB /* Metal003GameLoopTests.swift */; };
+		63AB62B826F7DD5D00312DAB /* Metal003GameLoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB62B726F7DD5D00312DAB /* Metal003GameLoopUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		63AB62A926F7DD5D00312DAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63AB628E26F7DD5C00312DAB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63AB629526F7DD5C00312DAB;
+			remoteInfo = Metal003GameLoop;
+		};
+		63AB62B426F7DD5D00312DAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63AB628E26F7DD5C00312DAB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63AB629526F7DD5C00312DAB;
+			remoteInfo = Metal003GameLoop;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		63AB629626F7DD5C00312DAB /* Metal003GameLoop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal003GameLoop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		63AB629926F7DD5C00312DAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		63AB629B26F7DD5C00312DAB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		63AB629D26F7DD5D00312DAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		63AB62A026F7DD5D00312DAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		63AB62A226F7DD5D00312DAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63AB62A326F7DD5D00312DAB /* Metal003GameLoop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Metal003GameLoop.entitlements; sourceTree = "<group>"; };
+		63AB62A826F7DD5D00312DAB /* Metal003GameLoopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Metal003GameLoopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		63AB62AC26F7DD5D00312DAB /* Metal003GameLoopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metal003GameLoopTests.swift; sourceTree = "<group>"; };
+		63AB62AE26F7DD5D00312DAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		63AB62B326F7DD5D00312DAB /* Metal003GameLoopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Metal003GameLoopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		63AB62B726F7DD5D00312DAB /* Metal003GameLoopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metal003GameLoopUITests.swift; sourceTree = "<group>"; };
+		63AB62B926F7DD5D00312DAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		63AB629326F7DD5C00312DAB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63AB62A526F7DD5D00312DAB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63AB62B026F7DD5D00312DAB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		63AB628D26F7DD5C00312DAB = {
+			isa = PBXGroup;
+			children = (
+				63AB629826F7DD5C00312DAB /* Metal003GameLoop */,
+				63AB62AB26F7DD5D00312DAB /* Metal003GameLoopTests */,
+				63AB62B626F7DD5D00312DAB /* Metal003GameLoopUITests */,
+				63AB629726F7DD5C00312DAB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		63AB629726F7DD5C00312DAB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63AB629626F7DD5C00312DAB /* Metal003GameLoop.app */,
+				63AB62A826F7DD5D00312DAB /* Metal003GameLoopTests.xctest */,
+				63AB62B326F7DD5D00312DAB /* Metal003GameLoopUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		63AB629826F7DD5C00312DAB /* Metal003GameLoop */ = {
+			isa = PBXGroup;
+			children = (
+				63AB629926F7DD5C00312DAB /* AppDelegate.swift */,
+				63AB629B26F7DD5C00312DAB /* ViewController.swift */,
+				63AB629D26F7DD5D00312DAB /* Assets.xcassets */,
+				63AB629F26F7DD5D00312DAB /* Main.storyboard */,
+				63AB62A226F7DD5D00312DAB /* Info.plist */,
+				63AB62A326F7DD5D00312DAB /* Metal003GameLoop.entitlements */,
+			);
+			path = Metal003GameLoop;
+			sourceTree = "<group>";
+		};
+		63AB62AB26F7DD5D00312DAB /* Metal003GameLoopTests */ = {
+			isa = PBXGroup;
+			children = (
+				63AB62AC26F7DD5D00312DAB /* Metal003GameLoopTests.swift */,
+				63AB62AE26F7DD5D00312DAB /* Info.plist */,
+			);
+			path = Metal003GameLoopTests;
+			sourceTree = "<group>";
+		};
+		63AB62B626F7DD5D00312DAB /* Metal003GameLoopUITests */ = {
+			isa = PBXGroup;
+			children = (
+				63AB62B726F7DD5D00312DAB /* Metal003GameLoopUITests.swift */,
+				63AB62B926F7DD5D00312DAB /* Info.plist */,
+			);
+			path = Metal003GameLoopUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		63AB629526F7DD5C00312DAB /* Metal003GameLoop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63AB62BC26F7DD5D00312DAB /* Build configuration list for PBXNativeTarget "Metal003GameLoop" */;
+			buildPhases = (
+				63AB629226F7DD5C00312DAB /* Sources */,
+				63AB629326F7DD5C00312DAB /* Frameworks */,
+				63AB629426F7DD5C00312DAB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Metal003GameLoop;
+			productName = Metal003GameLoop;
+			productReference = 63AB629626F7DD5C00312DAB /* Metal003GameLoop.app */;
+			productType = "com.apple.product-type.application";
+		};
+		63AB62A726F7DD5D00312DAB /* Metal003GameLoopTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63AB62BF26F7DD5D00312DAB /* Build configuration list for PBXNativeTarget "Metal003GameLoopTests" */;
+			buildPhases = (
+				63AB62A426F7DD5D00312DAB /* Sources */,
+				63AB62A526F7DD5D00312DAB /* Frameworks */,
+				63AB62A626F7DD5D00312DAB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				63AB62AA26F7DD5D00312DAB /* PBXTargetDependency */,
+			);
+			name = Metal003GameLoopTests;
+			productName = Metal003GameLoopTests;
+			productReference = 63AB62A826F7DD5D00312DAB /* Metal003GameLoopTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		63AB62B226F7DD5D00312DAB /* Metal003GameLoopUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63AB62C226F7DD5D00312DAB /* Build configuration list for PBXNativeTarget "Metal003GameLoopUITests" */;
+			buildPhases = (
+				63AB62AF26F7DD5D00312DAB /* Sources */,
+				63AB62B026F7DD5D00312DAB /* Frameworks */,
+				63AB62B126F7DD5D00312DAB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				63AB62B526F7DD5D00312DAB /* PBXTargetDependency */,
+			);
+			name = Metal003GameLoopUITests;
+			productName = Metal003GameLoopUITests;
+			productReference = 63AB62B326F7DD5D00312DAB /* Metal003GameLoopUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		63AB628E26F7DD5C00312DAB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
+				TargetAttributes = {
+					63AB629526F7DD5C00312DAB = {
+						CreatedOnToolsVersion = 12.5.1;
+					};
+					63AB62A726F7DD5D00312DAB = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = 63AB629526F7DD5C00312DAB;
+					};
+					63AB62B226F7DD5D00312DAB = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = 63AB629526F7DD5C00312DAB;
+					};
+				};
+			};
+			buildConfigurationList = 63AB629126F7DD5C00312DAB /* Build configuration list for PBXProject "Metal003GameLoop" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 63AB628D26F7DD5C00312DAB;
+			productRefGroup = 63AB629726F7DD5C00312DAB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				63AB629526F7DD5C00312DAB /* Metal003GameLoop */,
+				63AB62A726F7DD5D00312DAB /* Metal003GameLoopTests */,
+				63AB62B226F7DD5D00312DAB /* Metal003GameLoopUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		63AB629426F7DD5C00312DAB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63AB629E26F7DD5D00312DAB /* Assets.xcassets in Resources */,
+				63AB62A126F7DD5D00312DAB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63AB62A626F7DD5D00312DAB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63AB62B126F7DD5D00312DAB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		63AB629226F7DD5C00312DAB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63AB629C26F7DD5C00312DAB /* ViewController.swift in Sources */,
+				63AB629A26F7DD5C00312DAB /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63AB62A426F7DD5D00312DAB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63AB62AD26F7DD5D00312DAB /* Metal003GameLoopTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63AB62AF26F7DD5D00312DAB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63AB62B826F7DD5D00312DAB /* Metal003GameLoopUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		63AB62AA26F7DD5D00312DAB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63AB629526F7DD5C00312DAB /* Metal003GameLoop */;
+			targetProxy = 63AB62A926F7DD5D00312DAB /* PBXContainerItemProxy */;
+		};
+		63AB62B526F7DD5D00312DAB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63AB629526F7DD5C00312DAB /* Metal003GameLoop */;
+			targetProxy = 63AB62B426F7DD5D00312DAB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		63AB629F26F7DD5D00312DAB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				63AB62A026F7DD5D00312DAB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		63AB62BA26F7DD5D00312DAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		63AB62BB26F7DD5D00312DAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		63AB62BD26F7DD5D00312DAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Metal003GameLoop/Metal003GameLoop.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Metal003GameLoop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Metal003GameLoop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		63AB62BE26F7DD5D00312DAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Metal003GameLoop/Metal003GameLoop.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Metal003GameLoop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Metal003GameLoop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		63AB62C026F7DD5D00312DAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				INFOPLIST_FILE = Metal003GameLoopTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Metal003GameLoopTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metal003GameLoop.app/Contents/MacOS/Metal003GameLoop";
+			};
+			name = Debug;
+		};
+		63AB62C126F7DD5D00312DAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				INFOPLIST_FILE = Metal003GameLoopTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Metal003GameLoopTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metal003GameLoop.app/Contents/MacOS/Metal003GameLoop";
+			};
+			name = Release;
+		};
+		63AB62C326F7DD5D00312DAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				INFOPLIST_FILE = Metal003GameLoopUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Metal003GameLoopUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Metal003GameLoop;
+			};
+			name = Debug;
+		};
+		63AB62C426F7DD5D00312DAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				INFOPLIST_FILE = Metal003GameLoopUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Metal003GameLoopUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = Metal003GameLoop;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		63AB629126F7DD5C00312DAB /* Build configuration list for PBXProject "Metal003GameLoop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63AB62BA26F7DD5D00312DAB /* Debug */,
+				63AB62BB26F7DD5D00312DAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63AB62BC26F7DD5D00312DAB /* Build configuration list for PBXNativeTarget "Metal003GameLoop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63AB62BD26F7DD5D00312DAB /* Debug */,
+				63AB62BE26F7DD5D00312DAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63AB62BF26F7DD5D00312DAB /* Build configuration list for PBXNativeTarget "Metal003GameLoopTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63AB62C026F7DD5D00312DAB /* Debug */,
+				63AB62C126F7DD5D00312DAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63AB62C226F7DD5D00312DAB /* Build configuration list for PBXNativeTarget "Metal003GameLoopUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63AB62C326F7DD5D00312DAB /* Debug */,
+				63AB62C426F7DD5D00312DAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 63AB628E26F7DD5C00312DAB /* Project object */;
+}
