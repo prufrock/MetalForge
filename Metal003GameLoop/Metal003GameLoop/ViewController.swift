@@ -22,5 +22,9 @@ class ViewController: NSViewController {
     }
 
 
-}
+        guard let view = self.view as? MTKView else {
+            fatalError("""
+                       Metal view not setup in storyboard. It's too horrible to continue. Shutting it DOWN!
+                       """)
+        }
 
