@@ -11,10 +11,12 @@ import MetalKit
 class Drawer: NSObject {
     let metalBits: MetalBits
     let vertices: Vertices
+    var previous: Double
 
     init(metalBits: MetalBits, vertices: Vertices) {
         self.metalBits = metalBits
         self.vertices = vertices
+        self.previous = CACurrentMediaTime()
 
         super.init()
 
@@ -83,6 +85,15 @@ extension Drawer: MTKViewDelegate {
     }
 
     func draw(in view: MTKView) {
+        let current = CACurrentMediaTime()
+        let delta = current - previous
+        previous = current
+
+        print(delta)
+        print(view.preferredFramesPerSecond)
+        let deltafps: Double = (1.0/Double(view.preferredFramesPerSecond))
+        print(deltafps)
+
         render(in: view)
     }
 }
