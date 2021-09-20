@@ -12,10 +12,11 @@ extension AppDelegate {
     private struct MetalBits {
         let device: MTLDevice
         let pipelines: [String: MTLRenderPipelineState]
-        let vertices: [VerticeObjects: Vertices]
+        let vertices: [VerticesObject: Vertices]
     }
 
-    private enum VerticeObjects {
+    private enum VerticesObject {
         case square
+        case point
     }
 }
