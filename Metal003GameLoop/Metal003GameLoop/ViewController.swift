@@ -11,6 +11,8 @@ import MetalKit
 class ViewController: NSViewController {
     private var state: ControllerStates = .notDrawing
 
+    private var drawer: MTKViewDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,6 +40,11 @@ class ViewController: NSViewController {
                        Metal view not setup in storyboard. It's too horrible to continue. Shutting it DOWN!
                        """)
         }
+
+        drawer = Drawer(
+            metalBits: MetalBits.create(view: view),
+            vertices: VerticeCollection().c[.singlePoint]!
+        )
 
         state = .drawing
         print(state)

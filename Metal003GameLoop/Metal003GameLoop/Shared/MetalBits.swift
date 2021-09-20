@@ -13,12 +13,14 @@ struct MetalBits {
     let pipelines: [PipelineName: MTLRenderPipelineState]
     let commandQueue: MTLCommandQueue
 
-    func create(view: MTKView) -> MetalBits {
+    static func create(view: MTKView) -> MetalBits {
         guard let device = MTLCreateSystemDefaultDevice() else {
             fatalError("""
                        I looked in the computer and didn't find a device...sorry =/
                        """)
         }
+
+        view.device = device
 
         guard let commandQueue = device.makeCommandQueue() else {
             fatalError("""
