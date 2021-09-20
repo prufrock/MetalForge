@@ -6,13 +6,15 @@
 //
 
 import Cocoa
+import MetalKit
 
 class ViewController: NSViewController {
+    private var state: ControllerStates = .notDrawing
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        startDrawing()
     }
 
     override var representedObject: Any? {
@@ -21,10 +23,33 @@ class ViewController: NSViewController {
         }
     }
 
+    override func viewDidDisappear() {
+        state = .notDrawing
+    }
+
+    private func startDrawing() {
+        guard state != .drawing else {
+            print(#function + " called while already drawing. Did the view get reloaded somehow?")
+            return
+        }
 
         guard let view = self.view as? MTKView else {
             fatalError("""
                        Metal view not setup in storyboard. It's too horrible to continue. Shutting it DOWN!
                        """)
         }
+
+        state = .drawing
+        print(state)
+    }
+
+    private func printState() {
+        print(#function + " \(state)")
+    }
+
+    private enum ControllerStates {
+        case notDrawing
+        case drawing
+    }
+}
 
