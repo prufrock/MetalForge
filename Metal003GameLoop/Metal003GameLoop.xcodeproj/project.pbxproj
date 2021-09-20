@@ -23,6 +23,7 @@
 		63AB62D526F81FD100312DAB /* MTLClearColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB62D426F81FD100312DAB /* MTLClearColorExt.swift */; };
 		63AB62D726F81FF500312DAB /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB62D626F81FF500312DAB /* Colors.swift */; };
 		63AB62D926F8216400312DAB /* VerticeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB62D826F8216400312DAB /* VerticeCollections.swift */; };
+		63AB62DB26F829E200312DAB /* SimdFloat4x4Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AB62DA26F829E200312DAB /* SimdFloat4x4Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		63AB62D426F81FD100312DAB /* MTLClearColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLClearColorExt.swift; sourceTree = "<group>"; };
 		63AB62D626F81FF500312DAB /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		63AB62D826F8216400312DAB /* VerticeCollections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticeCollections.swift; sourceTree = "<group>"; };
+		63AB62DA26F829E200312DAB /* SimdFloat4x4Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimdFloat4x4Ext.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 				63AB62D426F81FD100312DAB /* MTLClearColorExt.swift */,
 				63AB62D626F81FF500312DAB /* Colors.swift */,
 				63AB62D826F8216400312DAB /* VerticeCollections.swift */,
+				63AB62DA26F829E200312DAB /* SimdFloat4x4Ext.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63AB62D926F8216400312DAB /* VerticeCollections.swift in Sources */,
+				63AB62DB26F829E200312DAB /* SimdFloat4x4Ext.swift in Sources */,
 				63AB62D126F81E5D00312DAB /* Shaders.metal in Sources */,
 				63AB62D726F81FF500312DAB /* Colors.swift in Sources */,
 				63AB629C26F7DD5C00312DAB /* ViewController.swift in Sources */,
