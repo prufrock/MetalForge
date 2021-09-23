@@ -43,7 +43,8 @@ class ViewController: NSViewController {
 
         drawer = Drawer(
             metalBits: MetalBits.create(view: view),
-            vertices: VerticeCollection().c[.singlePoint]!
+            vertices: VerticeCollection().c[.singlePoint]!,
+            world: GameWorld(vertices: VerticeCollection().c[.originPoint]!)
         )
 
         state = .drawing

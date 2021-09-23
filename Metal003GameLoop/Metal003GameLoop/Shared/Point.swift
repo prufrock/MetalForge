@@ -17,4 +17,12 @@ struct Point {
     init(_ x: Float, _ y: Float, _ z: Float) {
         rawValue = [x, y, z]
     }
+
+    func translate(_ x: Float, _ y: Float, _ z: Float) -> Point {
+        Self(
+            self.rawValue.x + x,
+            self.rawValue.y + y,
+            self.rawValue.z + z
+        )
+    }
 }

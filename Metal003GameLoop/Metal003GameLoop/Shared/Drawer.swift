@@ -12,11 +12,13 @@ class Drawer: NSObject {
     let metalBits: MetalBits
     let vertices: Vertices
     var previous: Double
+    var world: World
 
-    init(metalBits: MetalBits, vertices: Vertices) {
+    init(metalBits: MetalBits, vertices: Vertices, world: World) {
         self.metalBits = metalBits
         self.vertices = vertices
         self.previous = CACurrentMediaTime()
+        self.world = world
 
         super.init()
 
@@ -54,9 +56,9 @@ class Drawer: NSObject {
                 // projection
                 * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
                 // model
-                * float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
+                //* float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
 
-        let buffer = metalBits.device.makeBuffer(bytes: vertices.toFloat4(), length: vertices.memoryLength(), options: [])
+        let buffer = metalBits.device.makeBuffer(bytes: world.vertices.toFloat4(), length: vertices.memoryLength(), options: [])
 
         encoder.setRenderPipelineState(metalBits.pipelines[.simple]!)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
@@ -65,7 +67,7 @@ class Drawer: NSObject {
         var color = Colors().green
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)
-        encoder.drawPrimitives(type: vertices.primitiveType, vertexStart: 0, vertexCount: vertices.count)
+        encoder.drawPrimitives(type: world.vertices.primitiveType, vertexStart: 0, vertexCount: world.vertices.count)
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -89,11 +91,49 @@ extension Drawer: MTKViewDelegate {
         let delta = current - previous
         previous = current
 
-        print(delta)
-        print(view.preferredFramesPerSecond)
-        let deltafps: Double = (1.0/Double(view.preferredFramesPerSecond))
-        print(deltafps)
+        world.update(elapsed: delta)
 
         render(in: view)
+    }
+}
+
+protocol World {
+    var vertices: Vertices { get }
+
+    func update(elapsed: Double)
+}
+
+class GameWorld: World {
+    var vertices: Vertices
+    var state: WorldState
+    var rate: Float
+
+    init(vertices: Vertices, state: WorldState = .forward, rate: Float = 0.005) {
+        self.vertices = vertices
+        self.state = state
+        self.rate = rate
+    }
+
+    func update(elapsed: Double) {
+        if (vertices.vertices[0].rawValue.x > 1) {
+            self.state = .backward
+        }
+
+        if (vertices.vertices[0].rawValue.x < 0) {
+            self.state = .forward
+        }
+
+        switch state {
+        case .forward:
+            vertices = Vertices([vertices.vertices[0].translate(rate, 0, 0)])
+        case .backward:
+            vertices = Vertices([vertices.vertices[0].translate(-1 * rate, 0, 0)])
+        }
+
+    }
+
+    enum WorldState {
+        case forward
+        case backward
     }
 }
