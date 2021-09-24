@@ -57,8 +57,9 @@ class Drawer: NSObject {
                 * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
                 // model
                 //* float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
+        		* world.node.transformation
 
-        let buffer = metalBits.device.makeBuffer(bytes: world.vertices.toFloat4(), length: vertices.memoryLength(), options: [])
+        let buffer = metalBits.device.makeBuffer(bytes: world.node.vertices.toFloat4(), length: world.node.vertices.memoryLength(), options: [])
 
         encoder.setRenderPipelineState(metalBits.pipelines[.simple]!)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
@@ -67,7 +68,7 @@ class Drawer: NSObject {
         var color = Colors().green
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)
-        encoder.drawPrimitives(type: world.vertices.primitiveType, vertexStart: 0, vertexCount: world.vertices.count)
+        encoder.drawPrimitives(type: world.node.vertices.primitiveType, vertexStart: 0, vertexCount: world.node.vertices.count)
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -99,6 +100,7 @@ extension Drawer: MTKViewDelegate {
 
 protocol World {
     var vertices: Vertices { get }
+    var node: GameWorld.Node { get }
 
     func update(elapsed: Double)
 }
@@ -132,10 +134,10 @@ class GameWorld: World {
         switch state {
         case .forward:
             vertices = Vertices([vertices.vertices[0].translate(rate, 0, 0)])
-            node.location = node.location.translate(rate, 0, 0)
+            node.translate(rate, 0, 0)
         case .backward:
             vertices = Vertices([vertices.vertices[0].translate(-1 * rate, 0, 0)])
-            node.location = node.location.translate(-1 * rate, 0, 0)
+            node.translate(-1 * rate, 0, 0)
         }
 
     }
@@ -158,6 +160,7 @@ class GameWorld: World {
             self.transformation = transformation
         }
 
+        @discardableResult
         func translate(_ x: Float, _ y: Float, _ z: Float) -> Node {
             location = location.translate(x, y, z)
             transformation = float4x4.translate(
