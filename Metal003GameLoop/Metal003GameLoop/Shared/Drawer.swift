@@ -107,9 +107,15 @@ class GameWorld: World {
     var vertices: Vertices
     var state: WorldState
     var rate: Float
+    var node: Node
 
-    init(vertices: Vertices, state: WorldState = .forward, rate: Float = 0.005) {
+    init(vertices: Vertices,
+        node: Node,
+        state: WorldState = .forward,
+        rate: Float = 0.005
+    ) {
         self.vertices = vertices
+        self.node = node
         self.state = state
         self.rate = rate
     }
@@ -126,8 +132,10 @@ class GameWorld: World {
         switch state {
         case .forward:
             vertices = Vertices([vertices.vertices[0].translate(rate, 0, 0)])
+            node.location = node.location.translate(rate, 0, 0)
         case .backward:
             vertices = Vertices([vertices.vertices[0].translate(-1 * rate, 0, 0)])
+            node.location = node.location.translate(-1 * rate, 0, 0)
         }
 
     }
@@ -139,15 +147,26 @@ class GameWorld: World {
 
     class Node {
         // for the CPU
-        var location: float3
+        var location: Point
         // for the GPU
         var vertices: Vertices
-        var transformation: float3x3
+        var transformation: float4x4
 
-        init(location: float3, vertices: Vertices, transformation: float3x3 = matrix_identity_float3x3) {
+        init(location: Point, vertices: Vertices, transformation: float4x4 = matrix_identity_float4x4) {
             self.location = location
             self.vertices = vertices
             self.transformation = transformation
+        }
+
+        func translate(_ x: Float, _ y: Float, _ z: Float) -> Node {
+            location = location.translate(x, y, z)
+            transformation = float4x4.translate(
+                x: location.rawValue.x + x,
+                y: location.rawValue.y + y,
+                z: location.rawValue.z + z
+            )
+
+            return self
         }
     }
 }
