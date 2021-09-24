@@ -136,4 +136,18 @@ class GameWorld: World {
         case forward
         case backward
     }
+
+    class Node {
+        // for the CPU
+        var location: float3
+        // for the GPU
+        var vertices: Vertices
+        var transformation: float3x3
+
+        init(location: float3, vertices: Vertices, transformation: float3x3 = matrix_identity_float3x3) {
+            self.location = location
+            self.vertices = vertices
+            self.transformation = transformation
+        }
+    }
 }
