@@ -153,11 +153,42 @@ class GameWorld: World {
         // for the GPU
         var vertices: Vertices
         var transformation: float4x4
+        var state: NodeState
+        var rate: Float
 
-        init(location: Point, vertices: Vertices, transformation: float4x4 = matrix_identity_float4x4) {
+        init(
+            location: Point,
+            vertices: Vertices,
+            transformation: float4x4 = matrix_identity_float4x4,
+            initialState: NodeState = .forward,
+            rate: Float = 0.005
+        ) {
             self.location = location
             self.vertices = vertices
             self.transformation = transformation
+            self.state = initialState
+            self.rate = rate
+        }
+
+        @discardableResult
+        func move() -> Node {
+            if (vertices.vertices[0].rawValue.x > 1) {
+                self.state = .backward
+            }
+
+            if (vertices.vertices[0].rawValue.x < 0) {
+                self.state = .forward
+            }
+
+            switch state {
+            case .forward:
+                vertices = Vertices([vertices.vertices[0].translate(rate, 0, 0)])
+                translate(rate, 0, 0)
+            case .backward:
+                vertices = Vertices([vertices.vertices[0].translate(-1 * rate, 0, 0)])
+                translate(-1 * rate, 0, 0)
+            }
+            return self
         }
 
         @discardableResult
@@ -170,6 +201,11 @@ class GameWorld: World {
             )
 
             return self
+        }
+
+        enum NodeState {
+            case forward
+            case backward
         }
     }
 }
