@@ -127,10 +127,8 @@ class GameWorld: World {
 
         switch state {
         case .forward:
-            node.vertices = Vertices([node.vertices.vertices[0].translate(rate, 0, 0)])
             node.translate(rate, 0, 0)
         case .backward:
-            node.vertices = Vertices([node.vertices.vertices[0].translate(-1 * rate, 0, 0)])
             node.translate(-1 * rate, 0, 0)
         }
 
