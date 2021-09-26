@@ -10,13 +10,11 @@ import MetalKit
 
 class Drawer: NSObject {
     let metalBits: MetalBits
-    let vertices: Vertices
     var previous: Double
     var world: World
 
-    init(metalBits: MetalBits, vertices: Vertices, world: World) {
+    init(metalBits: MetalBits, world: World) {
         self.metalBits = metalBits
-        self.vertices = vertices
         self.previous = CACurrentMediaTime()
         self.world = world
 
@@ -99,44 +97,40 @@ extension Drawer: MTKViewDelegate {
 }
 
 protocol World {
-    var vertices: Vertices { get }
     var node: GameWorld.Node { get }
 
     func update(elapsed: Double)
 }
 
 class GameWorld: World {
-    var vertices: Vertices
     var state: WorldState
     var rate: Float
     var node: Node
 
-    init(vertices: Vertices,
-        node: Node,
+    init(node: Node,
         state: WorldState = .forward,
         rate: Float = 0.005
     ) {
-        self.vertices = vertices
         self.node = node
         self.state = state
         self.rate = rate
     }
 
     func update(elapsed: Double) {
-        if (vertices.vertices[0].rawValue.x > 1) {
+        if (node.vertices.vertices[0].rawValue.x > 1) {
             self.state = .backward
         }
 
-        if (vertices.vertices[0].rawValue.x < 0) {
+        if (node.vertices.vertices[0].rawValue.x < 0) {
             self.state = .forward
         }
 
         switch state {
         case .forward:
-            vertices = Vertices([vertices.vertices[0].translate(rate, 0, 0)])
+            node.vertices = Vertices([node.vertices.vertices[0].translate(rate, 0, 0)])
             node.translate(rate, 0, 0)
         case .backward:
-            vertices = Vertices([vertices.vertices[0].translate(-1 * rate, 0, 0)])
+            node.vertices = Vertices([node.vertices.vertices[0].translate(-1 * rate, 0, 0)])
             node.translate(-1 * rate, 0, 0)
         }
 

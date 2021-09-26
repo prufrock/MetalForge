@@ -43,9 +43,7 @@ class ViewController: NSViewController {
 
         drawer = Drawer(
             metalBits: MetalBits.create(view: view),
-            vertices: VerticeCollection().c[.singlePoint]!,
             world: GameWorld(
-                vertices: VerticeCollection().c[.originPoint]!,
                 node: GameWorld.Node(
                     location: VerticeCollection().c[.originPoint]!.vertices[0],
                     vertices: VerticeCollection().c[.cube]!)
