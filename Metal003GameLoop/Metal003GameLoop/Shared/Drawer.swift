@@ -96,8 +96,16 @@ extension Drawer: MTKViewDelegate {
     }
 }
 
+extension Drawer {
+    func click() {
+        world.click()
+    }
+}
+
 protocol World {
     var node: GameWorld.Node { get }
+
+    func click()
 
     func update(elapsed: Double)
 }
@@ -116,8 +124,22 @@ class GameWorld: World {
         self.rate = rate
     }
 
+    func click() {
+        switch state {
+        case .playing:
+            state = .paused
+        case .paused:
+            state = .playing
+        }
+    }
+
     func update(elapsed: Double) {
-        node.move()
+        switch state {
+        case .playing:
+            node.move()
+        case .paused:
+            1 + 1
+        }
     }
 
     enum WorldState {

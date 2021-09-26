@@ -11,7 +11,7 @@ import MetalKit
 class ViewController: NSViewController {
     private var state: ControllerStates = .notDrawing
 
-    private var drawer: MTKViewDelegate?
+    private var drawer: Drawer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,3 +64,9 @@ class ViewController: NSViewController {
     }
 }
 
+extension ViewController {
+    override func mouseDown(with event: NSEvent) {
+        drawer!.click()
+        print("x: \(event.locationInWindow.x) y: \(event.locationInWindow.y)")
+    }
+}
