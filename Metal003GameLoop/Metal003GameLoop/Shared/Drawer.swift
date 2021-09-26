@@ -117,21 +117,7 @@ class GameWorld: World {
     }
 
     func update(elapsed: Double) {
-        if (node.location.rawValue.x > 1) {
-            self.state = .backward
-        }
-
-        if (node.location.rawValue.x < 0) {
-            self.state = .forward
-        }
-
-        switch state {
-        case .forward:
-            node.translate(rate, 0, 0)
-        case .backward:
-            node.translate(-1 * rate, 0, 0)
-        }
-
+        node.move()
     }
 
     enum WorldState {
@@ -164,20 +150,18 @@ class GameWorld: World {
 
         @discardableResult
         func move() -> Node {
-            if (vertices.vertices[0].rawValue.x > 1) {
+            if (location.rawValue.x > 1) {
                 self.state = .backward
             }
 
-            if (vertices.vertices[0].rawValue.x < 0) {
+            if (location.rawValue.x < 0) {
                 self.state = .forward
             }
 
             switch state {
             case .forward:
-                vertices = Vertices([vertices.vertices[0].translate(rate, 0, 0)])
                 translate(rate, 0, 0)
             case .backward:
-                vertices = Vertices([vertices.vertices[0].translate(-1 * rate, 0, 0)])
                 translate(-1 * rate, 0, 0)
             }
             return self
