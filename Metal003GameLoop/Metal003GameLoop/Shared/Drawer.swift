@@ -117,11 +117,11 @@ class GameWorld: World {
     }
 
     func update(elapsed: Double) {
-        if (node.vertices.vertices[0].rawValue.x > 1) {
+        if (node.location.rawValue.x > 1) {
             self.state = .backward
         }
 
-        if (node.vertices.vertices[0].rawValue.x < 0) {
+        if (node.location.rawValue.x < 0) {
             self.state = .forward
         }
 
