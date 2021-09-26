@@ -108,7 +108,7 @@ class GameWorld: World {
     var node: Node
 
     init(node: Node,
-        state: WorldState = .forward,
+        state: WorldState = .playing,
         rate: Float = 0.005
     ) {
         self.node = node
@@ -121,8 +121,8 @@ class GameWorld: World {
     }
 
     enum WorldState {
-        case forward
-        case backward
+        case playing
+        case paused
     }
 
     class Node {
