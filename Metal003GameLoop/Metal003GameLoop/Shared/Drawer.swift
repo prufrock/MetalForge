@@ -136,7 +136,7 @@ class GameWorld: World {
     func update(elapsed: Double) {
         switch state {
         case .playing:
-            node.move()
+            node.move(elapsed: elapsed)
         case .paused:
             1 + 1
         }
@@ -161,7 +161,7 @@ class GameWorld: World {
             vertices: Vertices,
             transformation: float4x4 = matrix_identity_float4x4,
             initialState: NodeState = .forward,
-            rate: Float = 0.005
+            rate: Float = (1/3.8)
         ) {
             self.location = location
             self.vertices = vertices
@@ -171,7 +171,7 @@ class GameWorld: World {
         }
 
         @discardableResult
-        func move() -> Node {
+        func move(elapsed: Double) -> Node {
             if (location.rawValue.x > 1) {
                 self.state = .backward
             }
@@ -182,9 +182,9 @@ class GameWorld: World {
 
             switch state {
             case .forward:
-                translate(rate, 0, 0)
+                translate(Float(elapsed) * rate, 0, 0)
             case .backward:
-                translate(-1 * rate, 0, 0)
+                translate(-1 * Float(elapsed) * rate, 0, 0)
             }
             return self
         }
