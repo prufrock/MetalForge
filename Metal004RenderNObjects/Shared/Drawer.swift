@@ -55,9 +55,9 @@ class Drawer: NSObject {
                 * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
                 // model
                 //* float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
-        		* world.node.transformation
+        		* world.nodes[0].transformation
 
-        let buffer = metalBits.device.makeBuffer(bytes: world.node.vertices.toFloat4(), length: world.node.vertices.memoryLength(), options: [])
+        let buffer = metalBits.device.makeBuffer(bytes: world.nodes[0].vertices.toFloat4(), length: world.nodes[0].vertices.memoryLength(), options: [])
 
         encoder.setRenderPipelineState(metalBits.pipelines[.simple]!)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
@@ -66,7 +66,7 @@ class Drawer: NSObject {
         var color = Colors().green
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)
-        encoder.drawPrimitives(type: world.node.vertices.primitiveType, vertexStart: 0, vertexCount: world.node.vertices.count)
+        encoder.drawPrimitives(type: world.nodes[0].vertices.primitiveType, vertexStart: 0, vertexCount: world.nodes[0].vertices.count)
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -103,7 +103,6 @@ extension Drawer {
 }
 
 protocol World {
-    var node: Node { get }
     var nodes: [Node] { get }
 
     func click()
