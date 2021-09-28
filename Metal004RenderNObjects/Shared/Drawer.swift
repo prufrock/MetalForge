@@ -113,17 +113,15 @@ protocol World {
 class GameWorld: World {
     var state: WorldState
     var rate: Float
-    var node: Node
     var nodes: [Node]
 
-    init(node: Node,
+    init(nodes: [Node],
         state: WorldState = .playing,
         rate: Float = 0.005
     ) {
-        self.node = node
         self.state = state
         self.rate = rate
-        self.nodes = [node]
+        self.nodes = nodes
     }
 
     func click() {
@@ -138,7 +136,7 @@ class GameWorld: World {
     func update(elapsed: Double) {
         switch state {
         case .playing:
-            node.move(elapsed: elapsed)
+            nodes[0].move(elapsed: elapsed)
         case .paused:
             1 + 1
         }
