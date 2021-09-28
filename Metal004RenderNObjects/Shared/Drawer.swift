@@ -139,7 +139,10 @@ class GameWorld: World {
     func update(elapsed: Double) {
         switch state {
         case .playing:
-            nodes[0].move(elapsed: elapsed)
+            nodes.forEach { node in
+                node.move(elapsed: elapsed)
+            }
+
         case .paused:
             1 + 1
         }
