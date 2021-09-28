@@ -103,7 +103,8 @@ extension Drawer {
 }
 
 protocol World {
-    var node: GameWorld.Node { get }
+    var node: Node { get }
+    var nodes: [Node] { get }
 
     func click()
 
@@ -114,6 +115,7 @@ class GameWorld: World {
     var state: WorldState
     var rate: Float
     var node: Node
+    var nodes: [Node]
 
     init(node: Node,
         state: WorldState = .playing,
@@ -122,6 +124,7 @@ class GameWorld: World {
         self.node = node
         self.state = state
         self.rate = rate
+        self.nodes = [node]
     }
 
     func click() {
@@ -146,64 +149,64 @@ class GameWorld: World {
         case playing
         case paused
     }
+}
 
-    class Node {
-        // for the CPU
-        var location: Point
-        // for the GPU
-        var vertices: Vertices
-        var transformation: float4x4
-        var state: NodeState
-        var rate: Float
+class Node {
+    // for the CPU
+    var location: Point
+    // for the GPU
+    var vertices: Vertices
+    var transformation: float4x4
+    var state: NodeState
+    var rate: Float
 
-        init(
-            location: Point,
-            vertices: Vertices,
-            transformation: float4x4 = matrix_identity_float4x4,
-            initialState: NodeState = .forward,
-            rate: Float = (1/3.8)
-        ) {
-            self.location = location
-            self.vertices = vertices
-            self.transformation = transformation
-            self.state = initialState
-            self.rate = rate
+    init(
+        location: Point,
+        vertices: Vertices,
+        transformation: float4x4 = matrix_identity_float4x4,
+        initialState: NodeState = .forward,
+        rate: Float = (1/3.8)
+    ) {
+        self.location = location
+        self.vertices = vertices
+        self.transformation = transformation
+        self.state = initialState
+        self.rate = rate
+    }
+
+    @discardableResult
+    func move(elapsed: Double) -> Node {
+        if (location.rawValue.x > 1) {
+            self.state = .backward
         }
 
-        @discardableResult
-        func move(elapsed: Double) -> Node {
-            if (location.rawValue.x > 1) {
-                self.state = .backward
-            }
-
-            if (location.rawValue.x < 0) {
-                self.state = .forward
-            }
-
-            switch state {
-            case .forward:
-                translate(Float(elapsed) * rate, 0, 0)
-            case .backward:
-                translate(-1 * Float(elapsed) * rate, 0, 0)
-            }
-            return self
+        if (location.rawValue.x < 0) {
+            self.state = .forward
         }
 
-        @discardableResult
-        func translate(_ x: Float, _ y: Float, _ z: Float) -> Node {
-            location = location.translate(x, y, z)
-            transformation = float4x4.translate(
-                x: location.rawValue.x + x,
-                y: location.rawValue.y + y,
-                z: location.rawValue.z + z
-            )
-
-            return self
+        switch state {
+        case .forward:
+            translate(Float(elapsed) * rate, 0, 0)
+        case .backward:
+            translate(-1 * Float(elapsed) * rate, 0, 0)
         }
+        return self
+    }
 
-        enum NodeState {
-            case forward
-            case backward
-        }
+    @discardableResult
+    func translate(_ x: Float, _ y: Float, _ z: Float) -> Node {
+        location = location.translate(x, y, z)
+        transformation = float4x4.translate(
+            x: location.rawValue.x + x,
+            y: location.rawValue.y + y,
+            z: location.rawValue.z + z
+        )
+
+        return self
+    }
+
+    enum NodeState {
+        case forward
+        case backward
     }
 }
