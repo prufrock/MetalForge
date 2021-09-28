@@ -17,6 +17,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+
+        startDrawing()
     }
 
     private func startDrawing() {
@@ -42,6 +44,15 @@ class ViewController: UIViewController {
 
         state = .drawing
         print(state)
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let location = touch.location(in: self.view)
+
+        drawer!.click()
+
+        print("x: \(location.x) y: \(location.y)")
     }
 
     private func printState() {
