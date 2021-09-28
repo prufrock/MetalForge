@@ -13,7 +13,17 @@
 		637B85072702AAA300C09017 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 637B85052702AAA300C09017 /* Main.storyboard */; };
 		637B85092702AAA400C09017 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 637B85082702AAA400C09017 /* Assets.xcassets */; };
 		637B850C2702AAA400C09017 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 637B850A2702AAA400C09017 /* LaunchScreen.storyboard */; };
-		637B85142702AD2500C09017 /* Shared in Resources */ = {isa = PBXBuildFile; fileRef = 637B85132702AD2500C09017 /* Shared */; };
+		637B85232702B27800C09017 /* MTLClearColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B85182702B27800C09017 /* MTLClearColorExt.swift */; };
+		637B85242702B27800C09017 /* Vertices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B85192702B27800C09017 /* Vertices.swift */; };
+		637B85252702B27800C09017 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B851A2702B27800C09017 /* Colors.swift */; };
+		637B85262702B27800C09017 /* MetalBits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B851B2702B27800C09017 /* MetalBits.swift */; };
+		637B85272702B27800C09017 /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B851C2702B27800C09017 /* Drawer.swift */; };
+		637B85282702B27800C09017 /* VerticeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B851D2702B27800C09017 /* VerticeCollections.swift */; };
+		637B85292702B27800C09017 /* AppDelegateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B851E2702B27800C09017 /* AppDelegateExt.swift */; };
+		637B852A2702B27800C09017 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B851F2702B27800C09017 /* Point.swift */; };
+		637B852B2702B27800C09017 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 637B85202702B27800C09017 /* Shaders.metal */; };
+		637B852C2702B27800C09017 /* FloatTypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B85212702B27800C09017 /* FloatTypeAliases.swift */; };
+		637B852D2702B27800C09017 /* SimdFloat4x4Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637B85222702B27800C09017 /* SimdFloat4x4Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +35,17 @@
 		637B85082702AAA400C09017 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		637B850B2702AAA400C09017 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		637B850D2702AAA400C09017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		637B85132702AD2500C09017 /* Shared */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shared; sourceTree = "<group>"; };
+		637B85182702B27800C09017 /* MTLClearColorExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTLClearColorExt.swift; sourceTree = "<group>"; };
+		637B85192702B27800C09017 /* Vertices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertices.swift; sourceTree = "<group>"; };
+		637B851A2702B27800C09017 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		637B851B2702B27800C09017 /* MetalBits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalBits.swift; sourceTree = "<group>"; };
+		637B851C2702B27800C09017 /* Drawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
+		637B851D2702B27800C09017 /* VerticeCollections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticeCollections.swift; sourceTree = "<group>"; };
+		637B851E2702B27800C09017 /* AppDelegateExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateExt.swift; sourceTree = "<group>"; };
+		637B851F2702B27800C09017 /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		637B85202702B27800C09017 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		637B85212702B27800C09017 /* FloatTypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatTypeAliases.swift; sourceTree = "<group>"; };
+		637B85222702B27800C09017 /* SimdFloat4x4Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimdFloat4x4Ext.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +62,7 @@
 		637B84F32702AAA300C09017 = {
 			isa = PBXGroup;
 			children = (
-				637B85132702AD2500C09017 /* Shared */,
+				637B85172702B20600C09017 /* Shared */,
 				637B84FE2702AAA300C09017 /* Metal004RenderNObjects */,
 				637B84FD2702AAA300C09017 /* Products */,
 			);
@@ -68,6 +88,24 @@
 				637B850D2702AAA400C09017 /* Info.plist */,
 			);
 			path = Metal004RenderNObjects;
+			sourceTree = "<group>";
+		};
+		637B85172702B20600C09017 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				637B851E2702B27800C09017 /* AppDelegateExt.swift */,
+				637B851A2702B27800C09017 /* Colors.swift */,
+				637B851C2702B27800C09017 /* Drawer.swift */,
+				637B85212702B27800C09017 /* FloatTypeAliases.swift */,
+				637B851B2702B27800C09017 /* MetalBits.swift */,
+				637B85182702B27800C09017 /* MTLClearColorExt.swift */,
+				637B851F2702B27800C09017 /* Point.swift */,
+				637B85202702B27800C09017 /* Shaders.metal */,
+				637B85222702B27800C09017 /* SimdFloat4x4Ext.swift */,
+				637B851D2702B27800C09017 /* VerticeCollections.swift */,
+				637B85192702B27800C09017 /* Vertices.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,7 +167,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				637B850C2702AAA400C09017 /* LaunchScreen.storyboard in Resources */,
-				637B85142702AD2500C09017 /* Shared in Resources */,
 				637B85092702AAA400C09017 /* Assets.xcassets in Resources */,
 				637B85072702AAA300C09017 /* Main.storyboard in Resources */,
 			);
@@ -142,7 +179,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				637B852B2702B27800C09017 /* Shaders.metal in Sources */,
+				637B85282702B27800C09017 /* VerticeCollections.swift in Sources */,
+				637B852D2702B27800C09017 /* SimdFloat4x4Ext.swift in Sources */,
+				637B85242702B27800C09017 /* Vertices.swift in Sources */,
+				637B85262702B27800C09017 /* MetalBits.swift in Sources */,
+				637B85252702B27800C09017 /* Colors.swift in Sources */,
+				637B852C2702B27800C09017 /* FloatTypeAliases.swift in Sources */,
 				637B85042702AAA300C09017 /* ViewController.swift in Sources */,
+				637B85272702B27800C09017 /* Drawer.swift in Sources */,
+				637B85292702B27800C09017 /* AppDelegateExt.swift in Sources */,
+				637B852A2702B27800C09017 /* Point.swift in Sources */,
+				637B85232702B27800C09017 /* MTLClearColorExt.swift in Sources */,
 				637B85002702AAA300C09017 /* AppDelegate.swift in Sources */,
 				637B85022702AAA300C09017 /* SceneDelegate.swift in Sources */,
 			);
