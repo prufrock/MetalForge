@@ -33,7 +33,7 @@ class ViewController: UIViewController {
                        """)
         }
 
-        let nodes = [
+        var nodes = [
             Node(
                 location: VerticeCollection().c[.originPoint]!.vertices[0],
                 vertices: VerticeCollection().c[.cube]!
@@ -43,6 +43,15 @@ class ViewController: UIViewController {
                 vertices: VerticeCollection().c[.cube]!
             )
         ]
+
+
+
+        (0...5).forEach { i in
+            nodes.append(            Node(
+                location: VerticeCollection().randomPoint(),
+                vertices: VerticeCollection().c[.cube]!
+            ))
+        }
 
         drawer = Drawer(
             metalBits: MetalBits.create(view: view),

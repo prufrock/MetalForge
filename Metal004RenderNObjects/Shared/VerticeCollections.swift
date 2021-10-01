@@ -52,11 +52,15 @@ struct VerticeCollection {
         )]
     }
 
-    func randomPoint() -> Vertices {
-        return Vertices(Point(randomFloat(), randomFloat(), 0.0))
+    func randomPoint() -> Point {
+        return Point(randomXY(), randomXY(), randomZ())
     }
 
-    func randomFloat() -> Float {
+    private func randomXY() -> Float {
+        Float.random(in: -1...1)
+    }
+
+    private func randomZ() -> Float {
         Float.random(in: 0...1)
     }
 }
