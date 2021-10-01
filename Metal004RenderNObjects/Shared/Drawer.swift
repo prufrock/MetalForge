@@ -65,6 +65,13 @@ class Drawer: NSObject {
             encoder.setVertexBytes(&transform, length: MemoryLayout<float4x4>.stride, index: 1)
 
             var color = Colors().green
+
+            // this probably shouldn't be here but it's currently the easiest place
+            // to make it happen.
+            if node === world.nodes.last {
+                color = Colors().red
+            }
+
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)
             encoder.drawPrimitives(type: node.vertices.primitiveType, vertexStart: 0, vertexCount: node.vertices.count)
@@ -148,9 +155,12 @@ class GameWorld: World {
             nodes.forEach { node in
                 node.move(elapsed: elapsed)
             }
-
         case .paused:
-            1 + 1
+            nodes.forEach { node in
+                if (node !== nodes.last) {
+                    node.move(elapsed: elapsed)
+                }
+            }
         }
     }
 
@@ -189,7 +199,7 @@ class Node {
             self.state = .backward
         }
 
-        if (location.rawValue.x < 0) {
+        if (location.rawValue.x < -1) {
             self.state = .forward
         }
 
