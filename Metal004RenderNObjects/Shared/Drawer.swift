@@ -131,6 +131,12 @@ class GameWorld: World {
         switch state {
         case .playing:
             state = .paused
+            self.nodes.append(
+                Node(
+                    location: VerticeCollection().randomPoint(),
+                    vertices: VerticeCollection().c[.cube]!
+                )
+            )
         case .paused:
             state = .playing
         }

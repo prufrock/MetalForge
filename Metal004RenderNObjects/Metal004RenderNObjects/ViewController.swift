@@ -47,7 +47,7 @@ class ViewController: UIViewController {
 
 
         (0...5).forEach { i in
-            nodes.append(            Node(
+            nodes.append(Node(
                 location: VerticeCollection().randomPoint(),
                 vertices: VerticeCollection().c[.cube]!
             ))
