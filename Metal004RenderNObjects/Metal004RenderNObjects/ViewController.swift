@@ -33,16 +33,20 @@ class ViewController: UIViewController {
                        """)
         }
 
+        let nodes = [
+            Node(
+                location: VerticeCollection().c[.originPoint]!.vertices[0],
+                vertices: VerticeCollection().c[.cube]!
+            ),
+            Node(
+                location: VerticeCollection().c[.singlePoint]!.vertices[0],
+                vertices: VerticeCollection().c[.cube]!
+            )
+        ]
+
         drawer = Drawer(
             metalBits: MetalBits.create(view: view),
-            world: GameWorld(
-                nodes: [Node(
-                    location: VerticeCollection().c[.originPoint]!.vertices[0],
-                    vertices: VerticeCollection().c[.cube]!),
-                        Node(
-                            location: VerticeCollection().c[.singlePoint]!.vertices[0],
-                            vertices: VerticeCollection().c[.cube]!)]
-            )
+            world: GameWorld(nodes: nodes)
         )
 
         state = .drawing
