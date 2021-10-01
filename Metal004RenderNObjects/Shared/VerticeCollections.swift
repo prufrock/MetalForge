@@ -51,4 +51,12 @@ struct VerticeCollection {
             primitiveType: .line
         )]
     }
+
+    func randomPoint() -> Vertices {
+        return Vertices(Point(randomFloat(), randomFloat(), 0.0))
+    }
+
+    func randomFloat() -> Float {
+        Float.random(in: 0...1)
+    }
 }
