@@ -12,6 +12,7 @@ class Drawer: NSObject {
     let metalBits: MetalBits
     var previous: Double
     var world: World
+    var aspect: Float = 1.0
 
     init(metalBits: MetalBits, world: World) {
         self.metalBits = metalBits
@@ -54,6 +55,8 @@ class Drawer: NSObject {
             var transform = matrix_identity_float4x4
                     // projection
                     * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
+                    // scale for the aspect ratio
+                    * float4x4.scaleY(aspect)
                     // model
                     //* float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
                     * node.transformation
@@ -93,6 +96,9 @@ class Drawer: NSObject {
 extension Drawer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function)
+        print("height: \(size.height) width: \(size.width)")
+        aspect = Float(size.width / size.height)
+        print("aspect ratio: \(aspect)")
     }
 
     func draw(in view: MTKView) {

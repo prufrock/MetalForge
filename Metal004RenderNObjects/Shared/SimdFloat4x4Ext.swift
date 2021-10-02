@@ -17,6 +17,15 @@ extension float4x4 {
         )
     }
 
+    static func scaleY(_ scalar: Float) -> float4x4 {
+        float4x4(
+                [1, 0, 0, 0],
+                [0, scalar, 0, 0],
+                [0, 0, 1, 0],
+                [0, 0, 0, 1]
+        )
+    }
+
     static func perspectiveProjection(nearPlane: Float, farPlane: Float) -> float4x4 {
         float4x4(
                 [(farPlane / farPlane - nearPlane), 0, 0, 0],
