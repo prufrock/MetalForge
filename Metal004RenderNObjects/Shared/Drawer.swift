@@ -106,6 +106,7 @@ extension Drawer: MTKViewDelegate {
         let delta = current - previous
         previous = current
 
+        world.setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
         world.update(elapsed: delta)
 
         render(in: view)
@@ -119,25 +120,39 @@ extension Drawer {
 }
 
 protocol World {
+    var cameraTop: Float { get }
+    var cameraBottom: Float { get }
     var nodes: [Node] { get }
 
     func click()
+
+    func setCameraDimension(top: Float, bottom: Float)
 
     func update(elapsed: Double)
 }
 
 class GameWorld: World {
+    var cameraTop: Float
+    var cameraBottom: Float
     var state: WorldState
     var rate: Float
     var nodes: [Node]
 
     init(nodes: [Node],
-        state: WorldState = .playing,
-        rate: Float = 0.005
+         state: WorldState = .playing,
+         rate: Float = 0.005,
+         cameraDimensions: (Float, Float)
     ) {
         self.state = state
         self.rate = rate
         self.nodes = nodes
+        self.cameraTop = cameraDimensions.0
+        self.cameraBottom = cameraDimensions.1
+    }
+
+    func setCameraDimension(top: Float, bottom: Float) {
+        cameraTop = top
+        cameraBottom = bottom
     }
 
     func click() {
@@ -146,7 +161,11 @@ class GameWorld: World {
             state = .paused
             self.nodes.append(
                 Node(
-                    location: VerticeCollection().randomPoint(),
+                    location: Point(
+                        Float.random(in: -1...1),
+                        Float.random(in: self.cameraBottom...self.cameraTop),
+                        Float.random(in: 0...1)
+                    ),
                     vertices: VerticeCollection().c[.cube]!
                 )
             )

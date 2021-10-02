@@ -35,7 +35,7 @@ class ViewController: UIViewController {
 
         drawer = Drawer(
             metalBits: MetalBits.create(view: view),
-            world: GameWorld(nodes: [])
+            world: GameWorld(nodes: [], cameraDimensions: (Float(1.0), Float(1.0)))
         )
 
         state = .drawing
