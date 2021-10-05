@@ -17,7 +17,12 @@ protocol GMWorld {
 }
 
 func GMCreateWorld() -> GMWorld {
-    GMGameWorld(nodes: [], cameraDimensions: (Float(1.0), Float(1.0)))
+    GMGameWorld(
+        nodes: [],
+        state: .playing,
+        rate: 0.005,
+        cameraDimensions: (Float(1.0), Float(1.0))
+    )
 }
 
 class GMGameWorld: GMWorld {
@@ -28,8 +33,8 @@ class GMGameWorld: GMWorld {
     var nodes: [GMNode]
 
     init(nodes: [GMNode],
-         state: WorldState = .playing,
-         rate: Float = 0.005,
+         state: WorldState,
+         rate: Float,
          cameraDimensions: (Float, Float)
     ) {
         self.state = state
