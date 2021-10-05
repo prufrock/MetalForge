@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     private var state: ControllerStates = .notDrawing
 
-    private var drawer: Drawer?
+    private var drawer: Renderer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
                        """)
         }
 
-        drawer = Drawer(
+        drawer = Renderer(
             metalBits: MetalBits.create(view: view),
             world: GameWorld(nodes: [], cameraDimensions: (Float(1.0), Float(1.0)))
         )

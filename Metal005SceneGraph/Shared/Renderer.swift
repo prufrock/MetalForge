@@ -8,7 +8,7 @@
 import Foundation
 import MetalKit
 
-class Drawer: NSObject {
+class Renderer: NSObject {
     let metalBits: MetalBits
     var previous: Double
     var world: World
@@ -93,7 +93,7 @@ class Drawer: NSObject {
     }
 }
 
-extension Drawer: MTKViewDelegate {
+extension Renderer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function)
         print("height: \(size.height) width: \(size.width)")
@@ -113,7 +113,7 @@ extension Drawer: MTKViewDelegate {
     }
 }
 
-extension Drawer {
+extension Renderer {
     func click() {
         world.click()
     }
