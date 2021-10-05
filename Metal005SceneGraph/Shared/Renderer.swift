@@ -56,7 +56,7 @@ class Renderer: NSObject {
                     // projection
                     * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
                     // scale for the aspect ratio
-                    * float4x4.scaleY(aspect)
+                    * float4x4.scaleY(aspect) //TODO move this into perspectiveProjection or something to do with the camera.
                     // model
                     //* float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
                     * node.transformation
@@ -67,13 +67,7 @@ class Renderer: NSObject {
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBytes(&transform, length: MemoryLayout<float4x4>.stride, index: 1)
 
-            var color = Colors().green
-
-            // this probably shouldn't be here but it's currently the easiest place
-            // to make it happen.
-            if node === world.nodes.last {
-                color = Colors().red
-            }
+            var color = node.color
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)

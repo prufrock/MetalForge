@@ -7,7 +7,7 @@ import MetalKit
 protocol GMWorld {
     var cameraTop: Float { get }
     var cameraBottom: Float { get }
-    var nodes: [GMNode] { get }
+    var nodes: [PGMNode] { get }
 
     func click()
 
@@ -30,9 +30,9 @@ class GMGameWorld: GMWorld {
     var cameraBottom: Float
     var state: WorldState
     var rate: Float
-    var nodes: [GMNode]
+    var nodes: [PGMNode]
 
-    init(nodes: [GMNode],
+    init(nodes: [PGMNode],
          state: WorldState,
          rate: Float,
          cameraDimensions: (Float, Float)
@@ -75,13 +75,17 @@ class GMGameWorld: GMWorld {
         case .playing:
             nodes.forEach { node in
                 node.move(elapsed: elapsed)
+                node.setColor(Colors().green)
             }
         case .paused:
-            nodes.forEach { node in
-                if (node !== nodes.last) {
-                    node.move(elapsed: elapsed)
-                }
-            }
+            updateAllButNewestNode(elapsed: elapsed)
+        }
+        nodes.last?.setColor(Colors().red)
+    }
+
+    func updateAllButNewestNode(elapsed: Double) {
+        for i in 0..<nodes.lastIndex {
+            nodes[i].move(elapsed: elapsed).setColor(Colors().green)
         }
     }
 
@@ -91,4 +95,7 @@ class GMGameWorld: GMWorld {
     }
 }
 
+extension Collection {
+    var lastIndex: Int { return self.count - 1 }
+}
 
