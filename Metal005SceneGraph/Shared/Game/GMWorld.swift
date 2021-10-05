@@ -4,10 +4,10 @@
 
 import MetalKit
 
-protocol World {
+protocol GMWorld {
     var cameraTop: Float { get }
     var cameraBottom: Float { get }
-    var nodes: [Node] { get }
+    var nodes: [GMNode] { get }
 
     func click()
 
@@ -16,18 +16,18 @@ protocol World {
     func update(elapsed: Double)
 }
 
-func GMCreateWorld() -> World {
-    GameWorld(nodes: [], cameraDimensions: (Float(1.0), Float(1.0)))
+func GMCreateWorld() -> GMWorld {
+    GMGameWorld(nodes: [], cameraDimensions: (Float(1.0), Float(1.0)))
 }
 
-class GameWorld: World {
+class GMGameWorld: GMWorld {
     var cameraTop: Float
     var cameraBottom: Float
     var state: WorldState
     var rate: Float
-    var nodes: [Node]
+    var nodes: [GMNode]
 
-    init(nodes: [Node],
+    init(nodes: [GMNode],
          state: WorldState = .playing,
          rate: Float = 0.005,
          cameraDimensions: (Float, Float)
@@ -49,7 +49,7 @@ class GameWorld: World {
         case .playing:
             state = .paused
             self.nodes.append(
-                Node(
+                GMNode(
                     location: Point(
                         Float.random(in: -1...1),
                         Float.random(in: self.cameraBottom...self.cameraTop),
@@ -84,7 +84,7 @@ class GameWorld: World {
     }
 }
 
-class Node {
+class GMNode {
     // for the CPU
     var location: Point
     // for the GPU
@@ -108,7 +108,7 @@ class Node {
     }
 
     @discardableResult
-    func move(elapsed: Double) -> Node {
+    func move(elapsed: Double) -> GMNode {
         if (location.rawValue.x > 1) {
             self.state = .backward
         }
@@ -127,7 +127,7 @@ class Node {
     }
 
     @discardableResult
-    func translate(_ x: Float, _ y: Float, _ z: Float) -> Node {
+    func translate(_ x: Float, _ y: Float, _ z: Float) -> GMNode {
         location = location.translate(x, y, z)
         transformation = float4x4.translate(
             x: location.rawValue.x + x,

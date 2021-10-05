@@ -11,10 +11,10 @@ import MetalKit
 class Renderer: NSObject {
     let metalBits: MetalBits
     var previous: Double
-    var world: World
+    var world: GMWorld
     var aspect: Float = 1.0
 
-    init(metalBits: MetalBits, world: World) {
+    init(metalBits: MetalBits, world: GMWorld) {
         self.metalBits = metalBits
         self.previous = CACurrentMediaTime()
         self.world = world
