@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AF0E16C25BC649F7A7E597C /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EA7024B2133A557162BC /* GMWorld.swift */; };
 		633C649D270CDDFC0018E16A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C649C270CDDFC0018E16A /* AppDelegate.swift */; };
 		633C649F270CDDFC0018E16A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C649E270CDDFC0018E16A /* SceneDelegate.swift */; };
 		633C64A1270CDDFC0018E16A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C64A0270CDDFC0018E16A /* ViewController.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5AF0EA7024B2133A557162BC /* GMWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMWorld.swift; sourceTree = "<group>"; };
 		633C6499270CDDFC0018E16A /* Metal005SceneGraph.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal005SceneGraph.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		633C649C270CDDFC0018E16A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		633C649E270CDDFC0018E16A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5AF0E36FC572B14155308B29 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				5AF0EA7024B2133A557162BC /* GMWorld.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
 		633C6490270CDDFC0018E16A = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +114,7 @@
 				633C64D1270CDFBF0018E16A /* SimdFloat4x4Ext.swift */,
 				633C64D2270CDFBF0018E16A /* VerticeCollections.swift */,
 				633C64D3270CDFBF0018E16A /* Vertices.swift */,
+				5AF0E36FC572B14155308B29 /* Game */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -193,6 +204,7 @@
 				633C64D6270CDFBF0018E16A /* Renderer.swift in Sources */,
 				633C64DE270CDFBF0018E16A /* Vertices.swift in Sources */,
 				633C649F270CDDFC0018E16A /* SceneDelegate.swift in Sources */,
+				5AF0E16C25BC649F7A7E597C /* GMWorld.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
