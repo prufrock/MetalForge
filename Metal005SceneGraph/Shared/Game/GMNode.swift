@@ -10,20 +10,18 @@ class GMNode {
     var location: Point
     // for the GPU
     var vertices: Vertices
-    var transformation: float4x4
+    var transformation: float4x4 = matrix_identity_float4x4
     var state: NodeState
     var rate: Float
 
     init(
         location: Point,
         vertices: Vertices,
-        transformation: float4x4 = matrix_identity_float4x4,
-        initialState: NodeState = .forward,
-        rate: Float = (1/3.8)
+        initialState: NodeState,
+        rate: Float
     ) {
         self.location = location
         self.vertices = vertices
-        self.transformation = transformation
         self.state = initialState
         self.rate = rate
     }

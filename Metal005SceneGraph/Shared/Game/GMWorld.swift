@@ -60,7 +60,9 @@ class GMGameWorld: GMWorld {
                         Float.random(in: self.cameraBottom...self.cameraTop),
                         Float.random(in: 0...1)
                     ),
-                    vertices: VerticeCollection().c[.cube]!
+                    vertices: VerticeCollection().c[.cube]!,
+                    initialState: .forward,
+                    rate: Float(0.26)
                 )
             )
         case .paused:
