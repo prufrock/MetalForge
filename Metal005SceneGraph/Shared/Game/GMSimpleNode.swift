@@ -16,7 +16,7 @@ protocol PGMNode {
 }
 
 
-class GMNode: PGMNode {
+class GMSimpleNode: PGMNode {
     // for the CPU
     var location: Point
     // for the GPU

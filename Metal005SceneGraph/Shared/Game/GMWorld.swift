@@ -54,7 +54,7 @@ class GMGameWorld: GMWorld {
         case .playing:
             state = .paused
             self.nodes.append(
-                GMNode(
+                GMSimpleNode(
                     location: Point(
                         Float.random(in: -1...1),
                         Float.random(in: self.cameraBottom...self.cameraTop),
