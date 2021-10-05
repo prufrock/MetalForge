@@ -4,19 +4,19 @@
 
 import MetalKit
 
-protocol PGMNode {
+protocol GMNode {
     var location: Point { get }
     var transformation: float4x4 { get }
     var vertices: Vertices { get }
     var color: float4 { get }
 
-    func move(elapsed: Double) -> PGMNode
+    func move(elapsed: Double) -> GMNode
 
-    func setColor(_ color: float4) -> PGMNode
+    func setColor(_ color: float4) -> GMNode
 }
 
 
-class GMSimpleNode: PGMNode {
+class GMSimpleNode: GMNode {
     // for the CPU
     var location: Point
     // for the GPU
@@ -41,7 +41,7 @@ class GMSimpleNode: PGMNode {
     }
 
     @discardableResult
-    func move(elapsed: Double) -> PGMNode {
+    func move(elapsed: Double) -> GMNode {
         if (location.rawValue.x > 1) {
             self.state = .backward
         }
@@ -60,7 +60,7 @@ class GMSimpleNode: PGMNode {
     }
 
     @discardableResult
-    func translate(_ x: Float, _ y: Float, _ z: Float) -> PGMNode {
+    func translate(_ x: Float, _ y: Float, _ z: Float) -> GMNode {
         location = location.translate(x, y, z)
         transformation = float4x4.translate(
             x: location.rawValue.x + x,
@@ -72,7 +72,7 @@ class GMSimpleNode: PGMNode {
     }
 
     @discardableResult
-    func setColor(_ color: float4) -> PGMNode {
+    func setColor(_ color: float4) -> GMNode {
         self.color = color
 
         return self

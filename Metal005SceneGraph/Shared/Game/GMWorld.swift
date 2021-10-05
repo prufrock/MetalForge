@@ -7,7 +7,7 @@ import MetalKit
 protocol GMWorld {
     var cameraTop: Float { get }
     var cameraBottom: Float { get }
-    var nodes: [PGMNode] { get }
+    var nodes: [GMNode] { get }
 
     func click()
 
@@ -30,9 +30,9 @@ class GMGameWorld: GMWorld {
     var cameraBottom: Float
     var state: WorldState
     var rate: Float
-    var nodes: [PGMNode]
+    var nodes: [GMNode]
 
-    init(nodes: [PGMNode],
+    init(nodes: [GMNode],
          state: WorldState,
          rate: Float,
          cameraDimensions: (Float, Float)
