@@ -16,6 +16,9 @@ protocol World {
     func update(elapsed: Double)
 }
 
+func GMCreateWorld() -> World {
+    GameWorld(nodes: [], cameraDimensions: (Float(1.0), Float(1.0)))
+}
 
 class GameWorld: World {
     var cameraTop: Float
