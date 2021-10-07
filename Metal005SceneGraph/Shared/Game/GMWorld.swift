@@ -9,11 +9,11 @@ protocol GMWorld {
     var cameraBottom: Float { get }
     var nodes: [GMNode] { get }
 
-    func click()
+    func click() -> GMWorld
 
-    func setCameraDimension(top: Float, bottom: Float)
+    func setCameraDimension(top: Float, bottom: Float) -> GMWorld
 
-    func update(elapsed: Double)
+    func update(elapsed: Double) -> GMWorld
 }
 
 func GMCreateWorld() -> GMWorld {
@@ -44,12 +44,16 @@ class GMGameWorld: GMWorld {
         self.cameraBottom = cameraDimensions.1
     }
 
-    func setCameraDimension(top: Float, bottom: Float) {
+    @discardableResult
+    func setCameraDimension(top: Float, bottom: Float) -> GMWorld {
         cameraTop = top
         cameraBottom = bottom
+
+        return self
     }
 
-    func click() {
+    @discardableResult
+    func click() -> GMWorld {
         switch state {
         case .playing:
             state = .paused
@@ -68,9 +72,12 @@ class GMGameWorld: GMWorld {
         case .paused:
             state = .playing
         }
+
+        return self
     }
 
-    func update(elapsed: Double) {
+    @discardableResult
+    func update(elapsed: Double) -> GMWorld {
         switch state {
         case .playing:
             nodes.forEach { node in
@@ -81,9 +88,11 @@ class GMGameWorld: GMWorld {
             updateAllButNewestNode(elapsed: elapsed)
         }
         nodes.last?.setColor(Colors().red)
+
+        return self
     }
 
-    func updateAllButNewestNode(elapsed: Double) {
+    private func updateAllButNewestNode(elapsed: Double) {
         for i in 0..<nodes.lastIndex {
             nodes[i].move(elapsed: elapsed).setColor(Colors().green)
         }
