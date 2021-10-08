@@ -20,8 +20,23 @@ enum GMNodeState {
     case backward
 }
 
+func GMCreateNode(location: Point,
+                  vertices: Vertices,
+                  initialState: GMNodeState,
+                  rate: Float,
+                  color: float4
+    ) -> GMNode {
+    return GMSimpleNode(
+        location: location,
+        vertices: vertices,
+        initialState: initialState,
+        rate: rate,
+        color: color
+    )
+}
+
 struct GMImmutableNode: GMNode {
-    // for the CPI
+    // for the CPU
     let location: Point
     // for the GPU
     let vertices: Vertices
@@ -126,14 +141,14 @@ class GMSimpleNode: GMNode {
     // for the GPU
     var vertices: Vertices
     var transformation: float4x4 = matrix_identity_float4x4
-    var state: NodeState
+    var state: GMNodeState
     var rate: Float
     var color: float4
 
     init(
         location: Point,
         vertices: Vertices,
-        initialState: NodeState,
+        initialState: GMNodeState,
         rate: Float,
         color: float4 = Colors().green
     ) {
@@ -180,10 +195,5 @@ class GMSimpleNode: GMNode {
         self.color = color
 
         return self
-    }
-
-    enum NodeState {
-        case forward
-        case backward
     }
 }
