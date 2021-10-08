@@ -58,7 +58,7 @@ class GMGameWorld: GMWorld {
         case .playing:
             state = .paused
             self.nodes.append(
-                GMSimpleNode(
+                GMCreateNode(
                     location: Point(
                         Float.random(in: -1...1),
                         Float.random(in: self.cameraBottom...self.cameraTop),
@@ -66,7 +66,8 @@ class GMGameWorld: GMWorld {
                     ),
                     vertices: VerticeCollection().c[.cube]!,
                     initialState: .forward,
-                    rate: Float(0.26)
+                    rate: Float(0.26),
+                    color: Colors().green
                 )
             )
         case .paused:
