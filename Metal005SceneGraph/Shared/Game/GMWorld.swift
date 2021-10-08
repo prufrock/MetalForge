@@ -81,21 +81,26 @@ class GMGameWorld: GMWorld {
     func update(elapsed: Double) -> GMWorld {
         switch state {
         case .playing:
-            nodes.forEach { node in
-                node.move(elapsed: elapsed)
-                node.setColor(Colors().green)
+            nodes = nodes.map { node in
+                node.move(elapsed: elapsed).setColor(Colors().green)
             }
         case .paused:
-            updateAllButNewestNode(elapsed: elapsed)
+            nodes = updateAllButNewestNode(elapsed: elapsed, nodes: nodes)
         }
         nodes.last?.setColor(Colors().red)
 
         return self
     }
 
-    private func updateAllButNewestNode(elapsed: Double) {
-        for i in 0..<nodes.lastIndex {
-            nodes[i].move(elapsed: elapsed).setColor(Colors().green)
+    private func updateAllButNewestNode(
+        elapsed: Double,
+        nodes oldNodes: [GMNode],
+        newNodes: [GMNode] = []
+    ) -> [GMNode] {
+        if ((newNodes.lastIndex + 1) == oldNodes.lastIndex) {
+            return newNodes + [oldNodes[oldNodes.lastIndex]]
+        } else {
+            return updateAllButNewestNode(elapsed: elapsed, nodes: oldNodes, newNodes: newNodes + [oldNodes[newNodes.count].move(elapsed: elapsed).setColor(Colors().green)])
         }
     }
 
