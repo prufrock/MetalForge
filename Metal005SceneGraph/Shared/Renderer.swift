@@ -13,11 +13,13 @@ class Renderer: NSObject {
     var previous: Double
     var world: GMWorld
     var aspect: Float = 1.0
+    let commandQueue: MTLCommandQueue
 
     init(metalBits: MetalBits, world: GMWorld) {
         self.metalBits = metalBits
         self.previous = CACurrentMediaTime()
         self.world = world
+        self.commandQueue = metalBits.device.makeCommandQueue()!
 
         super.init()
 
@@ -32,13 +34,7 @@ class Renderer: NSObject {
     }
 
     private func render(in view: MTKView) {
-        guard let commandQueue = metalBits.device.makeCommandQueue() else {
-            fatalError("""
-                       What?! No comand queue. Come on!
-                       """)
-        }
-
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
+        guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
             fatalError("""
                        Ugh, no command buffer. What the heck!
                        """)
