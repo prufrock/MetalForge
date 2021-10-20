@@ -87,7 +87,10 @@ class GMGameWorld: GMWorld {
         case .paused:
             nodes = updateAllButNewestNode(elapsed: elapsed, nodes: nodes)
         }
-        nodes.last?.setColor(Colors().red)
+
+        if(nodes.count >= 1) {
+            nodes = nodes[0..<(nodes.endIndex-1)] + [nodes.last!.setColor(Colors().red)]
+        }
 
         return self
     }

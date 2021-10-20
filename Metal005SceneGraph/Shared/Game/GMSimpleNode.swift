@@ -12,6 +12,7 @@ protocol GMNode {
 
     func move(elapsed: Double) -> GMNode
 
+    @discardableResult
     func setColor(_ color: float4) -> GMNode
 }
 
@@ -26,7 +27,7 @@ func GMCreateNode(location: Point,
                   rate: Float,
                   color: float4
     ) -> GMNode {
-    return GMSimpleNode(
+    GMImmutableNode(
         location: location,
         vertices: vertices,
         initialState: initialState,
@@ -129,6 +130,7 @@ struct GMImmutableNode: GMNode {
             vertices: vertices ?? self.vertices,
             initialState: state ?? self.state,
             rate: rate ?? self.rate,
+            color: color ?? self.color,
             transformation: transformation ?? self.transformation
         )
     }
