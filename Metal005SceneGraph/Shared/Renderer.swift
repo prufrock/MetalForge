@@ -96,8 +96,8 @@ extension Renderer: MTKViewDelegate {
         let delta = current - previous
         previous = current
 
-        world.setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
-        world.update(elapsed: delta)
+        world = world.setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
+        world = world.update(elapsed: delta)
 
         render(in: view)
     }
@@ -105,6 +105,6 @@ extension Renderer: MTKViewDelegate {
 
 extension Renderer {
     func click() {
-        world.click()
+        world = world.click()
     }
 }
