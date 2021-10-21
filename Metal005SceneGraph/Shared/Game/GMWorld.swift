@@ -176,7 +176,7 @@ class GMImmutableGameWorld: GMWorld {
             newNodes = updateAllButNewestNode(elapsed: elapsed, nodes: nodes)
         }
 
-        if(nodes.count >= 1) {
+        if(newNodes.count >= 1) {
             newNodes = newNodes[0..<(nodes.endIndex-1)] + [newNodes.last!.setColor(Colors().red)]
         }
 
