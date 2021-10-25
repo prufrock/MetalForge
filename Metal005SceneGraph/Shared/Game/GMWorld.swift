@@ -5,8 +5,6 @@
 import MetalKit
 
 protocol GMWorld {
-    var cameraTop: Float { get }
-    var cameraBottom: Float { get }
     var nodes: [GMNode] { get }
 
     func click() -> GMWorld
