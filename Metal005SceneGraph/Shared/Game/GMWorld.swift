@@ -5,13 +5,14 @@
 import MetalKit
 
 protocol GMWorld {
-    var nodes: [GMNode] { get }
-
     func click() -> GMWorld
 
     func setCameraDimension(top: Float, bottom: Float) -> GMWorld
 
     func update(elapsed: Double) -> GMWorld
+
+    // TODO Figure out how to make it so render doesn't know about GMNode.
+    func render(to: (GMNode) -> Void)
 }
 
 func GMCreateWorld() -> GMWorld {
@@ -122,6 +123,10 @@ class GMImmutableGameWorld: GMWorld {
             rate: rate ?? self.rate,
             cameraDimensions: cameraDimensions ?? (self.cameraTop, self.cameraBottom)
         )
+    }
+
+    func render(to: (GMNode) -> Void) {
+        self.nodes.forEach(to)
     }
 }
 

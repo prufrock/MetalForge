@@ -47,15 +47,15 @@ class Renderer: NSObject {
                        """)
         }
 
-        world.nodes.forEach { node in
+        world.render(to: { node in
             var transform = matrix_identity_float4x4
-                    // projection
-                    * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
-                    // scale for the aspect ratio
-                    * float4x4.scaleY(aspect) //TODO move this into perspectiveProjection or something to do with the camera.
-                    // model
-                    //* float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
-                    * node.transformation
+                // projection
+                * float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
+                // scale for the aspect ratio
+                * float4x4.scaleY(aspect) //TODO move this into perspectiveProjection or something to do with the camera.
+                // model
+                //* float4x4.translate(x: 0.3, y: 0.3, z: 0.0)
+                * node.transformation
 
             let buffer = metalBits.device.makeBuffer(bytes: node.vertices.toFloat4(), length: node.vertices.memoryLength(), options: [])
 
@@ -68,7 +68,7 @@ class Renderer: NSObject {
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)
             encoder.drawPrimitives(type: node.vertices.primitiveType, vertexStart: 0, vertexCount: node.vertices.count)
-        }
+        })
 
         encoder.endEncoding()
 

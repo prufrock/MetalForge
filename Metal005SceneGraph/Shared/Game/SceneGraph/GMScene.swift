@@ -5,8 +5,6 @@
 import Foundation
 
 protocol GMScene {
-    var nodes: [GMSceneNode] { get }
-
     func update(elapsed: Double) -> GMScene
 }
 
