@@ -11,8 +11,7 @@ protocol GMWorld {
 
     func update(elapsed: Double) -> GMWorld
 
-    // TODO Figure out how to make it so render doesn't know about GMNode.
-    func render(to: (GMNode) -> Void)
+    func render(to: (RenderableNode) -> Void)
 }
 
 func GMCreateWorld() -> GMWorld {
@@ -125,7 +124,7 @@ class GMImmutableGameWorld: GMWorld {
         )
     }
 
-    func render(to: (GMNode) -> Void) {
+    func render(to: (RenderableNode) -> Void) {
         self.nodes.forEach(to)
     }
 }

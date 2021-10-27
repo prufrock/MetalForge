@@ -4,12 +4,7 @@
 
 import MetalKit
 
-protocol GMNode {
-    var location: Point { get }
-    var transformation: float4x4 { get }
-    var vertices: Vertices { get }
-    var color: float4 { get }
-
+protocol GMNode: RenderableNode {
     func move(elapsed: Double) -> GMNode
 
     @discardableResult

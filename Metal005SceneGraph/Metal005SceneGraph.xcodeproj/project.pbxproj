@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5AF0E16C25BC649F7A7E597C /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EA7024B2133A557162BC /* GMWorld.swift */; };
 		5AF0E3EAEA9610CEB69296FA /* GMScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB7847F14A6E0EE1D815 /* GMScene.swift */; };
+		5AF0EB8979F6A4DABB00600E /* RenderableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBE0BA4249F5930DF134 /* RenderableNode.swift */; };
 		5AF0ED5846D74D07E6586188 /* GMSimpleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6B1DEC64FA4B0D93C4A /* GMSimpleNode.swift */; };
 		633C649D270CDDFC0018E16A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C649C270CDDFC0018E16A /* AppDelegate.swift */; };
 		633C649F270CDDFC0018E16A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633C649E270CDDFC0018E16A /* SceneDelegate.swift */; };
@@ -33,6 +34,7 @@
 		5AF0E6B1DEC64FA4B0D93C4A /* GMSimpleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSimpleNode.swift; sourceTree = "<group>"; };
 		5AF0EA7024B2133A557162BC /* GMWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMWorld.swift; sourceTree = "<group>"; };
 		5AF0EB7847F14A6E0EE1D815 /* GMScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMScene.swift; sourceTree = "<group>"; };
+		5AF0EBE0BA4249F5930DF134 /* RenderableNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderableNode.swift; sourceTree = "<group>"; };
 		633C6499270CDDFC0018E16A /* Metal005SceneGraph.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal005SceneGraph.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		633C649C270CDDFC0018E16A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		633C649E270CDDFC0018E16A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				633C64D2270CDFBF0018E16A /* VerticeCollections.swift */,
 				633C64D3270CDFBF0018E16A /* Vertices.swift */,
 				5AF0E36FC572B14155308B29 /* Game */,
+				5AF0EBE0BA4249F5930DF134 /* RenderableNode.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				5AF0E16C25BC649F7A7E597C /* GMWorld.swift in Sources */,
 				5AF0ED5846D74D07E6586188 /* GMSimpleNode.swift in Sources */,
 				5AF0E3EAEA9610CEB69296FA /* GMScene.swift in Sources */,
+				5AF0EB8979F6A4DABB00600E /* RenderableNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
