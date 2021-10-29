@@ -35,7 +35,7 @@ class ViewController: UIViewController {
 
         drawer = Renderer(
             metalBits: MetalBits.create(view: view),
-            world: GMCreateWorld()
+            world: GMCreateScene()
         )
 
         state = .drawing

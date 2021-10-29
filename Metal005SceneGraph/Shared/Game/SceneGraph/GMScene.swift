@@ -4,10 +4,6 @@
 
 import Foundation
 
-protocol GMScene {
-    func update(elapsed: Double) -> GMScene
-}
-
 protocol GMSceneNode: RenderableNode {
     func add(child: GMSceneNode) -> GMSceneNode
 
@@ -16,10 +12,26 @@ protocol GMSceneNode: RenderableNode {
     func update(elapsed: Double) -> GMSceneNode
 }
 
-struct GMSceneImmutableScene: GMScene {
+func GMCreateScene() -> RenderableCollection {
+   GMSceneImmutableScene(nodes: [])
+}
+
+struct GMSceneImmutableScene: RenderableCollection {
     let nodes: [GMSceneNode]
 
-    func update(elapsed: Double) -> GMScene {
+    func click() -> RenderableCollection {
+        self
+    }
+
+    func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
+        self
+    }
+
+    func render(to: (RenderableNode) -> Void) {
+        nodes.forEach { node in to(node) }
+    }
+
+    func update(elapsed: Double) -> RenderableCollection {
         self
     }
 }
