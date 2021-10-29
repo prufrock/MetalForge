@@ -13,11 +13,24 @@ protocol GMSceneNode: RenderableNode {
 }
 
 func GMCreateScene() -> RenderableCollection {
-   GMSceneImmutableScene(nodes: [])
+   GMSceneImmutableScene(
+       nodes: [],
+       cameraDimensions: (1.0, 1.0)
+   )
 }
 
 struct GMSceneImmutableScene: RenderableCollection {
+    let cameraTop: Float
+    let cameraBottom: Float
     let nodes: [GMSceneNode]
+
+    init(nodes: [GMSceneNode],
+         cameraDimensions: (Float, Float)
+    ) {
+        self.nodes = nodes
+        self.cameraTop = cameraDimensions.0
+        self.cameraBottom = cameraDimensions.1
+    }
 
     func click() -> RenderableCollection {
         self
@@ -33,6 +46,16 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     func update(elapsed: Double) -> RenderableCollection {
         self
+    }
+
+    private func clone(
+        nodes: [GMSceneNode]? = nil,
+        cameraDimensions: (Float, Float)? = nil
+    ) -> RenderableCollection {
+        GMSceneImmutableScene(
+            nodes: nodes ?? self.nodes,
+            cameraDimensions: cameraDimensions ?? (self.cameraTop, self.cameraBottom)
+        )
     }
 }
 
