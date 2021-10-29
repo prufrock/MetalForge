@@ -8,7 +8,7 @@ protocol GMScene {
     func update(elapsed: Double) -> GMScene
 }
 
-protocol GMSceneNode {
+protocol GMSceneNode: RenderableNode {
     func add(child: GMSceneNode) -> GMSceneNode
 
     func delete(child: GMSceneNode) -> GMSceneNode
@@ -27,6 +27,11 @@ struct GMSceneImmutableScene: GMScene {
 struct GMSceneImmutableNode: GMSceneNode {
     let parent: GMSceneNode?
     let children: [GMSceneNode]
+
+    let location: Point
+    let transformation: float4x4
+    let vertices: Vertices
+    let color: float4
 
     func add(child: GMSceneNode) -> GMSceneNode {
         self
