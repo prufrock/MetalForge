@@ -11,11 +11,11 @@ import MetalKit
 class Renderer: NSObject {
     let metalBits: MetalBits
     var previous: Double
-    var world: GMWorld
+    var world: RenderableCollection
     var aspect: Float = 1.0
     let commandQueue: MTLCommandQueue
 
-    init(metalBits: MetalBits, world: GMWorld) {
+    init(metalBits: MetalBits, world: RenderableCollection) {
         self.metalBits = metalBits
         self.previous = CACurrentMediaTime()
         self.world = world

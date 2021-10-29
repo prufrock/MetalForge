@@ -14,7 +14,7 @@ protocol GMWorld {
     func render(to: (RenderableNode) -> Void)
 }
 
-func GMCreateWorld() -> GMWorld {
+func GMCreateWorld() -> RenderableCollection {
     GMImmutableGameWorld(
         nodes: [],
         state: .playing,
@@ -23,7 +23,7 @@ func GMCreateWorld() -> GMWorld {
     )
 }
 
-class GMImmutableGameWorld: GMWorld {
+class GMImmutableGameWorld: RenderableCollection {
     let cameraTop: Float
     let cameraBottom: Float
     let state: WorldState
@@ -43,12 +43,12 @@ class GMImmutableGameWorld: GMWorld {
     }
 
     @discardableResult
-    func setCameraDimension(top: Float, bottom: Float) -> GMWorld {
+    func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
         clone(cameraDimensions: (top, bottom))
     }
 
     @discardableResult
-    func click() -> GMWorld {
+    func click() -> RenderableCollection {
         let newState: WorldState
         let newNodes: [GMNode]
         switch state {
@@ -75,7 +75,7 @@ class GMImmutableGameWorld: GMWorld {
     }
 
     @discardableResult
-    func update(elapsed: Double) -> GMWorld {
+    func update(elapsed: Double) -> RenderableCollection {
         var newNodes: [GMNode]
         switch state {
         case .playing:
@@ -115,7 +115,7 @@ class GMImmutableGameWorld: GMWorld {
         state: WorldState? = nil,
         rate: Float? = nil,
         cameraDimensions: (Float, Float)? = nil
-    ) -> GMWorld {
+    ) -> RenderableCollection {
         GMImmutableGameWorld(
             nodes: nodes ?? self.nodes,
             state: state ?? self.state,
