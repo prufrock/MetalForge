@@ -18,6 +18,10 @@ struct Point {
         rawValue = [x, y, z]
     }
 
+    static func origin() -> Point {
+        Point(0.0, 0.0, 0.0)
+    }
+
     func translate(_ x: Float, _ y: Float, _ z: Float) -> Point {
         Self(
             self.rawValue.x + x,
