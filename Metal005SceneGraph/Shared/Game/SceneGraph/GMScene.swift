@@ -8,7 +8,6 @@ import simd
 protocol GMSceneNode: RenderableNode {
     func add(child: GMSceneNode) -> GMSceneNode
 
-
     func delete(child: GMSceneNode) -> GMSceneNode
 
     func update(elapsed: Double) -> GMSceneNode
@@ -44,7 +43,6 @@ struct GMSceneImmutableScene: RenderableCollection {
 
         let newNode = node.add(
             child: GMSceneImmutableNode(
-                parent: node, //not correct
                 children: [],
                 location: Point(
                     Float.random(in: -1...1),
@@ -84,7 +82,6 @@ struct GMSceneImmutableScene: RenderableCollection {
 }
 
 struct GMSceneImmutableNode: GMSceneNode {
-    let parent: GMSceneNode?
     let children: [GMSceneNode]
 
     let location: Point
@@ -93,7 +90,6 @@ struct GMSceneImmutableNode: GMSceneNode {
     let color: float4
 
     init() {
-        parent = nil
         children = []
 
         location = Point.origin()
@@ -105,14 +101,12 @@ struct GMSceneImmutableNode: GMSceneNode {
     }
 
     init(
-        parent: GMSceneNode?,
         children: [GMSceneNode],
         location: Point,
         transformation: float4x4,
         vertices: Vertices,
         color: float4
     ) {
-        self.parent = parent
         self.children = children
         self.location = location
         self.transformation = transformation
