@@ -11,6 +11,8 @@ protocol GMSceneNode: RenderableNode {
     func delete(child: GMSceneNode) -> GMSceneNode
 
     func update(elapsed: Double) -> GMSceneNode
+
+    func render(to: (RenderableNode) -> Void)
 }
 
 extension GMSceneNode {
@@ -41,15 +43,23 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     func click() -> RenderableCollection {
 
+        let location = Point(
+            Float.random(in: -1...1),
+            Float.random(in: self.cameraBottom...self.cameraTop),
+            Float.random(in: 0...1)
+        )
+
+        let transformation = float4x4.translate(
+            x: location.rawValue.x,
+            y: location.rawValue.y,
+            z: location.rawValue.z
+        )
+
         let newNode = node.add(
             child: GMSceneImmutableNode(
                 children: [],
-                location: Point(
-                    Float.random(in: -1...1),
-                    Float.random(in: self.cameraBottom...self.cameraTop),
-                    Float.random(in: 0...1)
-                ),
-                transformation: matrix_identity_float4x4,
+                location: location,
+                transformation: transformation,
                 vertices: VerticeCollection().c[.cube]!,
                 color: Colors().green
             )
@@ -59,11 +69,11 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
-        self
+        clone(cameraDimensions: (top, bottom))
     }
 
     func render(to: (RenderableNode) -> Void) {
-        to(node)
+        node.render(to: to)
     }
 
     func update(elapsed: Double) -> RenderableCollection {
@@ -115,7 +125,9 @@ struct GMSceneImmutableNode: GMSceneNode {
     }
 
     func add(child: GMSceneNode) -> GMSceneNode {
-        self
+        let newChildren = children + [child]
+
+        return clone(children: newChildren)
     }
 
     func delete(child: GMSceneNode) -> GMSceneNode {
@@ -124,5 +136,26 @@ struct GMSceneImmutableNode: GMSceneNode {
 
     func update(elapsed: Double) -> GMSceneNode {
         self
+    }
+
+    func render(to: (RenderableNode) -> Void) {
+        to(self)
+        children.forEach{ node in node.render(to: to)}
+    }
+
+    private func clone(
+        children: [GMSceneNode]? = nil,
+        location: Point? = nil,
+        transformation: float4x4? = nil,
+        vertices: Vertices? = nil,
+        color: float4? = nil
+    ) -> GMSceneImmutableNode {
+        GMSceneImmutableNode(
+            children: children ?? self.children,
+            location: location ?? self.location,
+            transformation: transformation ?? self.transformation,
+            vertices: vertices ?? self.vertices,
+            color: color ?? self.color
+        )
     }
 }
