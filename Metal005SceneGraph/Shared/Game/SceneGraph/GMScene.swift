@@ -92,7 +92,7 @@ struct GMSceneImmutableScene: RenderableCollection {
 }
 
 struct GMSceneImmutableNode: GMSceneNode {
-    let children: [GMSceneNode]
+    private let children: [GMSceneNode]
 
     let location: Point
     let transformation: float4x4
