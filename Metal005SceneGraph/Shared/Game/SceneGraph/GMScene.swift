@@ -43,27 +43,11 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     func click() -> RenderableCollection {
 
-        let location = Point(
-            Float.random(in: -1...1),
-            Float.random(in: self.cameraBottom...self.cameraTop),
-            Float.random(in: 0...1)
-        )
-
-        let transformation = float4x4.translate(
-            x: location.rawValue.x,
-            y: location.rawValue.y,
-            z: location.rawValue.z
-        )
-
         let newNode = node.add(
-            child: GMSceneImmutableNode(
-                children: [],
-                location: location,
-                transformation: transformation,
-                vertices: VerticeCollection().c[.cube]!,
-                color: Colors().green
-            )
-        )
+            child: randomNode(children: [
+                randomNode(children: [], color: Colors().red)
+            ], color: Colors().green)
+        ).add(child: randomNode(children: [], color: Colors().blue))
 
         return clone(node: newNode)
     }
@@ -87,6 +71,28 @@ struct GMSceneImmutableScene: RenderableCollection {
         GMSceneImmutableScene(
             node: node ?? self.node,
             cameraDimensions: cameraDimensions ?? (self.cameraTop, self.cameraBottom)
+        )
+    }
+
+    private func randomNode(children: [GMSceneImmutableNode], color: float4) -> GMSceneImmutableNode {
+        let location = Point(
+            Float.random(in: -1...1),
+            Float.random(in: self.cameraBottom...self.cameraTop),
+            Float.random(in: 0...1)
+        )
+
+        let transformation = float4x4.translate(
+            x: location.rawValue.x,
+            y: location.rawValue.y,
+            z: location.rawValue.z
+        )
+
+        return GMSceneImmutableNode(
+            children: children,
+            location: location,
+            transformation: transformation,
+            vertices: VerticeCollection().c[.cube]!,
+            color: color
         )
     }
 }
