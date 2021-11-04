@@ -42,6 +42,10 @@ class GMImmutableGameWorld: RenderableCollection {
         self.cameraBottom = cameraDimensions.1
     }
 
+    func cameraSpace(withAspect aspect: Float) -> float4x4 {
+        float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0) * float4x4.scaleY(aspect)
+    }
+
     @discardableResult
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
         clone(cameraDimensions: (top, bottom))

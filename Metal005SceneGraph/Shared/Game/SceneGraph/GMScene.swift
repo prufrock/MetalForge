@@ -15,6 +15,12 @@ protocol GMSceneNode: RenderableNode {
     func render(to: (RenderableNode) -> Void)
 }
 
+protocol CameraNode {
+    var transformation: float4x4 { get }
+
+    func cameraSpace(withAspect aspect: Float) -> float4x4
+}
+
 extension GMSceneNode {
     static func +(left: GMSceneNode, right: GMSceneNode) -> GMSceneNode {
         left.add(child: right)
@@ -27,7 +33,16 @@ func GMCreateScene() -> RenderableCollection {
    )
 }
 
+struct GMImmutableCamera: CameraNode {
+    let transformation: float4x4
+
+    func cameraSpace(withAspect aspect: Float) -> float4x4 {
+       transformation * float4x4.scaleY(aspect)
+    }
+}
+
 struct GMSceneImmutableScene: RenderableCollection {
+    let camera: GMImmutableCamera
     let cameraTop: Float
     let cameraBottom: Float
     let node: GMSceneNode
@@ -37,8 +52,15 @@ struct GMSceneImmutableScene: RenderableCollection {
         cameraDimensions: (Float, Float)
     ) {
         self.node = node
+        self.camera = GMImmutableCamera(
+            transformation: float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
+        )
         self.cameraTop = cameraDimensions.0
         self.cameraBottom = cameraDimensions.1
+    }
+
+    func cameraSpace(withAspect aspect: Float) -> float4x4 {
+        camera.cameraSpace(withAspect: aspect)
     }
 
     func click() -> RenderableCollection {

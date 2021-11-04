@@ -12,4 +12,6 @@ protocol RenderableCollection {
     func update(elapsed: Double) -> RenderableCollection
 
     func render(to: (RenderableNode) -> Void)
+
+    func cameraSpace(withAspect aspect: Float) -> float4x4
 }
