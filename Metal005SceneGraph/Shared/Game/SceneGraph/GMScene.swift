@@ -31,7 +31,11 @@ extension GMSceneNode {
 
 func GMCreateScene() -> RenderableCollection {
    GMSceneImmutableScene(
-       cameraDimensions: (1.0, 1.0)
+       camera: GMImmutableCamera(
+        cameraTop: 1.0,
+        cameraBottom: 1.0,
+        transformation: float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
+       )
    )
 }
 
@@ -47,22 +51,14 @@ struct GMImmutableCamera: CameraNode {
 
 struct GMSceneImmutableScene: RenderableCollection {
     let camera: GMImmutableCamera
-    let cameraTop: Float
-    let cameraBottom: Float
     let node: GMSceneNode
 
     init(
         node: GMSceneNode = GMSceneImmutableNode(),
-        cameraDimensions: (Float, Float)
+        camera: GMImmutableCamera
     ) {
         self.node = node
-        self.camera = GMImmutableCamera(
-            cameraTop: cameraDimensions.0,
-            cameraBottom: cameraDimensions.1,
-            transformation: float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
-        )
-        self.cameraTop = cameraDimensions.0
-        self.cameraBottom = cameraDimensions.1
+        self.camera = camera
     }
 
     func cameraSpace(withAspect aspect: Float) -> float4x4 {
@@ -81,7 +77,13 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
-        clone(cameraDimensions: (top, bottom))
+        clone(
+            camera: GMImmutableCamera(
+                cameraTop: top,
+                cameraBottom: bottom,
+                transformation: camera.transformation
+            )
+        )
     }
 
     func render(to: (RenderableNode) -> Void) {
@@ -94,18 +96,18 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     private func clone(
         node: GMSceneNode? = nil,
-        cameraDimensions: (Float, Float)? = nil
+        camera: GMImmutableCamera? = nil
     ) -> RenderableCollection {
         GMSceneImmutableScene(
             node: node ?? self.node,
-            cameraDimensions: cameraDimensions ?? (self.cameraTop, self.cameraBottom)
+            camera: camera ?? self.camera
         )
     }
 
     private func randomNode(children: [GMSceneImmutableNode], color: float4) -> GMSceneImmutableNode {
         let location = Point(
             Float.random(in: -1...1),
-            Float.random(in: self.cameraBottom...self.cameraTop),
+            Float.random(in: self.camera.cameraBottom...self.camera.cameraTop),
             Float.random(in: 0...1)
         )
 
