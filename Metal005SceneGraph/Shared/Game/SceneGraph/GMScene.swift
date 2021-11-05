@@ -10,7 +10,13 @@ protocol GMSceneNode: RenderableNode {
 
     func delete(child: GMSceneNode) -> GMSceneNode
 
-    func update(elapsed: Double) -> GMSceneNode
+    func update(transform: (GMSceneNode) -> GMSceneNode) -> GMSceneNode
+
+    func setColor(_ color: float4) -> GMSceneNode
+
+    func setChildren(_ children: [GMSceneNode]) -> GMSceneNode
+
+    func move(elapsed: Double) -> GMSceneNode
 
     func render(to: (RenderableNode) -> Void)
 }
@@ -52,28 +58,39 @@ struct GMImmutableCamera: CameraNode {
 struct GMSceneImmutableScene: RenderableCollection {
     let camera: GMImmutableCamera
     let node: GMSceneNode
+    let state: SceneState
 
     init(
         node: GMSceneNode = GMSceneImmutableNode(),
-        camera: GMImmutableCamera
+        camera: GMImmutableCamera,
+        state: SceneState = .paused
     ) {
         self.node = node
         self.camera = camera
+        self.state = state
     }
 
     func cameraSpace(withAspect aspect: Float) -> float4x4 {
         camera.cameraSpace(withAspect: aspect)
     }
 
+    //TODO Get the cubes moving again
     func click() -> RenderableCollection {
+        let newState: SceneState
+        let newNode: GMSceneNode
 
-        let newNode = node.add(
-            child: randomNode(children: [
-                randomNode(children: [], color: Colors().red)
-            ], color: Colors().green)
-        ).add(child: randomNode(children: [], color: Colors().blue))
+        switch state {
+        case .playing:
+            print("playing")
+            newState = .paused
+            newNode = node.add(child: randomNode(children: [], color: Colors().red))
+        case .paused:
+            print("paused")
+            newState = .playing
+            newNode = node
+        }
 
-        return clone(node: newNode)
+        return clone(node: newNode, state: newState)
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
@@ -91,16 +108,28 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     func update(elapsed: Double) -> RenderableCollection {
-        self
+        var newNode: GMSceneNode
+        switch state {
+        case .playing:
+            newNode = node.update { node in
+                node.move(elapsed: elapsed).setColor(Colors().green)
+            }
+        case .paused:
+            newNode = node
+        }
+
+        return clone(node: newNode)
     }
 
     private func clone(
         node: GMSceneNode? = nil,
-        camera: GMImmutableCamera? = nil
+        camera: GMImmutableCamera? = nil,
+        state: SceneState? = nil
     ) -> RenderableCollection {
         GMSceneImmutableScene(
             node: node ?? self.node,
-            camera: camera ?? self.camera
+            camera: camera ?? self.camera,
+            state: state ?? self.state
         )
     }
 
@@ -122,8 +151,14 @@ struct GMSceneImmutableScene: RenderableCollection {
             location: location,
             transformation: transformation,
             vertices: VerticeCollection().c[.cube]!,
-            color: color
+            color: color,
+            state: .forward
         )
+    }
+
+    enum SceneState {
+        case playing
+        case paused
     }
 }
 
@@ -134,6 +169,8 @@ struct GMSceneImmutableNode: GMSceneNode {
     let transformation: float4x4
     let vertices: Vertices
     let color: float4
+    let state: GMSceneImmutableSceneState
+    let rate = Float(0.26)
 
     init() {
         children = []
@@ -144,6 +181,7 @@ struct GMSceneImmutableNode: GMSceneNode {
             Point(0.0, 0.0, 0.0)
         )
         color = Colors().green
+        state = .forward
     }
 
     init(
@@ -151,13 +189,15 @@ struct GMSceneImmutableNode: GMSceneNode {
         location: Point,
         transformation: float4x4,
         vertices: Vertices,
-        color: float4
+        color: float4,
+        state: GMSceneImmutableSceneState
     ) {
         self.children = children
         self.location = location
         self.transformation = transformation
         self.vertices = vertices
         self.color = color
+        self.state = state
     }
 
     func add(child: GMSceneNode) -> GMSceneNode {
@@ -179,19 +219,75 @@ struct GMSceneImmutableNode: GMSceneNode {
         children.forEach{ node in node.render(to: to)}
     }
 
+    func setChildren(_ children: [GMSceneNode]) -> GMSceneNode {
+        clone(children: children)
+    }
+
+    func update(transform: (GMSceneNode) -> GMSceneNode) -> GMSceneNode {
+        let newSelf = transform(self)
+        let newChildren = children.map { node in node.update(transform: transform) }
+
+        return newSelf.setChildren(newChildren)
+    }
+
+    func move(elapsed: Double) -> GMSceneNode {
+
+        let newState: GMSceneImmutableSceneState
+        if (location.rawValue.x > 1) {
+            newState = .backward
+        } else if (location.rawValue.x < -1) {
+            newState = .forward
+        } else {
+            newState = state
+        }
+
+        let newLocation: Point
+        let newTransformation: float4x4
+        switch state {
+        case .forward:
+            (newLocation, newTransformation) = translate(Float(elapsed) * rate, 0, 0)
+        case .backward:
+            (newLocation, newTransformation) = translate(-1 * Float(elapsed) * rate, 0, 0)
+        }
+
+        return clone(location: newLocation, transformation: newTransformation, state: newState)
+    }
+
+    func setColor(_ color: float4) -> GMSceneNode {
+        clone(color: color)
+    }
+
     private func clone(
         children: [GMSceneNode]? = nil,
         location: Point? = nil,
         transformation: float4x4? = nil,
         vertices: Vertices? = nil,
-        color: float4? = nil
+        color: float4? = nil,
+        state: GMSceneImmutableSceneState? = nil
     ) -> GMSceneImmutableNode {
         GMSceneImmutableNode(
             children: children ?? self.children,
             location: location ?? self.location,
             transformation: transformation ?? self.transformation,
             vertices: vertices ?? self.vertices,
-            color: color ?? self.color
+            color: color ?? self.color,
+            state: state ?? self.state
         )
+    }
+
+    private func translate(_ x: Float, _ y: Float, _ z: Float) -> (Point, float4x4) {
+        let newLocation = location.translate(x, y, z)
+        let newTransformation = float4x4.translate(
+            x: location.rawValue.x + x,
+            y: location.rawValue.y + y,
+            z: location.rawValue.z + z
+        )
+
+        return (newLocation, newTransformation)
+    }
+
+    enum GMSceneImmutableSceneState {
+        case forward
+        case backward
     }
 }
