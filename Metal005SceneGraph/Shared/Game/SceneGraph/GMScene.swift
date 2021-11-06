@@ -6,6 +6,8 @@ import Foundation
 import simd
 
 protocol GMSceneNode: RenderableNode {
+    var children: [GMSceneNode] { get }
+
     func add(child: GMSceneNode) -> GMSceneNode
 
     func delete(child: GMSceneNode) -> GMSceneNode
@@ -74,7 +76,6 @@ struct GMSceneImmutableScene: RenderableCollection {
         camera.cameraSpace(withAspect: aspect)
     }
 
-    //TODO Get the cubes moving again
     func click() -> RenderableCollection {
         let newState: SceneState
         let newNode: GMSceneNode
@@ -115,10 +116,30 @@ struct GMSceneImmutableScene: RenderableCollection {
                 node.move(elapsed: elapsed).setColor(Colors().green)
             }
         case .paused:
-            newNode = node
+            newNode = node.setChildren(updateAllButNewestChild(elapsed: elapsed, children: node.children))
+        }
+
+        if(newNode.children.count >= 1) {
+            newNode = newNode.setChildren(newNode.children[0..<(node.children.endIndex-1)] + [newNode.children.last!.setColor(Colors().red)])
         }
 
         return clone(node: newNode)
+    }
+
+    private func updateAllButNewestChild(
+        elapsed: Double,
+        children oldChildren: [GMSceneNode],
+        newChildren: [GMSceneNode] = []
+    ) -> [GMSceneNode] {
+        // if there's no children then do nothing
+        if oldChildren.lastIndex == -1 {
+            return oldChildren
+        // stop just short of the end so that the last element doesn't change
+        } else if (newChildren.lastIndex + 1) == oldChildren.lastIndex {
+            return newChildren + [oldChildren[oldChildren.lastIndex]]
+        } else {
+            return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [oldChildren[newChildren.count].move(elapsed: elapsed).setColor(Colors().green)])
+        }
     }
 
     private func clone(
@@ -140,11 +161,7 @@ struct GMSceneImmutableScene: RenderableCollection {
             Float.random(in: 0...1)
         )
 
-        let transformation = float4x4.translate(
-            x: location.rawValue.x,
-            y: location.rawValue.y,
-            z: location.rawValue.z
-        )
+        let transformation = matrix_identity_float4x4
 
         return GMSceneImmutableNode(
             children: children,
@@ -163,7 +180,7 @@ struct GMSceneImmutableScene: RenderableCollection {
 }
 
 struct GMSceneImmutableNode: GMSceneNode {
-    private let children: [GMSceneNode]
+    let children: [GMSceneNode]
 
     let location: Point
     let transformation: float4x4
