@@ -48,6 +48,10 @@ class Renderer: NSObject {
         }
 
         world.render(to: { node in
+            guard node.hidden != true else {
+                return
+            }
+
             var transform = matrix_identity_float4x4
                 * world.cameraSpace(withAspect: aspect)
                 // model

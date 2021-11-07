@@ -43,6 +43,8 @@ struct GMImmutableNode: GMNode {
 
     let state: GMNodeState
 
+    let hidden = false
+
     init(
         location: Point,
         vertices: Vertices,
@@ -141,6 +143,8 @@ class GMSimpleNode: GMNode {
     var state: GMNodeState
     var rate: Float
     var color: float4
+
+    var hidden = false
 
     init(
         location: Point,

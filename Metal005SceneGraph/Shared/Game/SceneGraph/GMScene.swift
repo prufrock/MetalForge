@@ -112,9 +112,11 @@ struct GMSceneImmutableScene: RenderableCollection {
         var newNode: GMSceneNode
         switch state {
         case .playing:
-            newNode = node.update { node in
-                node.move(elapsed: elapsed).setColor(Colors().green)
-            }
+            newNode = node.setChildren(node.children.map {
+                node in node.update { node in
+                    node.move(elapsed: elapsed).setColor(Colors().green)
+                }
+            })
         case .paused:
             newNode = node.setChildren(updateAllButNewestChild(elapsed: elapsed, children: node.children))
         }
@@ -169,7 +171,8 @@ struct GMSceneImmutableScene: RenderableCollection {
             transformation: transformation,
             vertices: VerticeCollection().c[.cube]!,
             color: color,
-            state: .forward
+            state: .forward,
+            hidden: false
         )
     }
 
@@ -179,6 +182,7 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 }
 
+//TODO hide the root node
 struct GMSceneImmutableNode: GMSceneNode {
     let children: [GMSceneNode]
 
@@ -188,6 +192,7 @@ struct GMSceneImmutableNode: GMSceneNode {
     let color: float4
     let state: GMSceneImmutableSceneState
     let rate = Float(0.26)
+    let hidden: Bool
 
     init() {
         children = []
@@ -199,6 +204,7 @@ struct GMSceneImmutableNode: GMSceneNode {
         )
         color = Colors().green
         state = .forward
+        hidden = true
     }
 
     init(
@@ -207,7 +213,8 @@ struct GMSceneImmutableNode: GMSceneNode {
         transformation: float4x4,
         vertices: Vertices,
         color: float4,
-        state: GMSceneImmutableSceneState
+        state: GMSceneImmutableSceneState,
+        hidden: Bool
     ) {
         self.children = children
         self.location = location
@@ -215,6 +222,7 @@ struct GMSceneImmutableNode: GMSceneNode {
         self.vertices = vertices
         self.color = color
         self.state = state
+        self.hidden = hidden
     }
 
     func add(child: GMSceneNode) -> GMSceneNode {
@@ -280,7 +288,8 @@ struct GMSceneImmutableNode: GMSceneNode {
         transformation: float4x4? = nil,
         vertices: Vertices? = nil,
         color: float4? = nil,
-        state: GMSceneImmutableSceneState? = nil
+        state: GMSceneImmutableSceneState? = nil,
+        hidden: Bool? = nil
     ) -> GMSceneImmutableNode {
         GMSceneImmutableNode(
             children: children ?? self.children,
@@ -288,7 +297,8 @@ struct GMSceneImmutableNode: GMSceneNode {
             transformation: transformation ?? self.transformation,
             vertices: vertices ?? self.vertices,
             color: color ?? self.color,
-            state: state ?? self.state
+            state: state ?? self.state,
+            hidden: hidden ?? self.hidden
         )
     }
 

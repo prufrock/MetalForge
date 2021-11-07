@@ -9,4 +9,5 @@ protocol RenderableNode {
     var transformation: float4x4 { get }
     var vertices: Vertices { get }
     var color: float4 { get }
+    var hidden: Bool { get }
 }
