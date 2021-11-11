@@ -16,6 +16,22 @@
 		637240F5273CCA11001ADFDE /* Metal006ButtonsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637240F4273CCA11001ADFDE /* Metal006ButtonsTests.swift */; };
 		637240FF273CCA11001ADFDE /* Metal006ButtonsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637240FE273CCA11001ADFDE /* Metal006ButtonsUITests.swift */; };
 		63724101273CCA11001ADFDE /* Metal006ButtonsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724100273CCA11001ADFDE /* Metal006ButtonsUITestsLaunchTests.swift */; };
+		6372412F273CD08A001ADFDE /* AppDelegateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372412E273CD08A001ADFDE /* AppDelegateExt.swift */; };
+		63724131273CD093001ADFDE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724130273CD093001ADFDE /* Colors.swift */; };
+		63724133273CD099001ADFDE /* FloatTypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724132273CD099001ADFDE /* FloatTypeAliases.swift */; };
+		63724135273CD0A1001ADFDE /* MetalBits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724134273CD0A1001ADFDE /* MetalBits.swift */; };
+		63724137273CD0A8001ADFDE /* MTLClearColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724136273CD0A7001ADFDE /* MTLClearColorExt.swift */; };
+		63724139273CD0AC001ADFDE /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724138273CD0AC001ADFDE /* Point.swift */; };
+		6372413B273CD0B2001ADFDE /* RenderableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372413A273CD0B2001ADFDE /* RenderableCollection.swift */; };
+		6372413D273CD0B7001ADFDE /* RenderableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372413C273CD0B7001ADFDE /* RenderableNode.swift */; };
+		6372413F273CD0BD001ADFDE /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372413E273CD0BD001ADFDE /* Renderer.swift */; };
+		63724141273CD0C2001ADFDE /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63724140273CD0C2001ADFDE /* Shaders.metal */; };
+		63724143273CD0CA001ADFDE /* SimdFloat4x4Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724142273CD0CA001ADFDE /* SimdFloat4x4Ext.swift */; };
+		63724145273CD0CF001ADFDE /* VerticeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724144273CD0CF001ADFDE /* VerticeCollections.swift */; };
+		63724147273CD0D6001ADFDE /* Vertices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724146273CD0D6001ADFDE /* Vertices.swift */; };
+		63724152273CD258001ADFDE /* GMSimpleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724151273CD258001ADFDE /* GMSimpleNode.swift */; };
+		63724154273CD25E001ADFDE /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724153273CD25E001ADFDE /* GMWorld.swift */; };
+		63724157273CD275001ADFDE /* GMScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724156273CD275001ADFDE /* GMScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +65,22 @@
 		637240FA273CCA11001ADFDE /* Metal006ButtonsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Metal006ButtonsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		637240FE273CCA11001ADFDE /* Metal006ButtonsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metal006ButtonsUITests.swift; sourceTree = "<group>"; };
 		63724100273CCA11001ADFDE /* Metal006ButtonsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metal006ButtonsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6372412E273CD08A001ADFDE /* AppDelegateExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateExt.swift; sourceTree = "<group>"; };
+		63724130273CD093001ADFDE /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		63724132273CD099001ADFDE /* FloatTypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatTypeAliases.swift; sourceTree = "<group>"; };
+		63724134273CD0A1001ADFDE /* MetalBits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalBits.swift; sourceTree = "<group>"; };
+		63724136273CD0A7001ADFDE /* MTLClearColorExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTLClearColorExt.swift; sourceTree = "<group>"; };
+		63724138273CD0AC001ADFDE /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		6372413A273CD0B2001ADFDE /* RenderableCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderableCollection.swift; sourceTree = "<group>"; };
+		6372413C273CD0B7001ADFDE /* RenderableNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderableNode.swift; sourceTree = "<group>"; };
+		6372413E273CD0BD001ADFDE /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		63724140273CD0C2001ADFDE /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		63724142273CD0CA001ADFDE /* SimdFloat4x4Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimdFloat4x4Ext.swift; sourceTree = "<group>"; };
+		63724144273CD0CF001ADFDE /* VerticeCollections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticeCollections.swift; sourceTree = "<group>"; };
+		63724146273CD0D6001ADFDE /* Vertices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertices.swift; sourceTree = "<group>"; };
+		63724151273CD258001ADFDE /* GMSimpleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GMSimpleNode.swift; path = Metal006Buttons/Shared/Game2/GMSimpleNode.swift; sourceTree = SOURCE_ROOT; };
+		63724153273CD25E001ADFDE /* GMWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GMWorld.swift; path = Metal006Buttons/Shared/Game2/GMWorld.swift; sourceTree = SOURCE_ROOT; };
+		63724156273CD275001ADFDE /* GMScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GMScene.swift; path = Metal006Buttons/Shared/Game2/SceneGraph/GMScene.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +131,7 @@
 		637240DC273CCA10001ADFDE /* Metal006Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				6372412B273CD014001ADFDE /* Shared */,
 				637240DD273CCA10001ADFDE /* AppDelegate.swift */,
 				637240DF273CCA10001ADFDE /* SceneDelegate.swift */,
 				637240E1273CCA10001ADFDE /* ViewController.swift */,
@@ -125,6 +158,45 @@
 				63724100273CCA11001ADFDE /* Metal006ButtonsUITestsLaunchTests.swift */,
 			);
 			path = Metal006ButtonsUITests;
+			sourceTree = "<group>";
+		};
+		6372412B273CD014001ADFDE /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				63724150273CD245001ADFDE /* Game */,
+				63724132273CD099001ADFDE /* FloatTypeAliases.swift */,
+				63724134273CD0A1001ADFDE /* MetalBits.swift */,
+				63724136273CD0A7001ADFDE /* MTLClearColorExt.swift */,
+				63724130273CD093001ADFDE /* Colors.swift */,
+				63724138273CD0AC001ADFDE /* Point.swift */,
+				6372412E273CD08A001ADFDE /* AppDelegateExt.swift */,
+				6372413A273CD0B2001ADFDE /* RenderableCollection.swift */,
+				6372413C273CD0B7001ADFDE /* RenderableNode.swift */,
+				6372413E273CD0BD001ADFDE /* Renderer.swift */,
+				63724140273CD0C2001ADFDE /* Shaders.metal */,
+				63724142273CD0CA001ADFDE /* SimdFloat4x4Ext.swift */,
+				63724144273CD0CF001ADFDE /* VerticeCollections.swift */,
+				63724146273CD0D6001ADFDE /* Vertices.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		63724150273CD245001ADFDE /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				63724155273CD265001ADFDE /* SceneGraph */,
+				63724151273CD258001ADFDE /* GMSimpleNode.swift */,
+				63724153273CD25E001ADFDE /* GMWorld.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		63724155273CD265001ADFDE /* SceneGraph */ = {
+			isa = PBXGroup;
+			children = (
+				63724156273CD275001ADFDE /* GMScene.swift */,
+			);
+			path = SceneGraph;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +330,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6372412F273CD08A001ADFDE /* AppDelegateExt.swift in Sources */,
+				63724135273CD0A1001ADFDE /* MetalBits.swift in Sources */,
+				63724143273CD0CA001ADFDE /* SimdFloat4x4Ext.swift in Sources */,
+				63724145273CD0CF001ADFDE /* VerticeCollections.swift in Sources */,
+				63724141273CD0C2001ADFDE /* Shaders.metal in Sources */,
+				63724157273CD275001ADFDE /* GMScene.swift in Sources */,
+				63724131273CD093001ADFDE /* Colors.swift in Sources */,
 				637240E2273CCA10001ADFDE /* ViewController.swift in Sources */,
+				6372413F273CD0BD001ADFDE /* Renderer.swift in Sources */,
 				637240DE273CCA10001ADFDE /* AppDelegate.swift in Sources */,
+				6372413D273CD0B7001ADFDE /* RenderableNode.swift in Sources */,
+				6372413B273CD0B2001ADFDE /* RenderableCollection.swift in Sources */,
+				63724139273CD0AC001ADFDE /* Point.swift in Sources */,
+				63724154273CD25E001ADFDE /* GMWorld.swift in Sources */,
+				63724152273CD258001ADFDE /* GMSimpleNode.swift in Sources */,
+				63724137273CD0A8001ADFDE /* MTLClearColorExt.swift in Sources */,
 				637240E0273CCA10001ADFDE /* SceneDelegate.swift in Sources */,
+				63724147273CD0D6001ADFDE /* Vertices.swift in Sources */,
+				63724133273CD099001ADFDE /* FloatTypeAliases.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
