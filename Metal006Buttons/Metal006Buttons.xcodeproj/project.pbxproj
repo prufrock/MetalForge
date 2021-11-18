@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6308FE2A27460304009B7036 /* GMSimpleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308FE2827460303009B7036 /* GMSimpleNode.swift */; };
+		6308FE2B27460304009B7036 /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308FE2927460303009B7036 /* GMWorld.swift */; };
+		6308FE34274603DD009B7036 /* GMScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308FE33274603DD009B7036 /* GMScene.swift */; };
 		637240DE273CCA10001ADFDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637240DD273CCA10001ADFDE /* AppDelegate.swift */; };
 		637240E0273CCA10001ADFDE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637240DF273CCA10001ADFDE /* SceneDelegate.swift */; };
 		637240E2273CCA10001ADFDE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637240E1273CCA10001ADFDE /* ViewController.swift */; };
@@ -29,9 +32,6 @@
 		63724143273CD0CA001ADFDE /* SimdFloat4x4Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724142273CD0CA001ADFDE /* SimdFloat4x4Ext.swift */; };
 		63724145273CD0CF001ADFDE /* VerticeCollections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724144273CD0CF001ADFDE /* VerticeCollections.swift */; };
 		63724147273CD0D6001ADFDE /* Vertices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724146273CD0D6001ADFDE /* Vertices.swift */; };
-		63724152273CD258001ADFDE /* GMSimpleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724151273CD258001ADFDE /* GMSimpleNode.swift */; };
-		63724154273CD25E001ADFDE /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724153273CD25E001ADFDE /* GMWorld.swift */; };
-		63724157273CD275001ADFDE /* GMScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63724156273CD275001ADFDE /* GMScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +52,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6308FE2827460303009B7036 /* GMSimpleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSimpleNode.swift; sourceTree = "<group>"; };
+		6308FE2927460303009B7036 /* GMWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMWorld.swift; sourceTree = "<group>"; };
+		6308FE33274603DD009B7036 /* GMScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMScene.swift; sourceTree = "<group>"; };
 		637240DA273CCA10001ADFDE /* Metal006Buttons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal006Buttons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		637240DD273CCA10001ADFDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		637240DF273CCA10001ADFDE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,9 +81,6 @@
 		63724142273CD0CA001ADFDE /* SimdFloat4x4Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimdFloat4x4Ext.swift; sourceTree = "<group>"; };
 		63724144273CD0CF001ADFDE /* VerticeCollections.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticeCollections.swift; sourceTree = "<group>"; };
 		63724146273CD0D6001ADFDE /* Vertices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertices.swift; sourceTree = "<group>"; };
-		63724151273CD258001ADFDE /* GMSimpleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GMSimpleNode.swift; path = Metal006Buttons/Shared/Game2/GMSimpleNode.swift; sourceTree = SOURCE_ROOT; };
-		63724153273CD25E001ADFDE /* GMWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GMWorld.swift; path = Metal006Buttons/Shared/Game2/GMWorld.swift; sourceTree = SOURCE_ROOT; };
-		63724156273CD275001ADFDE /* GMScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GMScene.swift; path = Metal006Buttons/Shared/Game2/SceneGraph/GMScene.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +108,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6308FE32274603AD009B7036 /* SceneGraph */ = {
+			isa = PBXGroup;
+			children = (
+				6308FE33274603DD009B7036 /* GMScene.swift */,
+			);
+			path = SceneGraph;
+			sourceTree = "<group>";
+		};
 		637240D1273CCA10001ADFDE = {
 			isa = PBXGroup;
 			children = (
@@ -184,19 +192,11 @@
 		63724150273CD245001ADFDE /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				63724155273CD265001ADFDE /* SceneGraph */,
-				63724151273CD258001ADFDE /* GMSimpleNode.swift */,
-				63724153273CD25E001ADFDE /* GMWorld.swift */,
+				6308FE32274603AD009B7036 /* SceneGraph */,
+				6308FE2827460303009B7036 /* GMSimpleNode.swift */,
+				6308FE2927460303009B7036 /* GMWorld.swift */,
 			);
 			path = Game;
-			sourceTree = "<group>";
-		};
-		63724155273CD265001ADFDE /* SceneGraph */ = {
-			isa = PBXGroup;
-			children = (
-				63724156273CD275001ADFDE /* GMScene.swift */,
-			);
-			path = SceneGraph;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,7 +335,7 @@
 				63724143273CD0CA001ADFDE /* SimdFloat4x4Ext.swift in Sources */,
 				63724145273CD0CF001ADFDE /* VerticeCollections.swift in Sources */,
 				63724141273CD0C2001ADFDE /* Shaders.metal in Sources */,
-				63724157273CD275001ADFDE /* GMScene.swift in Sources */,
+				6308FE34274603DD009B7036 /* GMScene.swift in Sources */,
 				63724131273CD093001ADFDE /* Colors.swift in Sources */,
 				637240E2273CCA10001ADFDE /* ViewController.swift in Sources */,
 				6372413F273CD0BD001ADFDE /* Renderer.swift in Sources */,
@@ -343,8 +343,8 @@
 				6372413D273CD0B7001ADFDE /* RenderableNode.swift in Sources */,
 				6372413B273CD0B2001ADFDE /* RenderableCollection.swift in Sources */,
 				63724139273CD0AC001ADFDE /* Point.swift in Sources */,
-				63724154273CD25E001ADFDE /* GMWorld.swift in Sources */,
-				63724152273CD258001ADFDE /* GMSimpleNode.swift in Sources */,
+				6308FE2B27460304009B7036 /* GMWorld.swift in Sources */,
+				6308FE2A27460304009B7036 /* GMSimpleNode.swift in Sources */,
 				63724137273CD0A8001ADFDE /* MTLClearColorExt.swift in Sources */,
 				637240E0273CCA10001ADFDE /* SceneDelegate.swift in Sources */,
 				63724147273CD0D6001ADFDE /* Vertices.swift in Sources */,
