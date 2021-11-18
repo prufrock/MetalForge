@@ -38,13 +38,36 @@ extension GMSceneNode {
 }
 
 func GMCreateScene() -> RenderableCollection {
-   GMSceneImmutableScene(
+    let root = GMSceneImmutableNode()
+
+    var children: [GMSceneImmutableNode] = []
+    (0..<10).forEach { _ in
+       children.append(
+           GMSceneImmutableNode(
+               children: [],
+               location: Point(
+                   Float.random(in: -1...1),
+                   Float.random(in: -1...1),
+                    Float.random(in: 0...1)
+               ),
+               transformation: matrix_identity_float4x4,
+               vertices: VerticeCollection().c[.cube]!,
+               color: Colors().green,
+               state: .forward,
+               hidden: false
+           )
+       )
+    }
+
+
+    return GMSceneImmutableScene(
+       node: root.setChildren(children),
        camera: GMImmutableCamera(
         cameraTop: 1.0,
         cameraBottom: 1.0,
         transformation: float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
        )
-   )
+    )
 }
 
 struct GMImmutableCamera: CameraNode {
@@ -77,21 +100,8 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     func click() -> RenderableCollection {
-        let newState: SceneState
-        let newNode: GMSceneNode
-
-        switch state {
-        case .playing:
-            print("playing")
-            newState = .paused
-            newNode = node.add(child: randomNode(children: [], color: Colors().red))
-        case .paused:
-            print("paused")
-            newState = .playing
-            newNode = node
-        }
-
-        return clone(node: newNode, state: newState)
+        //no-op
+        self
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
@@ -182,7 +192,6 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 }
 
-//TODO hide the root node
 struct GMSceneImmutableNode: GMSceneNode {
     let children: [GMSceneNode]
 
