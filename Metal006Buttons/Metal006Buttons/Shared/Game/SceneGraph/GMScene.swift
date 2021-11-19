@@ -78,6 +78,22 @@ struct GMImmutableCamera: CameraNode {
     func cameraSpace(withAspect aspect: Float) -> float4x4 {
        transformation * float4x4.scaleY(aspect)
     }
+
+    func translate(x: Float, y: Float, z: Float) -> GMImmutableCamera {
+        clone(transformation: self.transformation * float4x4.translate(x: x, y: y, z: z))
+    }
+
+    func clone(
+        cameraTop: Float? = nil,
+        cameraBottom: Float? = nil,
+        transformation: float4x4? = nil
+        ) -> GMImmutableCamera {
+        GMImmutableCamera(
+            cameraTop: cameraTop ?? self.cameraTop,
+            cameraBottom: cameraBottom ?? self.cameraBottom,
+            transformation: transformation ?? self.transformation
+        )
+    }
 }
 
 struct GMSceneImmutableScene: RenderableCollection {
@@ -101,7 +117,7 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     func click() -> RenderableCollection {
         //no-op
-        self
+        self.clone(camera: self.camera.translate(x: 0.1, y: 0, z: 0))
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {

@@ -28,8 +28,8 @@ extension float4x4 {
 
     static func perspectiveProjection(nearPlane: Float, farPlane: Float) -> float4x4 {
         float4x4(
-                [Float(tan(Double.pi / 5)), 0, 0, 0],
-                [0, Float(tan(Double.pi / 5)), 0, 0],
+                [-Float(tan(Double.pi / 5)), 0, 0, 0],
+                [0, -Float(tan(Double.pi / 5)), 0, 0],
                 [0, 0, 1, 1],
                 [0, 0, 0, 1]
         )
