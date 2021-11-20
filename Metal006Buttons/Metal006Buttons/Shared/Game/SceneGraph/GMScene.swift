@@ -65,7 +65,7 @@ func GMCreateScene() -> RenderableCollection {
        camera: GMImmutableCamera(
         cameraTop: 1.0,
         cameraBottom: 1.0,
-        transformation: float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0)
+        transformation: matrix_identity_float4x4
        )
     )
 }
@@ -76,7 +76,15 @@ struct GMImmutableCamera: CameraNode {
     let transformation: float4x4
 
     func cameraSpace(withAspect aspect: Float) -> float4x4 {
-       transformation * float4x4.scaleY(aspect)
+        projectionMatrix(aspect) * viewMatrix()
+    }
+
+    private func viewMatrix() -> float4x4 {
+        (transformation).inverse
+    }
+
+    private func projectionMatrix(_ aspect: Float) -> float4x4 {
+        (float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0) * float4x4.scaleY(aspect))
     }
 
     func translate(x: Float, y: Float, z: Float) -> GMImmutableCamera {
@@ -117,7 +125,7 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     func click() -> RenderableCollection {
         //no-op
-        self.clone(camera: self.camera.translate(x: 0.1, y: 0, z: 0))
+        self.clone(camera: self.camera.translate(x: 0.0, y: 0.0, z: -0.1))
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
