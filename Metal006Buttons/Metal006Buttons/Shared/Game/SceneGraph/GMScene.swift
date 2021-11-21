@@ -23,7 +23,7 @@ protocol GMSceneNode: RenderableNode {
     func render(to: (RenderableNode) -> Void)
 }
 
-protocol CameraNode {
+protocol CameraNode: GMSceneNode {
     var cameraTop: Float { get }
     var cameraBottom: Float { get }
     var transformation: float4x4 { get }
@@ -62,11 +62,7 @@ func GMCreateScene() -> RenderableCollection {
 
     return GMSceneImmutableScene(
        node: root.setChildren(children),
-       camera: GMImmutableCamera(
-        cameraTop: 1.0,
-        cameraBottom: 1.0,
-        transformation: matrix_identity_float4x4
-       )
+       camera: GMImmutableCamera.atOrigin()
     )
 }
 
@@ -74,6 +70,26 @@ struct GMImmutableCamera: CameraNode {
     let cameraTop: Float
     let cameraBottom: Float
     let transformation: float4x4
+
+    // GMSceneNode
+    let children: [GMSceneNode]
+    let location: Point
+    let vertices: Vertices
+    let color: float4
+    let hidden: Bool
+
+    static func atOrigin() -> GMImmutableCamera {
+        GMImmutableCamera(
+            cameraTop: 1.0,
+            cameraBottom: 1.0,
+            transformation: matrix_identity_float4x4,
+            children: [],
+            location: Point.origin(),
+            vertices: Vertices(),
+            color: Colors().black,
+            hidden: true
+        )
+    }
 
     func cameraSpace(withAspect aspect: Float) -> float4x4 {
         projectionMatrix(aspect) * viewMatrix()
@@ -91,15 +107,58 @@ struct GMImmutableCamera: CameraNode {
         clone(transformation: self.transformation * float4x4.translate(x: x, y: y, z: z))
     }
 
+    func setDimensions(cameraTop: Float, cameraBottom: Float) -> GMImmutableCamera {
+        clone(cameraTop: cameraTop, cameraBottom: cameraBottom)
+    }
+
+    func add(child: GMSceneNode) -> GMSceneNode {
+        clone(children: children + [child])
+    }
+
+    func delete(child: GMSceneNode) -> GMSceneNode {
+        self
+    }
+
+    func update(transform: (GMSceneNode) -> GMSceneNode) -> GMSceneNode {
+        self
+    }
+
+    func setColor(_ color: float4) -> GMSceneNode {
+        self
+    }
+
+    func setChildren(_ children: [GMSceneNode]) -> GMSceneNode {
+        clone(children: children)
+    }
+
+    func move(elapsed: Double) -> GMSceneNode {
+        self
+    }
+
+    func render(to: (RenderableNode) -> Void) {
+        to(self)
+        children.forEach{ node in node.render(to: to)}
+    }
+
     func clone(
         cameraTop: Float? = nil,
         cameraBottom: Float? = nil,
-        transformation: float4x4? = nil
+        transformation: float4x4? = nil,
+        children: [GMSceneNode]? = nil,
+        location: Point? = nil,
+        vertices: Vertices? = nil,
+        color: float4? = nil,
+        hidden: Bool? = nil
         ) -> GMImmutableCamera {
         GMImmutableCamera(
             cameraTop: cameraTop ?? self.cameraTop,
             cameraBottom: cameraBottom ?? self.cameraBottom,
-            transformation: transformation ?? self.transformation
+            transformation: transformation ?? self.transformation,
+            children: children ?? self.children,
+            location: location ?? self.location,
+            vertices: vertices ?? self.vertices,
+            color: color ?? self.color,
+            hidden: hidden ?? self.hidden
         )
     }
 }
@@ -129,11 +188,7 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
         clone(
-            camera: GMImmutableCamera(
-                cameraTop: top,
-                cameraBottom: bottom,
-                transformation: camera.transformation
-            )
+            camera: camera.setDimensions(cameraTop: top, cameraBottom: bottom)
         )
     }
 
