@@ -42,6 +42,11 @@ class GMImmutableGameWorld: RenderableCollection {
         self.cameraBottom = cameraDimensions.1
     }
 
+    func setScreenDimensions(height: CGFloat, width: CGFloat) -> RenderableCollection {
+        // no-op
+        self
+    }
+
     func cameraSpace(withAspect aspect: Float) -> float4x4 {
         float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0) * float4x4.scaleY(aspect)
     }
@@ -76,6 +81,12 @@ class GMImmutableGameWorld: RenderableCollection {
         }
 
         return clone(nodes: newNodes, state: newState)
+    }
+
+    @discardableResult
+    func click(x: CGFloat, y: CGFloat) -> RenderableCollection {
+        // no-op
+        self
     }
 
     @discardableResult

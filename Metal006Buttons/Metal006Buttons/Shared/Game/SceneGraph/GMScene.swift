@@ -216,11 +216,15 @@ struct GMSceneImmutableScene: RenderableCollection {
     init(
         node: GMSceneNode = GMSceneImmutableNode(),
         camera: GMImmutableCamera,
-        state: SceneState = .paused
+        state: SceneState = .paused,
+        screenWidth: CGFloat = 0,
+        screenHeight: CGFloat = 0
     ) {
         self.node = node
         self.camera = camera
         self.state = state
+        self.screenHeight = screenHeight
+        self.screenWidth = screenWidth
     }
 
     func cameraSpace(withAspect aspect: Float) -> float4x4 {
@@ -229,6 +233,22 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     func click() -> RenderableCollection {
         self.clone(camera: self.camera.translate(x: 0.1, y: 0.0, z: 0.0))
+    }
+
+    func click(x: CGFloat, y: CGFloat) -> RenderableCollection {
+        print("width \(screenWidth)")
+        let firstThird = screenWidth / 3
+        let secondThird = firstThird + firstThird
+        let thirdThird = secondThird + firstThird
+        print("firstThird \(firstThird)")
+        if (x < firstThird) {
+            print("first third")
+        } else if(x < secondThird) {
+            print("second third")
+        } else {
+            print ("third third")
+        }
+        return self
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
@@ -281,18 +301,21 @@ struct GMSceneImmutableScene: RenderableCollection {
     private func clone(
         node: GMSceneNode? = nil,
         camera: GMImmutableCamera? = nil,
-        state: SceneState? = nil
+        state: SceneState? = nil,
+        screenWidth: CGFloat? = nil,
+        screenHeight: CGFloat? = nil
     ) -> RenderableCollection {
         GMSceneImmutableScene(
             node: node ?? self.node,
             camera: camera ?? self.camera,
-            state: state ?? self.state
+            state: state ?? self.state,
+            screenWidth: screenWidth ?? self.screenWidth,
+            screenHeight: screenHeight ?? self.screenHeight
         )
     }
 
     func setScreenDimensions(height: CGFloat, width: CGFloat) -> RenderableCollection {
-        screenHeight = height
-        screenWidth = width
+        return clone(screenWidth: width, screenHeight: height)
     }
 
     private func randomNode(children: [GMSceneImmutableNode], color: float4) -> GMSceneImmutableNode {

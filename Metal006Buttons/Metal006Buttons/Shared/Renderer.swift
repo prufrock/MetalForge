@@ -112,4 +112,8 @@ extension Renderer {
     func click() {
         world = world.click()
     }
+
+    func click(x: CGFloat, y: CGFloat) {
+        world = world.click(x: x, y: y)
+    }
 }

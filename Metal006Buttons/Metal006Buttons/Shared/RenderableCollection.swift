@@ -8,6 +8,8 @@ import MetalKit
 protocol RenderableCollection {
     func click() -> RenderableCollection
 
+    func click(x: CGFloat, y: CGFloat) -> RenderableCollection
+
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection
 
     func update(elapsed: Double) -> RenderableCollection
