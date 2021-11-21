@@ -79,11 +79,42 @@ struct GMImmutableCamera: CameraNode {
     let hidden: Bool
 
     static func atOrigin() -> GMImmutableCamera {
-        GMImmutableCamera(
+        let button1 = GMSceneImmutableNode(
+            children: [],
+            location: Point(-0.5, -2.5, 0.0),
+            transformation: float4x4.translate(x: -0.5, y: -2.5, z: 0.0),
+            vertices: VerticeCollection().c[.cube]!,
+            color: Colors().blue,
+            state: .forward,
+            hidden: false
+        )
+
+        let button2 = GMSceneImmutableNode(
+            children: [],
+            location: Point(0.0, -2.5, 0.0),
+            transformation: float4x4.translate(x: 0.0, y: -2.5, z: 0.0),
+            vertices: VerticeCollection().c[.cube]!,
+            color: Colors().blue,
+            state: .forward,
+            hidden: false
+        )
+
+        let button3 = GMSceneImmutableNode(
+            children: [],
+            location: Point(0.5, -2.5, 0.0),
+            transformation: float4x4.translate(x: 0.5, y: -2.5, z: 0.0),
+            vertices: VerticeCollection().c[.cube]!,
+            color: Colors().blue,
+            state: .forward,
+            hidden: false
+        )
+
+
+        return GMImmutableCamera(
             cameraTop: 1.0,
             cameraBottom: 1.0,
             transformation: matrix_identity_float4x4,
-            children: [],
+            children: [button1, button2, button3],
             location: Point.origin(),
             vertices: Vertices(),
             color: Colors().black,
