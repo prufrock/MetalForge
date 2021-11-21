@@ -13,6 +13,8 @@ class Renderer: NSObject {
     var previous: Double
     var world: RenderableCollection
     var aspect: Float = 1.0
+    var screenWidth: CGFloat = 0.0
+    var screenHeight: CGFloat = 0.0
     let commandQueue: MTLCommandQueue
 
     init(metalBits: MetalBits, world: RenderableCollection) {
@@ -87,6 +89,8 @@ extension Renderer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function)
         print("height: \(size.height) width: \(size.width)")
+        screenWidth = size.width
+        screenHeight = size.height
         aspect = Float(size.width / size.height)
         print("aspect ratio: \(aspect)")
     }
@@ -98,6 +102,7 @@ extension Renderer: MTKViewDelegate {
 
         world = world.setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
         world = world.update(elapsed: delta)
+        .setScreenDimensions(height: screenHeight, width: screenWidth)
 
         render(in: view)
     }

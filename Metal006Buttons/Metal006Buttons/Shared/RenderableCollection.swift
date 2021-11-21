@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import MetalKit
 
 protocol RenderableCollection {
     func click() -> RenderableCollection
@@ -14,4 +15,6 @@ protocol RenderableCollection {
     func render(to: (RenderableNode) -> Void)
 
     func cameraSpace(withAspect aspect: Float) -> float4x4
+
+    func setScreenDimensions(height: CGFloat, width: CGFloat) -> RenderableCollection
 }

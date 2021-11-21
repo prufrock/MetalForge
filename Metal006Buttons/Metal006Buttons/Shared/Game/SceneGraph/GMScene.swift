@@ -4,6 +4,7 @@
 
 import Foundation
 import simd
+import MetalKit
 
 protocol GMSceneNode: RenderableNode {
     var children: [GMSceneNode] { get }
@@ -205,6 +206,9 @@ struct GMImmutableCamera: CameraNode {
 }
 
 struct GMSceneImmutableScene: RenderableCollection {
+    private let screenHeight: CGFloat
+    private let screenWidth: CGFloat
+
     let camera: GMImmutableCamera
     let node: GMSceneNode
     let state: SceneState
@@ -284,6 +288,11 @@ struct GMSceneImmutableScene: RenderableCollection {
             camera: camera ?? self.camera,
             state: state ?? self.state
         )
+    }
+
+    func setScreenDimensions(height: CGFloat, width: CGFloat) -> RenderableCollection {
+        screenHeight = height
+        screenWidth = width
     }
 
     private func randomNode(children: [GMSceneImmutableNode], color: float4) -> GMSceneImmutableNode {
