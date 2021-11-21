@@ -193,6 +193,7 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     func render(to: (RenderableNode) -> Void) {
+        camera.render(to: to)
         node.render(to: to)
     }
 
