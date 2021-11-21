@@ -21,6 +21,8 @@ protocol GMSceneNode: RenderableNode {
     func move(elapsed: Double) -> GMSceneNode
 
     func render(to: (RenderableNode) -> Void)
+
+    func translate(_ transform: float4x4) -> GMSceneNode
 }
 
 protocol CameraNode: GMSceneNode {
@@ -135,7 +137,11 @@ struct GMImmutableCamera: CameraNode {
     }
 
     func translate(x: Float, y: Float, z: Float) -> GMImmutableCamera {
-        clone(transformation: self.transformation * float4x4.translate(x: x, y: y, z: z))
+        let transform = float4x4.translate(x: x, y: y, z: z)
+        return clone(
+            transformation: self.transformation * transform,
+            children: children.map{ node in node.translate(transform) }
+        )
     }
 
     func setDimensions(cameraTop: Float, cameraBottom: Float) -> GMImmutableCamera {
@@ -164,6 +170,10 @@ struct GMImmutableCamera: CameraNode {
 
     func move(elapsed: Double) -> GMSceneNode {
         self
+    }
+
+    func translate(_ transform: float4x4) -> GMSceneNode {
+        clone(transformation: transform)
     }
 
     func render(to: (RenderableNode) -> Void) {
@@ -395,6 +405,10 @@ struct GMSceneImmutableNode: GMSceneNode {
         }
 
         return clone(location: newLocation, transformation: newTransformation, state: newState)
+    }
+
+    func translate(_ transform: float4x4) -> GMSceneNode {
+        clone(transformation: self.transformation * transform)
     }
 
     func setColor(_ color: float4) -> GMSceneNode {
