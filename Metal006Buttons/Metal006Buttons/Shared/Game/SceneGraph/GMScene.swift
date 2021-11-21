@@ -124,8 +124,7 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     func click() -> RenderableCollection {
-        //no-op
-        self.clone(camera: self.camera.translate(x: 0.0, y: 0.0, z: -0.1))
+        self.clone(camera: self.camera.translate(x: 0.1, y: 0.0, z: 0.0))
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
