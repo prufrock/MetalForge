@@ -86,7 +86,7 @@ struct GMImmutableCamera: CameraNode {
             children: [],
             location: Point(-0.5, -2.5, 0.0),
             transformation: float4x4.translate(x: -0.5, y: -2.5, z: 0.0),
-            vertices: VerticeCollection().c[.cube]!,
+            vertices: VerticeCollection().c[.square]!,
             color: Colors().white,
             state: .forward,
             hidden: false
@@ -96,7 +96,7 @@ struct GMImmutableCamera: CameraNode {
             children: [],
             location: Point(0.0, -2.5, 0.0),
             transformation: float4x4.translate(x: 0.0, y: -2.5, z: 0.0),
-            vertices: VerticeCollection().c[.cube]!,
+            vertices: VerticeCollection().c[.square]!,
             color: Colors().white,
             state: .forward,
             hidden: false
@@ -106,7 +106,7 @@ struct GMImmutableCamera: CameraNode {
             children: [],
             location: Point(0.5, -2.5, 0.0),
             transformation: float4x4.translate(x: 0.5, y: -2.5, z: 0.0),
-            vertices: VerticeCollection().c[.cube]!,
+            vertices: VerticeCollection().c[.square]!,
             color: Colors().white,
             state: .forward,
             hidden: false

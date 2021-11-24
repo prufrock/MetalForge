@@ -14,13 +14,14 @@ struct VerticeCollection {
         case singlePoint
         case originPoint
         case cube
+        case square
     }
 
     init() {
         c = [
-            .singlePoint : Vertices(Point(0.5, 0.2, 0.0)),
+            .singlePoint: Vertices(Point(0.5, 0.2, 0.0)),
             .originPoint: Vertices(Point(0.0, 0.0, 0.0)),
-            .cube : Vertices(
+            .cube: Vertices(
             // First Square
             Point(0.2, 0.2, 0.0),
             Point(-0.2, 0.2, 0.0),
@@ -48,7 +49,18 @@ struct VerticeCollection {
             Point(-0.2, -0.2, 0.2),
             Point(0.2, -0.2, 0.0),
             Point(0.2, -0.2, 0.2),
+            primitiveType: .line),
+            .square: Vertices (
+            Point(0.2, 0.2, 0.0),
+            Point(-0.2, 0.2, 0.0),
+            Point(-0.2, 0.2, 0.0),
+            Point(-0.2, -0.2, 0.0),
+            Point(-0.2, -0.2, 0.0),
+            Point(0.2, -0.2, 0.0),
+            Point(0.2, -0.2, 0.0),
+            Point(0.2, 0.2, 0.0),
             primitiveType: .line
-        )]
+            ),
+        ]
     }
 }
