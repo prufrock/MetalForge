@@ -248,6 +248,13 @@ struct GMSceneImmutableScene: RenderableCollection {
         } else {
             print ("third third")
         }
+
+        let displayCoords = SIMD2<Float>(Float(x), Float(y))
+        let worldCoords = displayCoords.displayToWorld(
+            display: SIMD2<Float>(Float(screenWidth), Float(screenHeight)),
+            world: SIMD2<Float>(Float(1), Float(-1))
+        )
+        print("worldCoords \(worldCoords.x) \(worldCoords.y)")
         return self
     }
 
@@ -481,5 +488,11 @@ struct GMSceneImmutableNode: GMSceneNode {
     enum GMSceneImmutableSceneState {
         case forward
         case backward
+    }
+}
+
+extension SIMD2 where Scalar == Float  {
+    func displayToWorld(display: SIMD2<Float>, world: SIMD2<Float>) -> SIMD2<Float> {
+        self * SIMD2<Float>(world[0] / display[0], world[1] / display[1])
     }
 }
