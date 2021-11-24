@@ -250,9 +250,8 @@ struct GMSceneImmutableScene: RenderableCollection {
         }
 
         let displayCoords = SIMD2<Float>(Float(x), Float(y))
-        let worldCoords = displayCoords.displayToWorld(
-            display: SIMD2<Float>(Float(screenWidth), Float(screenHeight)),
-            world: SIMD2<Float>(Float(1), Float(-1))
+        let worldCoords = displayCoords.displayToNdc(
+            display: SIMD2<Float>(Float(screenWidth), Float(screenHeight))
         )
         print("worldCoords \(worldCoords.x) \(worldCoords.y)")
         return self
@@ -492,7 +491,9 @@ struct GMSceneImmutableNode: GMSceneNode {
 }
 
 extension SIMD2 where Scalar == Float  {
-    func displayToWorld(display: SIMD2<Float>, world: SIMD2<Float>) -> SIMD2<Float> {
-        self * SIMD2<Float>(world[0] / display[0], world[1] / display[1])
+    func displayToNdc(display: SIMD2<Float>) -> SIMD2<Float> {
+        let x = ((x / display.x) * 2) - 1
+        let y = 1 - ((y / display.y) * 2)
+        return SIMD2<Float>(x, y)
     }
 }
