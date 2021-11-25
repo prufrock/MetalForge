@@ -4,6 +4,7 @@
 
 import XCTest
 import simd
+@testable import Metal006Buttons
 
 class LineSphereIntersectionTests: XCTestCase {
 
@@ -20,11 +21,6 @@ class LineSphereIntersectionTests: XCTestCase {
 
         XCTAssertFalse(ray.intersects(with: sphere))
     }
-}
-
-struct Sphere {
-    let center: SIMD3<Float>
-    let radius: Float
 }
 
 struct Ray {
