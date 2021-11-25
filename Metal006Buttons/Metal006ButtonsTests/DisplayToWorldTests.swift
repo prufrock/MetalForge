@@ -9,7 +9,7 @@ import simd
 
 class DisplayToNdcTests: XCTestCase {
 
-    func testDisplayToWorld() throws {
+    func testDisplayToNdc() throws {
         let display: SIMD2<Float> = SIMD2<Float>(414.0, 896.0)
         let world: SIMD2<Float> = SIMD2<Float>(1, -1)
 
