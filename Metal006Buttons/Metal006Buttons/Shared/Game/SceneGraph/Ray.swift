@@ -20,8 +20,11 @@ struct Ray {
         let b = 2.0 * simd_dot((origin - sphere.center), displacement)
         let oc = origin - sphere.center
         let c = simd_dot(oc, oc) - (sphere.radius * sphere.radius)
-        let discriminant = (b * b) - 4 * a * c
 
-        return discriminant >= 0
+        return discriminant(a: a, b: b, c: c) >= 0
+    }
+
+    private func discriminant(a: Float, b: Float, c: Float) -> Float {
+        (b * b) - 4 * a * c
     }
 }
