@@ -30,6 +30,7 @@ protocol CameraNode: GMSceneNode {
     var cameraTop: Float { get }
     var cameraBottom: Float { get }
     var transformation: float4x4 { get }
+    var nearPlane: Float { get }
 
     func cameraSpace(withAspect aspect: Float) -> float4x4
 }
@@ -70,6 +71,7 @@ func GMCreateScene() -> RenderableCollection {
 }
 
 struct GMImmutableCamera: CameraNode {
+    let nearPlane: Float = 0.1
     let cameraTop: Float
     let cameraBottom: Float
     let transformation: float4x4
@@ -85,7 +87,7 @@ struct GMImmutableCamera: CameraNode {
         let button1 = GMSceneImmutableNode(
             children: [],
             location: Point(-0.5, -2.5, 0.0),
-            transformation: float4x4.translate(x: -0.5, y: -2.5, z: 0.0),
+            transformation: float4x4.translate(x: -0.5, y: -2.5, z: 0.1),
             vertices: VerticeCollection().c[.square]!,
             color: Colors().white,
             state: .forward,
@@ -95,7 +97,7 @@ struct GMImmutableCamera: CameraNode {
         let button2 = GMSceneImmutableNode(
             children: [],
             location: Point(0.0, -2.5, 0.0),
-            transformation: float4x4.translate(x: 0.0, y: -2.5, z: 0.0),
+            transformation: float4x4.translate(x: 0.0, y: -2.5, z: 0.1),
             vertices: VerticeCollection().c[.square]!,
             color: Colors().white,
             state: .forward,
@@ -105,7 +107,7 @@ struct GMImmutableCamera: CameraNode {
         let button3 = GMSceneImmutableNode(
             children: [],
             location: Point(0.5, -2.5, 0.0),
-            transformation: float4x4.translate(x: 0.5, y: -2.5, z: 0.0),
+            transformation: float4x4.translate(x: 0.5, y: -2.5, z: 0.1),
             vertices: VerticeCollection().c[.square]!,
             color: Colors().white,
             state: .forward,
@@ -134,7 +136,7 @@ struct GMImmutableCamera: CameraNode {
     }
 
     private func projectionMatrix(_ aspect: Float) -> float4x4 {
-        (float4x4.perspectiveProjection(nearPlane: 0.2, farPlane: 1.0) * float4x4.scaleY(aspect))
+        (float4x4.perspectiveProjection(nearPlane: nearPlane, farPlane: 1.0) * float4x4.scaleY(aspect))
     }
 
     func translate(x: Float, y: Float, z: Float) -> GMImmutableCamera {
@@ -237,23 +239,27 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     func click(x: CGFloat, y: CGFloat) -> RenderableCollection {
         print("width \(screenWidth)")
-        let firstThird = screenWidth / 3
-        let secondThird = firstThird + firstThird
-        let thirdThird = secondThird + firstThird
-        print("firstThird \(firstThird)")
-        if (x < firstThird) {
-            print("first third")
-        } else if(x < secondThird) {
-            print("second third")
-        } else {
-            print ("third third")
-        }
 
+        let aspect = Float(screenWidth / screenHeight)
         let displayCoords = SIMD2<Float>(Float(x), Float(y))
         let worldCoords = displayCoords.displayToNdc(
-            display: SIMD2<Float>(Float(screenWidth), Float(screenHeight))
+            display: SIMD2<Float>(Float(screenWidth), Float(screenHeight) * aspect)
         )
         print("worldCoords \(worldCoords.x) \(worldCoords.y)")
+
+        let ray = Ray(origin: camera.location.rawValue, target: float3(worldCoords.x, worldCoords.y, camera.nearPlane))
+
+        for i in 0..<camera.children.count {
+            let children = camera.children
+            let node = children[i]
+            let sphere = Sphere(center: node.location.rawValue, radius: 0.1)
+            if(ray.intersects(with: sphere)) {
+                print("START BING! BING! BING! BING!")
+                print("node i:\(i) x:\(node.location.rawValue.x) y:\(node.location.rawValue.y) z:\(node.location.rawValue.z)")
+                print("END BING! BING! BING! BING!")
+            }
+        }
+
         return self
     }
 
@@ -494,6 +500,6 @@ extension SIMD2 where Scalar == Float  {
     func displayToNdc(display: SIMD2<Float>) -> SIMD2<Float> {
         let x = ((x / display.x) * 2) - 1
         let y = 1 - ((y / display.y) * 2)
-        return SIMD2<Float>(x, y)
+        return SIMD2<Float>(x, y) * simd_float2x2([Float(tan(Double.pi / 5)), 0.0], [0, Float(tan(Double.pi / 5))])
     }
 }
