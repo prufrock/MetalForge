@@ -258,7 +258,9 @@ struct GMSceneImmutableScene: RenderableCollection {
         let worldCoords = ndcCoords * camera.reverseProjectionMatrix(aspect)
         print("worldCoords \(worldCoords[0][0]) \(worldCoords[1][1])")
 
-        let ray = Ray(origin: camera.location.rawValue, target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
+        let ray = Ray(origin: float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
+
+        var newChildren: [GMSceneNode] = []
 
         for i in 0..<camera.children.count {
             let children = camera.children
@@ -268,10 +270,17 @@ struct GMSceneImmutableScene: RenderableCollection {
                 print("START BING! BING! BING! BING!")
                 print("node i:\(i) x:\(node.location.rawValue.x) y:\(node.location.rawValue.y) z:\(node.location.rawValue.z)")
                 print("END BING! BING! BING! BING!")
+                if (node.color == Colors().white) {
+                    newChildren.append(node.setColor(Colors().red))
+                } else {
+                    newChildren.append(node.setColor(Colors().white))
+                }
+            } else {
+                newChildren.append(node)
             }
         }
 
-        return self
+        return self.clone(camera: camera.clone(children: newChildren))
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
