@@ -33,6 +33,10 @@ protocol CameraNode: GMSceneNode {
     var nearPlane: Float { get }
 
     func cameraSpace(withAspect aspect: Float) -> float4x4
+
+    func projectionMatrix(_ aspect: Float) -> float4x4
+
+    func reverseProjectionMatrix(_ aspect: Float) -> float4x4
 }
 
 extension GMSceneNode {
@@ -87,7 +91,7 @@ struct GMImmutableCamera: CameraNode {
         let button1 = GMSceneImmutableNode(
             children: [],
             location: Point(-0.5, -2.5, 0.0),
-            transformation: float4x4.translate(x: -0.5, y: -2.5, z: 0.1),
+            transformation: float4x4.translate(x: -0.5, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
             color: Colors().white,
             state: .forward,
@@ -97,7 +101,7 @@ struct GMImmutableCamera: CameraNode {
         let button2 = GMSceneImmutableNode(
             children: [],
             location: Point(0.0, -2.5, 0.0),
-            transformation: float4x4.translate(x: 0.0, y: -2.5, z: 0.1),
+            transformation: float4x4.translate(x: 0.0, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
             color: Colors().white,
             state: .forward,
@@ -107,7 +111,7 @@ struct GMImmutableCamera: CameraNode {
         let button3 = GMSceneImmutableNode(
             children: [],
             location: Point(0.5, -2.5, 0.0),
-            transformation: float4x4.translate(x: 0.5, y: -2.5, z: 0.1),
+            transformation: float4x4.translate(x: 0.5, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
             color: Colors().white,
             state: .forward,
@@ -135,8 +139,12 @@ struct GMImmutableCamera: CameraNode {
         (transformation).inverse
     }
 
-    private func projectionMatrix(_ aspect: Float) -> float4x4 {
+    func projectionMatrix(_ aspect: Float) -> float4x4 {
         (float4x4.perspectiveProjection(nearPlane: nearPlane, farPlane: 1.0) * float4x4.scaleY(aspect))
+    }
+
+    func reverseProjectionMatrix(_ aspect: Float) -> float4x4 {
+        projectionMatrix(aspect).inverse
     }
 
     func translate(x: Float, y: Float, z: Float) -> GMImmutableCamera {
@@ -242,17 +250,20 @@ struct GMSceneImmutableScene: RenderableCollection {
 
         let aspect = Float(screenWidth / screenHeight)
         let displayCoords = SIMD2<Float>(Float(x), Float(y))
-        let worldCoords: SIMD2<Float> = displayCoords.displayToNdc(
-            display: SIMD2<Float>(Float(screenWidth), Float(screenHeight) * aspect)
+        let ndcCoords: float4x4 = displayCoords.displayToNdc(
+            display: SIMD2<Float>(Float(screenWidth), Float(screenHeight))
         )
-        print("worldCoords \(worldCoords.x) \(worldCoords.y)")
+        print("ndcCoords \(ndcCoords[0][0]) \(ndcCoords[1][1])")
 
-        let ray = Ray(origin: camera.location.rawValue, target: float3(worldCoords.x, worldCoords.y, camera.nearPlane))
+        let worldCoords = ndcCoords * camera.reverseProjectionMatrix(aspect)
+        print("worldCoords \(worldCoords[0][0]) \(worldCoords[1][1])")
+
+        let ray = Ray(origin: camera.location.rawValue, target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
 
         for i in 0..<camera.children.count {
             let children = camera.children
             let node = children[i]
-            let sphere = Sphere(center: node.location.rawValue, radius: 0.1)
+            let sphere = Sphere(center: node.location.rawValue, radius: 0.2)
             if(ray.intersects(with: sphere)) {
                 print("START BING! BING! BING! BING!")
                 print("node i:\(i) x:\(node.location.rawValue.x) y:\(node.location.rawValue.y) z:\(node.location.rawValue.z)")
