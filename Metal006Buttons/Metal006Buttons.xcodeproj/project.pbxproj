@@ -13,7 +13,6 @@
 		5AF0EDA1BEC44AE11B0E7566 /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E86472CD0646AFDC572F /* Ray.swift */; };
 		5AF0EF83C3DC3B873348351E /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE9EDD490654D72452D0 /* Sphere.swift */; };
 		6308FE2A27460304009B7036 /* GMSimpleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308FE2827460303009B7036 /* GMSimpleNode.swift */; };
-		6308FE2B27460304009B7036 /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308FE2927460303009B7036 /* GMWorld.swift */; };
 		6308FE34274603DD009B7036 /* GMScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308FE33274603DD009B7036 /* GMScene.swift */; };
 		637240DE273CCA10001ADFDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637240DD273CCA10001ADFDE /* AppDelegate.swift */; };
 		637240E0273CCA10001ADFDE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637240DF273CCA10001ADFDE /* SceneDelegate.swift */; };
@@ -63,7 +62,6 @@
 		5AF0EBDE204481488BFBF507 /* CollectionExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionExt.swift; sourceTree = "<group>"; };
 		5AF0EE9EDD490654D72452D0 /* Sphere.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
 		6308FE2827460303009B7036 /* GMSimpleNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSimpleNode.swift; sourceTree = "<group>"; };
-		6308FE2927460303009B7036 /* GMWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMWorld.swift; sourceTree = "<group>"; };
 		6308FE33274603DD009B7036 /* GMScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMScene.swift; sourceTree = "<group>"; };
 		637240DA273CCA10001ADFDE /* Metal006Buttons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal006Buttons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		637240DD273CCA10001ADFDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -209,7 +207,6 @@
 			children = (
 				6308FE32274603AD009B7036 /* SceneGraph */,
 				6308FE2827460303009B7036 /* GMSimpleNode.swift */,
-				6308FE2927460303009B7036 /* GMWorld.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -358,7 +355,6 @@
 				6372413D273CD0B7001ADFDE /* RenderableNode.swift in Sources */,
 				6372413B273CD0B2001ADFDE /* RenderableCollection.swift in Sources */,
 				63724139273CD0AC001ADFDE /* Point.swift in Sources */,
-				6308FE2B27460304009B7036 /* GMWorld.swift in Sources */,
 				6308FE2A27460304009B7036 /* GMSimpleNode.swift in Sources */,
 				63724137273CD0A8001ADFDE /* MTLClearColorExt.swift in Sources */,
 				637240E0273CCA10001ADFDE /* SceneDelegate.swift in Sources */,
