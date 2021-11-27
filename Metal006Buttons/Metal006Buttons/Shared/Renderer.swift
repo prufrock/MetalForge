@@ -27,7 +27,7 @@ class Renderer: NSObject {
 
         self.metalBits.view.delegate = self
 
-        self.metalBits.view.clearColor = MTLClearColor(Colors().black)
+        self.metalBits.view.clearColor = MTLClearColor(float4(.black))
 
         mtkView(
             self.metalBits.view,

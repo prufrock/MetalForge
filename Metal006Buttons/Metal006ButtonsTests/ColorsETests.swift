@@ -8,22 +8,22 @@ import simd
 @testable import Metal006Buttons
 
 
-class ColorsETests: XCTestCase {
+class ColorsTests: XCTestCase {
 
     func testConvert() {
-        let red = ColorsE.red
+        let red = Colors.red
 
         XCTAssertEqual(255, red.r())
         XCTAssertEqual(0, red.g())
         XCTAssertEqual(0, red.b())
 
-        let green = ColorsE.green
+        let green = Colors.green
 
         XCTAssertEqual(0, green.r())
         XCTAssertEqual(255, green.g())
         XCTAssertEqual(0, green.b())
 
-        let blue = ColorsE.blue
+        let blue = Colors.blue
 
         XCTAssertEqual(0, blue.r())
         XCTAssertEqual(0, blue.g())

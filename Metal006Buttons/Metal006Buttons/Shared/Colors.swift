@@ -5,15 +5,7 @@
 //  Created by David Kanenwisher on 9/19/21.
 //
 
-struct Colors {
-    let black = float4(0.0, 0.0, 0.0, 1.0)
-    let red = float4(1.0, 0.0, 0.0, 1.0)
-    let green = float4(0.0, 1.0, 0.0, 1.0)
-    let blue = float4(0.0, 0.0, 1.0, 1.0)
-    let white = float4(1.0, 1.0, 1.0, 1.0)
-}
-
-enum ColorsE: Int {
+enum Colors: Int {
     case black = 0x000000
     case red = 0xFF0000
     case green = 0x00FF00
@@ -32,5 +24,23 @@ enum ColorsE: Int {
 
     func b() -> Int {
         rawValue >> 0 & 0xFF
+    }
+
+    func rFloat() -> Float {
+        Float(r()) / 255.0
+    }
+
+    func gFloat() -> Float {
+        Float(g()) / 255.0
+    }
+
+    func bFloat() -> Float {
+        Float(b()) / 255.0
+    }
+}
+
+extension float4 {
+    init(_ color: Colors) {
+        self.init(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
     }
 }

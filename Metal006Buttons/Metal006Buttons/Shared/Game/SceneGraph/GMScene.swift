@@ -60,7 +60,7 @@ func GMCreateScene() -> RenderableCollection {
                ),
                transformation: matrix_identity_float4x4,
                vertices: VerticeCollection().c[.cube]!,
-               color: Colors().green,
+               color: float4(.green),
                state: .forward,
                hidden: false
            )
@@ -93,7 +93,7 @@ struct GMImmutableCamera: CameraNode {
             location: Point(-0.5, -2.5, 0.0),
             transformation: float4x4.translate(x: -0.5, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
-            color: Colors().white,
+            color: float4(.white),
             state: .forward,
             hidden: false
         )
@@ -103,7 +103,7 @@ struct GMImmutableCamera: CameraNode {
             location: Point(0.0, -2.5, 0.0),
             transformation: float4x4.translate(x: 0.0, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
-            color: Colors().white,
+            color: float4(.white),
             state: .forward,
             hidden: false
         )
@@ -113,7 +113,7 @@ struct GMImmutableCamera: CameraNode {
             location: Point(0.5, -2.5, 0.0),
             transformation: float4x4.translate(x: 0.5, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
-            color: Colors().white,
+            color: float4(.white),
             state: .forward,
             hidden: false
         )
@@ -126,7 +126,7 @@ struct GMImmutableCamera: CameraNode {
             children: [button1, button2, button3],
             location: Point.origin(),
             vertices: Vertices(),
-            color: Colors().black,
+            color: float4(.black),
             hidden: true
         )
     }
@@ -263,10 +263,10 @@ struct GMSceneImmutableScene: RenderableCollection {
             let node = children[i]
             let sphere = Sphere(center: node.location.rawValue, radius: 0.2)
             if(ray.intersects(with: sphere)) {
-                if (node.color == Colors().white) {
-                    newChildren.append(node.setColor(Colors().red))
+                if (node.color == float4(.white)) {
+                    newChildren.append(node.setColor(float4(.red)))
                 } else {
-                    newChildren.append(node.setColor(Colors().white))
+                    newChildren.append(node.setColor(float4(.white)))
                 }
             } else {
                 newChildren.append(node)
@@ -293,7 +293,7 @@ struct GMSceneImmutableScene: RenderableCollection {
         case .playing:
             newNode = node.setChildren(node.children.map {
                 node in node.update { node in
-                    node.move(elapsed: elapsed).setColor(Colors().green)
+                    node.move(elapsed: elapsed).setColor(float4(.green))
                 }
             })
         case .paused:
@@ -301,7 +301,7 @@ struct GMSceneImmutableScene: RenderableCollection {
         }
 
         if(newNode.children.count >= 1) {
-            newNode = newNode.setChildren(newNode.children[0..<(node.children.endIndex-1)] + [newNode.children.last!.setColor(Colors().red)])
+            newNode = newNode.setChildren(newNode.children[0..<(node.children.endIndex-1)] + [newNode.children.last!.setColor(float4(.red))])
         }
 
         return clone(node: newNode)
@@ -319,7 +319,7 @@ struct GMSceneImmutableScene: RenderableCollection {
         } else if (newChildren.lastIndex + 1) == oldChildren.lastIndex {
             return newChildren + [oldChildren[oldChildren.lastIndex]]
         } else {
-            return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [oldChildren[newChildren.count].move(elapsed: elapsed).setColor(Colors().green)])
+            return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [oldChildren[newChildren.count].move(elapsed: elapsed).setColor(float4(.green))])
         }
     }
 
@@ -388,7 +388,7 @@ struct GMSceneImmutableNode: GMSceneNode {
         vertices = Vertices(
             Point(0.0, 0.0, 0.0)
         )
-        color = Colors().green
+        color = float4(.green)
         state = .forward
         hidden = true
     }
