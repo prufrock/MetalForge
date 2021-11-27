@@ -47,8 +47,6 @@ class ViewController: UIViewController {
         let location = touch.location(in: self.view)
 
         drawer!.click(x: location.x, y: location.y)
-
-        print("x: \(location.x) y: \(location.y)")
     }
 
     private func printState() {

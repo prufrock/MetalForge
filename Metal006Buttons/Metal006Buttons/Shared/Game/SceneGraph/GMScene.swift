@@ -246,17 +246,13 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     func click(x: CGFloat, y: CGFloat) -> RenderableCollection {
-        print("width \(screenWidth)")
-
         let aspect = Float(screenWidth / screenHeight)
         let displayCoords = SIMD2<Float>(Float(x), Float(y))
         let ndcCoords: float4x4 = displayCoords.displayToNdc(
             display: SIMD2<Float>(Float(screenWidth), Float(screenHeight))
         )
-        print("ndcCoords \(ndcCoords[0][0]) \(ndcCoords[1][1])")
 
         let worldCoords = ndcCoords * camera.reverseProjectionMatrix(aspect)
-        print("worldCoords \(worldCoords[0][0]) \(worldCoords[1][1])")
 
         let ray = Ray(origin: float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
 
@@ -267,9 +263,6 @@ struct GMSceneImmutableScene: RenderableCollection {
             let node = children[i]
             let sphere = Sphere(center: node.location.rawValue, radius: 0.2)
             if(ray.intersects(with: sphere)) {
-                print("START BING! BING! BING! BING!")
-                print("node i:\(i) x:\(node.location.rawValue.x) y:\(node.location.rawValue.y) z:\(node.location.rawValue.z)")
-                print("END BING! BING! BING! BING!")
                 if (node.color == Colors().white) {
                     newChildren.append(node.setColor(Colors().red))
                 } else {
