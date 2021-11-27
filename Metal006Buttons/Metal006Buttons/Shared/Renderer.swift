@@ -12,7 +12,7 @@ class Renderer: NSObject {
     let metalBits: MetalBits
     var previous: Double
     var world: RenderableCollection
-    var aspect: Float = 1.0
+    var aspect: GMFloat = 1.0
     var screenWidth: CGFloat = 0.0
     var screenHeight: CGFloat = 0.0
     let commandQueue: MTLCommandQueue
@@ -91,7 +91,7 @@ extension Renderer: MTKViewDelegate {
         print("height: \(size.height) width: \(size.width)")
         screenWidth = size.width
         screenHeight = size.height
-        aspect = Float(size.width / size.height)
+        aspect = GMFloat(size.width / size.height)
         print("aspect ratio: \(aspect)")
     }
 
