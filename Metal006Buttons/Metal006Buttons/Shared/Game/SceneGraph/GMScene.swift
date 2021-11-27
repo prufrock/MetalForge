@@ -509,14 +509,14 @@ struct GMSceneImmutableNode: GMSceneNode {
     }
 }
 
-extension SIMD2 where Scalar == Float  {
-    func displayToNdc(display: SIMD2<Float>) -> SIMD2<Float> {
+extension float2 where Scalar == Float  {
+    func displayToNdc(display: float2) -> float2 {
         let x = ((x / display.x) * 2) - 1
         let y = 1 - ((y / display.y) * 2)
-        return SIMD2<Float>(x, y)
+        return float2(x, y)
     }
 
-    func displayToNdc(display: SIMD2<Float>) -> float4x4 {
+    func displayToNdc(display: float2) -> float4x4 {
         let x = ((x / display.x) * 2) - 1
         let y = 1 - ((y / display.y) * 2)
         return float4x4(
