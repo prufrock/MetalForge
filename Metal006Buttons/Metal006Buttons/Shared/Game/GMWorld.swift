@@ -143,8 +143,3 @@ class GMImmutableGameWorld: RenderableCollection {
         self.nodes.forEach(to)
     }
 }
-
-extension Collection {
-    var lastIndex: Int { return self.count - 1 }
-}
-
