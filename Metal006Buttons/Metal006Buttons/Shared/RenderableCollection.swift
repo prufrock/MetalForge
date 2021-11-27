@@ -8,7 +8,7 @@ import MetalKit
 protocol RenderableCollection {
     func click() -> RenderableCollection
 
-    func click(x: CGFloat, y: CGFloat) -> RenderableCollection
+    func click(x: Float, y: Float) -> RenderableCollection
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection
 
@@ -18,5 +18,5 @@ protocol RenderableCollection {
 
     func cameraSpace(withAspect aspect: Float) -> float4x4
 
-    func setScreenDimensions(height: CGFloat, width: CGFloat) -> RenderableCollection
+    func setScreenDimensions(height: Float, width: Float) -> RenderableCollection
 }

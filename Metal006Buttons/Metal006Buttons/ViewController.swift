@@ -46,7 +46,7 @@ class ViewController: UIViewController {
         let touch = touches.first!
         let location = touch.location(in: self.view)
 
-        drawer!.click(x: location.x, y: location.y)
+        drawer!.click(x: Float(location.x), y: Float(location.y))
     }
 
     private func printState() {

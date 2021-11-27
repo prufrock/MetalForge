@@ -216,8 +216,8 @@ struct GMImmutableCamera: CameraNode {
 }
 
 struct GMSceneImmutableScene: RenderableCollection {
-    private let screenHeight: CGFloat
-    private let screenWidth: CGFloat
+    private let screenHeight: Float
+    private let screenWidth: Float
 
     let camera: GMImmutableCamera
     let node: GMSceneNode
@@ -227,8 +227,8 @@ struct GMSceneImmutableScene: RenderableCollection {
         node: GMSceneNode = GMSceneImmutableNode(),
         camera: GMImmutableCamera,
         state: SceneState = .paused,
-        screenWidth: CGFloat = 0,
-        screenHeight: CGFloat = 0
+        screenWidth: Float = 0,
+        screenHeight: Float = 0
     ) {
         self.node = node
         self.camera = camera
@@ -245,7 +245,7 @@ struct GMSceneImmutableScene: RenderableCollection {
         self.clone(camera: self.camera.translate(x: 0.1, y: 0.0, z: 0.0))
     }
 
-    func click(x: CGFloat, y: CGFloat) -> RenderableCollection {
+    func click(x: Float, y: Float) -> RenderableCollection {
         let aspect = Float(screenWidth / screenHeight)
         let displayCoords = SIMD2<Float>(Float(x), Float(y))
         let ndcCoords: float4x4 = displayCoords.displayToNdc(
@@ -327,8 +327,8 @@ struct GMSceneImmutableScene: RenderableCollection {
         node: GMSceneNode? = nil,
         camera: GMImmutableCamera? = nil,
         state: SceneState? = nil,
-        screenWidth: CGFloat? = nil,
-        screenHeight: CGFloat? = nil
+        screenWidth: Float? = nil,
+        screenHeight: Float? = nil
     ) -> RenderableCollection {
         GMSceneImmutableScene(
             node: node ?? self.node,
@@ -339,7 +339,7 @@ struct GMSceneImmutableScene: RenderableCollection {
         )
     }
 
-    func setScreenDimensions(height: CGFloat, width: CGFloat) -> RenderableCollection {
+    func setScreenDimensions(height: Float, width: Float) -> RenderableCollection {
         return clone(screenWidth: width, screenHeight: height)
     }
 
