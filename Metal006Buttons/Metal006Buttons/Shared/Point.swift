@@ -14,7 +14,7 @@ struct Point {
         self.rawValue = rawValue
     }
 
-    init(_ x: GMFloat, _ y: GMFloat, _ z: GMFloat) {
+    init(_ x: Float, _ y: Float, _ z: Float) {
         rawValue = [x, y, z]
     }
 
@@ -22,7 +22,7 @@ struct Point {
         Point(0.0, 0.0, 0.0)
     }
 
-    func translate(_ x: GMFloat, _ y: GMFloat, _ z: GMFloat) -> Point {
+    func translate(_ x: Float, _ y: Float, _ z: Float) -> Point {
         Self(
             self.rawValue.x + x,
             self.rawValue.y + y,

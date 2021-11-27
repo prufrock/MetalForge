@@ -27,16 +27,16 @@ protocol GMSceneNode: RenderableNode {
 }
 
 protocol CameraNode: GMSceneNode {
-    var cameraTop: GMFloat { get }
-    var cameraBottom: GMFloat { get }
+    var cameraTop: Float { get }
+    var cameraBottom: Float { get }
     var transformation: float4x4 { get }
-    var nearPlane: GMFloat { get }
+    var nearPlane: Float { get }
 
-    func cameraSpace(withAspect aspect: GMFloat) -> float4x4
+    func cameraSpace(withAspect aspect: Float) -> float4x4
 
-    func projectionMatrix(_ aspect: GMFloat) -> float4x4
+    func projectionMatrix(_ aspect: Float) -> float4x4
 
-    func reverseProjectionMatrix(_ aspect: GMFloat) -> float4x4
+    func reverseProjectionMatrix(_ aspect: Float) -> float4x4
 }
 
 extension GMSceneNode {
@@ -54,9 +54,9 @@ func GMCreateScene() -> RenderableCollection {
            GMSceneImmutableNode(
                children: [],
                location: Point(
-                   GMFloat.random(in: -1...1),
-                   GMFloat.random(in: -1...1),
-                    GMFloat.random(in: 0...1)
+                   Float.random(in: -1...1),
+                   Float.random(in: -1...1),
+                    Float.random(in: 0...1)
                ),
                transformation: matrix_identity_float4x4,
                vertices: VerticeCollection().c[.cube]!,
@@ -75,9 +75,9 @@ func GMCreateScene() -> RenderableCollection {
 }
 
 struct GMImmutableCamera: CameraNode {
-    let nearPlane: GMFloat = 0.1
-    let cameraTop: GMFloat
-    let cameraBottom: GMFloat
+    let nearPlane: Float = 0.1
+    let cameraTop: Float
+    let cameraBottom: Float
     let transformation: float4x4
 
     // GMSceneNode
@@ -131,7 +131,7 @@ struct GMImmutableCamera: CameraNode {
         )
     }
 
-    func cameraSpace(withAspect aspect: GMFloat) -> float4x4 {
+    func cameraSpace(withAspect aspect: Float) -> float4x4 {
         projectionMatrix(aspect) * viewMatrix()
     }
 
@@ -139,15 +139,15 @@ struct GMImmutableCamera: CameraNode {
         (transformation).inverse
     }
 
-    func projectionMatrix(_ aspect: GMFloat) -> float4x4 {
+    func projectionMatrix(_ aspect: Float) -> float4x4 {
         (float4x4.perspectiveProjection(nearPlane: nearPlane, farPlane: 1.0) * float4x4.scaleY(aspect))
     }
 
-    func reverseProjectionMatrix(_ aspect: GMFloat) -> float4x4 {
+    func reverseProjectionMatrix(_ aspect: Float) -> float4x4 {
         projectionMatrix(aspect).inverse
     }
 
-    func translate(x: GMFloat, y: GMFloat, z: GMFloat) -> GMImmutableCamera {
+    func translate(x: Float, y: Float, z: Float) -> GMImmutableCamera {
         let transform = float4x4.translate(x: x, y: y, z: z)
         return clone(
             transformation: self.transformation * transform,
@@ -155,7 +155,7 @@ struct GMImmutableCamera: CameraNode {
         )
     }
 
-    func setDimensions(cameraTop: GMFloat, cameraBottom: GMFloat) -> GMImmutableCamera {
+    func setDimensions(cameraTop: Float, cameraBottom: Float) -> GMImmutableCamera {
         clone(cameraTop: cameraTop, cameraBottom: cameraBottom)
     }
 
@@ -193,8 +193,8 @@ struct GMImmutableCamera: CameraNode {
     }
 
     func clone(
-        cameraTop: GMFloat? = nil,
-        cameraBottom: GMFloat? = nil,
+        cameraTop: Float? = nil,
+        cameraBottom: Float? = nil,
         transformation: float4x4? = nil,
         children: [GMSceneNode]? = nil,
         location: Point? = nil,
@@ -237,7 +237,7 @@ struct GMSceneImmutableScene: RenderableCollection {
         self.screenWidth = screenWidth
     }
 
-    func cameraSpace(withAspect aspect: GMFloat) -> float4x4 {
+    func cameraSpace(withAspect aspect: Float) -> float4x4 {
         camera.cameraSpace(withAspect: aspect)
     }
 
@@ -246,10 +246,10 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     func click(x: CGFloat, y: CGFloat) -> RenderableCollection {
-        let aspect = GMFloat(screenWidth / screenHeight)
-        let displayCoords = SIMD2<GMFloat>(GMFloat(x), GMFloat(y))
+        let aspect = Float(screenWidth / screenHeight)
+        let displayCoords = SIMD2<Float>(Float(x), Float(y))
         let ndcCoords: float4x4 = displayCoords.displayToNdc(
-            display: SIMD2<GMFloat>(GMFloat(screenWidth), GMFloat(screenHeight))
+            display: SIMD2<Float>(Float(screenWidth), Float(screenHeight))
         )
 
         let worldCoords = ndcCoords * camera.reverseProjectionMatrix(aspect)
@@ -276,7 +276,7 @@ struct GMSceneImmutableScene: RenderableCollection {
         return self.clone(camera: camera.clone(children: newChildren))
     }
 
-    func setCameraDimension(top: GMFloat, bottom: GMFloat) -> RenderableCollection {
+    func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
         clone(
             camera: camera.setDimensions(cameraTop: top, cameraBottom: bottom)
         )
@@ -345,9 +345,9 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     private func randomNode(children: [GMSceneImmutableNode], color: float4) -> GMSceneImmutableNode {
         let location = Point(
-            GMFloat.random(in: -1...1),
-            GMFloat.random(in: self.camera.cameraBottom...self.camera.cameraTop),
-            GMFloat.random(in: 0...1)
+            Float.random(in: -1...1),
+            Float.random(in: self.camera.cameraBottom...self.camera.cameraTop),
+            Float.random(in: 0...1)
         )
 
         let transformation = matrix_identity_float4x4
@@ -377,7 +377,7 @@ struct GMSceneImmutableNode: GMSceneNode {
     let vertices: Vertices
     let color: float4
     let state: GMSceneImmutableSceneState
-    let rate = GMFloat(0.26)
+    let rate = Float(0.26)
     let hidden: Bool
 
     init() {
@@ -456,9 +456,9 @@ struct GMSceneImmutableNode: GMSceneNode {
         let newTransformation: float4x4
         switch state {
         case .forward:
-            (newLocation, newTransformation) = translate(GMFloat(elapsed) * rate, 0, 0)
+            (newLocation, newTransformation) = translate(Float(elapsed) * rate, 0, 0)
         case .backward:
-            (newLocation, newTransformation) = translate(-1 * GMFloat(elapsed) * rate, 0, 0)
+            (newLocation, newTransformation) = translate(-1 * Float(elapsed) * rate, 0, 0)
         }
 
         return clone(location: newLocation, transformation: newTransformation, state: newState)
@@ -492,7 +492,7 @@ struct GMSceneImmutableNode: GMSceneNode {
         )
     }
 
-    private func translate(_ x: GMFloat, _ y: GMFloat, _ z: GMFloat) -> (Point, float4x4) {
+    private func translate(_ x: Float, _ y: Float, _ z: Float) -> (Point, float4x4) {
         let newLocation = location.translate(x, y, z)
         let newTransformation = float4x4.translate(
             x: location.rawValue.x + x,

@@ -6,9 +6,9 @@ import Foundation
 import simd
 
 struct Ray {
-    let origin: SIMD3<GMFloat>
-    let target: SIMD3<GMFloat>
-    var displacement: SIMD3<GMFloat> {
+    let origin: SIMD3<Float>
+    let target: SIMD3<Float>
+    var displacement: SIMD3<Float> {
         get {
             target - origin
         }
@@ -24,7 +24,7 @@ struct Ray {
         return discriminant(a: a, b: b, c: c) >= 0
     }
 
-    private func discriminant(a: GMFloat, b: GMFloat, c: GMFloat) -> GMFloat {
+    private func discriminant(a: Float, b: Float, c: Float) -> Float {
         (b * b) - 4 * a * c
     }
 }

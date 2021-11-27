@@ -10,13 +10,13 @@ protocol RenderableCollection {
 
     func click(x: CGFloat, y: CGFloat) -> RenderableCollection
 
-    func setCameraDimension(top: GMFloat, bottom: GMFloat) -> RenderableCollection
+    func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection
 
     func update(elapsed: Double) -> RenderableCollection
 
     func render(to: (RenderableNode) -> Void)
 
-    func cameraSpace(withAspect aspect: GMFloat) -> float4x4
+    func cameraSpace(withAspect aspect: Float) -> float4x4
 
     func setScreenDimensions(height: CGFloat, width: CGFloat) -> RenderableCollection
 }
