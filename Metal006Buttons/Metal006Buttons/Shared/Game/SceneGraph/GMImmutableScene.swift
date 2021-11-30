@@ -39,14 +39,14 @@ struct GMImmutableScene: RenderableCollection {
 
         let worldCoords = ndcCoords * camera.reverseProjectionMatrix(aspect)
 
-        let ray = Ray(origin: float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
+        let ray = GMRay(origin: float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
 
         var newChildren: [GMNode] = []
 
         for i in 0..<camera.children.count {
             let children = camera.children
             let node = children[i]
-            let sphere = Sphere(center: node.location.rawValue, radius: 0.2)
+            let sphere = GMSphere(center: node.location.rawValue, radius: 0.2)
             if(ray.intersects(with: sphere)) {
                 if (node.color == float4(.white)) {
                     newChildren.append(node.setColor(float4(.red)))

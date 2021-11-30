@@ -2,10 +2,9 @@
 // Created by David Kanenwisher on 11/24/21.
 //
 
-import Foundation
 import simd
 
-struct Ray {
+struct GMRay {
     let origin: SIMD3<Float>
     let target: SIMD3<Float>
     var displacement: SIMD3<Float> {
@@ -14,7 +13,7 @@ struct Ray {
         }
     }
 
-    func intersects(with sphere: Sphere) -> Bool {
+    func intersects(with sphere: GMSphere) -> Bool {
         //discriminant
         let a = simd_dot(displacement, displacement)
         let b = 2.0 * simd_dot((origin - sphere.center), displacement)

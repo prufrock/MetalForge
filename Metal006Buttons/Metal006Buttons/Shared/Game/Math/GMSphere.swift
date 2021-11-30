@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct Sphere {
+struct GMSphere {
     let center: SIMD3<Float>
     let radius: Float
 }
