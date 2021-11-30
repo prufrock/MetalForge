@@ -6,26 +6,6 @@ import Foundation
 import simd
 import MetalKit
 
-protocol GMSceneNode: RenderableNode {
-    var children: [GMSceneNode] { get }
-
-    func add(child: GMSceneNode) -> GMSceneNode
-
-    func delete(child: GMSceneNode) -> GMSceneNode
-
-    func update(transform: (GMSceneNode) -> GMSceneNode) -> GMSceneNode
-
-    func setColor(_ color: float4) -> GMSceneNode
-
-    func setChildren(_ children: [GMSceneNode]) -> GMSceneNode
-
-    func move(elapsed: Double) -> GMSceneNode
-
-    func render(to: (RenderableNode) -> Void)
-
-    func translate(_ transform: float4x4) -> GMSceneNode
-}
-
 protocol CameraNode: GMSceneNode {
     var cameraTop: Float { get }
     var cameraBottom: Float { get }
