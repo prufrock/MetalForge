@@ -273,7 +273,7 @@ struct GMSceneImmutableScene: RenderableCollection {
             }
         }
 
-        return self.clone(camera: camera.clone(children: newChildren))
+        return clone(camera: camera.clone(children: newChildren))
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
