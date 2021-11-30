@@ -4,16 +4,16 @@
 
 import simd
 
-struct GMSceneImmutableScene: RenderableCollection {
+struct GMImmutableScene: RenderableCollection {
     private let screenHeight: Float
     private let screenWidth: Float
 
     let camera: GMImmutableCamera
-    let node: GMSceneNode
+    let node: GMNode
     let state: SceneState
 
     init(
-        node: GMSceneNode = GMSceneImmutableNode(),
+        node: GMNode = GMImmutableNode(),
         camera: GMImmutableCamera,
         state: SceneState = .paused,
         screenWidth: Float = 0,
@@ -41,7 +41,7 @@ struct GMSceneImmutableScene: RenderableCollection {
 
         let ray = Ray(origin: float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
 
-        var newChildren: [GMSceneNode] = []
+        var newChildren: [GMNode] = []
 
         for i in 0..<camera.children.count {
             let children = camera.children
@@ -73,7 +73,7 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     func update(elapsed: Double) -> RenderableCollection {
-        var newNode: GMSceneNode
+        var newNode: GMNode
         switch state {
         case .playing:
             newNode = node.setChildren(node.children.map {
@@ -94,9 +94,9 @@ struct GMSceneImmutableScene: RenderableCollection {
 
     private func updateAllButNewestChild(
         elapsed: Double,
-        children oldChildren: [GMSceneNode],
-        newChildren: [GMSceneNode] = []
-    ) -> [GMSceneNode] {
+        children oldChildren: [GMNode],
+        newChildren: [GMNode] = []
+    ) -> [GMNode] {
         // if there's no children then do nothing
         if oldChildren.lastIndex == -1 {
             return oldChildren
@@ -109,13 +109,13 @@ struct GMSceneImmutableScene: RenderableCollection {
     }
 
     private func clone(
-        node: GMSceneNode? = nil,
+        node: GMNode? = nil,
         camera: GMImmutableCamera? = nil,
         state: SceneState? = nil,
         screenWidth: Float? = nil,
         screenHeight: Float? = nil
     ) -> RenderableCollection {
-        GMSceneImmutableScene(
+        GMImmutableScene(
             node: node ?? self.node,
             camera: camera ?? self.camera,
             state: state ?? self.state,
@@ -128,7 +128,7 @@ struct GMSceneImmutableScene: RenderableCollection {
         return clone(screenWidth: width, screenHeight: height)
     }
 
-    private func randomNode(children: [GMSceneImmutableNode], color: float4) -> GMSceneImmutableNode {
+    private func randomNode(children: [GMImmutableNode], color: float4) -> GMImmutableNode {
         let location = Point(
             Float.random(in: -1...1),
             Float.random(in: self.camera.cameraBottom...self.camera.cameraTop),
@@ -137,7 +137,7 @@ struct GMSceneImmutableScene: RenderableCollection {
 
         let transformation = matrix_identity_float4x4
 
-        return GMSceneImmutableNode(
+        return GMImmutableNode(
             children: children,
             location: location,
             transformation: transformation,

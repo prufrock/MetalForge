@@ -2,7 +2,7 @@
 // Created by David Kanenwisher on 11/29/21.
 //
 
-protocol GMCameraNode: GMSceneNode {
+protocol GMCameraNode: GMNode {
     var cameraTop: Float { get }
     var cameraBottom: Float { get }
     var transformation: float4x4 { get }

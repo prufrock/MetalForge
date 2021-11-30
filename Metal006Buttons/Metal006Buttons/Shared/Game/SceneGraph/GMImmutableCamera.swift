@@ -11,14 +11,14 @@ struct GMImmutableCamera: GMCameraNode {
     let transformation: float4x4
 
     // GMSceneNode
-    let children: [GMSceneNode]
+    let children: [GMNode]
     let location: Point
     let vertices: Vertices
     let color: float4
     let hidden: Bool
 
     static func atOrigin() -> GMImmutableCamera {
-        let button1 = GMSceneImmutableNode(
+        let button1 = GMImmutableNode(
             children: [],
             location: Point(-0.5, -2.5, 0.0),
             transformation: float4x4.translate(x: -0.5, y: -2.5, z: 0.0),
@@ -28,7 +28,7 @@ struct GMImmutableCamera: GMCameraNode {
             hidden: false
         )
 
-        let button2 = GMSceneImmutableNode(
+        let button2 = GMImmutableNode(
             children: [],
             location: Point(0.0, -2.5, 0.0),
             transformation: float4x4.translate(x: 0.0, y: -2.5, z: 0.0),
@@ -38,7 +38,7 @@ struct GMImmutableCamera: GMCameraNode {
             hidden: false
         )
 
-        let button3 = GMSceneImmutableNode(
+        let button3 = GMImmutableNode(
             children: [],
             location: Point(0.5, -2.5, 0.0),
             transformation: float4x4.translate(x: 0.5, y: -2.5, z: 0.0),
@@ -89,31 +89,31 @@ struct GMImmutableCamera: GMCameraNode {
         clone(cameraTop: cameraTop, cameraBottom: cameraBottom)
     }
 
-    func add(child: GMSceneNode) -> GMSceneNode {
+    func add(child: GMNode) -> GMNode {
         clone(children: children + [child])
     }
 
-    func delete(child: GMSceneNode) -> GMSceneNode {
+    func delete(child: GMNode) -> GMNode {
         self
     }
 
-    func update(transform: (GMSceneNode) -> GMSceneNode) -> GMSceneNode {
+    func update(transform: (GMNode) -> GMNode) -> GMNode {
         self
     }
 
-    func setColor(_ color: float4) -> GMSceneNode {
+    func setColor(_ color: float4) -> GMNode {
         self
     }
 
-    func setChildren(_ children: [GMSceneNode]) -> GMSceneNode {
+    func setChildren(_ children: [GMNode]) -> GMNode {
         clone(children: children)
     }
 
-    func move(elapsed: Double) -> GMSceneNode {
+    func move(elapsed: Double) -> GMNode {
         self
     }
 
-    func translate(_ transform: float4x4) -> GMSceneNode {
+    func translate(_ transform: float4x4) -> GMNode {
         clone(transformation: transform)
     }
 
@@ -126,7 +126,7 @@ struct GMImmutableCamera: GMCameraNode {
         cameraTop: Float? = nil,
         cameraBottom: Float? = nil,
         transformation: float4x4? = nil,
-        children: [GMSceneNode]? = nil,
+        children: [GMNode]? = nil,
         location: Point? = nil,
         vertices: Vertices? = nil,
         color: float4? = nil,

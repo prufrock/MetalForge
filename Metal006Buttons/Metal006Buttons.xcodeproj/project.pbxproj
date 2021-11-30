@@ -12,11 +12,11 @@
 		5AF0E6487D4D1472005934DD /* ColorsETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6AD078D155F5F5A3292 /* ColorsETests.swift */; };
 		5AF0E879151D3D72AB7A8A53 /* GMCameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE76003514D77D5B8552 /* GMCameraNode.swift */; };
 		5AF0E9487124A95D5FB331B6 /* GMImmutableCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */; };
-		5AF0EAE678EF730DBFFEB572 /* GMSceneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7C72A12B9874DB3F0C0 /* GMSceneNode.swift */; };
+		5AF0EAE678EF730DBFFEB572 /* GMNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7C72A12B9874DB3F0C0 /* GMNode.swift */; };
 		5AF0EB117EACBC864C618E55 /* DisplayToWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E1A24DDBFA441CDC17BC /* DisplayToWorldTests.swift */; };
 		5AF0EBA60320999FE9040BDE /* Float2Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E4D27B1032D567194052 /* Float2Ext.swift */; };
 		5AF0EDA1BEC44AE11B0E7566 /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E86472CD0646AFDC572F /* Ray.swift */; };
-		5AF0EDBC1C969D139A07B92B /* GMSceneImmutableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAA222B9EE33C543BC3 /* GMSceneImmutableScene.swift */; };
+		5AF0EDBC1C969D139A07B92B /* GMImmutableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAA222B9EE33C543BC3 /* GMImmutableScene.swift */; };
 		5AF0EF83C3DC3B873348351E /* Sphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE9EDD490654D72452D0 /* Sphere.swift */; };
 		6308FE34274603DD009B7036 /* GMScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6308FE33274603DD009B7036 /* GMScene.swift */; };
 		637240DE273CCA10001ADFDE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637240DD273CCA10001ADFDE /* AppDelegate.swift */; };
@@ -66,9 +66,9 @@
 		5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableCamera.swift; sourceTree = "<group>"; };
 		5AF0E4D27B1032D567194052 /* Float2Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Float2Ext.swift; sourceTree = "<group>"; };
 		5AF0E6AD078D155F5F5A3292 /* ColorsETests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsETests.swift; sourceTree = "<group>"; };
-		5AF0E7C72A12B9874DB3F0C0 /* GMSceneNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSceneNode.swift; sourceTree = "<group>"; };
+		5AF0E7C72A12B9874DB3F0C0 /* GMNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMNode.swift; sourceTree = "<group>"; };
 		5AF0E86472CD0646AFDC572F /* Ray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
-		5AF0EBAA222B9EE33C543BC3 /* GMSceneImmutableScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSceneImmutableScene.swift; sourceTree = "<group>"; };
+		5AF0EBAA222B9EE33C543BC3 /* GMImmutableScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableScene.swift; sourceTree = "<group>"; };
 		5AF0EBDE204481488BFBF507 /* CollectionExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionExt.swift; sourceTree = "<group>"; };
 		5AF0EE76003514D77D5B8552 /* GMCameraNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMCameraNode.swift; sourceTree = "<group>"; };
 		5AF0EE9EDD490654D72452D0 /* Sphere.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
@@ -132,10 +132,10 @@
 				6308FE33274603DD009B7036 /* GMScene.swift */,
 				5AF0EE9EDD490654D72452D0 /* Sphere.swift */,
 				5AF0E86472CD0646AFDC572F /* Ray.swift */,
-				5AF0E7C72A12B9874DB3F0C0 /* GMSceneNode.swift */,
+				5AF0E7C72A12B9874DB3F0C0 /* GMNode.swift */,
 				5AF0EE76003514D77D5B8552 /* GMCameraNode.swift */,
 				5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */,
-				5AF0EBAA222B9EE33C543BC3 /* GMSceneImmutableScene.swift */,
+				5AF0EBAA222B9EE33C543BC3 /* GMImmutableScene.swift */,
 			);
 			path = SceneGraph;
 			sourceTree = "<group>";
@@ -378,10 +378,10 @@
 				5AF0EDA1BEC44AE11B0E7566 /* Ray.swift in Sources */,
 				5AF0E5513899665A9EB93CD8 /* CollectionExt.swift in Sources */,
 				5AF0EBA60320999FE9040BDE /* Float2Ext.swift in Sources */,
-				5AF0EAE678EF730DBFFEB572 /* GMSceneNode.swift in Sources */,
+				5AF0EAE678EF730DBFFEB572 /* GMNode.swift in Sources */,
 				5AF0E879151D3D72AB7A8A53 /* GMCameraNode.swift in Sources */,
 				5AF0E9487124A95D5FB331B6 /* GMImmutableCamera.swift in Sources */,
-				5AF0EDBC1C969D139A07B92B /* GMSceneImmutableScene.swift in Sources */,
+				5AF0EDBC1C969D139A07B92B /* GMImmutableScene.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
