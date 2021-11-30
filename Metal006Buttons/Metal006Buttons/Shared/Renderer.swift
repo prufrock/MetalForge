@@ -5,7 +5,6 @@
 //  Created by David Kanenwisher on 9/19/21.
 //
 
-import Foundation
 import MetalKit
 
 class Renderer: NSObject {

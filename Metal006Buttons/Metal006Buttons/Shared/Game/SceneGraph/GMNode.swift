@@ -2,8 +2,6 @@
 // Created by David Kanenwisher on 11/29/21.
 //
 
-import Foundation
-
 protocol GMNode: RenderableNode {
     var children: [GMNode] { get }
 

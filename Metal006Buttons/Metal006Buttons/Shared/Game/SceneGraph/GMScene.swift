@@ -2,7 +2,6 @@
 // Created by David Kanenwisher on 10/24/21.
 //
 
-import Foundation
 import simd
 import MetalKit
 

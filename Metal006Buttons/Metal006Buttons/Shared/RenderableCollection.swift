@@ -2,7 +2,6 @@
 // Created by David Kanenwisher on 10/28/21.
 //
 
-import Foundation
 import MetalKit
 
 protocol RenderableCollection {
