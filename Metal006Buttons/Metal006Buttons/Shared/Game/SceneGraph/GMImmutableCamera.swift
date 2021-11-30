@@ -4,7 +4,7 @@
 
 import simd
 
-struct GMImmutableCamera: CameraNode {
+struct GMImmutableCamera: GMCameraNode {
     let nearPlane: Float = 0.1
     let cameraTop: Float
     let cameraBottom: Float
