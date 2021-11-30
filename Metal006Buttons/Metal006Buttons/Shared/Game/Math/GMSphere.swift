@@ -5,6 +5,6 @@
 import Foundation
 
 struct GMSphere {
-    let center: SIMD3<Float>
+    let center: float3
     let radius: Float
 }
