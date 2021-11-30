@@ -6,8 +6,6 @@ import Foundation
 import MetalKit
 
 protocol RenderableCollection {
-    func click() -> RenderableCollection
-
     func click(x: Float, y: Float) -> RenderableCollection
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection

@@ -241,10 +241,6 @@ struct GMSceneImmutableScene: RenderableCollection {
         camera.cameraSpace(withAspect: aspect)
     }
 
-    func click() -> RenderableCollection {
-        self.clone(camera: self.camera.translate(x: 0.1, y: 0.0, z: 0.0))
-    }
-
     func click(x: Float, y: Float) -> RenderableCollection {
         let aspect = Float(screenWidth / screenHeight)
         let displayCoords = SIMD2<Float>(Float(x), Float(y))

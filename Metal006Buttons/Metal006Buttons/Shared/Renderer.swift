@@ -109,10 +109,6 @@ extension Renderer: MTKViewDelegate {
 }
 
 extension Renderer {
-    func click() {
-        world = world.click()
-    }
-
     func click(x: Float, y: Float) {
         world = world.click(x: x, y: y)
     }
