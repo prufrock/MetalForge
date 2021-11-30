@@ -6,19 +6,6 @@ import Foundation
 import simd
 import MetalKit
 
-protocol CameraNode: GMSceneNode {
-    var cameraTop: Float { get }
-    var cameraBottom: Float { get }
-    var transformation: float4x4 { get }
-    var nearPlane: Float { get }
-
-    func cameraSpace(withAspect aspect: Float) -> float4x4
-
-    func projectionMatrix(_ aspect: Float) -> float4x4
-
-    func reverseProjectionMatrix(_ aspect: Float) -> float4x4
-}
-
 extension GMSceneNode {
     static func +(left: GMSceneNode, right: GMSceneNode) -> GMSceneNode {
         left.add(child: right)

@@ -10,6 +10,7 @@
 		5AF0E105AC544CD9A064859B /* LineSphereIntersectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0CA6B401BAD4E2D24E7 /* LineSphereIntersectionTests.swift */; };
 		5AF0E5513899665A9EB93CD8 /* CollectionExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBDE204481488BFBF507 /* CollectionExt.swift */; };
 		5AF0E6487D4D1472005934DD /* ColorsETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6AD078D155F5F5A3292 /* ColorsETests.swift */; };
+		5AF0E879151D3D72AB7A8A53 /* CameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE76003514D77D5B8552 /* CameraNode.swift */; };
 		5AF0EAE678EF730DBFFEB572 /* GMSceneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7C72A12B9874DB3F0C0 /* GMSceneNode.swift */; };
 		5AF0EB117EACBC864C618E55 /* DisplayToWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E1A24DDBFA441CDC17BC /* DisplayToWorldTests.swift */; };
 		5AF0EBA60320999FE9040BDE /* Float2Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E4D27B1032D567194052 /* Float2Ext.swift */; };
@@ -65,6 +66,7 @@
 		5AF0E7C72A12B9874DB3F0C0 /* GMSceneNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSceneNode.swift; sourceTree = "<group>"; };
 		5AF0E86472CD0646AFDC572F /* Ray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		5AF0EBDE204481488BFBF507 /* CollectionExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionExt.swift; sourceTree = "<group>"; };
+		5AF0EE76003514D77D5B8552 /* CameraNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraNode.swift; sourceTree = "<group>"; };
 		5AF0EE9EDD490654D72452D0 /* Sphere.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sphere.swift; sourceTree = "<group>"; };
 		6308FE33274603DD009B7036 /* GMScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMScene.swift; sourceTree = "<group>"; };
 		637240DA273CCA10001ADFDE /* Metal006Buttons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal006Buttons.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 				5AF0EE9EDD490654D72452D0 /* Sphere.swift */,
 				5AF0E86472CD0646AFDC572F /* Ray.swift */,
 				5AF0E7C72A12B9874DB3F0C0 /* GMSceneNode.swift */,
+				5AF0EE76003514D77D5B8552 /* CameraNode.swift */,
 			);
 			path = SceneGraph;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				5AF0E5513899665A9EB93CD8 /* CollectionExt.swift in Sources */,
 				5AF0EBA60320999FE9040BDE /* Float2Ext.swift in Sources */,
 				5AF0EAE678EF730DBFFEB572 /* GMSceneNode.swift in Sources */,
+				5AF0E879151D3D72AB7A8A53 /* CameraNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
