@@ -6,12 +6,6 @@ import Foundation
 import simd
 import MetalKit
 
-extension GMSceneNode {
-    static func +(left: GMSceneNode, right: GMSceneNode) -> GMSceneNode {
-        left.add(child: right)
-    }
-}
-
 func GMCreateScene() -> RenderableCollection {
     let root = GMSceneImmutableNode()
 
