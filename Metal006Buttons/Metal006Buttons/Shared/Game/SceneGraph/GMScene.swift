@@ -20,7 +20,7 @@ func GMCreateScene() -> RenderableCollection {
                ),
                transformation: matrix_identity_float4x4,
                vertices: VerticeCollection().c[.cube]!,
-               color: float4(.green),
+               color: Float4(.green),
                state: .forward,
                hidden: false
            )
