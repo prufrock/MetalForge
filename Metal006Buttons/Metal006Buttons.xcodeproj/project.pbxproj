@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5AF0E105AC544CD9A064859B /* LineSphereIntersectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0CA6B401BAD4E2D24E7 /* LineSphereIntersectionTests.swift */; };
 		5AF0E39066190ABD7578C200 /* GMRay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E01B8CBBB9F892DB5530 /* GMRay.swift */; };
 		5AF0E3FA3EDAC7B9DE2F2A19 /* GMImmutableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED7EA7BAEFE349BE269B /* GMImmutableNode.swift */; };
+		5AF0E41DB4FD39195ECADFAB /* LineSphereIntersectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7716DA35D1013CCB61F /* LineSphereIntersectionTests.swift */; };
 		5AF0E5513899665A9EB93CD8 /* CollectionExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBDE204481488BFBF507 /* CollectionExt.swift */; };
-		5AF0E6487D4D1472005934DD /* ColorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6AD078D155F5F5A3292 /* ColorsTests.swift */; };
+		5AF0E5E0E010399F0CC04381 /* ColorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF6698B6332E4470A01B /* ColorsTests.swift */; };
 		5AF0E879151D3D72AB7A8A53 /* GMCameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE76003514D77D5B8552 /* GMCameraNode.swift */; };
 		5AF0E9487124A95D5FB331B6 /* GMImmutableCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */; };
+		5AF0E9A85BE693B25BD5203D /* DisplayToWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E59D95FC781F224A05DE /* DisplayToWorldTests.swift */; };
 		5AF0EAE678EF730DBFFEB572 /* GMNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7C72A12B9874DB3F0C0 /* GMNode.swift */; };
-		5AF0EB117EACBC864C618E55 /* DisplayToWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E1A24DDBFA441CDC17BC /* DisplayToWorldTests.swift */; };
 		5AF0EBA60320999FE9040BDE /* Float2Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E4D27B1032D567194052 /* Float2Ext.swift */; };
 		5AF0EDBC1C969D139A07B92B /* GMImmutableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAA222B9EE33C543BC3 /* GMImmutableScene.swift */; };
 		5AF0EE279710703E8A055B85 /* GMSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EDD771C0C454C6293107 /* GMSphere.swift */; };
@@ -63,17 +63,17 @@
 
 /* Begin PBXFileReference section */
 		5AF0E01B8CBBB9F892DB5530 /* GMRay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMRay.swift; sourceTree = "<group>"; };
-		5AF0E0CA6B401BAD4E2D24E7 /* LineSphereIntersectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSphereIntersectionTests.swift; sourceTree = "<group>"; };
-		5AF0E1A24DDBFA441CDC17BC /* DisplayToWorldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayToWorldTests.swift; sourceTree = "<group>"; };
 		5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableCamera.swift; sourceTree = "<group>"; };
 		5AF0E4D27B1032D567194052 /* Float2Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Float2Ext.swift; sourceTree = "<group>"; };
-		5AF0E6AD078D155F5F5A3292 /* ColorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsTests.swift; sourceTree = "<group>"; };
+		5AF0E59D95FC781F224A05DE /* DisplayToWorldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayToWorldTests.swift; sourceTree = "<group>"; };
+		5AF0E7716DA35D1013CCB61F /* LineSphereIntersectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineSphereIntersectionTests.swift; sourceTree = "<group>"; };
 		5AF0E7C72A12B9874DB3F0C0 /* GMNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMNode.swift; sourceTree = "<group>"; };
 		5AF0EBAA222B9EE33C543BC3 /* GMImmutableScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableScene.swift; sourceTree = "<group>"; };
 		5AF0EBDE204481488BFBF507 /* CollectionExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionExt.swift; sourceTree = "<group>"; };
 		5AF0ED7EA7BAEFE349BE269B /* GMImmutableNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableNode.swift; sourceTree = "<group>"; };
 		5AF0EDD771C0C454C6293107 /* GMSphere.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMSphere.swift; sourceTree = "<group>"; };
 		5AF0EE76003514D77D5B8552 /* GMCameraNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMCameraNode.swift; sourceTree = "<group>"; };
+		5AF0EF6698B6332E4470A01B /* ColorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsTests.swift; sourceTree = "<group>"; };
 		6308FE33274603DD009B7036 /* GMScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMScene.swift; sourceTree = "<group>"; };
 		637240DA273CCA10001ADFDE /* Metal006Buttons.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal006Buttons.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		637240DD273CCA10001ADFDE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +137,32 @@
 			path = Math;
 			sourceTree = "<group>";
 		};
+		5AF0E4EDB0893734D06BA92C /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				5AF0EA3275F21DC7477E0766 /* Math */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		5AF0EA3275F21DC7477E0766 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				5AF0E7716DA35D1013CCB61F /* LineSphereIntersectionTests.swift */,
+			);
+			path = Math;
+			sourceTree = "<group>";
+		};
+		5AF0ECE3E9BE4AC234D92D2C /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				5AF0E4EDB0893734D06BA92C /* Game */,
+				5AF0EF6698B6332E4470A01B /* ColorsTests.swift */,
+				5AF0E59D95FC781F224A05DE /* DisplayToWorldTests.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		6308FE32274603AD009B7036 /* SceneGraph */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,9 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				637240F4273CCA11001ADFDE /* Metal006ButtonsTests.swift */,
-				5AF0E0CA6B401BAD4E2D24E7 /* LineSphereIntersectionTests.swift */,
-				5AF0E1A24DDBFA441CDC17BC /* DisplayToWorldTests.swift */,
-				5AF0E6AD078D155F5F5A3292 /* ColorsTests.swift */,
+				5AF0ECE3E9BE4AC234D92D2C /* Shared */,
 			);
 			path = Metal006ButtonsTests;
 			sourceTree = "<group>";
@@ -402,9 +426,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				637240F5273CCA11001ADFDE /* Metal006ButtonsTests.swift in Sources */,
-				5AF0E105AC544CD9A064859B /* LineSphereIntersectionTests.swift in Sources */,
-				5AF0EB117EACBC864C618E55 /* DisplayToWorldTests.swift in Sources */,
-				5AF0E6487D4D1472005934DD /* ColorsTests.swift in Sources */,
+				5AF0E5E0E010399F0CC04381 /* ColorsTests.swift in Sources */,
+				5AF0E9A85BE693B25BD5203D /* DisplayToWorldTests.swift in Sources */,
+				5AF0E41DB4FD39195ECADFAB /* LineSphereIntersectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
