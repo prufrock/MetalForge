@@ -32,7 +32,7 @@ struct GMImmutableCamera: GMCameraNode {
             location: Point(-0.5, -2.5, 0.0),
             transformation: Float4x4.translate(x: -0.5, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
-            color: float4(.white),
+            color: Float4(.white),
             state: .forward,
             hidden: false
         )
@@ -42,7 +42,7 @@ struct GMImmutableCamera: GMCameraNode {
             location: Point(0.0, -2.5, 0.0),
             transformation: Float4x4.translate(x: 0.0, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
-            color: float4(.white),
+            color: Float4(.white),
             state: .forward,
             hidden: false
         )
@@ -52,7 +52,7 @@ struct GMImmutableCamera: GMCameraNode {
             location: Point(0.5, -2.5, 0.0),
             transformation: Float4x4.translate(x: 0.5, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
-            color: float4(.white),
+            color: Float4(.white),
             state: .forward,
             hidden: false
         )
@@ -64,7 +64,7 @@ struct GMImmutableCamera: GMCameraNode {
             children: [button1, button2, button3],
             location: Point.origin(),
             vertices: Vertices(),
-            color: float4(.black),
+            color: Float4(.black),
             hidden: true
         )
     }

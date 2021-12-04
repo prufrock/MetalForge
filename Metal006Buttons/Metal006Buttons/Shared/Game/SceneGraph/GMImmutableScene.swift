@@ -42,10 +42,10 @@ struct GMImmutableScene: RenderableCollection {
 
         print("world x:\(worldCoords[0][0]) y:\(worldCoords[1][1])")
 
-        let ray = GMRay(origin: float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
+        let ray = GMRay(origin: Float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: Float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
 
         var newChildren: [GMNode] = []
-        var translation: Float3 = float3()
+        var translation: Float3 = Float3()
         var newState = state
 
         for i in 0..<camera.children.count {
@@ -53,16 +53,16 @@ struct GMImmutableScene: RenderableCollection {
             let node = children[i]
             let sphere = GMSphere(center: node.location.rawValue, radius: 0.2)
             if(ray.intersects(with: sphere)) {
-                if (node.color == float4(.white)) {
-                    newChildren.append(node.setColor(float4(.red)))
+                if (node.color == Float4(.white)) {
+                    newChildren.append(node.setColor(Float4(.red)))
                 } else {
-                    newChildren.append(node.setColor(float4(.white)))
+                    newChildren.append(node.setColor(Float4(.white)))
                 }
 
                 if i == 0 {
-                    translation = float3(x: -0.1, y: 0, z: 0)
+                    translation = Float3(x: -0.1, y: 0, z: 0)
                 } else if i == 1 {
-                    translation = float3()
+                    translation = Float3()
                     switch state {
                     case .playing:
                         newState = .paused
@@ -70,7 +70,7 @@ struct GMImmutableScene: RenderableCollection {
                         newState = .playing
                     }
                 } else if i == 2 {
-                    translation = float3(x: 0.1, y: 0, z: 0)
+                    translation = Float3(x: 0.1, y: 0, z: 0)
                 }
             } else {
                 newChildren.append(node)
@@ -95,7 +95,7 @@ struct GMImmutableScene: RenderableCollection {
         }
 
         if(newNode.children.count >= 1) {
-            newNode = newNode.setChildren(newNode.children[0..<(node.children.endIndex-1)] + [newNode.children.last!.setColor(float4(.red))])
+            newNode = newNode.setChildren(newNode.children[0..<(node.children.endIndex-1)] + [newNode.children.last!.setColor(Float4(.red))])
         }
 
         return clone(node: newNode)
@@ -113,7 +113,7 @@ struct GMImmutableScene: RenderableCollection {
         } else if (newChildren.lastIndex + 1) == oldChildren.lastIndex {
             return newChildren + [oldChildren[oldChildren.lastIndex]]
         } else {
-            return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [oldChildren[newChildren.count].move(elapsed: elapsed).setColor(float4(.green))])
+            return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [oldChildren[newChildren.count].move(elapsed: elapsed).setColor(Float4(.green))])
         }
     }
 

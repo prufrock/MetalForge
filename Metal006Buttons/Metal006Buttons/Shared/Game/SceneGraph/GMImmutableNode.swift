@@ -23,7 +23,7 @@ struct GMImmutableNode: GMNode {
         vertices = Vertices(
             Point(0.0, 0.0, 0.0)
         )
-        color = float4(.green)
+        color = Float4(.green)
         state = .forward
         hidden = true
     }

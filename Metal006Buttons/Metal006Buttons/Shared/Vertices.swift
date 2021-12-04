@@ -30,7 +30,7 @@ struct Vertices {
     }
 
     func toFloat4() -> [Float4] {
-        vertices.map { p in float4(p.rawValue.x, p.rawValue.y, p.rawValue.z, 1)}
+        vertices.map { p in Float4(p.rawValue.x, p.rawValue.y, p.rawValue.z, 1)}
     }
 }
 
