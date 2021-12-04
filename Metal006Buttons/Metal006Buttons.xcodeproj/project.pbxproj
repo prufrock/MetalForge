@@ -11,7 +11,7 @@
 		5AF0E39066190ABD7578C200 /* GMRay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E01B8CBBB9F892DB5530 /* GMRay.swift */; };
 		5AF0E3FA3EDAC7B9DE2F2A19 /* GMImmutableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED7EA7BAEFE349BE269B /* GMImmutableNode.swift */; };
 		5AF0E5513899665A9EB93CD8 /* CollectionExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBDE204481488BFBF507 /* CollectionExt.swift */; };
-		5AF0E6487D4D1472005934DD /* ColorsETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6AD078D155F5F5A3292 /* ColorsETests.swift */; };
+		5AF0E6487D4D1472005934DD /* ColorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6AD078D155F5F5A3292 /* ColorsTests.swift */; };
 		5AF0E879151D3D72AB7A8A53 /* GMCameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE76003514D77D5B8552 /* GMCameraNode.swift */; };
 		5AF0E9487124A95D5FB331B6 /* GMImmutableCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */; };
 		5AF0EAE678EF730DBFFEB572 /* GMNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7C72A12B9874DB3F0C0 /* GMNode.swift */; };
@@ -67,7 +67,7 @@
 		5AF0E1A24DDBFA441CDC17BC /* DisplayToWorldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayToWorldTests.swift; sourceTree = "<group>"; };
 		5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableCamera.swift; sourceTree = "<group>"; };
 		5AF0E4D27B1032D567194052 /* Float2Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Float2Ext.swift; sourceTree = "<group>"; };
-		5AF0E6AD078D155F5F5A3292 /* ColorsETests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsETests.swift; sourceTree = "<group>"; };
+		5AF0E6AD078D155F5F5A3292 /* ColorsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorsTests.swift; sourceTree = "<group>"; };
 		5AF0E7C72A12B9874DB3F0C0 /* GMNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMNode.swift; sourceTree = "<group>"; };
 		5AF0EBAA222B9EE33C543BC3 /* GMImmutableScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableScene.swift; sourceTree = "<group>"; };
 		5AF0EBDE204481488BFBF507 /* CollectionExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionExt.swift; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 				637240F4273CCA11001ADFDE /* Metal006ButtonsTests.swift */,
 				5AF0E0CA6B401BAD4E2D24E7 /* LineSphereIntersectionTests.swift */,
 				5AF0E1A24DDBFA441CDC17BC /* DisplayToWorldTests.swift */,
-				5AF0E6AD078D155F5F5A3292 /* ColorsETests.swift */,
+				5AF0E6AD078D155F5F5A3292 /* ColorsTests.swift */,
 			);
 			path = Metal006ButtonsTests;
 			sourceTree = "<group>";
@@ -404,7 +404,7 @@
 				637240F5273CCA11001ADFDE /* Metal006ButtonsTests.swift in Sources */,
 				5AF0E105AC544CD9A064859B /* LineSphereIntersectionTests.swift in Sources */,
 				5AF0EB117EACBC864C618E55 /* DisplayToWorldTests.swift in Sources */,
-				5AF0E6487D4D1472005934DD /* ColorsETests.swift in Sources */,
+				5AF0E6487D4D1472005934DD /* ColorsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
