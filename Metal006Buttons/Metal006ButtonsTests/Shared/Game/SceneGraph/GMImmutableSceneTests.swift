@@ -13,10 +13,9 @@ class GMImmutableSceneTests: XCTestCase {
         let aspect = screenDimensions.0 / screenDimensions.1
 
         //TODO Camera can find its top and bottom from the aspect ratio
-        //TODO screen dimensions width then height
         var scene = createScene()
             .setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
-            .setScreenDimensions(height: screenDimensions.1, width: screenDimensions.0)
+            .setScreenDimensions(width: screenDimensions.0, height: screenDimensions.1)
 
         var nodes = scene.flatten()
 

@@ -140,7 +140,7 @@ struct GMImmutableScene: RenderableCollection {
         )
     }
 
-    func setScreenDimensions(height: Float, width: Float) -> RenderableCollection {
+    func setScreenDimensions(width: Float, height: Float) -> RenderableCollection {
         clone(screenWidth: width, screenHeight: height)
     }
 

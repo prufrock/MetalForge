@@ -102,7 +102,7 @@ extension Renderer: MTKViewDelegate {
 
         world = world.setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
         world = world.update(elapsed: delta)
-        .setScreenDimensions(height: screenHeight, width: screenWidth)
+        .setScreenDimensions(width: screenWidth, height: screenHeight)
 
         render(in: view)
     }

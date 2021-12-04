@@ -15,5 +15,5 @@ protocol RenderableCollection {
 
     func cameraSpace(withAspect aspect: Float) -> Float4x4
 
-    func setScreenDimensions(height: Float, width: Float) -> RenderableCollection
+    func setScreenDimensions(width: Float, height: Float) -> RenderableCollection
 }
