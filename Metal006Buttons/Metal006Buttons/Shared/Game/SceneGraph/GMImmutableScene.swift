@@ -42,6 +42,8 @@ struct GMImmutableScene: RenderableCollection {
         let ray = GMRay(origin: float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
 
         var newChildren: [GMNode] = []
+        var translation: float3 = float3()
+        var newState = state
 
         for i in 0..<camera.children.count {
             let children = camera.children
@@ -53,12 +55,26 @@ struct GMImmutableScene: RenderableCollection {
                 } else {
                     newChildren.append(node.setColor(float4(.white)))
                 }
+
+                if i == 0 {
+                    translation = float3(x: -0.1, y: 0, z: 0)
+                } else if i == 1 {
+                    translation = float3()
+                    switch state {
+                    case .playing:
+                        newState = .paused
+                    case .paused:
+                        newState = .playing
+                    }
+                } else if i == 2 {
+                    translation = float3(x: 0.1, y: 0, z: 0)
+                }
             } else {
                 newChildren.append(node)
             }
         }
 
-        return clone(camera: camera.clone(children: newChildren))
+        return clone(camera: camera.clone(children: newChildren).translate(x: translation.x, y: translation.y, z: translation.z), state: newState)
     }
 
     func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
@@ -76,13 +92,9 @@ struct GMImmutableScene: RenderableCollection {
         var newNode: GMNode
         switch state {
         case .playing:
-            newNode = node.setChildren(node.children.map {
-                node in node.update { node in
-                    node.move(elapsed: elapsed).setColor(float4(.green))
-                }
-            })
-        case .paused:
             newNode = node.setChildren(updateAllButNewestChild(elapsed: elapsed, children: node.children))
+        case .paused:
+            newNode = node
         }
 
         if(newNode.children.count >= 1) {
