@@ -11,7 +11,7 @@ protocol GMNode: RenderableNode {
 
     func update(transform: (GMNode) -> GMNode) -> GMNode
 
-    func setColor(_ color: float4) -> GMNode
+    func setColor(_ color: Float4) -> GMNode
 
     func setChildren(_ children: [GMNode]) -> GMNode
 
@@ -19,5 +19,5 @@ protocol GMNode: RenderableNode {
 
     func render(to: (RenderableNode) -> Void)
 
-    func translate(_ transform: float4x4) -> GMNode
+    func translate(_ transform: Float4x4) -> GMNode
 }

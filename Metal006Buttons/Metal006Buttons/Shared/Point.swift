@@ -6,9 +6,9 @@
 //
 
 struct Point {
-    let rawValue: float3
+    let rawValue: Float3
 
-    init(rawValue: float3) {
+    init(rawValue: Float3) {
         self.rawValue = rawValue
     }
 

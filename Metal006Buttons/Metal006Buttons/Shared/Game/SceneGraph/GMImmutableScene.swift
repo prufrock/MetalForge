@@ -26,14 +26,14 @@ struct GMImmutableScene: RenderableCollection {
         self.screenWidth = screenWidth
     }
 
-    func cameraSpace(withAspect aspect: Float) -> float4x4 {
+    func cameraSpace(withAspect aspect: Float) -> Float4x4 {
         camera.cameraSpace(withAspect: aspect)
     }
 
     func click(x: Float, y: Float) -> RenderableCollection {
         let aspect = Float(screenWidth / screenHeight)
         let displayCoords = SIMD2<Float>(Float(x), Float(y))
-        let ndcCoords: float4x4 = displayCoords.displayToNdc(
+        let ndcCoords: Float4x4 = displayCoords.displayToNdc(
             display: SIMD2<Float>(Float(screenWidth), Float(screenHeight))
         )
 
@@ -42,7 +42,7 @@ struct GMImmutableScene: RenderableCollection {
         let ray = GMRay(origin: float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
 
         var newChildren: [GMNode] = []
-        var translation: float3 = float3()
+        var translation: Float3 = float3()
         var newState = state
 
         for i in 0..<camera.children.count {
@@ -140,7 +140,7 @@ struct GMImmutableScene: RenderableCollection {
         return clone(screenWidth: width, screenHeight: height)
     }
 
-    private func randomNode(children: [GMImmutableNode], color: float4) -> GMImmutableNode {
+    private func randomNode(children: [GMImmutableNode], color: Float4) -> GMImmutableNode {
         let location = Point(
             Float.random(in: -1...1),
             Float.random(in: self.camera.cameraBottom...self.camera.cameraTop),

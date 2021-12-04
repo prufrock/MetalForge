@@ -8,20 +8,20 @@ struct GMImmutableCamera: GMCameraNode {
     let nearPlane: Float = 0.1
     let cameraTop: Float
     let cameraBottom: Float
-    let transformation: float4x4
+    let transformation: Float4x4
 
     // GMSceneNode
     let children: [GMNode]
     let location: Point
     let vertices: Vertices
-    let color: float4
+    let color: Float4
     let hidden: Bool
 
     static func atOrigin() -> GMImmutableCamera {
         let button1 = GMImmutableNode(
             children: [],
             location: Point(-0.5, -2.5, 0.0),
-            transformation: float4x4.translate(x: -0.5, y: -2.5, z: 0.0),
+            transformation: Float4x4.translate(x: -0.5, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
             color: float4(.white),
             state: .forward,
@@ -31,7 +31,7 @@ struct GMImmutableCamera: GMCameraNode {
         let button2 = GMImmutableNode(
             children: [],
             location: Point(0.0, -2.5, 0.0),
-            transformation: float4x4.translate(x: 0.0, y: -2.5, z: 0.0),
+            transformation: Float4x4.translate(x: 0.0, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
             color: float4(.white),
             state: .forward,
@@ -41,7 +41,7 @@ struct GMImmutableCamera: GMCameraNode {
         let button3 = GMImmutableNode(
             children: [],
             location: Point(0.5, -2.5, 0.0),
-            transformation: float4x4.translate(x: 0.5, y: -2.5, z: 0.0),
+            transformation: Float4x4.translate(x: 0.5, y: -2.5, z: 0.0),
             vertices: VerticeCollection().c[.square]!,
             color: float4(.white),
             state: .forward,
@@ -61,24 +61,24 @@ struct GMImmutableCamera: GMCameraNode {
         )
     }
 
-    func cameraSpace(withAspect aspect: Float) -> float4x4 {
+    func cameraSpace(withAspect aspect: Float) -> Float4x4 {
         projectionMatrix(aspect) * viewMatrix()
     }
 
-    private func viewMatrix() -> float4x4 {
+    private func viewMatrix() -> Float4x4 {
         (transformation).inverse
     }
 
-    func projectionMatrix(_ aspect: Float) -> float4x4 {
-        (float4x4.perspectiveProjection(nearPlane: nearPlane, farPlane: 1.0) * float4x4.scaleY(aspect))
+    func projectionMatrix(_ aspect: Float) -> Float4x4 {
+        (Float4x4.perspectiveProjection(nearPlane: nearPlane, farPlane: 1.0) * Float4x4.scaleY(aspect))
     }
 
-    func reverseProjectionMatrix(_ aspect: Float) -> float4x4 {
+    func reverseProjectionMatrix(_ aspect: Float) -> Float4x4 {
         projectionMatrix(aspect).inverse
     }
 
     func translate(x: Float, y: Float, z: Float) -> GMImmutableCamera {
-        let transform = float4x4.translate(x: x, y: y, z: z)
+        let transform = Float4x4.translate(x: x, y: y, z: z)
         return clone(
             transformation: self.transformation * transform,
             children: children.map{ node in node.translate(transform) }
@@ -101,7 +101,7 @@ struct GMImmutableCamera: GMCameraNode {
         self
     }
 
-    func setColor(_ color: float4) -> GMNode {
+    func setColor(_ color: Float4) -> GMNode {
         self
     }
 
@@ -113,7 +113,7 @@ struct GMImmutableCamera: GMCameraNode {
         self
     }
 
-    func translate(_ transform: float4x4) -> GMNode {
+    func translate(_ transform: Float4x4) -> GMNode {
         clone(transformation: transform)
     }
 
@@ -125,11 +125,11 @@ struct GMImmutableCamera: GMCameraNode {
     func clone(
         cameraTop: Float? = nil,
         cameraBottom: Float? = nil,
-        transformation: float4x4? = nil,
+        transformation: Float4x4? = nil,
         children: [GMNode]? = nil,
         location: Point? = nil,
         vertices: Vertices? = nil,
-        color: float4? = nil,
+        color: Float4? = nil,
         hidden: Bool? = nil
     ) -> GMImmutableCamera {
         GMImmutableCamera(

@@ -4,8 +4,8 @@
 
 protocol RenderableNode {
     var location: Point { get }
-    var transformation: float4x4 { get }
+    var transformation: Float4x4 { get }
     var vertices: Vertices { get }
-    var color: float4 { get }
+    var color: Float4 { get }
     var hidden: Bool { get }
 }

@@ -39,7 +39,7 @@ enum Colors: Int {
     }
 }
 
-extension float4 {
+extension Float4 {
     init(_ color: Colors) {
         self.init(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
     }

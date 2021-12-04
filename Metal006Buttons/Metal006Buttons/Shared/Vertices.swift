@@ -26,10 +26,10 @@ struct Vertices {
     }
 
     func memoryLength() -> Int {
-        MemoryLayout<float4>.stride * vertices.count
+        MemoryLayout<Float4>.stride * vertices.count
     }
 
-    func toFloat4() -> [float4] {
+    func toFloat4() -> [Float4] {
         vertices.map { p in float4(p.rawValue.x, p.rawValue.y, p.rawValue.z, 1)}
     }
 }

@@ -62,12 +62,12 @@ class Renderer: NSObject {
 
             encoder.setRenderPipelineState(metalBits.pipelines[.simple]!)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&transform, length: MemoryLayout<float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&transform, length: MemoryLayout<Float4x4>.stride, index: 1)
 
             var color = node.color
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&color, length: MemoryLayout<float4>.stride, index: 0)
+            encoder.setFragmentBytes(&color, length: MemoryLayout<Float4>.stride, index: 0)
             encoder.drawPrimitives(type: node.vertices.primitiveType, vertexStart: 0, vertexCount: node.vertices.count)
         })
 

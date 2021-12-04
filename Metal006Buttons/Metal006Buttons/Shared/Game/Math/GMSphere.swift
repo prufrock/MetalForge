@@ -3,6 +3,6 @@
 //
 
 struct GMSphere {
-    let center: float3
+    let center: Float3
     let radius: Float
 }

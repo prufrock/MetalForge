@@ -8,9 +8,9 @@ struct GMImmutableNode: GMNode {
     let children: [GMNode]
 
     let location: Point
-    let transformation: float4x4
+    let transformation: Float4x4
     let vertices: Vertices
-    let color: float4
+    let color: Float4
     let state: GMSceneImmutableSceneState
     let rate = Float(0.26)
     let hidden: Bool
@@ -31,9 +31,9 @@ struct GMImmutableNode: GMNode {
     init(
         children: [GMNode],
         location: Point,
-        transformation: float4x4,
+        transformation: Float4x4,
         vertices: Vertices,
-        color: float4,
+        color: Float4,
         state: GMSceneImmutableSceneState,
         hidden: Bool
     ) {
@@ -88,7 +88,7 @@ struct GMImmutableNode: GMNode {
         }
 
         let newLocation: Point
-        let newTransformation: float4x4
+        let newTransformation: Float4x4
         switch state {
         case .forward:
             (newLocation, newTransformation) = translate(Float(elapsed) * rate, 0, 0)
@@ -99,20 +99,20 @@ struct GMImmutableNode: GMNode {
         return clone(location: newLocation, transformation: newTransformation, state: newState)
     }
 
-    func translate(_ transform: float4x4) -> GMNode {
+    func translate(_ transform: Float4x4) -> GMNode {
         clone(transformation: self.transformation * transform)
     }
 
-    func setColor(_ color: float4) -> GMNode {
+    func setColor(_ color: Float4) -> GMNode {
         clone(color: color)
     }
 
     private func clone(
         children: [GMNode]? = nil,
         location: Point? = nil,
-        transformation: float4x4? = nil,
+        transformation: Float4x4? = nil,
         vertices: Vertices? = nil,
-        color: float4? = nil,
+        color: Float4? = nil,
         state: GMSceneImmutableSceneState? = nil,
         hidden: Bool? = nil
     ) -> GMImmutableNode {
@@ -127,9 +127,9 @@ struct GMImmutableNode: GMNode {
         )
     }
 
-    private func translate(_ x: Float, _ y: Float, _ z: Float) -> (Point, float4x4) {
+    private func translate(_ x: Float, _ y: Float, _ z: Float) -> (Point, Float4x4) {
         let newLocation = location.translate(x, y, z)
-        let newTransformation = float4x4.translate(
+        let newTransformation = Float4x4.translate(
             x: location.rawValue.x + x,
             y: location.rawValue.y + y,
             z: location.rawValue.z + z

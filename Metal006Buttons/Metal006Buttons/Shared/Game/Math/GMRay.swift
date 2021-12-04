@@ -5,9 +5,9 @@
 import simd
 
 struct GMRay {
-    let origin: float3
-    let target: float3
-    var displacement: float3 {
+    let origin: Float3
+    let target: Float3
+    var displacement: Float3 {
         get {
             target - origin
         }
