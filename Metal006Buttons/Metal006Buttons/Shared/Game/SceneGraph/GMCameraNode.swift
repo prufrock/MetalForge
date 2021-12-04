@@ -7,10 +7,11 @@ protocol GMCameraNode: GMNode {
     var cameraBottom: Float { get }
     var transformation: Float4x4 { get }
     var nearPlane: Float { get }
+    var aspectRatio: Float { get }
 
-    func cameraSpace(withAspect aspect: Float) -> Float4x4
+    func cameraSpace() -> Float4x4
 
-    func projectionMatrix(_ aspect: Float) -> Float4x4
+    func projectionMatrix() -> Float4x4
 
-    func reverseProjectionMatrix(_ aspect: Float) -> Float4x4
+    func reverseProjectionMatrix() -> Float4x4
 }

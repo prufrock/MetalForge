@@ -13,7 +13,7 @@ protocol RenderableCollection {
 
     func render(to: (RenderableNode) -> Void)
 
-    func cameraSpace(withAspect aspect: Float) -> Float4x4
+    func cameraSpace() -> Float4x4
 
     func setScreenDimensions(width: Float, height: Float) -> RenderableCollection
 }

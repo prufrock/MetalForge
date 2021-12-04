@@ -26,12 +26,11 @@ struct GMImmutableScene: RenderableCollection {
         self.screenWidth = screenWidth
     }
 
-    func cameraSpace(withAspect aspect: Float) -> Float4x4 {
-        camera.cameraSpace(withAspect: aspect)
+    func cameraSpace() -> Float4x4 {
+        camera.cameraSpace()
     }
 
     func click(x: Float, y: Float) -> RenderableCollection {
-        let aspect = Float(screenWidth / screenHeight)
         let displayCoords = SIMD2<Float>(Float(x), Float(y))
         let ndcCoords: Float4x4 = displayCoords.displayToNdc(
             display: SIMD2<Float>(Float(screenWidth), Float(screenHeight))
@@ -39,7 +38,7 @@ struct GMImmutableScene: RenderableCollection {
 
         print("ndc x:\(ndcCoords[0][0]) y:\(ndcCoords[1][1])")
 
-        let worldCoords = ndcCoords * camera.reverseProjectionMatrix(aspect)
+        let worldCoords = ndcCoords * camera.reverseProjectionMatrix()
 
         print("world x:\(worldCoords[0][0]) y:\(worldCoords[1][1])")
 
@@ -141,7 +140,7 @@ struct GMImmutableScene: RenderableCollection {
     }
 
     func setScreenDimensions(width: Float, height: Float) -> RenderableCollection {
-        clone(screenWidth: width, screenHeight: height)
+        clone(camera: camera.setAspectRatio(Float(width / height)), screenWidth: width, screenHeight: height)
     }
 
     private func randomNode(children: [GMImmutableNode], color: Float4) -> GMImmutableNode {

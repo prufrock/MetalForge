@@ -11,6 +11,7 @@ class Renderer: NSObject {
     let metalBits: MetalBits
     var previous: Double
     var world: RenderableCollection
+    //TODO Remove aspect from here
     var aspect: Float = 1.0
     var screenWidth: Float = 0.0
     var screenHeight: Float = 0.0
@@ -54,7 +55,7 @@ class Renderer: NSObject {
             }
 
             var transform = matrix_identity_float4x4
-                * world.cameraSpace(withAspect: aspect)
+                * world.cameraSpace()
                 // model
 
                 * node.transformation
@@ -89,10 +90,8 @@ extension Renderer: MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function)
         print("height: \(size.height) width: \(size.width)")
-        screenWidth = Float(size.width)
-        screenHeight = Float(size.height)
-        aspect = Float(size.width / size.height)
-        print("aspect ratio: \(aspect)")
+
+        world = world.setScreenDimensions(width: Float(size.width), height: Float(size.height))
     }
 
     func draw(in view: MTKView) {
@@ -102,7 +101,6 @@ extension Renderer: MTKViewDelegate {
 
         world = world.setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
         world = world.update(elapsed: delta)
-        .setScreenDimensions(width: screenWidth, height: screenHeight)
 
         render(in: view)
     }

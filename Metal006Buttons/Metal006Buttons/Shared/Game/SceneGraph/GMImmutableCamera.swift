@@ -9,6 +9,7 @@ struct GMImmutableCamera: GMCameraNode {
     let cameraTop: Float
     let cameraBottom: Float
     let transformation: Float4x4
+    let aspectRatio: Float
 
     // GMSceneNode
     let children: [GMNode]
@@ -53,6 +54,7 @@ struct GMImmutableCamera: GMCameraNode {
             cameraTop: 1.0,
             cameraBottom: 1.0,
             transformation: matrix_identity_float4x4,
+            aspectRatio: 1.0,
             children: [button1, button2, button3],
             location: Point.origin(),
             vertices: Vertices(),
@@ -61,22 +63,28 @@ struct GMImmutableCamera: GMCameraNode {
         )
     }
 
-    func cameraSpace(withAspect aspect: Float) -> Float4x4 {
-        projectionMatrix(aspect) * viewMatrix()
+    func cameraSpace() -> Float4x4 {
+        projectionMatrix() * viewMatrix()
     }
 
     private func viewMatrix() -> Float4x4 {
         (transformation).inverse
     }
 
-    func projectionMatrix(_ aspect: Float) -> Float4x4 {
-        (Float4x4.perspectiveProjection(nearPlane: nearPlane, farPlane: 1.0) * Float4x4.scaleY(aspect))
+    func projectionMatrix() -> Float4x4 {
+        (Float4x4.perspectiveProjection(nearPlane: nearPlane, farPlane: 1.0) * Float4x4.scaleY(aspectRatio))
     }
 
-    func reverseProjectionMatrix(_ aspect: Float) -> Float4x4 {
-        projectionMatrix(aspect).inverse
+    func reverseProjectionMatrix() -> Float4x4 {
+        projectionMatrix().inverse
     }
 
+    //TODO promote to interface
+    func setAspectRatio(_ aspectRatio: Float) -> Self {
+        clone(aspectRatio: aspectRatio)
+    }
+
+    // TODO switch to GMCameraNode
     func translate(x: Float, y: Float, z: Float) -> GMImmutableCamera {
         let transform = Float4x4.translate(x: x, y: y, z: z)
         return clone(
@@ -85,6 +93,7 @@ struct GMImmutableCamera: GMCameraNode {
         )
     }
 
+    // TODO switch to GMCameraNode
     func setDimensions(cameraTop: Float, cameraBottom: Float) -> GMImmutableCamera {
         clone(cameraTop: cameraTop, cameraBottom: cameraBottom)
     }
@@ -130,12 +139,14 @@ struct GMImmutableCamera: GMCameraNode {
         location: Point? = nil,
         vertices: Vertices? = nil,
         color: Float4? = nil,
-        hidden: Bool? = nil
+        hidden: Bool? = nil,
+        aspectRatio: Float? = nil
     ) -> GMImmutableCamera {
         GMImmutableCamera(
             cameraTop: cameraTop ?? self.cameraTop,
             cameraBottom: cameraBottom ?? self.cameraBottom,
             transformation: transformation ?? self.transformation,
+            aspectRatio: aspectRatio ?? self.aspectRatio,
             children: children ?? self.children,
             location: location ?? self.location,
             vertices: vertices ?? self.vertices,
