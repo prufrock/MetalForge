@@ -137,7 +137,7 @@ struct GMImmutableScene: RenderableCollection {
     }
 
     func setScreenDimensions(height: Float, width: Float) -> RenderableCollection {
-        return clone(screenWidth: width, screenHeight: height)
+        clone(screenWidth: width, screenHeight: height)
     }
 
     private func randomNode(children: [GMImmutableNode], color: Float4) -> GMImmutableNode {
