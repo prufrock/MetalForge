@@ -11,8 +11,6 @@ class Renderer: NSObject {
     let metalBits: MetalBits
     var previous: Double
     var world: RenderableCollection
-    //TODO Remove aspect from here
-    var aspect: Float = 1.0
     var screenWidth: Float = 0.0
     var screenHeight: Float = 0.0
     let commandQueue: MTLCommandQueue
@@ -99,7 +97,6 @@ extension Renderer: MTKViewDelegate {
         let delta = current - previous
         previous = current
 
-        world = world.setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
         world = world.update(elapsed: delta)
 
         render(in: view)

@@ -80,12 +80,6 @@ struct GMImmutableScene: RenderableCollection {
         return clone(camera: camera.clone(children: newChildren).translate(x: translation.x, y: translation.y, z: translation.z), state: newState)
     }
 
-    func setCameraDimension(top: Float, bottom: Float) -> RenderableCollection {
-        clone(
-            camera: camera.setDimensions(cameraTop: top, cameraBottom: bottom)
-        )
-    }
-
     func render(to: (RenderableNode) -> Void) {
         camera.render(to: to)
         node.render(to: to)

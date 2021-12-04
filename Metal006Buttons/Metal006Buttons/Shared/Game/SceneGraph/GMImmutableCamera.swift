@@ -6,8 +6,16 @@ import simd
 
 struct GMImmutableCamera: GMCameraNode {
     let nearPlane: Float = 0.1
-    let cameraTop: Float
-    let cameraBottom: Float
+    var cameraTop: Float {
+        get {
+            1 / aspectRatio
+        }
+    }
+    var cameraBottom: Float {
+        get {
+            -1 * (1 / aspectRatio)
+        }
+    }
     let transformation: Float4x4
     let aspectRatio: Float
 
@@ -51,8 +59,6 @@ struct GMImmutableCamera: GMCameraNode {
 
 
         return GMImmutableCamera(
-            cameraTop: 1.0,
-            cameraBottom: 1.0,
             transformation: matrix_identity_float4x4,
             aspectRatio: 1.0,
             children: [button1, button2, button3],
@@ -93,11 +99,6 @@ struct GMImmutableCamera: GMCameraNode {
         )
     }
 
-    // TODO switch to GMCameraNode
-    func setDimensions(cameraTop: Float, cameraBottom: Float) -> GMImmutableCamera {
-        clone(cameraTop: cameraTop, cameraBottom: cameraBottom)
-    }
-
     func add(child: GMNode) -> GMNode {
         clone(children: children + [child])
     }
@@ -132,8 +133,6 @@ struct GMImmutableCamera: GMCameraNode {
     }
 
     func clone(
-        cameraTop: Float? = nil,
-        cameraBottom: Float? = nil,
         transformation: Float4x4? = nil,
         children: [GMNode]? = nil,
         location: Point? = nil,
@@ -143,8 +142,6 @@ struct GMImmutableCamera: GMCameraNode {
         aspectRatio: Float? = nil
     ) -> GMImmutableCamera {
         GMImmutableCamera(
-            cameraTop: cameraTop ?? self.cameraTop,
-            cameraBottom: cameraBottom ?? self.cameraBottom,
             transformation: transformation ?? self.transformation,
             aspectRatio: aspectRatio ?? self.aspectRatio,
             children: children ?? self.children,

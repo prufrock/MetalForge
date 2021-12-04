@@ -9,12 +9,8 @@ import simd
 class GMImmutableSceneTests: XCTestCase {
     func testClickMiddleButton() {
         let screenDimensions = (Float(414.0), Float(896.0))
-        //TODO the aspect ratio is getting passed around way too much.
-        let aspect = screenDimensions.0 / screenDimensions.1
 
-        //TODO Camera can find its top and bottom from the aspect ratio
         var scene = createScene()
-            .setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
             .setScreenDimensions(width: screenDimensions.0, height: screenDimensions.1)
 
         var nodes = scene.flatten()
