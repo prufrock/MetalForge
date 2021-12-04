@@ -56,6 +56,7 @@ class Renderer: NSObject {
             var transform = matrix_identity_float4x4
                 * world.cameraSpace(withAspect: aspect)
                 // model
+
                 * node.transformation
 
             let buffer = metalBits.device.makeBuffer(bytes: node.vertices.toFloat4(), length: node.vertices.memoryLength(), options: [])
@@ -109,6 +110,7 @@ extension Renderer: MTKViewDelegate {
 
 extension Renderer {
     func click(x: Float, y: Float) {
+        print("screen click x:\(x) y:\(y)")
         world = world.click(x: x, y: y)
     }
 }

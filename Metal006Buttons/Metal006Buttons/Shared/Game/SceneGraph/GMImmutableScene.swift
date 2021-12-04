@@ -37,7 +37,11 @@ struct GMImmutableScene: RenderableCollection {
             display: SIMD2<Float>(Float(screenWidth), Float(screenHeight))
         )
 
+        print("ndc x:\(ndcCoords[0][0]) y:\(ndcCoords[1][1])")
+
         let worldCoords = ndcCoords * camera.reverseProjectionMatrix(aspect)
+
+        print("world x:\(worldCoords[0][0]) y:\(worldCoords[1][1])")
 
         let ray = GMRay(origin: float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
 

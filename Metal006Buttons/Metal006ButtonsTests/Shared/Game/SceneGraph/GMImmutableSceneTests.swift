@@ -6,9 +6,31 @@ import XCTest
 import simd
 @testable import Metal006Buttons
 
-class GMImmutableSceneTests {
+class GMImmutableSceneTests: XCTestCase {
     func testClickMiddleButton() {
-        let scene = createScene()
+        let screenDimensions = (Float(414.0), Float(896.0))
+        //TODO the aspect ratio is getting passed around way too much.
+        let aspect = screenDimensions.0 / screenDimensions.1
+
+        //TODO Camera can find its top and bottom from the aspect ratio
+        //TODO screen dimensions width then height
+        var scene = createScene()
+            .setCameraDimension(top: 1 / aspect, bottom: -1 * (1 / aspect))
+            .setScreenDimensions(height: screenDimensions.1, width: screenDimensions.0)
+
+        var nodes = scene.flatten()
+
+        XCTAssertEqual(15, nodes.count)
+
+        var middleButton = nodes[2]
+        XCTAssertEqual(0.0, middleButton.location.rawValue.x)
+        XCTAssertEqual(-2.5, middleButton.location.rawValue.y)
+        XCTAssertEqual(Float4(.white), middleButton.color)
+
+        scene = scene.click(x: 206.5, y: 823.0)
+        nodes = scene.flatten()
+        middleButton = nodes[2]
+        XCTAssertEqual(Float4(.red), middleButton.color)
     }
 }
 
@@ -40,5 +62,17 @@ extension GMImmutableSceneTests {
             node: root.setChildren(children),
             camera: GMImmutableCamera.atOrigin()
         )
+    }
+}
+
+extension RenderableCollection {
+    func flatten() -> [RenderableNode] {
+        var nodes: [RenderableNode] = []
+
+        render { node in
+            nodes.append(node)
+        }
+
+        return nodes
     }
 }
