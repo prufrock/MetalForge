@@ -90,15 +90,6 @@ struct GMImmutableCamera: GMCameraNode {
         clone(aspectRatio: aspectRatio)
     }
 
-    // TODO switch to GMCameraNode
-    func translate(x: Float, y: Float, z: Float) -> GMImmutableCamera {
-        let transform = Float4x4.translate(x: x, y: y, z: z)
-        return clone(
-            transformation: self.transformation * transform,
-            children: children.map{ node in node.translate(transform) }
-        )
-    }
-
     func add(child: GMNode) -> GMNode {
         clone(children: children + [child])
     }
@@ -124,7 +115,10 @@ struct GMImmutableCamera: GMCameraNode {
     }
 
     func translate(_ transform: Float4x4) -> GMNode {
-        clone(transformation: transform)
+        clone(
+            transformation: self.transformation * transform,
+            children: children.map{ node in node.translate(transform) }
+        )
     }
 
     func render(to: (RenderableNode) -> Void) {

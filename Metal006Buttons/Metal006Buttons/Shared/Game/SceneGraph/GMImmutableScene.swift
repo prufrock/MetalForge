@@ -45,7 +45,7 @@ struct GMImmutableScene: RenderableCollection {
         let ray = GMRay(origin: Float3(worldCoords[0][0], worldCoords[1][1], 0.0), target: Float3(worldCoords[0][0], worldCoords[1][1], camera.nearPlane))
 
         var newChildren: [GMNode] = []
-        var translation: Float3 = Float3()
+        var translation: Float4x4 = matrix_identity_float4x4
         var newState = state
 
         for i in 0..<camera.children.count {
@@ -60,9 +60,9 @@ struct GMImmutableScene: RenderableCollection {
                 }
 
                 if i == 0 {
-                    translation = Float3(x: -0.1, y: 0, z: 0)
+                    translation = Float4x4.translate(x: -0.1, y: 0, z: 0)
                 } else if i == 1 {
-                    translation = Float3()
+                    translation = matrix_identity_float4x4
                     switch state {
                     case .playing:
                         newState = .paused
@@ -70,14 +70,15 @@ struct GMImmutableScene: RenderableCollection {
                         newState = .playing
                     }
                 } else if i == 2 {
-                    translation = Float3(x: 0.1, y: 0, z: 0)
+                    translation = Float4x4.translate(x: 0.1, y: 0, z: 0)
                 }
             } else {
                 newChildren.append(node)
             }
         }
 
-        return clone(camera: camera.clone(children: newChildren).translate(x: translation.x, y: translation.y, z: translation.z), state: newState)
+        //TODO Figure out a way to not force downcast this.
+        return clone(camera: (camera.clone(children: newChildren).translate(translation) as! GMImmutableCamera), state: newState)
     }
 
     func render(to: (RenderableNode) -> Void) {
