@@ -31,6 +31,7 @@ struct GMImmutableScene: RenderableCollection {
     }
 
     func click(x: Float, y: Float) -> RenderableCollection {
+        //TODO move process of changing displayCoords to worldCoords into a function
         let displayCoords = SIMD2<Float>(Float(x), Float(y))
         let ndcCoords: Float4x4 = displayCoords.displayToNdc(
             display: SIMD2<Float>(Float(screenWidth), Float(screenHeight))
