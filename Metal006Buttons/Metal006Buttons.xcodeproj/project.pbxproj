@@ -13,10 +13,12 @@
 		5AF0E41DB4FD39195ECADFAB /* LineSphereIntersectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7716DA35D1013CCB61F /* LineSphereIntersectionTests.swift */; };
 		5AF0E5513899665A9EB93CD8 /* CollectionExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBDE204481488BFBF507 /* CollectionExt.swift */; };
 		5AF0E5E0E010399F0CC04381 /* ColorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF6698B6332E4470A01B /* ColorsTests.swift */; };
+		5AF0E78C9356438C53154C10 /* GMImmutableContainerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3617334718C0CECFBBC /* GMImmutableContainerNode.swift */; };
 		5AF0E879151D3D72AB7A8A53 /* GMCameraNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE76003514D77D5B8552 /* GMCameraNode.swift */; };
 		5AF0E9487124A95D5FB331B6 /* GMImmutableCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */; };
 		5AF0E9A85BE693B25BD5203D /* DisplayToWorldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E59D95FC781F224A05DE /* DisplayToWorldTests.swift */; };
 		5AF0EAE678EF730DBFFEB572 /* GMNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7C72A12B9874DB3F0C0 /* GMNode.swift */; };
+		5AF0EB9413E912F529B6A4FE /* GMImmutableContainerNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E04F88E8CBDAA3EAA96B /* GMImmutableContainerNodeTests.swift */; };
 		5AF0EBA60320999FE9040BDE /* Float2Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E4D27B1032D567194052 /* Float2Ext.swift */; };
 		5AF0EDBC1C969D139A07B92B /* GMImmutableScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAA222B9EE33C543BC3 /* GMImmutableScene.swift */; };
 		5AF0EE279710703E8A055B85 /* GMSphere.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EDD771C0C454C6293107 /* GMSphere.swift */; };
@@ -64,7 +66,9 @@
 
 /* Begin PBXFileReference section */
 		5AF0E01B8CBBB9F892DB5530 /* GMRay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMRay.swift; sourceTree = "<group>"; };
+		5AF0E04F88E8CBDAA3EAA96B /* GMImmutableContainerNodeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableContainerNodeTests.swift; sourceTree = "<group>"; };
 		5AF0E3522CB99CC75AED411B /* GMImmutableSceneTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableSceneTests.swift; sourceTree = "<group>"; };
+		5AF0E3617334718C0CECFBBC /* GMImmutableContainerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableContainerNode.swift; sourceTree = "<group>"; };
 		5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMImmutableCamera.swift; sourceTree = "<group>"; };
 		5AF0E4D27B1032D567194052 /* Float2Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Float2Ext.swift; sourceTree = "<group>"; };
 		5AF0E59D95FC781F224A05DE /* DisplayToWorldTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayToWorldTests.swift; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				5AF0E3522CB99CC75AED411B /* GMImmutableSceneTests.swift */,
+				5AF0E04F88E8CBDAA3EAA96B /* GMImmutableContainerNodeTests.swift */,
 			);
 			path = SceneGraph;
 			sourceTree = "<group>";
@@ -183,6 +188,7 @@
 				5AF0E3E91D7D4AB0C113B49F /* GMImmutableCamera.swift */,
 				5AF0EBAA222B9EE33C543BC3 /* GMImmutableScene.swift */,
 				5AF0ED7EA7BAEFE349BE269B /* GMImmutableNode.swift */,
+				5AF0E3617334718C0CECFBBC /* GMImmutableContainerNode.swift */,
 			);
 			path = SceneGraph;
 			sourceTree = "<group>";
@@ -429,6 +435,7 @@
 				5AF0E3FA3EDAC7B9DE2F2A19 /* GMImmutableNode.swift in Sources */,
 				5AF0E39066190ABD7578C200 /* GMRay.swift in Sources */,
 				5AF0EE279710703E8A055B85 /* GMSphere.swift in Sources */,
+				5AF0E78C9356438C53154C10 /* GMImmutableContainerNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +448,7 @@
 				5AF0E9A85BE693B25BD5203D /* DisplayToWorldTests.swift in Sources */,
 				5AF0E41DB4FD39195ECADFAB /* LineSphereIntersectionTests.swift in Sources */,
 				5AF0E2A5C8EB87DB7BB2BBF8 /* GMImmutableSceneTests.swift in Sources */,
+				5AF0EB9413E912F529B6A4FE /* GMImmutableContainerNodeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

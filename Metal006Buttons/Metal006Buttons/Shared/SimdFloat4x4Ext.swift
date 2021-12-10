@@ -43,4 +43,8 @@ extension Float4x4 {
                 [x, y, z, 1]
         )
     }
+
+    static func identity() -> Float4x4 {
+        matrix_identity_float4x4
+    }
 }

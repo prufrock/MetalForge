@@ -9,6 +9,7 @@ protocol GMNode: RenderableNode {
 
     func delete(child: GMNode) -> GMNode
 
+    //TODO remove everything that isn't related to managing the tree
     func update(transform: (GMNode) -> GMNode) -> GMNode
 
     func setColor(_ color: Float4) -> GMNode
