@@ -15,9 +15,6 @@ protocol GMNode {
     //TODO RenderableNode
     func update(transform: (GMNode) -> GMNode) -> GMNode
 
-    //TODO RenderableNode
-    func setColor(_ color: Float4) -> GMNode
-
     func setChildren(_ children: [GMNode]) -> GMNode
 
     //TODO RenderableNode

@@ -8,4 +8,6 @@ protocol RenderableNode {
     var vertices: Vertices { get }
     var color: Float4 { get }
     var hidden: Bool { get }
+
+    func setColor(_ color: Float4) -> GMNode
 }

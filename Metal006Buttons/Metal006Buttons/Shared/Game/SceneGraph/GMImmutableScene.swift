@@ -56,9 +56,9 @@ struct GMImmutableScene: RenderableCollection {
             let sphere = GMSphere(center: node.element.location.rawValue, radius: 0.2)
             if(ray.intersects(with: sphere)) {
                 if (node.element.color == Float4(.white)) {
-                    newChildren.append(node.setColor(Float4(.red)))
+                    newChildren.append(node.element.setColor(Float4(.red)))
                 } else {
-                    newChildren.append(node.setColor(Float4(.white)))
+                    newChildren.append(node.element.setColor(Float4(.white)))
                 }
 
                 if i == 0 {
@@ -98,12 +98,13 @@ struct GMImmutableScene: RenderableCollection {
         }
 
         if(newNode.children.count >= 1) {
-            newNode = newNode.setChildren(newNode.children[0..<(node.children.endIndex-1)] + [newNode.children.last!.setColor(Float4(.red))])
+            newNode = newNode.setChildren(newNode.children[0..<(node.children.endIndex-1)] + [newNode.children.last!.element.setColor(Float4(.red))])
         }
 
         return clone(node: newNode)
     }
 
+    //TODO Is there an extension in here?
     private func updateAllButNewestChild(
         elapsed: Double,
         children oldChildren: [GMNode],
@@ -116,7 +117,8 @@ struct GMImmutableScene: RenderableCollection {
         } else if (newChildren.lastIndex + 1) == oldChildren.lastIndex {
             return newChildren + [oldChildren[oldChildren.lastIndex]]
         } else {
-            return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [oldChildren[newChildren.count].move(elapsed: elapsed).setColor(Float4(.green))])
+            //TODO can this be be cleaned up?
+            return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [oldChildren[newChildren.count].move(elapsed: elapsed).element.setColor(Float4(.green))])
         }
     }
 
