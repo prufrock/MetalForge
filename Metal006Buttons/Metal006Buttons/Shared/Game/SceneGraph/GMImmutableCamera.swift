@@ -119,10 +119,16 @@ struct GMImmutableCamera: GMCameraNode, RenderableNode {
         self
     }
 
-    func translate(_ transform: Float4x4) -> GMNode {
+    func translate(_ transform: Float4x4) -> RenderableNode {
         clone(
             transformation: self.transformation * transform,
-            children: children.map{ node in node.element.translate(transform) }
+            children: children.map{ node in
+                if let translatedNode = node.element.translate(transform) as? GMNode {
+                    return translatedNode
+                } else {
+                    return node
+                }
+            }
         )
     }
 

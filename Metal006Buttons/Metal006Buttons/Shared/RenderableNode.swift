@@ -17,5 +17,5 @@ protocol RenderableNode {
 
     //Is translate part of rendering?
     //TODO should translate go somewhere else?
-    func translate(_ transform: Float4x4) -> GMNode
+    func translate(_ transform: Float4x4) -> RenderableNode
 }

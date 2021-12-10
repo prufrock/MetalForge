@@ -105,7 +105,7 @@ struct GMImmutableNode: GMNode, RenderableNode {
         return clone(location: newLocation, transformation: newTransformation, state: newState)
     }
 
-    func translate(_ transform: Float4x4) -> GMNode {
+    func translate(_ transform: Float4x4) -> RenderableNode {
         clone(transformation: self.transformation * transform)
     }
 
