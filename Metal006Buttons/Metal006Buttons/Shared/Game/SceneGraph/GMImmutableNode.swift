@@ -82,7 +82,7 @@ struct GMImmutableNode: GMNode, RenderableNode {
         return newSelf.setChildren(newChildren)
     }
 
-    func move(elapsed: Double) -> GMNode {
+    func move(elapsed: Double) -> RenderableNode {
 
         let newState: GMSceneImmutableSceneState
         if (location.rawValue.x > 1) {

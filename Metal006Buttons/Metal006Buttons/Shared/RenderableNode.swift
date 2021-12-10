@@ -13,7 +13,7 @@ protocol RenderableNode {
 
     //It seems like 'move' is at a lower abstraction then 'translate'.
     //TODO should move go somewhere else?
-    func move(elapsed: Double) -> GMNode
+    func move(elapsed: Double) -> RenderableNode
 
     //Is translate part of rendering?
     //TODO should translate go somewhere else?

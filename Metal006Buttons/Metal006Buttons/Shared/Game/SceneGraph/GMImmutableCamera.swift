@@ -115,7 +115,7 @@ struct GMImmutableCamera: GMCameraNode, RenderableNode {
         clone(children: children)
     }
 
-    func move(elapsed: Double) -> GMNode {
+    func move(elapsed: Double) -> RenderableNode {
         self
     }
 

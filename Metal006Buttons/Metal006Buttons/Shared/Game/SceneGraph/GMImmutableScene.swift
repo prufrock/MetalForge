@@ -124,9 +124,12 @@ struct GMImmutableScene: RenderableCollection {
             return newChildren + [oldChildren[oldChildren.lastIndex]]
         } else {
             //TODO can this be be cleaned up?
-            if let greenNode = oldChildren[newChildren.count].element.move(elapsed: elapsed).element.setColor(Float4(.green)) as? GMNode {
-                return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [greenNode])
+            if let movedNode = oldChildren[newChildren.count].element.move(elapsed: elapsed) as? GMNode {
+                if let greenNode = movedNode.element.setColor(Float4(.green)) as? GMNode {
+                    return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [greenNode])
+                }                
             }
+
             return oldChildren
         }
     }
