@@ -56,9 +56,13 @@ struct GMImmutableScene: RenderableCollection {
             let sphere = GMSphere(center: node.element.location.rawValue, radius: 0.2)
             if(ray.intersects(with: sphere)) {
                 if (node.element.color == Float4(.white)) {
-                    newChildren.append(node.element.setColor(Float4(.red)))
+                    if let newNode = node.element.setColor(Float4(.red)) as? GMNode {
+                        newChildren.append(newNode)
+                    }
                 } else {
-                    newChildren.append(node.element.setColor(Float4(.white)))
+                    if let newNode = node.element.setColor(Float4(.white)) as? GMNode {
+                        newChildren.append(newNode)
+                    }
                 }
 
                 if i == 0 {
@@ -98,7 +102,9 @@ struct GMImmutableScene: RenderableCollection {
         }
 
         if(newNode.children.count >= 1) {
-            newNode = newNode.setChildren(newNode.children[0..<(node.children.endIndex-1)] + [newNode.children.last!.element.setColor(Float4(.red))])
+            if let colorNode = newNode.children.last!.element.setColor(Float4(.red)) as? GMNode {
+                newNode = newNode.setChildren(newNode.children[0..<(node.children.endIndex-1)] + [colorNode])
+            }
         }
 
         return clone(node: newNode)
@@ -118,7 +124,10 @@ struct GMImmutableScene: RenderableCollection {
             return newChildren + [oldChildren[oldChildren.lastIndex]]
         } else {
             //TODO can this be be cleaned up?
-            return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [oldChildren[newChildren.count].element.move(elapsed: elapsed).element.setColor(Float4(.green))])
+            if let greenNode = oldChildren[newChildren.count].element.move(elapsed: elapsed).element.setColor(Float4(.green)) as? GMNode {
+                return updateAllButNewestChild(elapsed: elapsed, children: oldChildren, newChildren: newChildren + [greenNode])
+            }
+            return oldChildren
         }
     }
 

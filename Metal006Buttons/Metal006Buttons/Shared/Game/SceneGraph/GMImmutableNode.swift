@@ -109,7 +109,7 @@ struct GMImmutableNode: GMNode, RenderableNode {
         clone(transformation: self.transformation * transform)
     }
 
-    func setColor(_ color: Float4) -> GMNode {
+    func setColor(_ color: Float4) -> RenderableNode {
         clone(color: color)
     }
 

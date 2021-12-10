@@ -107,7 +107,7 @@ struct GMImmutableCamera: GMCameraNode, RenderableNode {
         self
     }
 
-    func setColor(_ color: Float4) -> GMNode {
+    func setColor(_ color: Float4) -> RenderableNode {
         self
     }
 

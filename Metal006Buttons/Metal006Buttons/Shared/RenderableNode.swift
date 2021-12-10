@@ -9,7 +9,7 @@ protocol RenderableNode {
     var color: Float4 { get }
     var hidden: Bool { get }
 
-    func setColor(_ color: Float4) -> GMNode
+    func setColor(_ color: Float4) -> RenderableNode
 
     //It seems like 'move' is at a lower abstraction then 'translate'.
     //TODO should move go somewhere else?
