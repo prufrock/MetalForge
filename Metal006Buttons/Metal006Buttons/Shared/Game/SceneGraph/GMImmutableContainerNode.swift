@@ -4,72 +4,65 @@
 
 import Foundation
 
-struct GMImmutableContainerNode<T>: GMNode {
-    let children: [GMNode]
+struct GMImmutableContainerNode<Element: Equatable>: Equatable {
+    private let children: [Self]
 
-    let location: Point
+    var count: Int {
+        get {
+            var count = 0
 
-    let transformation: Float4x4
+            count = count + children.count
 
-    let vertices: Vertices
+            children.forEach { node in
+                count = count + node.count
+            }
 
-    let color: Float4
+            return count
+        }
+    }
 
-    let hidden: Bool
+    public let element: Element
 
-    let item: T
+    init(children: [Self], element: Element) {
+        self.children = children
+        self.element = element
+    }
 
-    func add(child: GMNode) -> GMNode {
+    func add(child: Self) -> Self {
         clone(
             children: children + [child]
         )
     }
 
-    func delete(child: GMNode) -> GMNode {
-        self
+    func remove(child: Self) -> Self {
+        for i in 0..<children.count {
+            if (children[i] == child) {
+                var newChildren = children
+                newChildren.remove(at: i)
+                return clone(children: newChildren)
+            } else {
+                var newChildren = children
+                newChildren[i] = newChildren[i].remove(child: child)
+                return clone(
+                    children: newChildren
+                )
+            }
+        }
+
+        return self
     }
 
-    func update(transform: (GMNode) -> GMNode) -> GMNode {
-        self
-    }
-
-    func setColor(_ color: Float4) -> GMNode {
-        self
-    }
-
-    func setChildren(_ children: [GMNode]) -> GMNode {
-        self
-    }
-
-    func move(elapsed: Double) -> GMNode {
-        self
-    }
-
-    func render(to: (RenderableNode) -> Void) {
-
-    }
-
-    func translate(_ transform: Float4x4) -> GMNode {
-        self
+    static func ==(lhs: GMImmutableContainerNode<Element>, rhs: GMImmutableContainerNode<Element>) -> Bool {
+        lhs.element == rhs.element
     }
 
     private func clone(
-        children: [GMNode]? = nil,
-        location: Point? = nil,
-        transformation: Float4x4? = nil,
-        vertices: Vertices? = nil,
-        color: Float4? = nil,
-        hidden: Bool? = nil,
-        item: T? = nil
+        children: [Self]? = nil,
+        element: Element? = nil
     ) -> GMImmutableContainerNode {
         GMImmutableContainerNode(
             children: children ?? self.children,
-            location: location ?? self.location,
-            transformation: transformation ?? self.transformation,
-            vertices: vertices ?? self.vertices,
-            color: color ?? self.color,
-            hidden: hidden ?? self.hidden,
-            item: item ?? self.item
+            element: element ?? self.element
         )
     }
 }
