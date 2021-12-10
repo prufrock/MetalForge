@@ -4,7 +4,13 @@
 
 import simd
 
-struct GMImmutableNode: GMNode {
+struct GMImmutableNode: GMNode, RenderableNode {
+    var element: RenderableNode {
+        get {
+            self
+        }
+    }
+
     let children: [GMNode]
 
     let location: Point
@@ -61,7 +67,7 @@ struct GMImmutableNode: GMNode {
     }
 
     func render(to: (RenderableNode) -> Void) {
-        to(self)
+        to(element)
         children.forEach{ node in node.render(to: to)}
     }
 

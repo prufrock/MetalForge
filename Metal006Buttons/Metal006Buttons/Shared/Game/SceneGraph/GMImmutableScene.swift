@@ -53,9 +53,9 @@ struct GMImmutableScene: RenderableCollection {
             let children = camera.children
             let node = children[i]
             //TODO make it easier to create a sphere from a node
-            let sphere = GMSphere(center: node.location.rawValue, radius: 0.2)
+            let sphere = GMSphere(center: node.element.location.rawValue, radius: 0.2)
             if(ray.intersects(with: sphere)) {
-                if (node.color == Float4(.white)) {
+                if (node.element.color == Float4(.white)) {
                     newChildren.append(node.setColor(Float4(.red)))
                 } else {
                     newChildren.append(node.setColor(Float4(.white)))

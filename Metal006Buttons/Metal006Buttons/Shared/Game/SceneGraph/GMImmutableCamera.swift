@@ -4,7 +4,12 @@
 
 import simd
 
-struct GMImmutableCamera: GMCameraNode {
+struct GMImmutableCamera: GMCameraNode, RenderableNode {
+    var element: RenderableNode {
+        get {
+            self
+        }
+    }
     let nearPlane: Float = 0.1
     var cameraTop: Float {
         get {
