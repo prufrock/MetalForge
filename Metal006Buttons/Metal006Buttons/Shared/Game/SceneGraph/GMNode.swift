@@ -19,7 +19,4 @@ protocol GMNode {
 
     //TODO rename to traverse?
     func render(to: (RenderableNode) -> Void)
-
-    //TODO RenderableNode
-    func translate(_ transform: Float4x4) -> GMNode
 }

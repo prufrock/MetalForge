@@ -11,5 +11,11 @@ protocol RenderableNode {
 
     func setColor(_ color: Float4) -> GMNode
 
+    //It seems like 'move' is at a lower abstraction then 'translate'.
+    //TODO should move go somewhere else?
     func move(elapsed: Double) -> GMNode
+
+    //Is translate part of rendering?
+    //TODO should translate go somewhere else?
+    func translate(_ transform: Float4x4) -> GMNode
 }
