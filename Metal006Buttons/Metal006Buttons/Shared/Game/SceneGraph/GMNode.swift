@@ -17,9 +17,6 @@ protocol GMNode {
 
     func setChildren(_ children: [GMNode]) -> GMNode
 
-    //TODO RenderableNode
-    func move(elapsed: Double) -> GMNode
-
     //TODO rename to traverse?
     func render(to: (RenderableNode) -> Void)
 

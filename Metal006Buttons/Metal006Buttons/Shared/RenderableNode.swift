@@ -10,4 +10,6 @@ protocol RenderableNode {
     var hidden: Bool { get }
 
     func setColor(_ color: Float4) -> GMNode
+
+    func move(elapsed: Double) -> GMNode
 }
