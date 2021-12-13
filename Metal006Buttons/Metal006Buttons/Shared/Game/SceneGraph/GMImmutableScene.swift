@@ -12,18 +12,22 @@ struct GMImmutableScene: RenderableCollection {
     let node: GMNode
     let state: SceneState
 
+    private var cameraProjection: CameraProjection
+
     init(
         node: GMNode = GMImmutableNode(),
         camera: GMImmutableCamera,
         state: SceneState = .paused,
         screenWidth: Float = 0,
-        screenHeight: Float = 0
+        screenHeight: Float = 0,
+        cameraProjection: CameraProjection = .perspective
     ) {
         self.node = node
         self.camera = camera
         self.state = state
         self.screenHeight = screenHeight
         self.screenWidth = screenWidth
+        self.cameraProjection = cameraProjection
     }
 
     func cameraSpace() -> Float4x4 {
@@ -48,6 +52,8 @@ struct GMImmutableScene: RenderableCollection {
         var newChildren: [GMNode] = []
         var translation: Float4x4 = matrix_identity_float4x4
         var newState = state
+        var newCameraProjection = cameraProjection
+        var newCameraTransformMatrix = Float4x4.perspectiveProjection(nearPlane: 0.1, farPlane: 1.0)
 
         for i in 0..<camera.children.count {
             let children = camera.children
@@ -77,6 +83,14 @@ struct GMImmutableScene: RenderableCollection {
                     }
                 } else if i == 2 {
                     translation = Float4x4.translate(x: 0.1, y: 0, z: 0)
+                } else if i == 3 {
+                    switch cameraProjection {
+                    case .orthographic:
+                        newCameraProjection = .perspective
+                        newCameraTransformMatrix = Float4x4.perspectiveProjection(nearPlane: 0.1, farPlane: 1.0)
+                    case .perspective: newCameraProjection = .orthographic
+                        newCameraTransformMatrix = Float4x4.orthographicProjection()
+                    }
                 }
             } else {
                 newChildren.append(node)
@@ -84,7 +98,12 @@ struct GMImmutableScene: RenderableCollection {
         }
 
         //TODO Figure out a way to not force downcast this.
-        return clone(camera: (camera.clone(children: newChildren).translate(translation) as! GMImmutableCamera), state: newState)
+        return clone(camera: (camera.clone(children: newChildren, cameraTransformMatrix: newCameraTransformMatrix).translate(translation) as! GMImmutableCamera), state: newState, cameraProjection: newCameraProjection)
+    }
+
+    enum CameraProjection {
+        case perspective
+        case orthographic
     }
 
     func render(to: (RenderableNode) -> Void) {
@@ -139,14 +158,16 @@ struct GMImmutableScene: RenderableCollection {
         camera: GMImmutableCamera? = nil,
         state: SceneState? = nil,
         screenWidth: Float? = nil,
-        screenHeight: Float? = nil
+        screenHeight: Float? = nil,
+        cameraProjection: CameraProjection? = nil
     ) -> RenderableCollection {
         GMImmutableScene(
             node: node ?? self.node,
             camera: camera ?? self.camera,
             state: state ?? self.state,
             screenWidth: screenWidth ?? self.screenWidth,
-            screenHeight: screenHeight ?? self.screenHeight
+            screenHeight: screenHeight ?? self.screenHeight,
+            cameraProjection: cameraProjection ?? self.cameraProjection
         )
     }
 
