@@ -7,13 +7,17 @@
 
 import UIKit
 import MetalKit
+import Engine
 
 class ViewController: UIViewController {
     private let metalView = MTKView()
+    private var renderer: Renderer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMetalView()
+
+        renderer = Renderer()
     }
 
     func setupMetalView() {
