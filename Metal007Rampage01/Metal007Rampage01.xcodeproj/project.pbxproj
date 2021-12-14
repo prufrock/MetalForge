@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AF0E764895B02E2D571A3B5 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 6389C96227684BE200403237 /* Shaders.metal */; };
 		5AF0EE6EB1FFD80591773248 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E29E0075CB16851239F0 /* Renderer.swift */; };
 		6389C910276843D400403237 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389C90F276843D400403237 /* AppDelegate.swift */; };
 		6389C912276843D400403237 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389C911276843D400403237 /* SceneDelegate.swift */; };
@@ -23,6 +24,7 @@
 		6389C956276845D200403237 /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6389C946276845D200403237 /* Engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6389C959276845D200403237 /* Engine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6389C944276845D200403237 /* Engine.framework */; };
 		6389C95A276845D200403237 /* Engine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6389C944276845D200403237 /* Engine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6389C96327684BE200403237 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 6389C96227684BE200403237 /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +99,7 @@
 		6389C947276845D200403237 /* Engine.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Engine.docc; sourceTree = "<group>"; };
 		6389C94D276845D200403237 /* EngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6389C954276845D200403237 /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
+		6389C96227684BE200403237 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +204,7 @@
 				6389C946276845D200403237 /* Engine.h */,
 				6389C947276845D200403237 /* Engine.docc */,
 				5AF0E29E0075CB16851239F0 /* Renderer.swift */,
+				6389C96227684BE200403237 /* Shaders.metal */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -420,6 +424,7 @@
 				6389C914276843D400403237 /* ViewController.swift in Sources */,
 				6389C910276843D400403237 /* AppDelegate.swift in Sources */,
 				6389C912276843D400403237 /* SceneDelegate.swift in Sources */,
+				5AF0E764895B02E2D571A3B5 /* Shaders.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6389C96327684BE200403237 /* Shaders.metal in Sources */,
 				6389C948276845D200403237 /* Engine.docc in Sources */,
 				5AF0EE6EB1FFD80591773248 /* Renderer.swift in Sources */,
 			);

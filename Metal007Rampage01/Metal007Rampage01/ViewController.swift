@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupMetalView()
 
-        renderer = Renderer()
+        renderer = Renderer(metalView)
     }
 
     func setupMetalView() {
