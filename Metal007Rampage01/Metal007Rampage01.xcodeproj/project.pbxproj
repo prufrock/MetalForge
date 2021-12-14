@@ -16,6 +16,12 @@
 		6389C927276843D500403237 /* Metal007Rampage01Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389C926276843D500403237 /* Metal007Rampage01Tests.swift */; };
 		6389C931276843D500403237 /* Metal007Rampage01UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389C930276843D500403237 /* Metal007Rampage01UITests.swift */; };
 		6389C933276843D500403237 /* Metal007Rampage01UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389C932276843D500403237 /* Metal007Rampage01UITestsLaunchTests.swift */; };
+		6389C948276845D200403237 /* Engine.docc in Sources */ = {isa = PBXBuildFile; fileRef = 6389C947276845D200403237 /* Engine.docc */; };
+		6389C94E276845D200403237 /* Engine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6389C944276845D200403237 /* Engine.framework */; };
+		6389C955276845D200403237 /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389C954276845D200403237 /* EngineTests.swift */; };
+		6389C956276845D200403237 /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6389C946276845D200403237 /* Engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6389C959276845D200403237 /* Engine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6389C944276845D200403237 /* Engine.framework */; };
+		6389C95A276845D200403237 /* Engine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6389C944276845D200403237 /* Engine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +39,42 @@
 			remoteGlobalIDString = 6389C90B276843D400403237;
 			remoteInfo = Metal007Rampage01;
 		};
+		6389C94F276845D200403237 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6389C904276843D400403237 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6389C943276845D200403237;
+			remoteInfo = Engine;
+		};
+		6389C951276845D200403237 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6389C904276843D400403237 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6389C90B276843D400403237;
+			remoteInfo = Metal007Rampage01;
+		};
+		6389C957276845D200403237 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6389C904276843D400403237 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6389C943276845D200403237;
+			remoteInfo = Engine;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6389C95E276845D200403237 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6389C95A276845D200403237 /* Engine.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6389C90C276843D400403237 /* Metal007Rampage01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal007Rampage01.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +90,11 @@
 		6389C92C276843D500403237 /* Metal007Rampage01UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Metal007Rampage01UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6389C930276843D500403237 /* Metal007Rampage01UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metal007Rampage01UITests.swift; sourceTree = "<group>"; };
 		6389C932276843D500403237 /* Metal007Rampage01UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metal007Rampage01UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6389C944276845D200403237 /* Engine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Engine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6389C946276845D200403237 /* Engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
+		6389C947276845D200403237 /* Engine.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Engine.docc; sourceTree = "<group>"; };
+		6389C94D276845D200403237 /* EngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6389C954276845D200403237 /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6389C959276845D200403237 /* Engine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +120,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6389C941276845D200403237 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6389C94A276845D200403237 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6389C94E276845D200403237 /* Engine.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -82,6 +144,8 @@
 				6389C90E276843D400403237 /* Metal007Rampage01 */,
 				6389C925276843D500403237 /* Metal007Rampage01Tests */,
 				6389C92F276843D500403237 /* Metal007Rampage01UITests */,
+				6389C945276845D200403237 /* Engine */,
+				6389C953276845D200403237 /* EngineTests */,
 				6389C90D276843D400403237 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,6 +156,8 @@
 				6389C90C276843D400403237 /* Metal007Rampage01.app */,
 				6389C922276843D500403237 /* Metal007Rampage01Tests.xctest */,
 				6389C92C276843D500403237 /* Metal007Rampage01UITests.xctest */,
+				6389C944276845D200403237 /* Engine.framework */,
+				6389C94D276845D200403237 /* EngineTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,7 +193,35 @@
 			path = Metal007Rampage01UITests;
 			sourceTree = "<group>";
 		};
+		6389C945276845D200403237 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				6389C946276845D200403237 /* Engine.h */,
+				6389C947276845D200403237 /* Engine.docc */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		6389C953276845D200403237 /* EngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				6389C954276845D200403237 /* EngineTests.swift */,
+			);
+			path = EngineTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		6389C93F276845D200403237 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6389C956276845D200403237 /* Engine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		6389C90B276843D400403237 /* Metal007Rampage01 */ = {
@@ -137,10 +231,12 @@
 				6389C908276843D400403237 /* Sources */,
 				6389C909276843D400403237 /* Frameworks */,
 				6389C90A276843D400403237 /* Resources */,
+				6389C95E276845D200403237 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6389C958276845D200403237 /* PBXTargetDependency */,
 			);
 			name = Metal007Rampage01;
 			productName = Metal007Rampage01;
@@ -183,6 +279,43 @@
 			productReference = 6389C92C276843D500403237 /* Metal007Rampage01UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		6389C943276845D200403237 /* Engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6389C95B276845D200403237 /* Build configuration list for PBXNativeTarget "Engine" */;
+			buildPhases = (
+				6389C93F276845D200403237 /* Headers */,
+				6389C940276845D200403237 /* Sources */,
+				6389C941276845D200403237 /* Frameworks */,
+				6389C942276845D200403237 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Engine;
+			productName = Engine;
+			productReference = 6389C944276845D200403237 /* Engine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		6389C94C276845D200403237 /* EngineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6389C95F276845D200403237 /* Build configuration list for PBXNativeTarget "EngineTests" */;
+			buildPhases = (
+				6389C949276845D200403237 /* Sources */,
+				6389C94A276845D200403237 /* Frameworks */,
+				6389C94B276845D200403237 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6389C950276845D200403237 /* PBXTargetDependency */,
+				6389C952276845D200403237 /* PBXTargetDependency */,
+			);
+			name = EngineTests;
+			productName = EngineTests;
+			productReference = 6389C94D276845D200403237 /* EngineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -204,6 +337,13 @@
 						CreatedOnToolsVersion = 13.1;
 						TestTargetID = 6389C90B276843D400403237;
 					};
+					6389C943276845D200403237 = {
+						CreatedOnToolsVersion = 13.1;
+					};
+					6389C94C276845D200403237 = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 6389C90B276843D400403237;
+					};
 				};
 			};
 			buildConfigurationList = 6389C907276843D400403237 /* Build configuration list for PBXProject "Metal007Rampage01" */;
@@ -222,6 +362,8 @@
 				6389C90B276843D400403237 /* Metal007Rampage01 */,
 				6389C921276843D500403237 /* Metal007Rampage01Tests */,
 				6389C92B276843D500403237 /* Metal007Rampage01UITests */,
+				6389C943276845D200403237 /* Engine */,
+				6389C94C276845D200403237 /* EngineTests */,
 			);
 		};
 /* End PBXProject section */
@@ -245,6 +387,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		6389C92A276843D500403237 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6389C942276845D200403237 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6389C94B276845D200403237 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -281,6 +437,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6389C940276845D200403237 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6389C948276845D200403237 /* Engine.docc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6389C949276845D200403237 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6389C955276845D200403237 /* EngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -293,6 +465,21 @@
 			isa = PBXTargetDependency;
 			target = 6389C90B276843D400403237 /* Metal007Rampage01 */;
 			targetProxy = 6389C92D276843D500403237 /* PBXContainerItemProxy */;
+		};
+		6389C950276845D200403237 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6389C943276845D200403237 /* Engine */;
+			targetProxy = 6389C94F276845D200403237 /* PBXContainerItemProxy */;
+		};
+		6389C952276845D200403237 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6389C90B276843D400403237 /* Metal007Rampage01 */;
+			targetProxy = 6389C951276845D200403237 /* PBXContainerItemProxy */;
+		};
+		6389C958276845D200403237 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6389C943276845D200403237 /* Engine */;
+			targetProxy = 6389C957276845D200403237 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -588,6 +775,112 @@
 			};
 			name = Release;
 		};
+		6389C95C276845D200403237 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Engine;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6389C95D276845D200403237 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Engine;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6389C960276845D200403237 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.EngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metal007Rampage01.app/Metal007Rampage01";
+			};
+			name = Debug;
+		};
+		6389C961276845D200403237 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.EngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metal007Rampage01.app/Metal007Rampage01";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -623,6 +916,24 @@
 			buildConfigurations = (
 				6389C93D276843D500403237 /* Debug */,
 				6389C93E276843D500403237 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6389C95B276845D200403237 /* Build configuration list for PBXNativeTarget "Engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6389C95C276845D200403237 /* Debug */,
+				6389C95D276845D200403237 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6389C95F276845D200403237 /* Build configuration list for PBXNativeTarget "EngineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6389C960276845D200403237 /* Debug */,
+				6389C961276845D200403237 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
