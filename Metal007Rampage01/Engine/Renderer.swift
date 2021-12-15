@@ -50,8 +50,7 @@ public class Renderer: NSObject {
         super.init()
 
         view.delegate = self
-        //black
-        view.clearColor = MTLClearColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        view.clearColor = MTLClearColor(.black)
     }
 
     private func render() {
@@ -79,9 +78,7 @@ public class Renderer: NSObject {
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
         encoder.setVertexBytes(&transform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
 
-        //TODO: Create Colors struct
-        //white
-        var color = Float4(1.0,1.0,1.0,1.0)
+        var color = Float4(.white)
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&color, length: MemoryLayout<Float4>.stride, index: 0)
