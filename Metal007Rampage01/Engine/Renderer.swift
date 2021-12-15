@@ -69,23 +69,22 @@ public class Renderer: NSObject {
 
         }
 
-        var transform = matrix_identity_float4x4
+        var transform = Float4x4.identity()
 
-        let vertices = [SIMD4<Float>(0.0,0.0,0.0,1.0)]
+        let vertices = [Float4(0.0,0.0,0.0,1.0)]
 
-        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<SIMD4<Float>>.stride * vertices.count, options: [])
+        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float4>.stride * vertices.count, options: [])
 
         encoder.setRenderPipelineState(pipeline)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
         encoder.setVertexBytes(&transform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
 
-        //TODO: Create aliases for SIMD types
         //TODO: Create Colors struct
         //white
-        var color = SIMD4<Float>(1.0,1.0,1.0,1.0)
+        var color = Float4(1.0,1.0,1.0,1.0)
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-        encoder.setFragmentBytes(&color, length: MemoryLayout<SIMD4<Float>>.stride, index: 0)
+        encoder.setFragmentBytes(&color, length: MemoryLayout<Float4>.stride, index: 0)
         encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
 
         encoder.endEncoding()
