@@ -10,6 +10,7 @@ public class Renderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     let pipeline: MTLRenderPipelineState
+    var aspect: Float = 1.0
 
     public init(_ view: MTKView) {
         self.view = view
@@ -68,9 +69,9 @@ public class Renderer: NSObject {
 
         }
 
-        var transform = Float4x4.identity()
+        var transform = Float4x4.identity() * Float4x4(scaleX: 0.05, y: 0.05, z: 1.0) * Float4x4(scaleY: aspect)
 
-        let vertices = [Float4(0.0,0.0,0.0,1.0)]
+        let vertices = Rect(min: Vector(x:0, y:0), max: Vector(x:8,y:8)).shape().vertices
 
         let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float4>.stride * vertices.count, options: [])
 
@@ -101,6 +102,8 @@ extension Renderer: MTKViewDelegate {
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function)
         print("height: \(size.height) width: \(size.width)")
+
+        aspect = Float(size.width / size.height)
     }
 
     public func draw(in view: MTKView) {

@@ -10,6 +10,7 @@
 		5AF0E1664F4A384C322ADDA1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED045B2115AFB92507C0 /* Colors.swift */; };
 		5AF0E5EB025715DCD8B06109 /* MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E97EE93BB5E18920D777 /* MathUtils.swift */; };
 		5AF0E764895B02E2D571A3B5 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 6389C96227684BE200403237 /* Shaders.metal */; };
+		5AF0EACEA59ADD3D86EAD087 /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E56045A82BD5253FA091 /* Rect.swift */; };
 		5AF0EE6EB1FFD80591773248 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E29E0075CB16851239F0 /* Renderer.swift */; };
 		6389C910276843D400403237 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389C90F276843D400403237 /* AppDelegate.swift */; };
 		6389C912276843D400403237 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389C911276843D400403237 /* SceneDelegate.swift */; };
@@ -83,6 +84,7 @@
 
 /* Begin PBXFileReference section */
 		5AF0E29E0075CB16851239F0 /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		5AF0E56045A82BD5253FA091 /* Rect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
 		5AF0E97EE93BB5E18920D777 /* MathUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathUtils.swift; sourceTree = "<group>"; };
 		5AF0EB944660BEE23C5E3C0B /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		5AF0ED045B2115AFB92507C0 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				6389C953276845D200403237 /* EngineTests */,
 				6389C90D276843D400403237 /* Products */,
 				5AF0EB944660BEE23C5E3C0B /* readme.md */,
+				5AF0E56045A82BD5253FA091 /* Rect.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -462,6 +465,7 @@
 				5AF0EE6EB1FFD80591773248 /* Renderer.swift in Sources */,
 				5AF0E5EB025715DCD8B06109 /* MathUtils.swift in Sources */,
 				5AF0E1664F4A384C322ADDA1 /* Colors.swift in Sources */,
+				5AF0EACEA59ADD3D86EAD087 /* Rect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

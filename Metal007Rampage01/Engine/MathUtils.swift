@@ -14,4 +14,22 @@ extension Float4x4 {
     static func identity() -> Float4x4 {
         matrix_identity_float4x4
     }
+
+    init(scaleX x: Float, y: Float, z: Float) {
+        self.init(
+            [x, 0, 0, 0],
+            [0, y, 0, 0],
+            [0, 0, z, 0],
+            [0, 0, 0, 1]
+        )
+    }
+
+    init(scaleY y: Float) {
+        self.init(
+            [1, 0, 0, 0],
+            [0, y, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        )
+    }
 }
