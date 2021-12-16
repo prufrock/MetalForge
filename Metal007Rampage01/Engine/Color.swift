@@ -4,7 +4,7 @@
 
 import MetalKit
 
-enum Color: Int {
+public enum Color: Int {
     case black = 0x000000
     case red = 0xFF0000
     case green = 0x00FF00

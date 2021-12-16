@@ -16,11 +16,12 @@ struct VertexOut {
 
 vertex VertexOut vertex_main(constant float3 *vertices [[buffer(0)]],
                              constant matrix_float4x4 &matrix [[buffer(1)]],
+                             constant float &point_size [[buffer(2)]],
                              uint id [[vertex_id]]
                              ) {
     VertexOut vertex_out {
         .position = matrix * float4(vertices[id], 1),
-        .point_size = 81.0
+        .point_size = point_size
     };
 
     return vertex_out;

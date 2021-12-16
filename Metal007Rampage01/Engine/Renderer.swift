@@ -69,18 +69,25 @@ public class Renderer: NSObject {
 
         }
 
-        var transform = Float4x4.identity() * Float4x4(translateX: -0.35, y: -0.65, z: 0) * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0) * Float4x4(scaleY: aspect)
+        var transform = Float4x4.identity() * Float4x4(translateX: -0.32, y: 0.65, z: 0) * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0) * Float4x4(scaleY: aspect)
 
-        let vertices = Rect(min: Vector(x:0, y:0), max: Vector(x:8,y:8)).shape().vertices
+        //TODO Move the Bitmap and PixelImage into the ViewController
+        var bitmap = Bitmap(width: 8, height: 8, color: .white)
+        bitmap[0,0] = .blue
 
-        vertices.forEach { (vertex, color) in
+        let image = PixelImage(bitmap: bitmap, pixelSize: 81)
+
+        image.vertices.forEach { (vertex, color) in
             var group = [vertex]
 
             let buffer = device.makeBuffer(bytes: group, length: MemoryLayout<Float4>.stride * group.count, options: [])
 
+            var pixelSize:Float = image.pixelSize
+
             encoder.setRenderPipelineState(pipeline)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBytes(&transform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
 
             var fragmentColor = Float4(color)
 
