@@ -30,7 +30,7 @@ struct Vector {
 }
 
 struct Shape {
-    var vertices: [(Float4, Colors)]
+    var vertices: [(Float4, Color)]
 
     func update(at:Int) {
         let index = ()
