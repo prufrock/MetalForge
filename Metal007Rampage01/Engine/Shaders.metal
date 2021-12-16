@@ -20,7 +20,7 @@ vertex VertexOut vertex_main(constant float3 *vertices [[buffer(0)]],
                              ) {
     VertexOut vertex_out {
         .position = matrix * float4(vertices[id], 1),
-        .point_size = 10.0
+        .point_size = 81.0
     };
 
     return vertex_out;

@@ -32,4 +32,13 @@ extension Float4x4 {
             [0, 0, 0, 1]
         )
     }
+
+    init(translateX x: Float, y: Float, z: Float) {
+        self.init(
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [x, y, z, 1]
+        )
+    }
 }

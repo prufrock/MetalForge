@@ -69,21 +69,25 @@ public class Renderer: NSObject {
 
         }
 
-        var transform = Float4x4.identity() * Float4x4(scaleX: 0.05, y: 0.05, z: 1.0) * Float4x4(scaleY: aspect)
+        var transform = Float4x4.identity() * Float4x4(translateX: -0.35, y: -0.65, z: 0) * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0) * Float4x4(scaleY: aspect)
 
         let vertices = Rect(min: Vector(x:0, y:0), max: Vector(x:8,y:8)).shape().vertices
 
-        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float4>.stride * vertices.count, options: [])
+        vertices.forEach { (vertex, color) in
+            var group = [vertex]
 
-        encoder.setRenderPipelineState(pipeline)
-        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-        encoder.setVertexBytes(&transform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
+            let buffer = device.makeBuffer(bytes: group, length: MemoryLayout<Float4>.stride * group.count, options: [])
 
-        var color = Float4(.white)
+            encoder.setRenderPipelineState(pipeline)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBytes(&transform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
 
-        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-        encoder.setFragmentBytes(&color, length: MemoryLayout<Float4>.stride, index: 0)
-        encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
+            var fragmentColor = Float4(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float4>.stride, index: 0)
+            encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: group.count)
+        }
 
         encoder.endEncoding()
 
