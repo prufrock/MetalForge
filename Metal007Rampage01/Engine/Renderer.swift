@@ -79,10 +79,8 @@ public class Renderer: NSObject {
 
         let image = PixelImage(bitmap: bitmap, pixelSize: 81)
 
-        image.vertices.forEach { (vertex, color) in
-            var group = [vertex]
-
-            let buffer = device.makeBuffer(bytes: group, length: MemoryLayout<Float4>.stride * group.count, options: [])
+        image.vertices.forEach { (vertices, color) in
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float4>.stride * vertices.count, options: [])
 
             var pixelSize:Float = image.pixelSize
 
@@ -95,7 +93,7 @@ public class Renderer: NSObject {
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float4>.stride, index: 0)
-            encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: group.count)
+            encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
         }
 
         encoder.endEncoding()
