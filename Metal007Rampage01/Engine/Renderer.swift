@@ -11,9 +11,11 @@ public class Renderer: NSObject {
     let commandQueue: MTLCommandQueue
     let pipeline: MTLRenderPipelineState
     var aspect: Float = 1.0
+    public private(set) var bitmap: Bitmap
 
-    public init(_ view: MTKView) {
+    public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
+        self.bitmap = Bitmap(width: width, height: height, color: .white)
 
         guard let newDevice = MTLCreateSystemDefaultDevice() else {
             fatalError("""
@@ -71,10 +73,6 @@ public class Renderer: NSObject {
 
         var transform = Float4x4.identity() * Float4x4(translateX: -0.32, y: 0.65, z: 0) * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0) * Float4x4(scaleY: aspect)
 
-        //TODO Move the Bitmap and PixelImage into the ViewController
-        var bitmap = Bitmap(width: 8, height: 8, color: .white)
-        bitmap[0,0] = .blue
-
         let image = PixelImage(bitmap: bitmap, pixelSize: 81)
 
         image.vertices.forEach { (vertex, color) in
@@ -118,6 +116,7 @@ extension Renderer: MTKViewDelegate {
     }
 
     public func draw(in view: MTKView) {
+        bitmap[0, 0] = .blue
         render()
     }
 }
