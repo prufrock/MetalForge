@@ -11,11 +11,15 @@ public class Renderer: NSObject {
     let commandQueue: MTLCommandQueue
     let pipeline: MTLRenderPipelineState
     var aspect: Float = 1.0
+    public private(set) var originalBitmap: Bitmap
     public private(set) var bitmap: Bitmap
+    private var player = Player(position: Float2([4, 4]))
+    private var lastFrameTime = CACurrentMediaTime()
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
-        self.bitmap = Bitmap(width: width, height: height, color: .white)
+        self.originalBitmap = Bitmap(width: width, height: height, color: .white)
+        self.bitmap = self.originalBitmap
 
         guard let newDevice = MTLCreateSystemDefaultDevice() else {
             fatalError("""
@@ -116,7 +120,13 @@ extension Renderer: MTKViewDelegate {
     }
 
     public func draw(in view: MTKView) {
-        bitmap[0, 0] = .blue
+        let time = CACurrentMediaTime()
+        let timeStep = CACurrentMediaTime() - lastFrameTime
+        player.update(timeStep: Float(timeStep))
+        lastFrameTime = time
+
+        bitmap = originalBitmap
+        bitmap[Int(player.position.x), Int(player.position.y)] = .blue
         render()
     }
 }
