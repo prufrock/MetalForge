@@ -77,23 +77,42 @@ public class Renderer: NSObject {
 
         var transform = Float4x4.identity() * Float4x4(translateX: -0.32, y: 0.65, z: 0) * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0) * Float4x4(scaleY: aspect)
 
-        let image = PixelImage(bitmap: bitmap, pixelSize: 81)
+        var image = PixelImage(bitmap: bitmap, pixelSize: 81)
 
-        image.vertices.forEach { (vertices, color) in
+        let tile = [
+            Float4(-0.5, 0.5, 0.0, 1.0),
+            Float4(0.5, 0.5, 0.0, 1.0),
+            Float4(0.5, -0.5, 0.0, 1.0),
+
+            Float4(0.5, -0.5, 0.0, 1.0),
+            Float4(-0.5, -0.5, 0.0, 1.0),
+            Float4(-0.5, 0.5, 0.0, 1.0),
+        ]
+
+        var tiles: [([Float4], Color, Float4x4)] = [
+            (tile, .white, Float4x4(translateX: 0.0, y: 0, z: 0)),
+            (tile, .red, Float4x4(translateX: 1.0, y: 0, z: 0)),
+            (tile, .white, Float4x4(translateX: 2.0, y: 0, z: 0)),
+        ]
+
+        tiles.forEach { (vertices, color, objTransform) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float4>.stride * vertices.count, options: [])
 
             var pixelSize:Float = image.pixelSize
+             pixelSize = 1
+
+            var finalTransform = transform * objTransform
 
             encoder.setRenderPipelineState(pipeline)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&transform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
 
             var fragmentColor = Float4(color)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float4>.stride, index: 0)
-            encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
+            encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
         }
 
         encoder.endEncoding()
