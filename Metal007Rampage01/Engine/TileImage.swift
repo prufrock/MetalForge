@@ -19,5 +19,14 @@ struct TileImage {
 
     init(bitmap: Bitmap, pixelSize: Float = 81.0) {
         tiles = [(tile, matrix_identity_float4x4, .white)]
+
+        var myTiles: [([Float4], Float4x4, Color)] = []
+        for y in 0 ..< bitmap.height {
+            for x in 0 ..< bitmap.width {
+                myTiles.append((tile, Float4x4.init(translateX: Float(x), y: Float(-y), z: 0), bitmap[x,y]))
+            }
+        }
+
+        tiles = myTiles
     }
 }

@@ -75,7 +75,11 @@ public class Renderer: NSObject {
 
         }
 
-        let transform = Float4x4.identity() * Float4x4(translateX: -0.32, y: 0.65, z: 0) * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0) * Float4x4(scaleY: aspect)
+        let transform = Float4x4.identity()
+            * Float4x4(translateX: -0.32, y: 0.65, z: 0)
+            * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0)
+            * Float4x4(scaleY: aspect)
+
 
         let tile = [
             Float4(-0.5, 0.5, 0.0, 1.0),
@@ -125,6 +129,7 @@ extension Renderer: MTKViewDelegate {
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function)
         print("height: \(size.height) width: \(size.width)")
+        print("height: \(view.frame.height) width: \(view.frame.width)")
 
         aspect = Float(size.width / size.height)
     }
