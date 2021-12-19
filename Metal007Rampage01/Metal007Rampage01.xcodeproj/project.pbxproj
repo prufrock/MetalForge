@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5AF0E1664F4A384C322ADDA1 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED045B2115AFB92507C0 /* Color.swift */; };
 		5AF0E484861DEF3B8956E285 /* PixelImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED3EEE6D869599545B85 /* PixelImage.swift */; };
+		5AF0E5B3ED49F7C62BEC8DDF /* TileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED78F1EC411FC54D29D0 /* TileImage.swift */; };
 		5AF0E5EB025715DCD8B06109 /* MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E97EE93BB5E18920D777 /* MathUtils.swift */; };
 		5AF0E678560D414913E55379 /* Bitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2E127B9AF4649AC691F /* Bitmap.swift */; };
 		5AF0E764895B02E2D571A3B5 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 6389C96227684BE200403237 /* Shaders.metal */; };
@@ -92,6 +93,7 @@
 		5AF0EB944660BEE23C5E3C0B /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		5AF0ED045B2115AFB92507C0 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		5AF0ED3EEE6D869599545B85 /* PixelImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelImage.swift; sourceTree = "<group>"; };
+		5AF0ED78F1EC411FC54D29D0 /* TileImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileImage.swift; sourceTree = "<group>"; };
 		6389C90C276843D400403237 /* Metal007Rampage01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal007Rampage01.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6389C90F276843D400403237 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6389C911276843D400403237 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				5AF0E2E127B9AF4649AC691F /* Bitmap.swift */,
 				5AF0ED3EEE6D869599545B85 /* PixelImage.swift */,
 				5AF0EA580D76EE534FB3BCBE /* Player.swift */,
+				5AF0ED78F1EC411FC54D29D0 /* TileImage.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				5AF0E678560D414913E55379 /* Bitmap.swift in Sources */,
 				5AF0E484861DEF3B8956E285 /* PixelImage.swift in Sources */,
 				5AF0EAB59FE5CB4A968B4931 /* Player.swift in Sources */,
+				5AF0E5B3ED49F7C62BEC8DDF /* TileImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

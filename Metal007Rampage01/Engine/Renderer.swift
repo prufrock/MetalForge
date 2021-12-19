@@ -75,9 +75,7 @@ public class Renderer: NSObject {
 
         }
 
-        var transform = Float4x4.identity() * Float4x4(translateX: -0.32, y: 0.65, z: 0) * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0) * Float4x4(scaleY: aspect)
-
-        var image = PixelImage(bitmap: bitmap, pixelSize: 81)
+        let transform = Float4x4.identity() * Float4x4(translateX: -0.32, y: 0.65, z: 0) * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0) * Float4x4(scaleY: aspect)
 
         let tile = [
             Float4(-0.5, 0.5, 0.0, 1.0),
@@ -89,17 +87,12 @@ public class Renderer: NSObject {
             Float4(-0.5, 0.5, 0.0, 1.0),
         ]
 
-        var tiles: [([Float4], Color, Float4x4)] = [
-            (tile, .white, Float4x4(translateX: 0.0, y: 0, z: 0)),
-            (tile, .red, Float4x4(translateX: 1.0, y: 0, z: 0)),
-            (tile, .white, Float4x4(translateX: 2.0, y: 0, z: 0)),
-        ]
+        let tiles: [([Float4], Float4x4, Color)] = TileImage(bitmap: bitmap).tiles
 
-        tiles.forEach { (vertices, color, objTransform) in
+        tiles.forEach { (vertices, objTransform, color) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float4>.stride * vertices.count, options: [])
 
-            var pixelSize:Float = image.pixelSize
-             pixelSize = 1
+            var pixelSize = 1
 
             var finalTransform = transform * objTransform
 
