@@ -11,11 +11,3 @@ public struct Player {
         self.velocity = Float2([1, 1])
     }
 }
-
-public extension Player {
-    mutating func update(timeStep: Float) {
-        position += velocity * Float2(timeStep, timeStep)
-        position.x.formTruncatingRemainder(dividingBy: 8)
-        position.y.formTruncatingRemainder(dividingBy: 8)
-    }
-}

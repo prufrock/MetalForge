@@ -13,7 +13,7 @@ public class Renderer: NSObject {
     var aspect: Float = 1.0
     public private(set) var originalBitmap: Bitmap
     public private(set) var bitmap: Bitmap
-    private var player = Player(position: Float2([4, 4]))
+    private var world = World()
     private var lastFrameTime = CACurrentMediaTime()
 
     public init(_ view: MTKView, width: Int, height: Int) {
@@ -60,7 +60,11 @@ public class Renderer: NSObject {
         view.clearColor = MTLClearColor(.black)
     }
 
-    private func render() {
+    private func render(_ player: Player) {
+
+        bitmap = originalBitmap
+        bitmap[Int(player.position.x), Int(player.position.y)] = .blue
+
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
             fatalError("""
                        Ugh, no command buffer. What the heck!
@@ -137,11 +141,10 @@ extension Renderer: MTKViewDelegate {
     public func draw(in view: MTKView) {
         let time = CACurrentMediaTime()
         let timeStep = CACurrentMediaTime() - lastFrameTime
-        player.update(timeStep: Float(timeStep))
+        world.update(timeStep: Float(timeStep))
         lastFrameTime = time
 
-        bitmap = originalBitmap
-        bitmap[Int(player.position.x), Int(player.position.y)] = .blue
-        render()
+
+        render(world.player)
     }
 }
