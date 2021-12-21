@@ -5,9 +5,18 @@
 public struct Player {
     public var position: Float2
     public var velocity: Float2
+    public let radius: Float = 0.5
 
     public init(position: Float2) {
         self.position = position
         self.velocity = Float2([1, 1])
+    }
+}
+
+public extension Player {
+    var rect: Rect {
+        let halfSize = Float2(radius, radius)
+        // the player is centered on the position
+        return Rect(min: position - halfSize, max: position + halfSize)
     }
 }

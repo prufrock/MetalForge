@@ -11,15 +11,18 @@ public class Renderer: NSObject {
     let commandQueue: MTLCommandQueue
     let pipeline: MTLRenderPipelineState
     var aspect: Float = 1.0
+    // Need to have the originalBitmap so we don't have to keep turning off "pixels" as it's animated
     public private(set) var originalBitmap: Bitmap
     public private(set) var bitmap: Bitmap
+    private var scale: Float
     private var world = World()
     private var lastFrameTime = CACurrentMediaTime()
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
-        self.originalBitmap = Bitmap(width: width, height: height, color: .white)
-        self.bitmap = self.originalBitmap
+        originalBitmap = Bitmap(width: width, height: height, color: .white)
+        bitmap = self.originalBitmap
+        scale = Float(bitmap.height) / world.size.y
 
         guard let newDevice = MTLCreateSystemDefaultDevice() else {
             fatalError("""
@@ -60,10 +63,14 @@ public class Renderer: NSObject {
         view.clearColor = MTLClearColor(.black)
     }
 
-    private func render(_ player: Player) {
-
+    private func render(_ world: World) {
         bitmap = originalBitmap
-        bitmap[Int(player.position.x), Int(player.position.y)] = .blue
+
+        //Draw player
+        var rect = world.player.rect
+        rect.min *= scale
+        rect.max *= scale
+        bitmap.fill(rect: rect, color: .blue)
 
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
             fatalError("""
@@ -145,6 +152,6 @@ extension Renderer: MTKViewDelegate {
         lastFrameTime = time
 
 
-        render(world.player)
+        render(world)
     }
 }
