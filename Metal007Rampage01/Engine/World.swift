@@ -15,7 +15,7 @@ public struct World {
 public extension World {
     mutating func update(timeStep: Float) {
         player.position += player.velocity * timeStep
-        player.position.x.formTruncatingRemainder(dividingBy: size.x)
-        player.position.y.formTruncatingRemainder(dividingBy: size.y)
+        player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)
+        player.position.y.formTruncatingRemainder(dividingBy: size.y - 1)
     }
 }

@@ -12,17 +12,18 @@ public class Renderer: NSObject {
     let pipeline: MTLRenderPipelineState
     var aspect: Float = 1.0
     // Need to have the originalBitmap so we don't have to keep turning off "pixels" as it's animated
-    public private(set) var originalBitmap: Bitmap
     public private(set) var bitmap: Bitmap
-    private var scale: Float
+    private var scale: Float {
+        get {
+            Float(bitmap.height) / world.size.y
+        }
+    }
     private var world = World()
     private var lastFrameTime = CACurrentMediaTime()
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
-        originalBitmap = Bitmap(width: width, height: height, color: .white)
-        bitmap = self.originalBitmap
-        scale = Float(bitmap.height) / world.size.y
+        bitmap = Bitmap(width: width, height: height, color: .white)
 
         guard let newDevice = MTLCreateSystemDefaultDevice() else {
             fatalError("""
@@ -64,13 +65,11 @@ public class Renderer: NSObject {
     }
 
     private func render(_ world: World) {
-        bitmap = originalBitmap
-
         //Draw player
         var rect = world.player.rect
         rect.min *= scale
         rect.max *= scale
-        bitmap.fill(rect: rect, color: .blue)
+        let playerRect = rect.renderable()
 
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
             fatalError("""
@@ -91,20 +90,10 @@ public class Renderer: NSObject {
             * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0)
             * Float4x4(scaleY: aspect)
 
+        var renderables: [([Float4], Float4x4, Color)] = TileImage(bitmap: bitmap).tiles
+        renderables.append(playerRect)
 
-        let tile = [
-            Float4(-0.5, 0.5, 0.0, 1.0),
-            Float4(0.5, 0.5, 0.0, 1.0),
-            Float4(0.5, -0.5, 0.0, 1.0),
-
-            Float4(0.5, -0.5, 0.0, 1.0),
-            Float4(-0.5, -0.5, 0.0, 1.0),
-            Float4(-0.5, 0.5, 0.0, 1.0),
-        ]
-
-        let tiles: [([Float4], Float4x4, Color)] = TileImage(bitmap: bitmap).tiles
-
-        tiles.forEach { (vertices, objTransform, color) in
+        renderables.forEach { (vertices, objTransform, color) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float4>.stride * vertices.count, options: [])
 
             var pixelSize = 1
@@ -143,6 +132,8 @@ extension Renderer: MTKViewDelegate {
         print("height: \(view.frame.height) width: \(view.frame.width)")
 
         aspect = Float(size.width / size.height)
+
+        bitmap = Bitmap(width: 8, height: 8, color: .white)
     }
 
     public func draw(in view: MTKView) {
