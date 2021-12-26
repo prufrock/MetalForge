@@ -18,12 +18,12 @@ public class Renderer: NSObject {
             Float(bitmap.height) / world.size.y
         }
     }
-    private var world = World()
+    private var world = World(map: loadMap())
     private var lastFrameTime = CACurrentMediaTime()
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
-        bitmap = Bitmap(width: width, height: height, color: .white)
+        bitmap = Bitmap(width: width, height: height, color: .black)
 
         guard let newDevice = MTLCreateSystemDefaultDevice() else {
             fatalError("""
@@ -65,6 +65,18 @@ public class Renderer: NSObject {
     }
 
     private func render(_ world: World) {
+        //Draw map
+        for y in 0 ..< world.map.height {
+            for x in 0 ..< world.map.width where world.map[x, y].isWall {
+                let rect = Rect(
+                    min: Float2(x: Float(x), y: Float(y)) * scale,
+                    max: Float2(x: Float(x + 1), y: Float(y + 1)) * scale
+                )
+                bitmap.fill(rect: rect, color: .white)
+            }
+        }
+
+
         //Draw player
         var rect = world.player.rect
         rect.min *= scale
@@ -133,7 +145,7 @@ extension Renderer: MTKViewDelegate {
 
         aspect = Float(size.width / size.height)
 
-        bitmap = Bitmap(width: 8, height: 8, color: .white)
+        bitmap = Bitmap(width: 8, height: 8, color: .black)
     }
 
     public func draw(in view: MTKView) {
@@ -145,4 +157,11 @@ extension Renderer: MTKViewDelegate {
 
         render(world)
     }
+}
+
+
+private func loadMap() -> Tilemap {
+    let jsonUrl = Bundle.main.url(forResource: "Map", withExtension: "json")!
+    let jsonData = try! Data(contentsOf: jsonUrl)
+    return try! JSONDecoder().decode(Tilemap.self, from: jsonData)
 }

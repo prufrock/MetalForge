@@ -3,16 +3,18 @@
 //
 
 public struct World {
-    public let size: Float2
+    public let map: Tilemap
     public var player: Player
 
-    public init() {
-        self.size = Float2(8, 8)
-        self.player = Player(position: Float2(4, 4))
+    public init(map: Tilemap) {
+        self.map = map
+        self.player = Player(position: map.size / 2)
     }
 }
 
 public extension World {
+    var size: Float2 { map.size }
+
     mutating func update(timeStep: Float) {
         player.position += player.velocity * timeStep
         player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)
