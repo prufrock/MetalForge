@@ -16,6 +16,23 @@
 		63C6EC3F2779029A0027057A /* Metal008Rampage02Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC3E2779029A0027057A /* Metal008Rampage02Tests.swift */; };
 		63C6EC492779029A0027057A /* Metal008Rampage02UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC482779029A0027057A /* Metal008Rampage02UITests.swift */; };
 		63C6EC4B2779029A0027057A /* Metal008Rampage02UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC4A2779029A0027057A /* Metal008Rampage02UITestsLaunchTests.swift */; };
+		63C6EC60277903F00027057A /* Engine.docc in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC5F277903F00027057A /* Engine.docc */; };
+		63C6EC66277903F00027057A /* Engine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C6EC5C277903F00027057A /* Engine.framework */; };
+		63C6EC6D277903F00027057A /* EngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC6C277903F00027057A /* EngineTests.swift */; };
+		63C6EC6E277903F00027057A /* Engine.h in Headers */ = {isa = PBXBuildFile; fileRef = 63C6EC5E277903F00027057A /* Engine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		63C6EC71277903F00027057A /* Engine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63C6EC5C277903F00027057A /* Engine.framework */; };
+		63C6EC72277903F00027057A /* Engine.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63C6EC5C277903F00027057A /* Engine.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		63C6EC84277904680027057A /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC7A277904680027057A /* Color.swift */; };
+		63C6EC85277904680027057A /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC7B277904680027057A /* Renderer.swift */; };
+		63C6EC86277904680027057A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC7C277904680027057A /* Player.swift */; };
+		63C6EC87277904680027057A /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC7D277904680027057A /* Shaders.metal */; };
+		63C6EC88277904680027057A /* TileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC7E277904680027057A /* TileImage.swift */; };
+		63C6EC89277904680027057A /* Bitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC7F277904680027057A /* Bitmap.swift */; };
+		63C6EC8A277904680027057A /* World.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC80277904680027057A /* World.swift */; };
+		63C6EC8B277904680027057A /* MathUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC81277904680027057A /* MathUtils.swift */; };
+		63C6EC8C277904680027057A /* PixelImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC82277904680027057A /* PixelImage.swift */; };
+		63C6EC8D277904680027057A /* Rect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC83277904680027057A /* Rect.swift */; };
+		63C6EC8E2779054A0027057A /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC7D277904680027057A /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,7 +50,42 @@
 			remoteGlobalIDString = 63C6EC23277902980027057A;
 			remoteInfo = Metal008Rampage02;
 		};
+		63C6EC67277903F00027057A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63C6EC1C277902980027057A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63C6EC5B277903F00027057A;
+			remoteInfo = Engine;
+		};
+		63C6EC69277903F00027057A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63C6EC1C277902980027057A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63C6EC23277902980027057A;
+			remoteInfo = Metal008Rampage02;
+		};
+		63C6EC6F277903F00027057A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63C6EC1C277902980027057A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63C6EC5B277903F00027057A;
+			remoteInfo = Engine;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		63C6EC76277903F00027057A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				63C6EC72277903F00027057A /* Engine.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		63C6EC24277902980027057A /* Metal008Rampage02.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal008Rampage02.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +101,21 @@
 		63C6EC442779029A0027057A /* Metal008Rampage02UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Metal008Rampage02UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63C6EC482779029A0027057A /* Metal008Rampage02UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metal008Rampage02UITests.swift; sourceTree = "<group>"; };
 		63C6EC4A2779029A0027057A /* Metal008Rampage02UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metal008Rampage02UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		63C6EC5C277903F00027057A /* Engine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Engine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		63C6EC5E277903F00027057A /* Engine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
+		63C6EC5F277903F00027057A /* Engine.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Engine.docc; sourceTree = "<group>"; };
+		63C6EC65277903F00027057A /* EngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		63C6EC6C277903F00027057A /* EngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineTests.swift; sourceTree = "<group>"; };
+		63C6EC7A277904680027057A /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		63C6EC7B277904680027057A /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		63C6EC7C277904680027057A /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		63C6EC7D277904680027057A /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		63C6EC7E277904680027057A /* TileImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileImage.swift; sourceTree = "<group>"; };
+		63C6EC7F277904680027057A /* Bitmap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bitmap.swift; sourceTree = "<group>"; };
+		63C6EC80277904680027057A /* World.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = World.swift; sourceTree = "<group>"; };
+		63C6EC81277904680027057A /* MathUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathUtils.swift; sourceTree = "<group>"; };
+		63C6EC82277904680027057A /* PixelImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelImage.swift; sourceTree = "<group>"; };
+		63C6EC83277904680027057A /* Rect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63C6EC71277903F00027057A /* Engine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +141,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63C6EC59277903F00027057A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63C6EC62277903F00027057A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63C6EC66277903F00027057A /* Engine.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -82,6 +165,8 @@
 				63C6EC26277902980027057A /* Metal008Rampage02 */,
 				63C6EC3D2779029A0027057A /* Metal008Rampage02Tests */,
 				63C6EC472779029A0027057A /* Metal008Rampage02UITests */,
+				63C6EC5D277903F00027057A /* Engine */,
+				63C6EC6B277903F00027057A /* EngineTests */,
 				63C6EC25277902980027057A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -92,6 +177,8 @@
 				63C6EC24277902980027057A /* Metal008Rampage02.app */,
 				63C6EC3A2779029A0027057A /* Metal008Rampage02Tests.xctest */,
 				63C6EC442779029A0027057A /* Metal008Rampage02UITests.xctest */,
+				63C6EC5C277903F00027057A /* Engine.framework */,
+				63C6EC65277903F00027057A /* EngineTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -127,7 +214,45 @@
 			path = Metal008Rampage02UITests;
 			sourceTree = "<group>";
 		};
+		63C6EC5D277903F00027057A /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				63C6EC7F277904680027057A /* Bitmap.swift */,
+				63C6EC7A277904680027057A /* Color.swift */,
+				63C6EC81277904680027057A /* MathUtils.swift */,
+				63C6EC82277904680027057A /* PixelImage.swift */,
+				63C6EC7C277904680027057A /* Player.swift */,
+				63C6EC83277904680027057A /* Rect.swift */,
+				63C6EC7B277904680027057A /* Renderer.swift */,
+				63C6EC7D277904680027057A /* Shaders.metal */,
+				63C6EC7E277904680027057A /* TileImage.swift */,
+				63C6EC80277904680027057A /* World.swift */,
+				63C6EC5E277903F00027057A /* Engine.h */,
+				63C6EC5F277903F00027057A /* Engine.docc */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		63C6EC6B277903F00027057A /* EngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				63C6EC6C277903F00027057A /* EngineTests.swift */,
+			);
+			path = EngineTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		63C6EC57277903F00027057A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63C6EC6E277903F00027057A /* Engine.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		63C6EC23277902980027057A /* Metal008Rampage02 */ = {
@@ -137,10 +262,12 @@
 				63C6EC20277902980027057A /* Sources */,
 				63C6EC21277902980027057A /* Frameworks */,
 				63C6EC22277902980027057A /* Resources */,
+				63C6EC76277903F00027057A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				63C6EC70277903F00027057A /* PBXTargetDependency */,
 			);
 			name = Metal008Rampage02;
 			productName = Metal008Rampage02;
@@ -183,6 +310,43 @@
 			productReference = 63C6EC442779029A0027057A /* Metal008Rampage02UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		63C6EC5B277903F00027057A /* Engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63C6EC73277903F00027057A /* Build configuration list for PBXNativeTarget "Engine" */;
+			buildPhases = (
+				63C6EC57277903F00027057A /* Headers */,
+				63C6EC58277903F00027057A /* Sources */,
+				63C6EC59277903F00027057A /* Frameworks */,
+				63C6EC5A277903F00027057A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Engine;
+			productName = Engine;
+			productReference = 63C6EC5C277903F00027057A /* Engine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		63C6EC64277903F00027057A /* EngineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 63C6EC77277903F00027057A /* Build configuration list for PBXNativeTarget "EngineTests" */;
+			buildPhases = (
+				63C6EC61277903F00027057A /* Sources */,
+				63C6EC62277903F00027057A /* Frameworks */,
+				63C6EC63277903F00027057A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				63C6EC68277903F00027057A /* PBXTargetDependency */,
+				63C6EC6A277903F00027057A /* PBXTargetDependency */,
+			);
+			name = EngineTests;
+			productName = EngineTests;
+			productReference = 63C6EC65277903F00027057A /* EngineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -204,6 +368,13 @@
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 63C6EC23277902980027057A;
 					};
+					63C6EC5B277903F00027057A = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					63C6EC64277903F00027057A = {
+						CreatedOnToolsVersion = 13.2.1;
+						TestTargetID = 63C6EC23277902980027057A;
+					};
 				};
 			};
 			buildConfigurationList = 63C6EC1F277902980027057A /* Build configuration list for PBXProject "Metal008Rampage02" */;
@@ -222,6 +393,8 @@
 				63C6EC23277902980027057A /* Metal008Rampage02 */,
 				63C6EC392779029A0027057A /* Metal008Rampage02Tests */,
 				63C6EC432779029A0027057A /* Metal008Rampage02UITests */,
+				63C6EC5B277903F00027057A /* Engine */,
+				63C6EC64277903F00027057A /* EngineTests */,
 			);
 		};
 /* End PBXProject section */
@@ -251,6 +424,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63C6EC5A277903F00027057A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63C6EC63277903F00027057A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -258,6 +445,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63C6EC8E2779054A0027057A /* Shaders.metal in Sources */,
 				63C6EC2C277902980027057A /* ViewController.swift in Sources */,
 				63C6EC28277902980027057A /* AppDelegate.swift in Sources */,
 				63C6EC2A277902980027057A /* SceneDelegate.swift in Sources */,
@@ -281,6 +469,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		63C6EC58277903F00027057A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63C6EC8B277904680027057A /* MathUtils.swift in Sources */,
+				63C6EC86277904680027057A /* Player.swift in Sources */,
+				63C6EC8D277904680027057A /* Rect.swift in Sources */,
+				63C6EC8C277904680027057A /* PixelImage.swift in Sources */,
+				63C6EC60277903F00027057A /* Engine.docc in Sources */,
+				63C6EC85277904680027057A /* Renderer.swift in Sources */,
+				63C6EC88277904680027057A /* TileImage.swift in Sources */,
+				63C6EC84277904680027057A /* Color.swift in Sources */,
+				63C6EC89277904680027057A /* Bitmap.swift in Sources */,
+				63C6EC8A277904680027057A /* World.swift in Sources */,
+				63C6EC87277904680027057A /* Shaders.metal in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		63C6EC61277903F00027057A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63C6EC6D277903F00027057A /* EngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -293,6 +507,21 @@
 			isa = PBXTargetDependency;
 			target = 63C6EC23277902980027057A /* Metal008Rampage02 */;
 			targetProxy = 63C6EC452779029A0027057A /* PBXContainerItemProxy */;
+		};
+		63C6EC68277903F00027057A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63C6EC5B277903F00027057A /* Engine */;
+			targetProxy = 63C6EC67277903F00027057A /* PBXContainerItemProxy */;
+		};
+		63C6EC6A277903F00027057A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63C6EC23277902980027057A /* Metal008Rampage02 */;
+			targetProxy = 63C6EC69277903F00027057A /* PBXContainerItemProxy */;
+		};
+		63C6EC70277903F00027057A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63C6EC5B277903F00027057A /* Engine */;
+			targetProxy = 63C6EC6F277903F00027057A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -435,6 +664,7 @@
 		63C6EC4F2779029A0027057A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -463,6 +693,7 @@
 		63C6EC502779029A0027057A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -564,6 +795,102 @@
 			};
 			name = Release;
 		};
+		63C6EC74277903F00027057A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Engine;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		63C6EC75277903F00027057A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Engine;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		63C6EC78277903F00027057A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.EngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metal008Rampage02.app/Metal008Rampage02";
+			};
+			name = Debug;
+		};
+		63C6EC79277903F00027057A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VUGNZY6N5J;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.EngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metal008Rampage02.app/Metal008Rampage02";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -599,6 +926,24 @@
 			buildConfigurations = (
 				63C6EC552779029A0027057A /* Debug */,
 				63C6EC562779029A0027057A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63C6EC73277903F00027057A /* Build configuration list for PBXNativeTarget "Engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63C6EC74277903F00027057A /* Debug */,
+				63C6EC75277903F00027057A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		63C6EC77277903F00027057A /* Build configuration list for PBXNativeTarget "EngineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63C6EC78277903F00027057A /* Debug */,
+				63C6EC79277903F00027057A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
