@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5AF0E23F304BA037E9C02EEC /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 5AF0EBB65B9D0855BCF59DEB /* Map.json */; };
 		5AF0E4D0348C60EA996DB64B /* Tilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E71D28EF7CA85DD4B712 /* Tilemap.swift */; };
+		5AF0E791216D6C57FD064E1B /* Thing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0E390EBC8D1155A2430 /* Thing.swift */; };
 		5AF0EC620BC5761A9171F014 /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 5AF0EBB65B9D0855BCF59DEB /* Map.json */; };
 		5AF0ED59E31E1D376ADA8752 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EA17CC298C9CEC8296FC /* Tile.swift */; };
 		63C6EC28277902980027057A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC27277902980027057A /* AppDelegate.swift */; };
@@ -92,6 +93,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5AF0E0E390EBC8D1155A2430 /* Thing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thing.swift; sourceTree = "<group>"; };
 		5AF0E71D28EF7CA85DD4B712 /* Tilemap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tilemap.swift; sourceTree = "<group>"; };
 		5AF0EA17CC298C9CEC8296FC /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		5AF0EBB65B9D0855BCF59DEB /* Map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Map.json; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				63C6EC5F277903F00027057A /* Engine.docc */,
 				5AF0EA17CC298C9CEC8296FC /* Tile.swift */,
 				5AF0E71D28EF7CA85DD4B712 /* Tilemap.swift */,
+				5AF0E0E390EBC8D1155A2430 /* Thing.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -498,6 +501,7 @@
 				63C6EC87277904680027057A /* Shaders.metal in Sources */,
 				5AF0ED59E31E1D376ADA8752 /* Tile.swift in Sources */,
 				5AF0E4D0348C60EA996DB64B /* Tilemap.swift in Sources */,
+				5AF0E791216D6C57FD064E1B /* Thing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

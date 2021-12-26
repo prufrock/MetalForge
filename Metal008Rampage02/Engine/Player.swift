@@ -9,7 +9,7 @@ public struct Player {
 
     public init(position: Float2) {
         self.position = position
-        self.velocity = Float2([1, 1]) // 1, 1 world unit a second
+        self.velocity = Float2([0, 0]) // 0, 0 world unit a second
     }
 }
 

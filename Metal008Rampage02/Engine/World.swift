@@ -4,11 +4,24 @@
 
 public struct World {
     public let map: Tilemap
-    public var player: Player
+    public var player: Player!
 
     public init(map: Tilemap) {
         self.map = map
-        self.player = Player(position: map.size / 2)
+
+        for y in 0 ..< map.height {
+            for x in 0 ..< map.width {
+                let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5) // in the center of the tile
+                let thing = map.things[y * map.width + x]
+                switch thing {
+                case .nothing:
+                    break
+                case .player:
+                    self.player = Player(position: position)
+                }
+            }
+        }
+        print(player)
     }
 }
 
