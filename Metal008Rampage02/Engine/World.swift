@@ -33,7 +33,7 @@ public extension World {
         player.position += player.velocity * timeStep
         player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)
         player.position.y.formTruncatingRemainder(dividingBy: size.y - 1)
-        if let intersection = player.intersection(with: map) {
+        while let intersection = player.intersection(with: map) {
             player.position -= intersection
         }
     }
