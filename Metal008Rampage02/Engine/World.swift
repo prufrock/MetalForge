@@ -28,7 +28,8 @@ public struct World {
 public extension World {
     var size: Float2 { map.size }
 
-    mutating func update(timeStep: Float) {
+    mutating func update(timeStep: Float, input: Input) {
+        player.velocity = input.velocity
         player.position += player.velocity * timeStep
         player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)
         player.position.y.formTruncatingRemainder(dividingBy: size.y - 1)

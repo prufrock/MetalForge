@@ -20,6 +20,17 @@ public class Renderer: NSObject {
     }
     private var world = World(map: loadMap())
     private var lastFrameTime = CACurrentMediaTime()
+    //TODO is there some way to do this in the view controller?
+    private let panGesture = UIPanGestureRecognizer()
+    private var inputVector: Float2 {
+        switch panGesture.state {
+        case .began, .changed:
+            let translation = panGesture.translation(in: view)
+            return Float2(x: Float(translation.x), y: Float(translation.y))
+        default:
+            return Float2(x: 0, y: 0)
+        }
+    }
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
@@ -32,6 +43,7 @@ public class Renderer: NSObject {
         }
 
         view.device = newDevice
+        view.addGestureRecognizer(panGesture)
 
         device = newDevice
 
@@ -137,6 +149,7 @@ public class Renderer: NSObject {
     }
 }
 
+//TODO can this be an extension of the view controller?
 extension Renderer: MTKViewDelegate {
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function)
@@ -151,7 +164,8 @@ extension Renderer: MTKViewDelegate {
     public func draw(in view: MTKView) {
         let time = CACurrentMediaTime()
         let timeStep = CACurrentMediaTime() - lastFrameTime
-        world.update(timeStep: Float(timeStep))
+        let input = Input(velocity: inputVector)
+        world.update(timeStep: Float(timeStep), input: input)
         lastFrameTime = time
 
 
