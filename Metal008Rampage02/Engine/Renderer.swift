@@ -19,6 +19,8 @@ public class Renderer: NSObject {
         }
     }
     private var world = World(map: loadMap())
+    private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
+    private let worldTimeStep: Float = 1 / 120 // number of steps to take each frame
     private var lastFrameTime = CACurrentMediaTime()
     //TODO is there some way to do this in the view controller?
     private let panGesture = UIPanGestureRecognizer()
@@ -174,10 +176,15 @@ extension Renderer: MTKViewDelegate {
     }
 
     public func draw(in view: MTKView) {
+        // increase accuracy of collisions by reducing time between updates
+        // also avoid spiralling when world updates take longer than frame step
         let time = CACurrentMediaTime()
-        let timeStep = CACurrentMediaTime() - lastFrameTime
+        let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
         let input = Input(velocity: inputVector)
-        world.update(timeStep: Float(timeStep), input: input)
+        let worldSteps = (timeStep / worldTimeStep).rounded(.up)
+        for _ in 0 ..< Int(worldSteps) {
+            world.update(timeStep: Float(timeStep /  worldSteps), input: input)
+        }
         lastFrameTime = time
 
 
