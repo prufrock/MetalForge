@@ -26,11 +26,23 @@ public class Renderer: NSObject {
         switch panGesture.state {
         case .began, .changed:
             let translation = panGesture.translation(in: view)
-            return Float2(x: Float(translation.x), y: Float(translation.y))
+            var vector = Float2(x: Float(translation.x), y: Float(translation.y))
+            vector /= max(joystickRadius, vector.length)
+
+            //update the position of where the gesture started
+            //to make movement a little smoother
+            panGesture.setTranslation(CGPoint(
+                x: Double(vector.x * joystickRadius),
+                y: Double(vector.y * joystickRadius)
+            ), in: view)
+
+            return vector
         default:
             return Float2(x: 0, y: 0)
         }
     }
+    // travel distance of 80 screen points ~0.5" so 40 radius
+    private let joystickRadius: Float = 40
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view

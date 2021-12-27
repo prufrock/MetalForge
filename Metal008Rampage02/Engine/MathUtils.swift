@@ -42,3 +42,9 @@ extension Float4x4 {
         )
     }
 }
+
+public extension Float2 {
+    var length : Float {
+        (x * x + y * y).squareRoot()
+    }
+}

@@ -6,6 +6,7 @@ public struct Player {
     public var position: Float2
     public var velocity: Float2
     public let radius: Float = 0.5 // 0.5 a world unit
+    public let speed: Float = 2
 
     public init(position: Float2) {
         self.position = position
