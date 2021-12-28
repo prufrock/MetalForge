@@ -11,13 +11,6 @@ public class Renderer: NSObject {
     let commandQueue: MTLCommandQueue
     let pipeline: MTLRenderPipelineState
     var aspect: Float = 1.0
-    // Need to have the originalBitmap so we don't have to keep turning off "pixels" as it's animated
-    public private(set) var bitmap: Bitmap
-    private var scale: Float {
-        get {
-            Float(bitmap.height) / world.size.y
-        }
-    }
     private var world = World(map: loadMap())
     private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
     private let worldTimeStep: Float = 1 / 120 // number of steps to take each frame
@@ -48,7 +41,6 @@ public class Renderer: NSObject {
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
-        bitmap = Bitmap(width: width, height: height, color: .black)
 
         guard let newDevice = MTLCreateSystemDefaultDevice() else {
             fatalError("""
@@ -92,25 +84,6 @@ public class Renderer: NSObject {
 
     private func render(_ world: World) {
 
-        bitmap = Bitmap(width: world.map.width, height: world.map.height, color: .black)
-        //Draw map
-        for y in 0 ..< world.map.height {
-            for x in 0 ..< world.map.width where world.map[x, y].isWall {
-                let rect = Rect(
-                    min: Float2(x: Float(x), y: Float(y)) * scale,
-                    max: Float2(x: Float(x + 1), y: Float(y + 1)) * scale
-                )
-                bitmap.fill(rect: rect, color: .white)
-            }
-        }
-
-
-        //Draw player
-        var rect = world.player.rect
-        rect.min *= scale
-        rect.max *= scale
-        let playerRect = rect.renderable()
-
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
             fatalError("""
                        Ugh, no command buffer. What the heck!
@@ -130,8 +103,10 @@ public class Renderer: NSObject {
             * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0)
             * Float4x4(scaleY: aspect)
 
-        var renderables: [([Float4], Float4x4, Color)] = TileImage(bitmap: bitmap).tiles
-        renderables.append(playerRect)
+        //Draw map
+        var renderables: [([Float4], Float4x4, Color)] = TileImage(map: world.map).tiles
+        //Draw player
+        renderables.append(world.player.rect.renderable())
 
         renderables.forEach { (vertices, objTransform, color) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float4>.stride * vertices.count, options: [])
