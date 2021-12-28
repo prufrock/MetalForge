@@ -127,7 +127,7 @@ public class Renderer: NSObject {
 
         let transform = Float4x4.identity()
             * Float4x4(translateX: -0.32, y: 0.65, z: 0)
-            * Float4x4(scaleX: 0.05, y: 0.05, z: 1.0)
+            * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0)
             * Float4x4(scaleY: aspect)
 
         var renderables: [([Float4], Float4x4, Color)] = TileImage(bitmap: bitmap).tiles
