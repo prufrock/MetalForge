@@ -98,7 +98,10 @@ public class Renderer: NSObject {
 
         }
 
-        let transform = Float4x4.identity()
+        let worldTransform = Float4x4.identity()
+            * Float4x4(scaleY: -1)
+
+        let cameraTransform = Float4x4.identity()
             * Float4x4(translateX: -0.32, y: 0.65, z: 0)
             * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0)
             * Float4x4(scaleY: aspect)
@@ -113,7 +116,7 @@ public class Renderer: NSObject {
 
             var pixelSize = 1
 
-            var finalTransform = transform * objTransform
+            var finalTransform = cameraTransform * worldTransform * objTransform
 
             encoder.setRenderPipelineState(pipeline)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)

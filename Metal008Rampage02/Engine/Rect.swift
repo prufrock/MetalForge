@@ -6,7 +6,7 @@ import simd
 
 public struct Rect {
     var min, max: Float2
-    private let adj: Float = -0.5
+    private let adj: Float = 0.0
 
     public init(min: Float2, max: Float2) {
         self.min = min
@@ -25,9 +25,7 @@ public struct Rect {
         vertices.append(Float4(max.x, min.y, 0.0, 1.0))
 
         //TODO re-work rendering to not need this -0.5 adjustment
-        vertices = vertices.map{ Float4x4.init(translateX: adj, y: adj, z: 0.0) * $0 }
-
-        return (vertices, Float4x4.init(scaleX: 1, y: -1, z: 1), .blue)
+        return (vertices, Float4x4.init(translateX: adj, y: adj, z: 0.0), .blue)
     }
 }
 

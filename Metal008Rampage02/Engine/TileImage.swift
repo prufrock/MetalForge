@@ -7,24 +7,28 @@ import simd
 
 struct TileImage {
     var tiles: [([Float4], Float4x4, Color)]
-    private let tile = [
-        Float4(-0.5, 0.5, 0.0, 1.0),
-        Float4(0.5, 0.5, 0.0, 1.0),
-        Float4(0.5, -0.5, 0.0, 1.0),
-
-        Float4(0.5, -0.5, 0.0, 1.0),
-        Float4(-0.5, -0.5, 0.0, 1.0),
-        Float4(-0.5, 0.5, 0.0, 1.0),
-    ]
+    private let size = Float(1.0)
+    private let start = Float(0.0)
+    private let tile: [Float4]
 
     init(map: Tilemap, wallColor: Color = .white) {
+        tile = [
+            Float4(start + size * 0, start + size * 1, 0.0, 1.0),
+            Float4(start + size * 1, start + size * 1, 0.0, 1.0),
+            Float4(start + size * 1, start + size * 0, 0.0, 1.0),
+
+            Float4(start + size * 1, start + size * 0, 0.0, 1.0),
+            Float4(start + size * 0, start + size * 0, 0.0, 1.0),
+            Float4(start + size * 0, start + size * 1, 0.0, 1.0),
+        ]
+
         tiles = [(tile, matrix_identity_float4x4, .white)]
 
         var myTiles: [([Float4], Float4x4, Color)] = []
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
                 if map[x, y].isWall {
-                    myTiles.append((tile, Float4x4.init(translateX: Float(x), y: Float(-y), z: 0), wallColor))
+                    myTiles.append((tile, Float4x4.init(translateX: Float(x), y: Float(y), z: 0), wallColor))
                 }
             }
         }
