@@ -13,6 +13,8 @@
 		5AF0E791216D6C57FD064E1B /* Thing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0E390EBC8D1155A2430 /* Thing.swift */; };
 		5AF0EC620BC5761A9171F014 /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 5AF0EBB65B9D0855BCF59DEB /* Map.json */; };
 		5AF0ED59E31E1D376ADA8752 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EA17CC298C9CEC8296FC /* Tile.swift */; };
+		5AF0EF67E007F7B4A0384D75 /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 5AF0E3A1A8563D04FF9A5A58 /* Map16.json */; };
+		5AF0EFEBE21AB8FD343A7BBE /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 5AF0E3A1A8563D04FF9A5A58 /* Map16.json */; };
 		63C6EC28277902980027057A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC27277902980027057A /* AppDelegate.swift */; };
 		63C6EC2A277902980027057A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC29277902980027057A /* SceneDelegate.swift */; };
 		63C6EC2C277902980027057A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C6EC2B277902980027057A /* ViewController.swift */; };
@@ -95,6 +97,7 @@
 
 /* Begin PBXFileReference section */
 		5AF0E0E390EBC8D1155A2430 /* Thing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thing.swift; sourceTree = "<group>"; };
+		5AF0E3A1A8563D04FF9A5A58 /* Map16.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Map16.json; sourceTree = "<group>"; };
 		5AF0E4E959D3DFD555A34232 /* Input.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		5AF0E71D28EF7CA85DD4B712 /* Tilemap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tilemap.swift; sourceTree = "<group>"; };
 		5AF0EA17CC298C9CEC8296FC /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
@@ -205,6 +208,7 @@
 				63C6EC32277902990027057A /* LaunchScreen.storyboard */,
 				63C6EC35277902990027057A /* Info.plist */,
 				5AF0EBB65B9D0855BCF59DEB /* Map.json */,
+				5AF0E3A1A8563D04FF9A5A58 /* Map16.json */,
 			);
 			path = Metal008Rampage02;
 			sourceTree = "<group>";
@@ -424,6 +428,7 @@
 				63C6EC31277902990027057A /* Assets.xcassets in Resources */,
 				63C6EC2F277902980027057A /* Main.storyboard in Resources */,
 				5AF0E23F304BA037E9C02EEC /* Map.json in Resources */,
+				5AF0EF67E007F7B4A0384D75 /* Map16.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AF0EC620BC5761A9171F014 /* Map.json in Resources */,
+				5AF0EFEBE21AB8FD343A7BBE /* Map16.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

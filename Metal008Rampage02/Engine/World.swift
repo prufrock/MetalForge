@@ -21,7 +21,6 @@ public struct World {
                 }
             }
         }
-        print(player)
     }
 }
 
