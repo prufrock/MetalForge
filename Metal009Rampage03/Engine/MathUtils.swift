@@ -47,4 +47,14 @@ public extension Float2 {
     var length : Float {
         (x * x + y * y).squareRoot()
     }
+
+    internal func toFloat3() -> Float3 {
+        Float3(self)
+    }
+}
+
+extension Float3 {
+    init(_ value: Float2) {
+        self.init(value.x, value.y, 0.0)
+    }
 }

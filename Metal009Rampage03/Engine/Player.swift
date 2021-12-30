@@ -7,10 +7,12 @@ public struct Player {
     public var velocity: Float2
     public let radius: Float = 0.25
     public let speed: Float = 2
+    public var direction: Float2
 
     public init(position: Float2) {
         self.position = position
-        self.velocity = Float2([0, 0])
+        self.velocity = Float2(0, 0)
+        self.direction = Float2(1, 0)
     }
 }
 

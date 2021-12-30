@@ -28,6 +28,11 @@ public extension World {
     var size: Float2 { map.size }
 
     mutating func update(timeStep: Float, input: Input) {
+        let length = input.velocity.length
+        if length > 0 {
+            player.direction = input.velocity / length
+        }
+
         player.velocity = input.velocity * player.speed
         player.position += player.velocity * timeStep
         player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)

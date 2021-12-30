@@ -81,6 +81,13 @@ public class Renderer: NSObject {
         var renderables: [([Float3], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
         //Draw player
         renderables.append(world.player.rect.renderable())
+        //Draw line of sight line
+        renderables.append(
+            ([
+                world.player.position.toFloat3(),
+                (world.player.position + world.player.direction * 100).toFloat3()
+        ], Float4x4.identity(), .green, .line)
+        )
 
         renderables.forEach { (vertices, objTransform, color, primitiveType) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
