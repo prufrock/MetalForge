@@ -13,16 +13,16 @@ public struct Rect {
         self.max = max
     }
 
-    func renderable() -> ([Float4], Float4x4, Color) {
-        var vertices:[Float4] = []
+    func renderable() -> ([Float3], Float4x4, Color) {
+        var vertices:[Float3] = []
 
-        vertices.append(Float4(min.x, max.y, 0.0, 1.0))
-        vertices.append(Float4(max.x, max.y, 0.0, 1.0))
-        vertices.append(Float4(max.x, min.y, 0.0, 1.0))
+        vertices.append(Float3(min.x, max.y, 0.0))
+        vertices.append(Float3(max.x, max.y, 0.0))
+        vertices.append(Float3(max.x, min.y, 0.0))
 
-        vertices.append(Float4(min.x, max.y, 0.0, 1.0))
-        vertices.append(Float4(min.x, min.y, 0.0, 1.0))
-        vertices.append(Float4(max.x, min.y, 0.0, 1.0))
+        vertices.append(Float3(min.x, max.y, 0.0))
+        vertices.append(Float3(min.x, min.y, 0.0))
+        vertices.append(Float3(max.x, min.y, 0.0))
 
         //TODO re-work rendering to not need this -0.5 adjustment
         return (vertices, Float4x4.init(translateX: adj, y: adj, z: 0.0), .blue)

@@ -38,9 +38,9 @@ public enum Color: Int {
     }
 }
 
-extension Float4 {
+extension Float3 {
     init(_ color: Color) {
-        self.init(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
+        self.init(color.rFloat(), color.gFloat(), color.bFloat())
     }
 }
 
