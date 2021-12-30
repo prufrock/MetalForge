@@ -88,7 +88,20 @@ public class Renderer: NSObject {
             ([
                 world.player.position.toFloat3(),
                 end.toFloat3()
-        ], Float4x4.identity(), .green, .line)
+            ], Float4x4.identity(), .green, .line)
+        )
+        //Draw view plan
+        let focalLength: Float = 1.0
+        let viewWidth: Float = 1.0
+        let viewPlane = world.player.direction.orthogonal * viewWidth
+        let viewCenter = world.player.position + world.player.direction * focalLength
+        let viewStart = viewCenter - viewPlane / 2
+        let viewEnd = viewStart + viewPlane
+        renderables.append(
+            ([
+                viewStart.toFloat3(),
+                viewEnd.toFloat3()
+            ], Float4x4.identity(), .red, .line)
         )
 
         renderables.forEach { (vertices, objTransform, color, primitiveType) in

@@ -48,6 +48,10 @@ public extension Float2 {
         (x * x + y * y).squareRoot()
     }
 
+    var orthogonal: Float2 {
+        return Float2(x: -y, y: x)
+    }
+
     internal func toFloat3() -> Float3 {
         Float3(self)
     }
