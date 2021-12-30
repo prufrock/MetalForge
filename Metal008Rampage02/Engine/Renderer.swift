@@ -10,34 +10,7 @@ public class Renderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     let pipeline: MTLRenderPipelineState
-    var aspect: Float = 1.0
-    private var world = World(map: loadMap())
-    private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
-    private let worldTimeStep: Float = 1 / 120 // number of steps to take each frame
-    private var lastFrameTime = CACurrentMediaTime()
-    //TODO is there some way to do this in the view controller?
-    private let panGesture = UIPanGestureRecognizer()
-    private var inputVector: Float2 {
-        switch panGesture.state {
-        case .began, .changed:
-            let translation = panGesture.translation(in: view)
-            var vector = Float2(x: Float(translation.x), y: Float(translation.y))
-            vector /= max(joystickRadius, vector.length)
-
-            //update the position of where the gesture started
-            //to make movement a little smoother
-            panGesture.setTranslation(CGPoint(
-                x: Double(vector.x * joystickRadius),
-                y: Double(vector.y * joystickRadius)
-            ), in: view)
-
-            return vector
-        default:
-            return Float2(x: 0, y: 0)
-        }
-    }
-    // travel distance of 80 screen points ~0.5" so 40 radius
-    private let joystickRadius: Float = 40
+    public var aspect: Float = 1.0
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
@@ -49,7 +22,7 @@ public class Renderer: NSObject {
         }
 
         view.device = newDevice
-        view.addGestureRecognizer(panGesture)
+        view.clearColor = MTLClearColor(.black)
 
         device = newDevice
 
@@ -77,12 +50,9 @@ public class Renderer: NSObject {
         pipeline = defaultPipelineState
 
         super.init()
-
-        view.delegate = self
-        view.clearColor = MTLClearColor(.black)
     }
 
-    private func render(_ world: World) {
+    public func render(_ world: World) {
 
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
             fatalError("""
@@ -141,38 +111,4 @@ public class Renderer: NSObject {
         commandBuffer.present(drawable)
         commandBuffer.commit()
     }
-}
-
-//TODO can this be an extension of the view controller?
-extension Renderer: MTKViewDelegate {
-    public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-        print(#function)
-        print("height: \(size.height) width: \(size.width)")
-        print("height: \(view.frame.height) width: \(view.frame.width)")
-
-        aspect = Float(size.width / size.height)
-    }
-
-    public func draw(in view: MTKView) {
-        // increase accuracy of collisions by reducing time between updates
-        // also avoid spiralling when world updates take longer than frame step
-        let time = CACurrentMediaTime()
-        let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
-        let input = Input(velocity: inputVector)
-        let worldSteps = (timeStep / worldTimeStep).rounded(.up)
-        for _ in 0 ..< Int(worldSteps) {
-            world.update(timeStep: Float(timeStep /  worldSteps), input: input)
-        }
-        lastFrameTime = time
-
-
-        render(world)
-    }
-}
-
-
-private func loadMap() -> Tilemap {
-    let jsonUrl = Bundle.main.url(forResource: "Map", withExtension: "json")!
-    let jsonData = try! Data(contentsOf: jsonUrl)
-    return try! JSONDecoder().decode(Tilemap.self, from: jsonData)
 }
