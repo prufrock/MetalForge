@@ -77,11 +77,12 @@ public class Renderer: NSObject {
             * Float4x4(scaleY: aspect)
 
         //Draw map
-        var renderables: [([Float3], Float4x4, Color)] = TileImage(map: world.map).tiles
+        //TODO make this a type
+        var renderables: [([Float3], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
         //Draw player
         renderables.append(world.player.rect.renderable())
 
-        renderables.forEach { (vertices, objTransform, color) in
+        renderables.forEach { (vertices, objTransform, color, primitiveType) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
 
             var pixelSize = 1
@@ -97,7 +98,7 @@ public class Renderer: NSObject {
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
 
         encoder.endEncoding()

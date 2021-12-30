@@ -3,17 +3,17 @@
 //
 
 import simd
+import MetalKit
 
 public struct Rect {
     var min, max: Float2
-    private let adj: Float = 0.0
 
     public init(min: Float2, max: Float2) {
         self.min = min
         self.max = max
     }
 
-    func renderable() -> ([Float3], Float4x4, Color) {
+    func renderable() -> ([Float3], Float4x4, Color, MTLPrimitiveType) {
         var vertices:[Float3] = []
 
         vertices.append(Float3(min.x, max.y, 0.0))
@@ -24,8 +24,7 @@ public struct Rect {
         vertices.append(Float3(min.x, min.y, 0.0))
         vertices.append(Float3(max.x, min.y, 0.0))
 
-        //TODO re-work rendering to not need this -0.5 adjustment
-        return (vertices, Float4x4.init(translateX: adj, y: adj, z: 0.0), .blue)
+        return (vertices, Float4x4.identity(), .blue, .triangle)
     }
 }
 
