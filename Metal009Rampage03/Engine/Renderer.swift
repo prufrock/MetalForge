@@ -82,10 +82,12 @@ public class Renderer: NSObject {
         //Draw player
         renderables.append(world.player.rect.renderable())
         //Draw line of sight line
+        let ray = Ray(origin: world.player.position, direction: world.player.direction)
+        let end = world.map.hitTest(ray)
         renderables.append(
             ([
                 world.player.position.toFloat3(),
-                (world.player.position + world.player.direction * 100).toFloat3()
+                end.toFloat3()
         ], Float4x4.identity(), .green, .line)
         )
 
