@@ -103,6 +103,23 @@ public class Renderer: NSObject {
                 viewEnd.toFloat3()
             ], Float4x4.identity(), .red, .line)
         )
+        // Cast rays
+        let columns = 10
+        let step = viewPlane / Float(columns)
+        var columnPosition = viewStart
+        for _ in 0 ..< columns {
+            let rayDirection = columnPosition - world.player.position
+            let viewPlaneDistance = rayDirection.length
+            let ray = Ray(origin: world.player.position, direction: rayDirection / viewPlaneDistance)
+            let end = world.map.hitTest(ray)
+            renderables.append(
+                ([
+                    ray.origin.toFloat3(),
+                    end.toFloat3()
+                ], Float4x4.identity(), .green, .line)
+            )
+            columnPosition += step
+        }
 
         renderables.forEach { (vertices, objTransform, color, primitiveType) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
