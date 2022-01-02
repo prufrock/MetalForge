@@ -177,6 +177,8 @@ public class Renderer: NSObject {
             encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
 
+        cameraRendering(world: world, encoder: encoder)
+
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -187,5 +189,31 @@ public class Renderer: NSObject {
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
+    }
+
+    func cameraRendering(world: World, encoder: MTLRenderCommandEncoder) {
+        var renderables: [([Float3], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
+
+        let cameraTransform = Float4x4.identity()
+        let worldTransform = Float4x4.identity()
+
+        renderables.forEach { (vertices, objTransform, color, primitiveType) in
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+
+            var pixelSize = 1
+
+            var finalTransform = cameraTransform * worldTransform * objTransform
+
+            encoder.setRenderPipelineState(pipeline)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+
+            var fragmentColor = Float3(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
+        }
     }
 }
