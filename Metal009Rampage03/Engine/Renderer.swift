@@ -72,8 +72,8 @@ public class Renderer: NSObject {
             * Float4x4(scaleY: -1)
 
         let cameraTransform = Float4x4.identity()
-            * Float4x4(translateX: -0.32, y: 0.65, z: 0)
-            * Float4x4(scaleX: 0.09, y: 0.09, z: 1.0)
+            * Float4x4(translateX: -0.7, y: 0.9, z: 0)
+            * Float4x4(scaleX: 0.03, y: 0.03, z: 1.0)
             * Float4x4(scaleY: aspect)
 
         //Draw map
@@ -144,14 +144,17 @@ public class Renderer: NSObject {
                 wallColor = .grey
             }
 
-            renderables.append(
-                ([
-                    Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
-                    Float3(x: Float(x), y: Float(bitmapHeight) + height, z: 0.0),
-                ], Float4x4.identity()
-                 * Float4x4.init(translateX: -7.0, y: 2.0, z: 0.0)
-                 * Float4x4.init(scaleX: 0.1, y: 1.0, z: 1.0), wallColor, .line)
-            )
+            let drawWalls = false
+            if (drawWalls) {
+                renderables.append(
+                    ([
+                        Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
+                        Float3(x: Float(x), y: Float(bitmapHeight) + height, z: 0.0),
+                    ], Float4x4.identity()
+                        * Float4x4.init(translateX: -7.0, y: 2.0, z: 0.0)
+                        * Float4x4.init(scaleX: 0.1, y: 1.0, z: 1.0), wallColor, .line)
+                )
+            }
             columnPosition += step
         }
 
