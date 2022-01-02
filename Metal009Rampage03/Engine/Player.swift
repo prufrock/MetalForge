@@ -8,7 +8,7 @@ public struct Player {
     public let radius: Float = 0.25
     public let speed: Float = 2
     public var direction: Float2
-    public let turningSpeed: Float = .pi
+    public let turningSpeed: Float = .pi/2
 
     public init(position: Float2) {
         self.position = position
