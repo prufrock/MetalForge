@@ -75,7 +75,12 @@ extension ViewController: MTKViewDelegate {
         // also avoid spiralling when world updates take longer than frame step
         let time = CACurrentMediaTime()
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
-        let input = Input(velocity: inputVector)
+        let inputVector = self.inputVector
+        let rotation = inputVector.x * world.player.turningSpeed * worldTimeStep
+        let input = Input(
+            speed: -inputVector.y,
+            rotation: Float2x2(rotate: rotation)
+        )
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
             world.update(timeStep: Float(timeStep /  worldSteps), input: input)

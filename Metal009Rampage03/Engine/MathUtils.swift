@@ -8,10 +8,11 @@ public typealias Float2 = SIMD2<Float>
 typealias Float3 = SIMD3<Float>
 typealias Float4 = SIMD4<Float>
 
-typealias Float4x4 = simd_float4x4
+public typealias Float2x2 = simd_float2x2
+public typealias Float4x4 = simd_float4x4
 
-extension Float4x4 {
-    static func identity() -> Float4x4 {
+public extension Float4x4 {
+    internal static func identity() -> Float4x4 {
         matrix_identity_float4x4
     }
 
@@ -33,12 +34,30 @@ extension Float4x4 {
         )
     }
 
+    init(rotateZ angle: Float) {
+        self.init(
+            [ cos(angle), sin(angle), 0, 0],
+            [-sin(angle), cos(angle), 0, 0],
+            [          0,          0, 1, 0],
+            [          0,          0, 0, 1]
+        )
+    }
+
     init(translateX x: Float, y: Float, z: Float) {
         self.init(
             [1, 0, 0, 0],
             [0, 1, 0, 0],
             [0, 0, 1, 0],
             [x, y, z, 1]
+        )
+    }
+}
+
+public extension Float2x2 {
+    init(rotate angle: Float) {
+        self.init(
+            [ cos(angle), sin(angle)],
+            [-sin(angle), cos(angle)]
         )
     }
 }
@@ -54,6 +73,10 @@ public extension Float2 {
 
     internal func toFloat3() -> Float3 {
         Float3(self)
+    }
+
+    func rotated(by rotation: Float2x2) -> Float2 {
+        rotation * self
     }
 }
 

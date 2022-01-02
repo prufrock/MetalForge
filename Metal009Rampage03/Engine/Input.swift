@@ -5,9 +5,11 @@
 import Foundation
 
 public struct Input {
-    public var velocity: Float2
+    public var speed: Float
+    public var rotation: Float2x2
 
-    public init(velocity: Float2) {
-        self.velocity = velocity
+    public init(speed: Float, rotation: Float2x2) {
+        self.speed = speed
+        self.rotation = rotation
     }
 }
