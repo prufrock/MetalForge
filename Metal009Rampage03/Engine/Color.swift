@@ -10,6 +10,7 @@ public enum Color: Int {
     case green = 0x00FF00
     case blue = 0x0000FF
     case white = 0xFFFFFF
+    case grey = 0x808080
 
     // shift to the right x places
     // then only take FF(the two right most hex digits or 8 most bits)

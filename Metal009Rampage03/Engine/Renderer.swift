@@ -90,7 +90,7 @@ public class Renderer: NSObject {
                 end.toFloat3()
             ], Float4x4.identity(), .green, .line)
         )
-        //Draw view plan
+        //Draw view plane
         let focalLength: Float = 1.0
         let viewWidth: Float = 1.0
         let viewPlane = world.player.direction.orthogonal * viewWidth
@@ -101,10 +101,10 @@ public class Renderer: NSObject {
             ([
                 viewStart.toFloat3(),
                 viewEnd.toFloat3()
-            ], Float4x4.identity(), .red, .line)
+            ], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .red, .line)
         )
         // Cast rays
-        let columns = 10
+        let columns = 300
         let step = viewPlane / Float(columns)
         var columnPosition = viewStart
         for _ in 0 ..< columns {
@@ -116,7 +116,41 @@ public class Renderer: NSObject {
                 ([
                     ray.origin.toFloat3(),
                     end.toFloat3()
-                ], Float4x4.identity(), .green, .line)
+                ], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .green, .line)
+            )
+            columnPosition += step
+        }
+        // Draw wall
+//        step = viewPlane / Float(columns)
+        columnPosition = viewStart
+        let bitmapHeight = 1
+        for x in 0 ..< columns {
+            let rayDirection = columnPosition - world.player.position
+            let viewPlaneDistance = rayDirection.length
+            let ray = Ray(
+                origin: world.player.position,
+                direction: rayDirection / viewPlaneDistance
+            )
+            let end = world.map.hitTest(ray)
+            let wallDistance = (end - ray.origin).length
+
+            // Draw wall
+            let wallHeight:Float = 5.0
+            let height = wallHeight * focalLength / wallDistance * Float(1.0)
+            let wallColor: Color
+            if end.x.rounded(.down) == end.x {
+                wallColor = .white
+            } else {
+                wallColor = .grey
+            }
+
+            renderables.append(
+                ([
+                    Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
+                    Float3(x: Float(x), y: Float(bitmapHeight) + height, z: 0.0),
+                ], Float4x4.identity()
+                 * Float4x4.init(translateX: -7.0, y: 2.0, z: 0.0)
+                 * Float4x4.init(scaleX: 0.1, y: 1.0, z: 1.0), wallColor, .line)
             )
             columnPosition += step
         }
