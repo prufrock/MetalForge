@@ -16,6 +16,15 @@ public extension Float4x4 {
         matrix_identity_float4x4
     }
 
+    static func perspectiveProjection(nearPlane: Float, farPlane: Float) -> Float4x4 {
+        float4x4(
+            [Float(tan(Double.pi / 5)), 0, 0, 0],
+            [0, Float(tan(Double.pi / 5)), 0, 0],
+            [0, 0, 1, 1],
+            [0, 0, 0, 1]
+        )
+    }
+
     init(scaleX x: Float, y: Float, z: Float) {
         self.init(
             [x, 0, 0, 0],

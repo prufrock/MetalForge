@@ -192,9 +192,51 @@ public class Renderer: NSObject {
     }
 
     func cameraRendering(world: World, encoder: MTLRenderCommandEncoder) {
-        var renderables: [([Float3], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
+        var renderables: [([Float3], Float4x4, Color, MTLPrimitiveType)] = []
+
+        renderables += LineCube(Float4x4(scaleX: 0.1, y: 0.1, z: 0.1))
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 1.0, y: 0.0, z: 0.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: -1.0, y: 0.0, z: 0.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: 1.0, z: 0.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
+
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: -1.0, z: 0.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
+
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: 0.0, z: 1.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
+
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: 0.0, z: -1.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
+
+
+//        renderables += (TileImage(map: world.map).tiles)
+
 
         let cameraTransform = Float4x4.identity()
+            * Float4x4.perspectiveProjection(nearPlane: 1.0, farPlane: 1.0)
+            * Float4x4(scaleY: aspect)
+            * Float4x4(translateX: 0.0, y: -0.5, z: 3.0)
         let worldTransform = Float4x4.identity()
 
         renderables.forEach { (vertices, objTransform, color, primitiveType) in
@@ -216,4 +258,86 @@ public class Renderer: NSObject {
             encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
     }
+}
+
+// Sitting with its bottom center on the origin
+func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], Float4x4, Color, MTLPrimitiveType)] {
+    return [
+        (
+            // xy z-0.5
+            [
+                Float3(-0.5, 0.0, -0.5),
+                Float3(-0.5, 1.0, -0.5),
+
+                Float3(-0.5, 1.0, -0.5),
+                Float3(0.5, 1.0, -0.5),
+
+                Float3(0.5, 1.0, -0.5),
+                Float3(0.5, 0.0, -0.5),
+
+                Float3(0.5, 0.0, -0.5),
+                Float3(-0.5, 0.0, -0.5),
+            ],
+            transformation,
+            .green,
+            .line
+        ),
+        (
+            // xy z1
+            [
+                Float3(-0.5, 0.0, 0.5),
+                Float3(-0.5, 1.0, 0.5),
+
+                Float3(-0.5, 1.0, 0.5),
+                Float3(0.5, 1.0, 0.5),
+
+                Float3(0.5, 1.0, 0.5),
+                Float3(0.5, 0.0, 0.5),
+
+                Float3(0.5, 0.0, 0.5),
+                Float3(-0.5, 0.0, 0.5),
+            ],
+            transformation,
+            .red,
+            .line
+        ),
+        (
+             //xz y0
+            [
+                Float3(-0.5, 0.0, -0.5),
+                Float3(-0.5, 0.0, 0.5),
+
+                Float3(-0.5, 0.0, 0.5),
+                Float3(0.5, 0.0, 0.5),
+
+                Float3(0.5, 0.0, 0.5),
+                Float3(0.5, 0.0, -0.5),
+
+                Float3(0.5, 0.0, -0.5),
+                Float3(-0.5, 0.0, -0.5),
+            ],
+            transformation,
+            .blue,
+            .line
+        ),
+        (
+            //xz y1
+            [
+                Float3(-0.5, 1.0, -0.5),
+                Float3(-0.5, 1.0, 0.5),
+
+                Float3(-0.5, 1.0, 0.5),
+                Float3(0.5, 1.0, 0.5),
+
+                Float3(0.5, 1.0, 0.5),
+                Float3(0.5, 1.0, -0.5),
+
+                Float3(0.5, 1.0, -0.5),
+                Float3(-0.5, 1.0, -0.5),
+            ],
+            transformation,
+            .white,
+            .line
+        )
+    ]
 }
