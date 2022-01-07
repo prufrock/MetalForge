@@ -230,13 +230,23 @@ public class Renderer: NSObject {
         )
 
 
-//        renderables += (TileImage(map: world.map).tiles)
+        renderables += (TileImage(map: world.map).tiles)
 
-
+print(world.player.position)
         let cameraTransform = Float4x4.identity()
             * Float4x4.perspectiveProjection(nearPlane: 1.0, farPlane: 1.0)
             * Float4x4(scaleY: aspect)
-            * Float4x4(translateX: 0.0, y: -0.5, z: 3.0)
+            * (
+            Float4x4.identity()
+//            * Float4x4(translateX: 0.0, y: 0.5, z: 3.0)
+            //* Float4x4(translateX: 8.5, y: 6.5, z: -0.75)
+            * Float4x4(translateX: 0.0, y: 0.0, z: -0.75)
+            * world.player.position.toTranslation()
+            * Float4x4(rotateX: -.pi/2)
+            * Float4x4(rotateY: .pi/2)
+//            * world.player.position.toTranslation()
+        ).inverse
+
         let worldTransform = Float4x4.identity()
 
         renderables.forEach { (vertices, objTransform, color, primitiveType) in

@@ -52,6 +52,24 @@ public extension Float4x4 {
         )
     }
 
+    init(rotateY angle: Float) {
+        self.init(
+            [cos(angle), 0, -sin(angle), 0],
+            [         0, 1,           0, 0],
+            [sin(angle), 0,  cos(angle), 0],
+            [         0, 0,           0, 1]
+        )
+    }
+
+    init(rotateX angle: Float) {
+        self.init(
+            [1,           0,          0, 0],
+            [0,  cos(angle), sin(angle), 0],
+            [0, -sin(angle), cos(angle), 0],
+            [0,           0,          0, 1]
+        )
+    }
+
     init(translateX x: Float, y: Float, z: Float) {
         self.init(
             [1, 0, 0, 0],
@@ -86,6 +104,10 @@ public extension Float2 {
 
     func rotated(by rotation: Float2x2) -> Float2 {
         rotation * self
+    }
+
+    func toTranslation() -> Float4x4 {
+        Float4x4(translateX: self.x, y: self.y, z: 0.0)
     }
 }
 
