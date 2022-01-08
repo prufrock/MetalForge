@@ -2,6 +2,8 @@
 // Created by David Kanenwisher on 12/20/21.
 //
 
+import simd
+
 public struct World {
     public let map: Tilemap
     public var player: Player!
@@ -29,6 +31,7 @@ public extension World {
 
     mutating func update(timeStep: Float, input: Input) {
         player.direction = player.direction.rotated(by: input.rotation)
+        player.direction3d = player.direction3d * input.rotation3d
         player.velocity = player.direction * Float(input.speed) * player.speed
 
         player.position += player.velocity * timeStep

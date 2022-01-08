@@ -238,13 +238,10 @@ print(world.player.position)
             * Float4x4(scaleY: aspect)
             * (
             Float4x4.identity()
-//            * Float4x4(translateX: 0.0, y: 0.5, z: 3.0)
-            //* Float4x4(translateX: 8.5, y: 6.5, z: -0.75)
-            * Float4x4(translateX: 0.0, y: 0.0, z: -0.75)
+            * Float4x4(translateX: 0.0, y: 0.0, z: 0.63)
             * world.player.position.toTranslation()
-            * Float4x4(rotateX: -.pi/2)
-            * Float4x4(rotateY: .pi/2)
-//            * world.player.position.toTranslation()
+            * Float4x4(rotateX: -(3 * .pi)/2)
+            * (world.player.direction3d * Float4x4(scaleX: 1.0, y: 1.0, z: 1.0))
         ).inverse
 
         let worldTransform = Float4x4.identity()
