@@ -16,10 +16,11 @@ public extension Float4x4 {
         matrix_identity_float4x4
     }
 
-    static func perspectiveProjection(nearPlane: Float, farPlane: Float) -> Float4x4 {
-        float4x4(
-            [Float(tan(Double.pi / 5)), 0, 0, 0],
-            [0, Float(tan(Double.pi / 5)), 0, 0],
+    static func perspectiveProjection(fov: Float, nearPlane: Float, farPlane: Float) -> Float4x4 {
+        let zoom = 1 / tan(fov / 2) // objects get smaller as fov increases
+        return float4x4(
+            [zoom, 0, 0, 0],
+            [0, zoom, 0, 0],
             [0, 0, 1, 1],
             [0, 0, 0, 1]
         )
