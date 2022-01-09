@@ -41,6 +41,7 @@ public class Renderer: NSObject {
         }
 
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
+        pipelineDescriptor.tessellationOutputWindingOrder = .clockwise
         pipelineDescriptor.vertexFunction = library.makeFunction(name: "vertex_main")
         pipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragment_main")
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
@@ -166,6 +167,7 @@ public class Renderer: NSObject {
             var finalTransform = cameraTransform * worldTransform * objTransform
 
             encoder.setRenderPipelineState(pipeline)
+            encoder.setCullMode(.back)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
