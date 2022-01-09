@@ -233,8 +233,7 @@ public class Renderer: NSObject {
         renderables += (TileImage(map: world.map).tiles)
 
         let cameraTransform = Float4x4.identity()
-            * Float4x4.perspectiveProjection(fov: .pi / 3, nearPlane: 0.1, farPlane: 1.0)
-            * Float4x4(scaleY: aspect)
+            * Float4x4.perspectiveProjection(fov: .pi / 3, aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
             * (
             Float4x4.identity()
             * Float4x4(translateX: 0.0, y: 0.0, z: 0.1)
