@@ -20,9 +20,9 @@ public extension Float4x4 {
         let zoom = 1 / tan(fov / 2) // objects get smaller as fov increases
         return float4x4(
             [zoom, 0, 0, 0],
-            [0, zoom, 0, 0],
-            [0, 0, 1, 1],
-            [0, 0, 0, 1]
+            [0, zoom, 1, 0],
+            [0, 0, farPlane / (farPlane - nearPlane), 1],
+            [0, 0, (-1 * nearPlane * farPlane ) / (farPlane - nearPlane), 0]
         )
     }
 
