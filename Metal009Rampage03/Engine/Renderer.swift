@@ -10,6 +10,7 @@ public class Renderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     let pipeline: MTLRenderPipelineState
+    let depthStencilState: MTLDepthStencilState
     public var aspect: Float = 1.0
 
     public init(_ view: MTKView, width: Int, height: Int) {
@@ -23,6 +24,7 @@ public class Renderer: NSObject {
 
         view.device = newDevice
         view.clearColor = MTLClearColor(.black)
+        view.depthStencilPixelFormat = .depth32Float
 
         device = newDevice
 
@@ -40,11 +42,24 @@ public class Renderer: NSObject {
                        """)
         }
 
+        let descriptor = MTLDepthStencilDescriptor()
+        descriptor.depthCompareFunction = .less
+        descriptor.isDepthWriteEnabled = true
+
+        guard let depthStencilState = device.makeDepthStencilState(descriptor: descriptor) else {
+            fatalError("""
+                       Agh?! The depth stencil state didn't work.
+                       """)
+        }
+
+        self.depthStencilState = depthStencilState
+
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.tessellationOutputWindingOrder = .clockwise
         pipelineDescriptor.vertexFunction = library.makeFunction(name: "vertex_main")
         pipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragment_main")
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
 
         let defaultPipelineState = try! device.makeRenderPipelineState(descriptor: pipelineDescriptor)
 
@@ -254,6 +269,7 @@ public class Renderer: NSObject {
             var finalTransform = cameraTransform * worldTransform * objTransform
 
             encoder.setRenderPipelineState(pipeline)
+            encoder.setDepthStencilState(depthStencilState)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
