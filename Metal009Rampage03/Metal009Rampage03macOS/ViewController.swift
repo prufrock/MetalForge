@@ -13,29 +13,35 @@ class GameViewController: NSViewController {
     private let metalView = MTKView()
     private var renderer: Renderer!
 
+    private var keyDownHandler: Any?
+    private var keyUpHandler: Any?
+
+    private var moveForward = false
+    private var moveBackward = false
+    private var turnLeft = false
+    private var turnRight = false
+
     private var world = World(map: loadMap())
     private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
     private let worldTimeStep: Float = 1 / 120 // number of steps to take each frame
     private var lastFrameTime = CACurrentMediaTime()
-//    private let panGesture = UIPanGestureRecognizer()
     private var inputVector: Float2 {
-//        switch panGesture.state {
-//        case .began, .changed:
-//            let translation = panGesture.translation(in: view)
-//            var vector = Float2(x: Float(translation.x), y: Float(translation.y))
-//            vector /= max(joystickRadius, vector.length)
-//
-//            //update the position of where the gesture started
-//            //to make movement a little smoother
-//            panGesture.setTranslation(CGPoint(
-//                x: Double(vector.x * joystickRadius),
-//                y: Double(vector.y * joystickRadius)
-//            ), in: view)
-//
-//            return vector
-//        default:
-            return Float2(x: 0, y: 0)
-//        }
+        var vector = Float2()
+        let rate: Float = 0.5
+        if moveForward {
+            vector += Float2(0, -1 * rate)
+        }
+        if moveBackward {
+            vector += Float2(0, rate)
+        }
+        if turnLeft {
+            vector += Float2(-1 * rate, 0)
+        }
+        if turnRight {
+            vector += Float2(rate, 0)
+        }
+
+        return vector
     }
     // travel distance of 80 screen points ~0.5" so 40 radius
     private let joystickRadius: Float = 40
@@ -43,8 +49,80 @@ class GameViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMetalView()
+        enableInputMonitors()
 
         renderer = Renderer(metalView, width: 8, height: 8)
+    }
+
+    override func viewDidDisappear() {
+        disableInputMonitors()
+    }
+
+    private func enableInputMonitors() {
+        //return nil to turn off beep
+        keyDownHandler = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [unowned self] in
+            self.keyDown(with: $0)
+            return nil
+        }
+
+        keyUpHandler = NSEvent.addLocalMonitorForEvents(matching: .keyUp) { [unowned self] in
+            self.keyUp(with: $0)
+            return nil
+        }
+    }
+
+    override func keyDown(with event: NSEvent) {
+        switch event.characters {
+        case "w":
+            print(event.characters!)
+            moveForward = true
+        case "s":
+            print(event.characters!)
+            moveBackward = true
+        case "a":
+            print(event.characters!)
+            turnLeft = true
+        case "d":
+            print(event.characters!)
+            turnRight = true
+        case "W":
+            print(event.characters!)
+        case "S":
+            print(event.characters!)
+        default:
+            return
+        }
+    }
+
+    override func keyUp(with event: NSEvent) {
+        switch event.characters {
+        case "w":
+            print(event.characters!)
+            moveForward = false
+        case "s":
+            print(event.characters!)
+            moveBackward = false
+        case "a":
+            print(event.characters!)
+            turnLeft = false
+        case "d":
+            print(event.characters!)
+            turnRight = false
+        case "W":
+            print(event.characters!)
+        case "S":
+            print(event.characters!)
+        default:
+            return
+        }
+    }
+
+    private func disableInputMonitors() {
+        guard let keyDownHandler = self.keyDownHandler else { return }
+        NSEvent.removeMonitor(keyDownHandler)
+
+        guard let keyUpHandler = self.keyUpHandler else { return }
+        NSEvent.removeMonitor(keyUpHandler)
     }
 
     func setupMetalView() {
@@ -54,10 +132,7 @@ class GameViewController: NSViewController {
         metalView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         metalView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         metalView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-//        metalView.contentMode = .scaleAspectFit
-//        metalView.backgroundColor = .black
         metalView.delegate = self
-//        metalView.addGestureRecognizer(panGesture)
     }
 }
 
@@ -87,7 +162,6 @@ extension GameViewController: MTKViewDelegate {
             world.update(timeStep: Float(timeStep /  worldSteps), input: input)
         }
         lastFrameTime = time
-
 
         renderer.render(world)
     }
