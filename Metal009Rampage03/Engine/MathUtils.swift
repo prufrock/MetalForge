@@ -117,3 +117,9 @@ extension Float3 {
         self.init(value.x, value.y, 0.0)
     }
 }
+
+extension Double {
+    func toRadians() -> Double {
+        self * (.pi / 180)
+    }
+}
