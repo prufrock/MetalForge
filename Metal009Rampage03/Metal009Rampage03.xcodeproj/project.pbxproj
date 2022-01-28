@@ -37,6 +37,8 @@
 		6317831C279B387400226875 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63772CD5277D3B2300DD59C8 /* Shaders.metal */; };
 		6317831D279B38AE00226875 /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E81E2E7026C99BD6CABD /* Ray.swift */; };
 		6317831E279B3A1700226875 /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE6277D3B7300DD59C8 /* Map.json */; };
+		6319278227A3A09D00CB3257 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6319278127A3A09D00CB3257 /* wall.png */; };
+		6319278327A3A09D00CB3257 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6319278127A3A09D00CB3257 /* wall.png */; };
 		63772C79277D39A000DD59C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C78277D39A000DD59C8 /* AppDelegate.swift */; };
 		63772C7B277D39A000DD59C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C7A277D39A000DD59C8 /* SceneDelegate.swift */; };
 		63772C7D277D39A000DD59C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C7C277D39A000DD59C8 /* ViewController.swift */; };
@@ -187,6 +189,7 @@
 		631782F6279B385200226875 /* EngineMacOS.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = EngineMacOS.docc; sourceTree = "<group>"; };
 		631782FC279B385200226875 /* EngineMacOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EngineMacOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63178303279B385200226875 /* EngineMacOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineMacOSTests.swift; sourceTree = "<group>"; };
+		6319278127A3A09D00CB3257 /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
 		63772C75277D39A000DD59C8 /* Metal009Rampage03.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal009Rampage03.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63772C78277D39A000DD59C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63772C7A277D39A000DD59C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -392,6 +395,7 @@
 		63772C77277D39A000DD59C8 /* Metal009Rampage03 */ = {
 			isa = PBXGroup;
 			children = (
+				6319278127A3A09D00CB3257 /* wall.png */,
 				63772CE6277D3B7300DD59C8 /* Map.json */,
 				63772CE5277D3B7300DD59C8 /* Map16.json */,
 				63772C78277D39A000DD59C8 /* AppDelegate.swift */,
@@ -741,6 +745,7 @@
 				6317831E279B3A1700226875 /* Map.json in Resources */,
 				631782C3279B2C3000226875 /* Assets.xcassets in Resources */,
 				631782C6279B2C3000226875 /* Main.storyboard in Resources */,
+				6319278327A3A09D00CB3257 /* wall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,6 +786,7 @@
 				63772C80277D39A000DD59C8 /* Main.storyboard in Resources */,
 				63772CE7277D3B7300DD59C8 /* Map16.json in Resources */,
 				63772CE8277D3B7300DD59C8 /* Map.json in Resources */,
+				6319278227A3A09D00CB3257 /* wall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

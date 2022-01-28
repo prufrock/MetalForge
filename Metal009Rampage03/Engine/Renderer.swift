@@ -261,6 +261,8 @@ public class Renderer: NSObject {
 
         let worldTransform = Float4x4.identity()
 
+        let texture = loadTexture(name: "wall")
+
         renderables.forEach { (vertices, objTransform, color, primitiveType) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
 
@@ -280,6 +282,21 @@ public class Renderer: NSObject {
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
             encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
+    }
+
+    func loadTexture(name: String) -> MTLTexture? {
+        let loader = MTKTextureLoader(device: device)
+
+        let options: [MTKTextureLoader.Option: Any] = [.origin: MTKTextureLoader.Origin.topLeft]
+
+        guard let url = Bundle.main.url(forResource: name, withExtension: "png") else {
+            print("Couldn't load the texture.")
+            return nil
+        }
+
+        let texture = try! loader.newTexture(URL: url, options: options)
+
+        return texture
     }
 }
 
