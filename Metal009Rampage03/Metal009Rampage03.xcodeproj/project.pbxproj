@@ -10,7 +10,6 @@
 		5AF0E98E0DAA0C64BEC923B4 /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E81E2E7026C99BD6CABD /* Ray.swift */; };
 		631782BA279B2C2E00226875 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631782B9279B2C2E00226875 /* AppDelegate.swift */; };
 		631782BC279B2C2E00226875 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631782BB279B2C2E00226875 /* ViewController.swift */; };
-		631782C0279B2C2E00226875 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 631782BF279B2C2E00226875 /* Shaders.metal */; };
 		631782C3279B2C3000226875 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 631782C2279B2C3000226875 /* Assets.xcassets */; };
 		631782C6279B2C3000226875 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 631782C4279B2C3000226875 /* Main.storyboard */; };
 		631782D1279B2C3000226875 /* Metal009Rampage03macOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631782D0279B2C3000226875 /* Metal009Rampage03macOSTests.swift */; };
@@ -69,6 +68,9 @@
 		63772CE4277D3B2B00DD59C8 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63772CD5277D3B2300DD59C8 /* Shaders.metal */; };
 		63772CE7277D3B7300DD59C8 /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE5277D3B7300DD59C8 /* Map16.json */; };
 		63772CE8277D3B7300DD59C8 /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE6277D3B7300DD59C8 /* Map.json */; };
+		63EBDAE427A5DF7B0052EC6B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 631782BF279B2C2E00226875 /* Shaders.metal */; };
+		63EBDAE627AA3D1F0052EC6B /* ShaderTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */; };
+		63EBDAE727AA3D1F0052EC6B /* ShaderTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,6 +224,7 @@
 		63772CD7277D3B2300DD59C8 /* Rect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rect.swift; sourceTree = "<group>"; };
 		63772CE5277D3B7300DD59C8 /* Map16.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Map16.json; sourceTree = "<group>"; };
 		63772CE6277D3B7300DD59C8 /* Map.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Map.json; sourceTree = "<group>"; };
+		63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -444,6 +447,7 @@
 				63772CB0277D3AD100DD59C8 /* Engine.h */,
 				63772CB1277D3AD100DD59C8 /* Engine.docc */,
 				5AF0E81E2E7026C99BD6CABD /* Ray.swift */,
+				63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -464,6 +468,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63178305279B385200226875 /* EngineMacOS.h in Headers */,
+				63EBDAE727AA3D1F0052EC6B /* ShaderTypes.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63772CC0277D3AD100DD59C8 /* Engine.h in Headers */,
+				63EBDAE627AA3D1F0052EC6B /* ShaderTypes.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,7 +831,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				631782C0279B2C2E00226875 /* Shaders.metal in Sources */,
+				63EBDAE427A5DF7B0052EC6B /* Shaders.metal in Sources */,
 				631782BC279B2C2E00226875 /* ViewController.swift in Sources */,
 				631782BA279B2C2E00226875 /* AppDelegate.swift in Sources */,
 				6317831C279B387400226875 /* Shaders.metal in Sources */,
@@ -1044,7 +1050,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/ShaderTypes.h";
+				SWIFT_OBJC_BRIDGING_HEADER = Engine/ShaderTypes.h;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1075,7 +1081,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(TARGET_NAME)/ShaderTypes.h";
+				SWIFT_OBJC_BRIDGING_HEADER = Engine/ShaderTypes.h;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1400,6 +1406,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Metal009Rampage03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = Engine/ShaderTypes.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1429,6 +1436,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.Metal009Rampage03;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = Engine/ShaderTypes.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
