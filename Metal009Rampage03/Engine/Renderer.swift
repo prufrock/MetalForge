@@ -65,7 +65,11 @@ public class Renderer: NSObject {
             vertexDescriptor.attributes[0].format = .float3
             vertexDescriptor.attributes[0].bufferIndex = 0
             vertexDescriptor.attributes[0].offset = 0
-            vertexDescriptor.layouts[0].stride = MemoryLayout<float3>.stride
+            vertexDescriptor.attributes[1].format = .float2
+            vertexDescriptor.attributes[1].bufferIndex = 1
+            vertexDescriptor.attributes[1].offset = 0
+            vertexDescriptor.layouts[0].stride = MemoryLayout<Float3>.stride
+            vertexDescriptor.layouts[1].stride = MemoryLayout<Float2>.stride
 
             return vertexDescriptor
         }()

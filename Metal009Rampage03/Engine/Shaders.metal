@@ -15,6 +15,7 @@ using namespace metal;
 typedef struct
 {
     float3 position [[attribute(VertexAttributePosition)]];
+    float2 texcoord [[attribute(VertexAttributeTexcoord)]];
 } Vertex;
 
 struct VertexOut {
