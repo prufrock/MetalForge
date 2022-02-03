@@ -7,20 +7,28 @@
 
 #include <metal_stdlib>
 #include <simd/simd.h>
+// Including header shared between this Metal shader code and Swift/C code executing Metal API commands
+#import "ShaderTypes.h"
+
 using namespace metal;
+
+typedef struct
+{
+    float3 position [[attribute(VertexAttributePosition)]];
+} Vertex;
 
 struct VertexOut {
     float4 position [[position]];
     float point_size [[point_size]];
 };
 
-vertex VertexOut vertex_main(constant float3 *vertices [[buffer(0)]],
+vertex VertexOut vertex_main(Vertex in [[stage_in]],
                              constant matrix_float4x4 &matrix [[buffer(1)]],
                              constant float &point_size [[buffer(2)]],
                              uint id [[vertex_id]]
                              ) {
     VertexOut vertex_out {
-        .position = matrix * float4(vertices[id], 1),
+        .position = matrix * float4(in.position, 1),
         .point_size = point_size
     };
 

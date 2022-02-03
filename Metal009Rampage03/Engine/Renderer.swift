@@ -60,6 +60,15 @@ public class Renderer: NSObject {
         pipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragment_main")
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
+        pipelineDescriptor.vertexDescriptor = {
+            let vertexDescriptor = MTLVertexDescriptor()
+            vertexDescriptor.attributes[0].format = .float3
+            vertexDescriptor.attributes[0].bufferIndex = 0
+            vertexDescriptor.attributes[0].offset = 0
+            vertexDescriptor.layouts[0].stride = MemoryLayout<float3>.stride
+
+            return vertexDescriptor
+        }()
 
         let defaultPipelineState = try! device.makeRenderPipelineState(descriptor: pipelineDescriptor)
 
