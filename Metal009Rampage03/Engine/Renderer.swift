@@ -62,10 +62,10 @@ public class Renderer: NSObject {
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
         pipelineDescriptor.vertexDescriptor = {
             let vertexDescriptor = MTLVertexDescriptor()
-            vertexDescriptor.attributes[0].format = .float3
+            vertexDescriptor.attributes[0].format = MTLVertexFormat.float3
             vertexDescriptor.attributes[0].bufferIndex = 0
             vertexDescriptor.attributes[0].offset = 0
-            vertexDescriptor.attributes[1].format = .float2
+            vertexDescriptor.attributes[1].format = MTLVertexFormat.float2
             vertexDescriptor.attributes[1].bufferIndex = 1
             vertexDescriptor.attributes[1].offset = 0
             vertexDescriptor.layouts[0].stride = MemoryLayout<Float3>.stride
@@ -107,7 +107,7 @@ public class Renderer: NSObject {
 
         //Draw map
         //TODO make this a type
-        var renderables: [([Float3], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
         //Draw player
         renderables.append(world.player.rect.renderable())
         //Draw line of sight line
@@ -117,7 +117,7 @@ public class Renderer: NSObject {
             ([
                 world.player.position.toFloat3(),
                 end.toFloat3()
-            ], Float4x4.identity(), .green, .line)
+            ], [], Float4x4.identity(), .green, .line)
         )
         //Draw view plane
         let focalLength: Float = 1.0
@@ -130,7 +130,7 @@ public class Renderer: NSObject {
             ([
                 viewStart.toFloat3(),
                 viewEnd.toFloat3()
-            ], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .red, .line)
+            ], [], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .red, .line)
         )
         // Cast rays
         let columns = 300
@@ -145,7 +145,7 @@ public class Renderer: NSObject {
                 ([
                     ray.origin.toFloat3(),
                     end.toFloat3()
-                ], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .green, .line)
+                ], [], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .green, .line)
             )
             columnPosition += step
         }
@@ -179,7 +179,7 @@ public class Renderer: NSObject {
                     ([
                         Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
                         Float3(x: Float(x), y: Float(bitmapHeight) + height, z: 0.0),
-                    ], Float4x4.identity()
+                    ], [], Float4x4.identity()
                         * Float4x4.init(translateX: -7.0, y: 2.0, z: 0.0)
                         * Float4x4.init(scaleX: 0.1, y: 1.0, z: 1.0), wallColor, .line)
                 )
@@ -187,25 +187,25 @@ public class Renderer: NSObject {
             columnPosition += step
         }
 
-        renderables.forEach { (vertices, objTransform, color, primitiveType) in
-            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-
-            var pixelSize = 1
-
-            var finalTransform = cameraTransform * worldTransform * objTransform
-
-            encoder.setRenderPipelineState(pipeline)
-            encoder.setCullMode(.back)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
-
-            var fragmentColor = Float3(color)
-
-            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
-        }
+//        renderables.forEach { (vertices, _, objTransform, color, primitiveType) in
+//            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+//
+//            var pixelSize = 1
+//
+//            var finalTransform = cameraTransform * worldTransform * objTransform
+//
+//            encoder.setRenderPipelineState(pipeline)
+//            encoder.setCullMode(.back)
+//            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+//            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
+//            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+//
+//            var fragmentColor = Float3(color)
+//
+//            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+//            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+//            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
+//        }
 
         cameraRendering(world: world, encoder: encoder)
 
@@ -222,42 +222,42 @@ public class Renderer: NSObject {
     }
 
     func cameraRendering(world: World, encoder: MTLRenderCommandEncoder) {
-        var renderables: [([Float3], Float4x4, Color, MTLPrimitiveType)] = []
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
 
-        renderables += LineCube(Float4x4(scaleX: 0.1, y: 0.1, z: 0.1))
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4(translateX: 1.0, y: 0.0, z: 0.0)
-                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-        )
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4(translateX: -1.0, y: 0.0, z: 0.0)
-                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-        )
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: 1.0, z: 0.0)
-                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-        )
-
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: -1.0, z: 0.0)
-                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-        )
-
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: 0.0, z: 1.0)
-                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-        )
-
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: 0.0, z: -1.0)
-                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-        )
+//        renderables += LineCube(Float4x4(scaleX: 0.1, y: 0.1, z: 0.1))
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 1.0, y: 0.0, z: 0.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: -1.0, y: 0.0, z: 0.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 0.0, y: 1.0, z: 0.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 0.0, y: -1.0, z: 0.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 0.0, y: 0.0, z: 1.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 0.0, y: 0.0, z: -1.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
 
 
         renderables += (TileImage(map: world.map).tiles)
@@ -274,10 +274,11 @@ public class Renderer: NSObject {
 
         let worldTransform = Float4x4.identity()
 
-        let texture = loadTexture(name: "wall")
+        let texture = loadTexture(name: "Wall")
 
-        renderables.forEach { (vertices, objTransform, color, primitiveType) in
+        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
 
             var pixelSize = 1
 
@@ -286,35 +287,49 @@ public class Renderer: NSObject {
             encoder.setRenderPipelineState(pipeline)
             encoder.setDepthStencilState(depthStencilState)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 3)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
 
             var fragmentColor = Float3(color)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentTexture(texture, index: 0)
             encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
     }
 
     func loadTexture(name: String) -> MTLTexture? {
-        let loader = MTKTextureLoader(device: device)
+//        let loader = MTKTextureLoader(device: device)
+//
+//        let options: [MTKTextureLoader.Option: Any] = [.origin: MTKTextureLoader.Origin.bottomLeft]
+//
+//        guard let url = Bundle.main.url(forResource: name, withExtension: "png") else {
+//            print("Couldn't load the texture.")
+//            return nil
+//        }
+//
+//        let texture = try! loader.newTexture(URL: url, options: options)
 
-        let options: [MTKTextureLoader.Option: Any] = [.origin: MTKTextureLoader.Origin.topLeft]
+        let textureLoader = MTKTextureLoader(device: device)
 
-        guard let url = Bundle.main.url(forResource: name, withExtension: "png") else {
-            print("Couldn't load the texture.")
-            return nil
-        }
+        let textureLoaderOptions = [
+            MTKTextureLoader.Option.textureUsage: NSNumber(value: MTLTextureUsage.shaderRead.rawValue),
+            MTKTextureLoader.Option.textureStorageMode: NSNumber(value: MTLStorageMode.`private`.rawValue)
+        ]
 
-        let texture = try! loader.newTexture(URL: url, options: options)
+        return try! textureLoader.newTexture(name: name,
+                                            scaleFactor: 1.0,
+                                            bundle: nil,
+                                            options: textureLoaderOptions)
 
-        return texture
+//        return texture
     }
 }
 
 // Sitting with its bottom center on the origin
-func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], Float4x4, Color, MTLPrimitiveType)] {
+func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] {
     return [
         (
             // xy z-0.5
@@ -330,7 +345,7 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], F
 
                 Float3(0.5, 0.0, -0.5),
                 Float3(-0.5, 0.0, -0.5),
-            ],
+            ], [],
             transformation,
             .green,
             .line
@@ -349,7 +364,7 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], F
 
                 Float3(0.5, 0.0, 0.5),
                 Float3(-0.5, 0.0, 0.5),
-            ],
+            ], [],
             transformation,
             .red,
             .line
@@ -368,7 +383,7 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], F
 
                 Float3(0.5, 0.0, -0.5),
                 Float3(-0.5, 0.0, -0.5),
-            ],
+            ], [],
             transformation,
             .blue,
             .line
@@ -387,7 +402,7 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], F
 
                 Float3(0.5, 1.0, -0.5),
                 Float3(-0.5, 1.0, -0.5),
-            ],
+            ], [],
             transformation,
             .white,
             .line

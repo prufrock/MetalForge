@@ -13,7 +13,7 @@ public struct Rect {
         self.max = max
     }
 
-    func renderable() -> ([Float3], Float4x4, Color, MTLPrimitiveType) {
+    func renderable() -> ([Float3], [Float2], Float4x4, Color, MTLPrimitiveType) {
         var vertices:[Float3] = []
 
         vertices.append(Float3(min.x, max.y, 0.0))
@@ -24,7 +24,7 @@ public struct Rect {
         vertices.append(Float3(min.x, min.y, 0.0))
         vertices.append(Float3(max.x, min.y, 0.0))
 
-        return (vertices, Float4x4.identity(), .blue, .triangle)
+        return (vertices, [], Float4x4.identity(), .blue, .triangle)
     }
 }
 

@@ -68,7 +68,6 @@
 		63772CE4277D3B2B00DD59C8 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63772CD5277D3B2300DD59C8 /* Shaders.metal */; };
 		63772CE7277D3B7300DD59C8 /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE5277D3B7300DD59C8 /* Map16.json */; };
 		63772CE8277D3B7300DD59C8 /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE6277D3B7300DD59C8 /* Map.json */; };
-		63EBDAE427A5DF7B0052EC6B /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 631782BF279B2C2E00226875 /* Shaders.metal */; };
 		63EBDAE627AA3D1F0052EC6B /* ShaderTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */; };
 		63EBDAE727AA3D1F0052EC6B /* ShaderTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */; };
 /* End PBXBuildFile section */
@@ -176,8 +175,6 @@
 		631782B7279B2C2E00226875 /* Metal009Rampage03macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal009Rampage03macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		631782B9279B2C2E00226875 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		631782BB279B2C2E00226875 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		631782BF279B2C2E00226875 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		631782C1279B2C2E00226875 /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		631782C2279B2C3000226875 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		631782C5279B2C3000226875 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		631782C7279B2C3000226875 /* Metal009Rampage03macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Metal009Rampage03macOS.entitlements; sourceTree = "<group>"; };
@@ -310,8 +307,6 @@
 			children = (
 				631782B9279B2C2E00226875 /* AppDelegate.swift */,
 				631782BB279B2C2E00226875 /* ViewController.swift */,
-				631782BF279B2C2E00226875 /* Shaders.metal */,
-				631782C1279B2C2E00226875 /* ShaderTypes.h */,
 				631782C2279B2C3000226875 /* Assets.xcassets */,
 				631782C4279B2C3000226875 /* Main.storyboard */,
 				631782C7279B2C3000226875 /* Metal009Rampage03macOS.entitlements */,
@@ -831,7 +826,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63EBDAE427A5DF7B0052EC6B /* Shaders.metal in Sources */,
 				631782BC279B2C2E00226875 /* ViewController.swift in Sources */,
 				631782BA279B2C2E00226875 /* AppDelegate.swift in Sources */,
 				6317831C279B387400226875 /* Shaders.metal in Sources */,

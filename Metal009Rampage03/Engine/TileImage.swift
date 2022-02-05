@@ -6,10 +6,17 @@ import simd
 import MetalKit
 
 struct TileImage {
-    var tiles: [([Float3], Float4x4, Color, MTLPrimitiveType)]
+    var tiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)]
     private let size = Float(1.0)
     private let start = Float(0.0)
     private let tile1: [Float3]
+    private let texCoords: [Float2] = [
+        Float2(1.0,1.0),
+        Float2(0.0,0.0),
+        Float2(0.0,1.0),
+        Float2(1.0,1.0),
+        Float2(1.0,0.0),
+        Float2(0.0,0.0)]
 
     init(map: Tilemap, wallColor: Color = .white) {
         tile1 = [
@@ -22,18 +29,18 @@ struct TileImage {
             Float3(1.0, 1.0, 0.0),
         ]
 
-        tiles = [(tile1, matrix_identity_float4x4, .white, .triangle)]
+        tiles = [(tile1, texCoords, matrix_identity_float4x4, .white, .triangle)]
 
-        var myTiles: [([Float3], Float4x4, Color, MTLPrimitiveType)] = []
+        var myTiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
                 if map[x, y].isWall {
-                    myTiles.append((tile1, Float4x4.init(translateX: Float(x), y: Float(y), z: 0), wallColor, .triangle))
-                    myTiles.append((tile1, Float4x4.init(translateX: Float(x), y: Float(y), z: 0) * rotateY(.pi/2), .blue, .triangle))
-                    myTiles.append((tile1, Float4x4.init(translateX: Float(x) + 1.0, y: Float(y), z: 0) * rotateY(.pi/2), .green, .triangle))
-                    myTiles.append((tile1, Float4x4.init(translateX: Float(x), y: Float(y) + 1.0, z: 0) * rotateZ(.pi/2) * rotateY(.pi/2), .red, .triangle))
-                    myTiles.append((tile1, Float4x4.init(translateX: Float(x), y: Float(y) - 1.0, z: 0) * rotateZ((3 * .pi)/2) * rotateY(.pi/2), .grey, .triangle))
-                    myTiles.append((tile1, Float4x4.init(translateX: Float(x) - 1.0, y: Float(y), z: 0) * rotateZ((2 * .pi)/2) * rotateY(.pi/2), .orange, .triangle))
+                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y), z: 0), wallColor, .triangle))
+                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y), z: 0) * rotateY(.pi/2), .blue, .triangle))
+                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x) + 1.0, y: Float(y), z: 0) * rotateY(.pi/2), .green, .triangle))
+                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y) + 1.0, z: 0) * rotateZ(.pi/2) * rotateY(.pi/2), .red, .triangle))
+                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y) - 1.0, z: 0) * rotateZ((3 * .pi)/2) * rotateY(.pi/2), .grey, .triangle))
+                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x) - 1.0, y: Float(y), z: 0) * rotateZ((2 * .pi)/2) * rotateY(.pi/2), .orange, .triangle))
                 }
             }
         }
