@@ -36,7 +36,6 @@ struct TileImage {
             for x in 0 ..< map.width {
                 if map[x, y].isWall {
                     myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y), z: 0), wallColor, .triangle))
-                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y), z: 0) * rotateY(.pi/2), .blue, .triangle))
                     myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x) + 1.0, y: Float(y), z: 0) * rotateY(.pi/2), .green, .triangle))
                     myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y) + 1.0, z: 0) * rotateZ(.pi/2) * rotateY(.pi/2), .red, .triangle))
                     myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y) - 1.0, z: 0) * rotateZ((3 * .pi)/2) * rotateY(.pi/2), .grey, .triangle))
