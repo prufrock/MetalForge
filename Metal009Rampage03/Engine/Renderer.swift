@@ -60,19 +60,16 @@ public class Renderer: NSObject {
         pipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragment_main")
         pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
         pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-        pipelineDescriptor.vertexDescriptor = {
-            let vertexDescriptor = MTLVertexDescriptor()
-            vertexDescriptor.attributes[0].format = MTLVertexFormat.float3
-            vertexDescriptor.attributes[0].bufferIndex = 0
-            vertexDescriptor.attributes[0].offset = 0
-            vertexDescriptor.attributes[1].format = MTLVertexFormat.float2
-            vertexDescriptor.attributes[1].bufferIndex = 1
-            vertexDescriptor.attributes[1].offset = 0
-            vertexDescriptor.layouts[0].stride = MemoryLayout<Float3>.stride
-            vertexDescriptor.layouts[1].stride = MemoryLayout<Float2>.stride
-
-            return vertexDescriptor
-        }()
+        pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor().apply {
+            $0.attributes[0].format = MTLVertexFormat.float3
+            $0.attributes[0].bufferIndex = 0
+            $0.attributes[0].offset = 0
+            $0.attributes[1].format = MTLVertexFormat.float2
+            $0.attributes[1].bufferIndex = 1
+            $0.attributes[1].offset = 0
+            $0.layouts[0].stride = MemoryLayout<Float3>.stride
+            $0.layouts[1].stride = MemoryLayout<Float2>.stride
+        }
 
         let defaultPipelineState = try! device.makeRenderPipelineState(descriptor: pipelineDescriptor)
 
@@ -409,3 +406,4 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], [
         )
     ]
 }
+

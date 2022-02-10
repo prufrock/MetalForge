@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5AF0E98E0DAA0C64BEC923B4 /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E81E2E7026C99BD6CABD /* Ray.swift */; };
+		5AF0EF097DCAD6426FB33C10 /* ScopeFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */; };
 		631782BA279B2C2E00226875 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631782B9279B2C2E00226875 /* AppDelegate.swift */; };
 		631782BC279B2C2E00226875 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631782BB279B2C2E00226875 /* ViewController.swift */; };
 		631782C3279B2C3000226875 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 631782C2279B2C3000226875 /* Assets.xcassets */; };
@@ -172,6 +173,7 @@
 
 /* Begin PBXFileReference section */
 		5AF0E81E2E7026C99BD6CABD /* Ray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
+		5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScopeFunc.swift; sourceTree = "<group>"; };
 		631782B7279B2C2E00226875 /* Metal009Rampage03macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal009Rampage03macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		631782B9279B2C2E00226875 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		631782BB279B2C2E00226875 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				63772CB1277D3AD100DD59C8 /* Engine.docc */,
 				5AF0E81E2E7026C99BD6CABD /* Ray.swift */,
 				63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */,
+				5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -924,6 +927,7 @@
 				63772CE3277D3B2300DD59C8 /* Rect.swift in Sources */,
 				63772CDD277D3B2300DD59C8 /* Thing.swift in Sources */,
 				5AF0E98E0DAA0C64BEC923B4 /* Ray.swift in Sources */,
+				5AF0EF097DCAD6426FB33C10 /* ScopeFunc.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
