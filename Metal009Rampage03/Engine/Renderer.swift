@@ -54,24 +54,23 @@ public class Renderer: NSObject {
 
         self.depthStencilState = depthStencilState
 
-        let pipelineDescriptor = MTLRenderPipelineDescriptor()
-        pipelineDescriptor.tessellationOutputWindingOrder = .clockwise
-        pipelineDescriptor.vertexFunction = library.makeFunction(name: "vertex_main")
-        pipelineDescriptor.fragmentFunction = library.makeFunction(name: "fragment_main")
-        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        pipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
-        pipelineDescriptor.vertexDescriptor = MTLVertexDescriptor().apply {
-            $0.attributes[0].format = MTLVertexFormat.float3
-            $0.attributes[0].bufferIndex = 0
-            $0.attributes[0].offset = 0
-            $0.attributes[1].format = MTLVertexFormat.float2
-            $0.attributes[1].bufferIndex = 1
-            $0.attributes[1].offset = 0
-            $0.layouts[0].stride = MemoryLayout<Float3>.stride
-            $0.layouts[1].stride = MemoryLayout<Float2>.stride
-        }
-
-        let defaultPipelineState = try! device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+        let defaultPipelineState = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+            $0.tessellationOutputWindingOrder = .clockwise
+            $0.vertexFunction = library.makeFunction(name: "vertex_main")
+            $0.fragmentFunction = library.makeFunction(name: "fragment_main")
+            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
+            $0.depthAttachmentPixelFormat = .depth32Float
+            $0.vertexDescriptor = MTLVertexDescriptor().apply {
+                $0.attributes[0].format = MTLVertexFormat.float3
+                $0.attributes[0].bufferIndex = 0
+                $0.attributes[0].offset = 0
+                $0.attributes[1].format = MTLVertexFormat.float2
+                $0.attributes[1].bufferIndex = 1
+                $0.attributes[1].offset = 0
+                $0.layouts[0].stride = MemoryLayout<Float3>.stride
+                $0.layouts[1].stride = MemoryLayout<Float2>.stride
+            }
+        })
 
         pipeline = defaultPipelineState
 

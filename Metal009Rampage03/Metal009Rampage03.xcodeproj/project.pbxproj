@@ -39,6 +39,7 @@
 		6317831E279B3A1700226875 /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE6277D3B7300DD59C8 /* Map.json */; };
 		6319278227A3A09D00CB3257 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6319278127A3A09D00CB3257 /* wall.png */; };
 		6319278327A3A09D00CB3257 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6319278127A3A09D00CB3257 /* wall.png */; };
+		6361036627B4C4AC0094392F /* ScopeFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */; };
 		63772C79277D39A000DD59C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C78277D39A000DD59C8 /* AppDelegate.swift */; };
 		63772C7B277D39A000DD59C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C7A277D39A000DD59C8 /* SceneDelegate.swift */; };
 		63772C7D277D39A000DD59C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C7C277D39A000DD59C8 /* ViewController.swift */; };
@@ -856,6 +857,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6361036627B4C4AC0094392F /* ScopeFunc.swift in Sources */,
 				63178316279B386E00226875 /* Thing.swift in Sources */,
 				63178312279B386E00226875 /* Renderer.swift in Sources */,
 				631782F7279B385200226875 /* EngineMacOS.docc in Sources */,
