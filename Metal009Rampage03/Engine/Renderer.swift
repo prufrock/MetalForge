@@ -42,11 +42,10 @@ public class Renderer: NSObject {
                        """)
         }
 
-        let descriptor = MTLDepthStencilDescriptor()
-        descriptor.depthCompareFunction = .less
-        descriptor.isDepthWriteEnabled = true
-
-        guard let depthStencilState = device.makeDepthStencilState(descriptor: descriptor) else {
+        guard let depthStencilState = device.makeDepthStencilState(descriptor: MTLDepthStencilDescriptor().apply {
+            $0.depthCompareFunction = .less
+            $0.isDepthWriteEnabled = true
+        }) else {
             fatalError("""
                        Agh?! The depth stencil state didn't work.
                        """)
