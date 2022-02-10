@@ -54,7 +54,7 @@ public class Renderer: NSObject {
 
         self.depthStencilState = depthStencilState
 
-        let defaultPipelineState = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+        let texturePipelineState = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
             $0.tessellationOutputWindingOrder = .clockwise
             $0.vertexFunction = library.makeFunction(name: "vertex_main")
             $0.fragmentFunction = library.makeFunction(name: "fragment_main")
@@ -72,7 +72,7 @@ public class Renderer: NSObject {
             }
         })
 
-        pipeline = defaultPipelineState
+        pipeline = texturePipelineState
 
         super.init()
     }
