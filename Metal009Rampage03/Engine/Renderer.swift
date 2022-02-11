@@ -10,6 +10,7 @@ public class Renderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     let texturePipeline: MTLRenderPipelineState
+    let vertexPipeline: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
     public var aspect: Float = 1.0
 
@@ -53,6 +54,14 @@ public class Renderer: NSObject {
 
         self.depthStencilState = depthStencilState
 
+        let vertexPipelineState = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+            $0.tessellationOutputWindingOrder = .clockwise
+            $0.vertexFunction = library.makeFunction(name: "vertex_main")
+            $0.fragmentFunction = library.makeFunction(name: "fragment_main")
+            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
+            $0.depthAttachmentPixelFormat = .depth32Float
+        })
+
         let texturePipelineState = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
             $0.tessellationOutputWindingOrder = .clockwise
             $0.vertexFunction = library.makeFunction(name: "vertex_with_texcoords")
@@ -72,6 +81,7 @@ public class Renderer: NSObject {
         })
 
         texturePipeline = texturePipelineState
+        vertexPipeline = vertexPipelineState
 
         super.init()
     }
@@ -182,25 +192,25 @@ public class Renderer: NSObject {
             columnPosition += step
         }
 
-//        renderables.forEach { (vertices, _, objTransform, color, primitiveType) in
-//            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-//
-//            var pixelSize = 1
-//
-//            var finalTransform = cameraTransform * worldTransform * objTransform
-//
-//            encoder.setRenderPipelineState(pipeline)
-//            encoder.setCullMode(.back)
-//            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-//            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
-//            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
-//
-//            var fragmentColor = Float3(color)
-//
-//            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-//            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-//            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
-//        }
+        renderables.forEach { (vertices, _, objTransform, color, primitiveType) in
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+
+            var pixelSize = 1
+
+            var finalTransform = cameraTransform * worldTransform * objTransform
+
+            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setCullMode(.back)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+
+            var fragmentColor = Float3(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
+        }
 
         cameraRendering(world: world, encoder: encoder)
 
