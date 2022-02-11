@@ -55,8 +55,8 @@ public class Renderer: NSObject {
 
         let texturePipelineState = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
             $0.tessellationOutputWindingOrder = .clockwise
-            $0.vertexFunction = library.makeFunction(name: "vertex_main")
-            $0.fragmentFunction = library.makeFunction(name: "fragment_main")
+            $0.vertexFunction = library.makeFunction(name: "vertex_with_texcoords")
+            $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
             $0.colorAttachments[0].pixelFormat = .bgra8Unorm
             $0.depthAttachmentPixelFormat = .depth32Float
             $0.vertexDescriptor = MTLVertexDescriptor().apply {

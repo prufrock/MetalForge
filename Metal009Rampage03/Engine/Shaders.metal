@@ -24,7 +24,25 @@ struct VertexOut {
     float point_size [[point_size]];
 };
 
-vertex VertexOut vertex_main(Vertex in [[stage_in]],
+vertex VertexOut vertex_main(constant float3 *vertices [[buffer(0)]],
+                             constant matrix_float4x4 &matrix [[buffer(1)]],
+                             constant float &point_size [[buffer(2)]],
+                             uint id [[vertex_id]]
+                             ) {
+    VertexOut vertex_out {
+        .position = matrix * float4(vertices[id], 1),
+        .texcoord = float2(),
+        .point_size = point_size
+    };
+
+    return vertex_out;
+}
+
+fragment float4 fragment_main(constant float4 &color [[buffer(0)]]) {
+    return color;
+}
+
+vertex VertexOut vertex_with_texcoords(Vertex in [[stage_in]],
                              constant matrix_float4x4 &matrix [[buffer(3)]],
                              constant float &point_size [[buffer(4)]],
                              uint id [[vertex_id]]
@@ -38,7 +56,7 @@ vertex VertexOut vertex_main(Vertex in [[stage_in]],
     return vertex_out;
 }
 
-fragment float4 fragment_main(VertexOut in [[stage_in]],
+fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
                               texture2d<half> texture [[ texture(0) ]],
                               constant float4 &color [[buffer(0)]]
                               ) {
