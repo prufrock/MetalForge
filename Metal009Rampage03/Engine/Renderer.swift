@@ -9,7 +9,7 @@ public class Renderer: NSObject {
     let view: MTKView
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
-    let pipeline: MTLRenderPipelineState
+    let texturePipeline: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
     public var aspect: Float = 1.0
 
@@ -71,7 +71,7 @@ public class Renderer: NSObject {
             }
         })
 
-        pipeline = texturePipelineState
+        texturePipeline = texturePipelineState
 
         super.init()
     }
@@ -279,7 +279,7 @@ public class Renderer: NSObject {
 
             var finalTransform = cameraTransform * worldTransform * objTransform
 
-            encoder.setRenderPipelineState(pipeline)
+            encoder.setRenderPipelineState(texturePipeline)
             encoder.setDepthStencilState(depthStencilState)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
