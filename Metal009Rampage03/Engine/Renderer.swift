@@ -105,16 +105,25 @@ public class Renderer: NSObject {
         let worldTransform = Float4x4.identity()
             * Float4x4(scaleY: -1)
 
-        let cameraTransform = Float4x4.identity()
+        let mapCamera = Float4x4.identity()
             * Float4x4(translateX: -0.7, y: 0.9, z: 0)
             * Float4x4(scaleX: 0.03, y: 0.03, z: 1.0)
             * Float4x4(scaleY: aspect)
 
-        drawReferenceMarkers(world: world, encoder: encoder)
+        let playerCamera = Float4x4.identity()
+            * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
+            * (Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: 0.0, z: 0.1)
+                * world.player.position.toTranslation()
+                * Float4x4(rotateX: -(3 * .pi)/2)
+                * (world.player.direction3d * Float4x4(scaleX: 1.0, y: 1.0, z: 1.0))
+              ).inverse
 
-        drawGameworld(world: world, encoder: encoder)
+        drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
 
-        drawMap(world: world, encoder: encoder, cameraTransform: cameraTransform, worldTransform: worldTransform)
+        drawGameworld(world: world, encoder: encoder, camera: playerCamera)
+
+        drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
 
         encoder.endEncoding()
 
@@ -128,7 +137,7 @@ public class Renderer: NSObject {
         commandBuffer.commit()
     }
 
-    func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder) {
+    func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
 
         renderables += LineCube(Float4x4(scaleX: 0.1, y: 0.1, z: 0.1))
@@ -166,15 +175,6 @@ public class Renderer: NSObject {
                 * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
         )
 
-        let cameraTransform = Float4x4.identity()
-            * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
-            * (Float4x4.identity()
-            * Float4x4(translateX: 0.0, y: 0.0, z: 0.1)
-            * world.player.position.toTranslation()
-            * Float4x4(rotateX: -(3 * .pi)/2)
-            * (world.player.direction3d * Float4x4(scaleX: 1.0, y: 1.0, z: 1.0))
-        ).inverse
-
         let worldTransform = Float4x4.identity()
 
         renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
@@ -182,7 +182,7 @@ public class Renderer: NSObject {
 
             var pixelSize = 1
 
-            var finalTransform = cameraTransform * worldTransform * objTransform
+            var finalTransform = camera * worldTransform * objTransform
 
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setDepthStencilState(depthStencilState)
@@ -198,19 +198,10 @@ public class Renderer: NSObject {
         }
     }
 
-    func drawGameworld(world: World, encoder: MTLRenderCommandEncoder) {
+    func drawGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
 
         renderables += (TileImage(map: world.map).tiles)
-
-        let cameraTransform = Float4x4.identity()
-            * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
-            * (Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: 0.0, z: 0.1)
-                * world.player.position.toTranslation()
-                * Float4x4(rotateX: -(3 * .pi)/2)
-                * (world.player.direction3d * Float4x4(scaleX: 1.0, y: 1.0, z: 1.0))
-              ).inverse
 
         let worldTransform = Float4x4.identity()
 
@@ -222,7 +213,7 @@ public class Renderer: NSObject {
 
             var pixelSize = 1
 
-            var finalTransform = cameraTransform * worldTransform * objTransform
+            var finalTransform = camera * worldTransform * objTransform
 
             encoder.setRenderPipelineState(texturePipeline)
             encoder.setDepthStencilState(depthStencilState)
@@ -240,7 +231,7 @@ public class Renderer: NSObject {
         }
     }
 
-    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, cameraTransform: Float4x4, worldTransform: Float4x4) {
+    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         //Draw map
         //TODO make this a type
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
@@ -328,7 +319,7 @@ public class Renderer: NSObject {
 
             var pixelSize = 1
 
-            var finalTransform = cameraTransform * worldTransform * objTransform
+            var finalTransform = camera * worldTransform * objTransform
 
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setCullMode(.back)
