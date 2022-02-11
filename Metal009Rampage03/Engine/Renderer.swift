@@ -110,6 +110,102 @@ public class Renderer: NSObject {
             * Float4x4(scaleX: 0.03, y: 0.03, z: 1.0)
             * Float4x4(scaleY: aspect)
 
+        cameraRendering(world: world, encoder: encoder)
+
+        drawMap(world: world, encoder: encoder, cameraTransform: cameraTransform, worldTransform: worldTransform)
+
+        encoder.endEncoding()
+
+        guard let drawable = view.currentDrawable else {
+            fatalError("""
+                       Wakoom! Attempted to get the view's drawable and everything fell apart! Boo!
+                       """)
+        }
+
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
+    }
+
+    func cameraRendering(world: World, encoder: MTLRenderCommandEncoder) {
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
+
+//        renderables += LineCube(Float4x4(scaleX: 0.1, y: 0.1, z: 0.1))
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 1.0, y: 0.0, z: 0.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: -1.0, y: 0.0, z: 0.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 0.0, y: 1.0, z: 0.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 0.0, y: -1.0, z: 0.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 0.0, y: 0.0, z: 1.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+//
+//        renderables += LineCube(
+//            Float4x4.identity()
+//                * Float4x4(translateX: 0.0, y: 0.0, z: -1.0)
+//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+//        )
+
+
+        renderables += (TileImage(map: world.map).tiles)
+
+        let cameraTransform = Float4x4.identity()
+            * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
+            * (
+            Float4x4.identity()
+            * Float4x4(translateX: 0.0, y: 0.0, z: 0.1)
+            * world.player.position.toTranslation()
+            * Float4x4(rotateX: -(3 * .pi)/2)
+            * (world.player.direction3d * Float4x4(scaleX: 1.0, y: 1.0, z: 1.0))
+        ).inverse
+
+        let worldTransform = Float4x4.identity()
+
+        let texture = loadTexture(name: "Wall")
+
+        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
+
+            var pixelSize = 1
+
+            var finalTransform = cameraTransform * worldTransform * objTransform
+
+            encoder.setRenderPipelineState(texturePipeline)
+            encoder.setDepthStencilState(depthStencilState)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 3)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
+
+            var fragmentColor = Float3(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentTexture(texture, index: 0)
+            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
+        }
+    }
+
+    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, cameraTransform: Float4x4, worldTransform: Float4x4) {
         //Draw map
         //TODO make this a type
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
@@ -209,98 +305,6 @@ public class Renderer: NSObject {
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
-        }
-
-        cameraRendering(world: world, encoder: encoder)
-
-        encoder.endEncoding()
-
-        guard let drawable = view.currentDrawable else {
-            fatalError("""
-                       Wakoom! Attempted to get the view's drawable and everything fell apart! Boo!
-                       """)
-        }
-
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
-    }
-
-    func cameraRendering(world: World, encoder: MTLRenderCommandEncoder) {
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
-
-//        renderables += LineCube(Float4x4(scaleX: 0.1, y: 0.1, z: 0.1))
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 1.0, y: 0.0, z: 0.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: -1.0, y: 0.0, z: 0.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 0.0, y: 1.0, z: 0.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 0.0, y: -1.0, z: 0.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 0.0, y: 0.0, z: 1.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 0.0, y: 0.0, z: -1.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-
-
-        renderables += (TileImage(map: world.map).tiles)
-
-        let cameraTransform = Float4x4.identity()
-            * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
-            * (
-            Float4x4.identity()
-            * Float4x4(translateX: 0.0, y: 0.0, z: 0.1)
-            * world.player.position.toTranslation()
-            * Float4x4(rotateX: -(3 * .pi)/2)
-            * (world.player.direction3d * Float4x4(scaleX: 1.0, y: 1.0, z: 1.0))
-        ).inverse
-
-        let worldTransform = Float4x4.identity()
-
-        let texture = loadTexture(name: "Wall")
-
-        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
-            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
-
-            var pixelSize = 1
-
-            var finalTransform = cameraTransform * worldTransform * objTransform
-
-            encoder.setRenderPipelineState(texturePipeline)
-            encoder.setDepthStencilState(depthStencilState)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 3)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
-
-            var fragmentColor = Float3(color)
-
-            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.setFragmentTexture(texture, index: 0)
             encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
     }
