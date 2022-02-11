@@ -187,7 +187,7 @@ public class Renderer: NSObject {
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setDepthStencilState(depthStencilState)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
 
             var fragmentColor = Float3(color)
@@ -219,7 +219,7 @@ public class Renderer: NSObject {
             encoder.setDepthStencilState(depthStencilState)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 3)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
 
             var fragmentColor = Float3(color)
@@ -324,7 +324,7 @@ public class Renderer: NSObject {
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setCullMode(.back)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
 
             var fragmentColor = Float3(color)
