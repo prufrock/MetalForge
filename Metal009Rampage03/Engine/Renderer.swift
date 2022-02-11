@@ -110,7 +110,7 @@ public class Renderer: NSObject {
             * Float4x4(scaleX: 0.03, y: 0.03, z: 1.0)
             * Float4x4(scaleY: aspect)
 
-        cameraRendering(world: world, encoder: encoder)
+        drawGameworld(world: world, encoder: encoder)
 
         drawMap(world: world, encoder: encoder, cameraTransform: cameraTransform, worldTransform: worldTransform)
 
@@ -126,7 +126,7 @@ public class Renderer: NSObject {
         commandBuffer.commit()
     }
 
-    func cameraRendering(world: World, encoder: MTLRenderCommandEncoder) {
+    func drawGameworld(world: World, encoder: MTLRenderCommandEncoder) {
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
 
 //        renderables += LineCube(Float4x4(scaleX: 0.1, y: 0.1, z: 0.1))
