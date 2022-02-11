@@ -110,6 +110,8 @@ public class Renderer: NSObject {
             * Float4x4(scaleX: 0.03, y: 0.03, z: 1.0)
             * Float4x4(scaleY: aspect)
 
+        drawReferenceMarkers(world: world, encoder: encoder)
+
         drawGameworld(world: world, encoder: encoder)
 
         drawMap(world: world, encoder: encoder, cameraTransform: cameraTransform, worldTransform: worldTransform)
@@ -126,56 +128,89 @@ public class Renderer: NSObject {
         commandBuffer.commit()
     }
 
-    func drawGameworld(world: World, encoder: MTLRenderCommandEncoder) {
+    func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder) {
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
 
-//        renderables += LineCube(Float4x4(scaleX: 0.1, y: 0.1, z: 0.1))
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 1.0, y: 0.0, z: 0.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: -1.0, y: 0.0, z: 0.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 0.0, y: 1.0, z: 0.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 0.0, y: -1.0, z: 0.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 0.0, y: 0.0, z: 1.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
-//
-//        renderables += LineCube(
-//            Float4x4.identity()
-//                * Float4x4(translateX: 0.0, y: 0.0, z: -1.0)
-//                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
-//        )
+        renderables += LineCube(Float4x4(scaleX: 0.1, y: 0.1, z: 0.1))
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 1.0, y: 0.0, z: 0.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: -1.0, y: 0.0, z: 0.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: 1.0, z: 0.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
 
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: -1.0, z: 0.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
 
-        renderables += (TileImage(map: world.map).tiles)
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: 0.0, z: 1.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
+
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: 0.0, z: -1.0)
+                * Float4x4(scaleX: 0.1, y: 0.1, z: 0.1)
+        )
 
         let cameraTransform = Float4x4.identity()
             * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
-            * (
-            Float4x4.identity()
+            * (Float4x4.identity()
             * Float4x4(translateX: 0.0, y: 0.0, z: 0.1)
             * world.player.position.toTranslation()
             * Float4x4(rotateX: -(3 * .pi)/2)
             * (world.player.direction3d * Float4x4(scaleX: 1.0, y: 1.0, z: 1.0))
         ).inverse
+
+        let worldTransform = Float4x4.identity()
+
+        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+
+            var pixelSize = 1
+
+            var finalTransform = cameraTransform * worldTransform * objTransform
+
+            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setDepthStencilState(depthStencilState)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<simd_float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+
+            var fragmentColor = Float3(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
+        }
+    }
+
+    func drawGameworld(world: World, encoder: MTLRenderCommandEncoder) {
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
+
+        renderables += (TileImage(map: world.map).tiles)
+
+        let cameraTransform = Float4x4.identity()
+            * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
+            * (Float4x4.identity()
+                * Float4x4(translateX: 0.0, y: 0.0, z: 0.1)
+                * world.player.position.toTranslation()
+                * Float4x4(rotateX: -(3 * .pi)/2)
+                * (world.player.direction3d * Float4x4(scaleX: 1.0, y: 1.0, z: 1.0))
+              ).inverse
 
         let worldTransform = Float4x4.identity()
 
