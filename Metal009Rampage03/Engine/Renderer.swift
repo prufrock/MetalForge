@@ -140,7 +140,7 @@ public class Renderer: NSObject {
     }
 
     func drawFloor(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, MTLTexture)] = []
 
         let transformation: Float4x4 = Float4x4.identity() * Float4x4(translateX: 0, y: 0, z: 0) * Float4x4(scaleX: 10, y: 10, z: 0)
 
@@ -165,7 +165,8 @@ public class Renderer: NSObject {
             ],
             Float4x4.identity() * Float4x4(translateX: 0, y: 0, z: 0) * Float4x4(scaleX: 10, y: 10, z: 0),
             .red,
-            .triangle
+            .triangle,
+            loadTexture(name: "Floor")!
         )]
 
         renderables += [(
@@ -189,14 +190,13 @@ public class Renderer: NSObject {
             ],
             Float4x4.identity()  * Float4x4(translateX: 0.0, y: 0.0, z: 0.2) * Float4x4(scaleX: 10, y: 10, z: 0) * rotateY(.pi),
             .blue,
-            .triangle
+            .triangle,
+            loadTexture(name: "Ceiling")!
         )]
 
         let worldTransform = Float4x4.identity()
 
-        let texture = loadTexture(name: "ColorMap")
-
-        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
+        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, texture) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
             let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
 
