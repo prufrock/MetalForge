@@ -156,11 +156,11 @@ public class Renderer: NSObject {
                 Float3(1.0, 1.0, 0.0),
             ],
             [
-                Float2(1.0,1.0),
+                Float2(40.0,40.0),
                 Float2(0.0,0.0),
-                Float2(0.0,1.0),
-                Float2(1.0,1.0),
-                Float2(1.0,0.0),
+                Float2(0.0,40.0),
+                Float2(40.0,40.0),
+                Float2(40.0,0.0),
                 Float2(0.0,0.0)
             ],
             Float4x4.identity() * Float4x4(translateX: 0, y: 0, z: 0) * Float4x4(scaleX: 10, y: 10, z: 0),
@@ -181,11 +181,11 @@ public class Renderer: NSObject {
                 Float3(1.0, 1.0, 0.0),
             ],
             [
-                Float2(1.0,1.0),
+                Float2(40.0,40.0),
                 Float2(0.0,0.0),
-                Float2(0.0,1.0),
-                Float2(1.0,1.0),
-                Float2(1.0,0.0),
+                Float2(0.0,40.0),
+                Float2(40.0,40.0),
+                Float2(20.0,0.0),
                 Float2(0.0,0.0)
             ],
             Float4x4.identity()  * Float4x4(translateX: 0.0, y: 0.0, z: 0.2) * Float4x4(scaleX: 10, y: 10, z: 0) * rotateY(.pi),
