@@ -288,7 +288,11 @@ public class Renderer: NSObject {
 
         let worldTransform = Float4x4.identity()
 
-        let texture = loadTexture(name: "Wall")
+        //TODO don't load textures everytime you draw the world
+        let wallTexture = loadTexture(name: "Wall")!
+        let crackedWallTexture = loadTexture(name: "CrackedWall")!
+        let slimeWallTexture = loadTexture(name: "SlimeWall")!
+        let colorMapTexture = loadTexture(name: "ColorMap")!
 
         renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, tile) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
@@ -297,6 +301,19 @@ public class Renderer: NSObject {
             var pixelSize = 1
 
             var finalTransform = camera * worldTransform * objTransform
+
+            let texture: MTLTexture
+
+            switch(tile) {
+            case .wall:
+                texture = wallTexture
+            case .crackWall:
+                texture = crackedWallTexture
+            case .slimeWall:
+                texture = slimeWallTexture
+            default:
+                texture = colorMapTexture
+            }
 
             encoder.setRenderPipelineState(texturePipeline)
             encoder.setDepthStencilState(depthStencilState)
