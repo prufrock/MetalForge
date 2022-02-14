@@ -18,12 +18,17 @@ public extension Float4x4 {
 
     static func perspectiveProjection(fov: Float, aspect: Float, nearPlane: Float, farPlane: Float) -> Float4x4 {
         let zoom = 1 / tan(fov / 2) // objects get smaller as fov increases
-        return float4x4(
-            [zoom, 0, 0, 0],
-            [0, zoom * aspect, 0, 0],
-            [0, 0, farPlane / (farPlane - nearPlane), 1],
-            [0, 0, (-1 * nearPlane * farPlane ) / (farPlane - nearPlane), 0]
-        )
+
+        let y = zoom
+        let x = y * aspect
+        let z = farPlane / (farPlane - nearPlane)
+        let w = -nearPlane * z
+        let X = Float4(x, 0, 0, 0)
+        let Y = Float4(0, y, 0, 0)
+        let Z = Float4(0, 0, z, 1)
+        let W = Float4(0, 0, w, 0)
+
+        return Float4x4(X, Y, Z, W)
     }
 
     init(scaleX x: Float, y: Float, z: Float) {

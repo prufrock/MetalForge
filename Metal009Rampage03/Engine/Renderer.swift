@@ -55,7 +55,7 @@ public class Renderer: NSObject {
         self.depthStencilState = depthStencilState
 
         let vertexPipelineState = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
-            $0.tessellationOutputWindingOrder = .clockwise
+            $0.tessellationOutputWindingOrder = .counterClockwise
             $0.vertexFunction = library.makeFunction(name: "vertex_main")
             $0.fragmentFunction = library.makeFunction(name: "fragment_main")
             $0.colorAttachments[0].pixelFormat = .bgra8Unorm
@@ -121,6 +121,8 @@ public class Renderer: NSObject {
 
         drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
 
+        drawFloor(world: world, encoder: encoder, camera: playerCamera)
+
         drawGameworld(world: world, encoder: encoder, camera: playerCamera)
 
         drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
@@ -135,6 +137,67 @@ public class Renderer: NSObject {
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
+    }
+
+    func drawFloor(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
+
+        let transformation: Float4x4 = Float4x4.identity() * Float4x4(translateX: 0, y: 0, z: 0) * Float4x4(scaleX: 10, y: 10, z: 0)
+
+        renderables += [(
+            // floor
+            [
+                Float3(0.0, 0.0, 0.0),
+                Float3(1.0, 1.0, 0.0),
+                Float3(0.0, 1.0, 0.0),
+
+                Float3(0.0, 0.0, 0.0),
+                Float3(1.0, 0.0, 0.0),
+                Float3(1.0, 1.0, 0.0),
+            ], [],
+            Float4x4.identity() * Float4x4(translateX: 0, y: 0, z: 0) * Float4x4(scaleX: 10, y: 10, z: 0),
+            .red,
+            .triangle
+        )]
+
+        renderables += [(
+            // ceiling
+            [
+                Float3(0.0, 0.0, 0.0),
+                Float3(1.0, 1.0, 0.0),
+                Float3(0.0, 1.0, 0.0),
+
+                Float3(0.0, 0.0, 0.0),
+                Float3(1.0, 0.0, 0.0),
+                Float3(1.0, 1.0, 0.0),
+            ], [],
+            Float4x4.identity()  * Float4x4(translateX: 0.0, y: 0.0, z: 1.0) * Float4x4(scaleX: 10, y: 10, z: 0) * rotateY(.pi),
+            .blue,
+            .triangle
+        )]
+
+        let worldTransform = Float4x4.identity()
+
+        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+
+            var pixelSize = 1
+
+            var finalTransform = camera * worldTransform * objTransform
+
+            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setDepthStencilState(depthStencilState)
+            encoder.setCullMode(.back)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+
+            var fragmentColor = Float3(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
+        }
     }
 
     func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
@@ -360,6 +423,26 @@ public class Renderer: NSObject {
                                             options: textureLoaderOptions)
 
 //        return texture
+    }
+    private func rotateY(_ angle: Float) -> Float4x4 {
+        Float4x4.identity()
+            * Float4x4.init(translateX: Float(0.5), y: Float(0.5), z: 0.5)
+            * Float4x4.init(rotateY: angle)
+            * Float4x4.init(translateX: -0.5, y: -0.5, z: -0.5)
+    }
+
+    private func rotateZ(_ angle: Float) -> Float4x4 {
+        Float4x4.identity()
+            * Float4x4.init(translateX: 0.5, y: 0.5, z: 0.5)
+            * Float4x4.init(rotateZ: angle)
+            * Float4x4.init(translateX: -0.5, y: -0.5, z: -0.5)
+    }
+
+    private func rotateX(_ angle: Float) -> Float4x4 {
+        Float4x4.identity()
+            * Float4x4.init(translateX: 0.5, y: 0.5, z: 0.5)
+            * Float4x4.init(rotateX: angle)
+            * Float4x4.init(translateX: -0.5, y: -0.5, z: -0.5)
     }
 }
 
