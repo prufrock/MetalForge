@@ -154,7 +154,15 @@ public class Renderer: NSObject {
                 Float3(0.0, 0.0, 0.0),
                 Float3(1.0, 0.0, 0.0),
                 Float3(1.0, 1.0, 0.0),
-            ], [],
+            ],
+            [
+                Float2(1.0,1.0),
+                Float2(0.0,0.0),
+                Float2(0.0,1.0),
+                Float2(1.0,1.0),
+                Float2(1.0,0.0),
+                Float2(0.0,0.0)
+            ],
             Float4x4.identity() * Float4x4(translateX: 0, y: 0, z: 0) * Float4x4(scaleX: 10, y: 10, z: 0),
             .red,
             .triangle
@@ -170,7 +178,15 @@ public class Renderer: NSObject {
                 Float3(0.0, 0.0, 0.0),
                 Float3(1.0, 0.0, 0.0),
                 Float3(1.0, 1.0, 0.0),
-            ], [],
+            ],
+            [
+                Float2(1.0,1.0),
+                Float2(0.0,0.0),
+                Float2(0.0,1.0),
+                Float2(1.0,1.0),
+                Float2(1.0,0.0),
+                Float2(0.0,0.0)
+            ],
             Float4x4.identity()  * Float4x4(translateX: 0.0, y: 0.0, z: 0.2) * Float4x4(scaleX: 10, y: 10, z: 0) * rotateY(.pi),
             .blue,
             .triangle
@@ -178,24 +194,28 @@ public class Renderer: NSObject {
 
         let worldTransform = Float4x4.identity()
 
+        let texture = loadTexture(name: "ColorMap")
+
         renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
 
             var pixelSize = 1
 
             var finalTransform = camera * worldTransform * objTransform
 
-            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setRenderPipelineState(texturePipeline)
             encoder.setDepthStencilState(depthStencilState)
-            encoder.setCullMode(.back)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
 
             var fragmentColor = Float3(color)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentTexture(texture, index: 0)
             encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
     }
