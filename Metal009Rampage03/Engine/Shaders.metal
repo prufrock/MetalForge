@@ -60,7 +60,7 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
                               texture2d<half> texture [[ texture(0) ]],
                               constant float4 &color [[buffer(0)]]
                               ) {
-    constexpr sampler colorSampler(coord::normalized, address::repeat, filter::linear);
+    constexpr sampler colorSampler(coord::normalized, address::repeat, filter::nearest);
 
     half4 colorSample = texture.sample(colorSampler, in.texcoord);
 
