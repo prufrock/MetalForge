@@ -282,7 +282,7 @@ public class Renderer: NSObject {
     }
 
     func drawGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)] = []
 
         renderables += (TileImage(map: world.map).tiles)
 
@@ -290,7 +290,7 @@ public class Renderer: NSObject {
 
         let texture = loadTexture(name: "Wall")
 
-        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
+        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, tile) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
             let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
 
@@ -317,7 +317,7 @@ public class Renderer: NSObject {
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         //Draw map
         //TODO make this a type
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles.map { ($0.0, $0.1, $0.2, $0.3, $0.4) }
         //Draw player
         renderables.append(world.player.rect.renderable())
         //Draw line of sight line
