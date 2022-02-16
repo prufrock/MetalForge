@@ -11,11 +11,11 @@ struct TileImage {
     private let start = Float(0.0)
     private let tile1: [Float3]
     private let texCoords: [Float2] = [
-        Float2(1.0,1.0),
+        Float2(0.2,0.2),
         Float2(0.0,0.0),
-        Float2(0.0,1.0),
-        Float2(1.0,1.0),
-        Float2(1.0,0.0),
+        Float2(0.0,0.2),
+        Float2(0.2,0.2),
+        Float2(0.2,0.0),
         Float2(0.0,0.0)]
 
     init(map: Tilemap, wallColor: Color = .white) {

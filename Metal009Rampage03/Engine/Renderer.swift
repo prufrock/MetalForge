@@ -113,7 +113,8 @@ public class Renderer: NSObject {
         let playerCamera = Float4x4.identity()
             * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
             * (Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: 0.0, z: 0.1)
+                * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
+                * Float4x4(translateX: 0.0, y: 0.0, z: 0.5)
                 * world.player.position.toTranslation()
                 * Float4x4(rotateX: -(3 * .pi)/2)
                 * (world.player.direction3d * Float4x4(scaleX: 1.0, y: 1.0, z: 1.0))
@@ -185,16 +186,16 @@ public class Renderer: NSObject {
                 Float2(0.0,0.0),
                 Float2(0.0,40.0),
                 Float2(40.0,40.0),
-                Float2(20.0,0.0),
+                Float2(40.0,0.0),
                 Float2(0.0,0.0)
             ],
-            Float4x4.identity()  * Float4x4(translateX: 0.0, y: 0.0, z: 0.2) * Float4x4(scaleX: 10, y: 10, z: 0) * rotateY(.pi),
+            Float4x4.identity()  * Float4x4(translateX: 0.0, y: 0.0, z: 1.0) * Float4x4(scaleX: 10, y: 10, z: 0) * rotateY(.pi),
             .blue,
             .triangle,
             loadTexture(name: "Ceiling")!
         )]
 
-        let worldTransform = Float4x4.identity()
+        let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
 
         renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, texture) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
@@ -286,7 +287,7 @@ public class Renderer: NSObject {
 
         renderables += (TileImage(map: world.map).tiles)
 
-        let worldTransform = Float4x4.identity()
+        let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
 
         //TODO don't load textures everytime you draw the world
         let wallTexture = loadTexture(name: "Wall")!
