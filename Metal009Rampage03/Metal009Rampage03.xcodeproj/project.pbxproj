@@ -39,6 +39,7 @@
 		6317831E279B3A1700226875 /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE6277D3B7300DD59C8 /* Map.json */; };
 		6319278227A3A09D00CB3257 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6319278127A3A09D00CB3257 /* wall.png */; };
 		6319278327A3A09D00CB3257 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6319278127A3A09D00CB3257 /* wall.png */; };
+		6360215027BDFA8800C0A8B2 /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE5277D3B7300DD59C8 /* Map16.json */; };
 		6361036627B4C4AC0094392F /* ScopeFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */; };
 		63772C79277D39A000DD59C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C78277D39A000DD59C8 /* AppDelegate.swift */; };
 		63772C7B277D39A000DD59C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C7A277D39A000DD59C8 /* SceneDelegate.swift */; };
@@ -751,6 +752,7 @@
 				631782C3279B2C3000226875 /* Assets.xcassets in Resources */,
 				631782C6279B2C3000226875 /* Main.storyboard in Resources */,
 				6319278327A3A09D00CB3257 /* wall.png in Resources */,
+				6360215027BDFA8800C0A8B2 /* Map16.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

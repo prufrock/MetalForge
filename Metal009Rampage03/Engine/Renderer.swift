@@ -111,7 +111,7 @@ public class Renderer: NSObject {
             * Float4x4(scaleY: aspect)
 
         let playerCamera = Float4x4.identity()
-            * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 10.0)
+            * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
             * (Float4x4.identity()
                 * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
                 * Float4x4(translateX: 0.0, y: 0.0, z: 0.5)
@@ -121,8 +121,6 @@ public class Renderer: NSObject {
               ).inverse
 
         drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
-
-        drawFloor(world: world, encoder: encoder, camera: playerCamera)
 
         drawGameworld(world: world, encoder: encoder, camera: playerCamera)
 
@@ -138,87 +136,6 @@ public class Renderer: NSObject {
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
-    }
-
-    func drawFloor(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, MTLTexture)] = []
-
-        let transformation: Float4x4 = Float4x4.identity() * Float4x4(translateX: 0, y: 0, z: 0) * Float4x4(scaleX: 10, y: 10, z: 0)
-
-        renderables += [(
-            // floor
-            [
-                Float3(0.0, 0.0, 0.0),
-                Float3(1.0, 1.0, 0.0),
-                Float3(0.0, 1.0, 0.0),
-
-                Float3(0.0, 0.0, 0.0),
-                Float3(1.0, 0.0, 0.0),
-                Float3(1.0, 1.0, 0.0),
-            ],
-            [
-                Float2(40.0,40.0),
-                Float2(0.0,0.0),
-                Float2(0.0,40.0),
-                Float2(40.0,40.0),
-                Float2(40.0,0.0),
-                Float2(0.0,0.0)
-            ],
-            Float4x4.identity() * Float4x4(translateX: 0, y: 0, z: 0) * Float4x4(scaleX: 10, y: 10, z: 0),
-            .red,
-            .triangle,
-            loadTexture(name: "Floor")!
-        )]
-
-        renderables += [(
-            // ceiling
-            [
-                Float3(0.0, 0.0, 0.0),
-                Float3(1.0, 1.0, 0.0),
-                Float3(0.0, 1.0, 0.0),
-
-                Float3(0.0, 0.0, 0.0),
-                Float3(1.0, 0.0, 0.0),
-                Float3(1.0, 1.0, 0.0),
-            ],
-            [
-                Float2(40.0,40.0),
-                Float2(0.0,0.0),
-                Float2(0.0,40.0),
-                Float2(40.0,40.0),
-                Float2(40.0,0.0),
-                Float2(0.0,0.0)
-            ],
-            Float4x4.identity()  * Float4x4(translateX: 0.0, y: 0.0, z: 1.0) * Float4x4(scaleX: 10, y: 10, z: 0) * rotateY(.pi),
-            .blue,
-            .triangle,
-            loadTexture(name: "Ceiling")!
-        )]
-
-        let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
-
-        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, texture) in
-            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
-
-            var pixelSize = 1
-
-            var finalTransform = camera * worldTransform * objTransform
-
-            encoder.setRenderPipelineState(texturePipeline)
-            encoder.setDepthStencilState(depthStencilState)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
-
-            var fragmentColor = Float3(color)
-
-            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.setFragmentTexture(texture, index: 0)
-            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
-        }
     }
 
     func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
@@ -290,10 +207,13 @@ public class Renderer: NSObject {
         let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
 
         //TODO don't load textures everytime you draw the world
-        let wallTexture = loadTexture(name: "Wall")!
-        let crackedWallTexture = loadTexture(name: "CrackedWall")!
-        let slimeWallTexture = loadTexture(name: "SlimeWall")!
+        let ceiling = loadTexture(name: "Ceiling")!
         let colorMapTexture = loadTexture(name: "ColorMap")!
+        let crackedFloor = loadTexture(name: "CrackedFloor")!
+        let crackedWallTexture = loadTexture(name: "CrackedWall")!
+        let floor = loadTexture(name: "Floor")!
+        let slimeWallTexture = loadTexture(name: "SlimeWall")!
+        let wallTexture = loadTexture(name: "Wall")!
 
         renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, tile) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
@@ -312,6 +232,12 @@ public class Renderer: NSObject {
                 texture = crackedWallTexture
             case .slimeWall:
                 texture = slimeWallTexture
+            case .floor:
+                texture = floor
+            case .crackFloor:
+                texture = crackedFloor
+            case .ceiling:
+                texture = ceiling
             default:
                 texture = colorMapTexture
             }
@@ -335,7 +261,9 @@ public class Renderer: NSObject {
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         //Draw map
         //TODO make this a type
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles.map { ($0.0, $0.1, $0.2, $0.3, $0.4) }
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
+                .filter { $0.5 == .crackWall || $0.5 == .wall || $0.5 == .slimeWall }
+                .map { ($0.0, $0.1, $0.2, $0.3, $0.4) }
         //Draw player
         renderables.append(world.player.rect.renderable())
         //Draw line of sight line

@@ -41,6 +41,10 @@ struct TileImage {
                     myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y) - 1.0, z: 0) * rotateZ((3 * .pi)/2) * rotateY(.pi/2), .grey, .triangle, map[x, y]))
                     myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x) - 1.0, y: Float(y), z: 0) * rotateZ((2 * .pi)/2) * rotateY(.pi/2), .orange, .triangle, map[x, y]))
                 }
+                if !map[x, y].isWall {
+                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y), z: 0), wallColor, .triangle, map[x, y]))
+                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y), z: 1.0), wallColor, .triangle, .ceiling))
+                }
             }
         }
 

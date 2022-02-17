@@ -3,6 +3,9 @@
 //
 
 public enum Tile: Int, Decodable {
+    // Ceiling
+    case ceiling = 5
+
     // Floors
     case floor = 0
     case crackFloor = 4
@@ -18,7 +21,7 @@ public extension Tile {
         switch self {
         case .wall, .crackWall, .slimeWall:
             return true
-        case .floor, .crackFloor:
+        case .floor, .crackFloor, .ceiling:
             return false
         }
     }
