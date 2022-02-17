@@ -244,6 +244,7 @@ public class Renderer: NSObject {
 
             encoder.setRenderPipelineState(texturePipeline)
             encoder.setDepthStencilState(depthStencilState)
+            encoder.setCullMode(.back)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)

@@ -43,7 +43,7 @@ struct TileImage {
                 }
                 if !map[x, y].isWall {
                     myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y), z: 0), wallColor, .triangle, map[x, y]))
-                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y), z: 1.0), wallColor, .triangle, .ceiling))
+                    myTiles.append((tile1, texCoords, Float4x4.init(translateX: Float(x), y: Float(y), z: 0)  * rotateY(.pi), wallColor, .triangle, .ceiling))
                 }
             }
         }
