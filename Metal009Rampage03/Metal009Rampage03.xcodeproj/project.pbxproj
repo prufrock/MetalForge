@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5AF0E5385F555047261D9F8F /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0272CBB17D63465D1DA /* Monster.swift */; };
+		5AF0E58905C14C9C4BB36A75 /* Billboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0D00D319755BFED14CC /* Billboard.swift */; };
+		5AF0E7094CCDB14F4EDB7965 /* Billboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0D00D319755BFED14CC /* Billboard.swift */; };
 		5AF0E95EEAD347DA4F89451D /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0272CBB17D63465D1DA /* Monster.swift */; };
 		5AF0E98E0DAA0C64BEC923B4 /* Ray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E81E2E7026C99BD6CABD /* Ray.swift */; };
 		5AF0EF097DCAD6426FB33C10 /* ScopeFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */; };
@@ -177,6 +179,7 @@
 
 /* Begin PBXFileReference section */
 		5AF0E0272CBB17D63465D1DA /* Monster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Monster.swift; sourceTree = "<group>"; };
+		5AF0E0D00D319755BFED14CC /* Billboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Billboard.swift; sourceTree = "<group>"; };
 		5AF0E81E2E7026C99BD6CABD /* Ray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScopeFunc.swift; sourceTree = "<group>"; };
 		631782B7279B2C2E00226875 /* Metal009Rampage03macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal009Rampage03macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -452,6 +455,7 @@
 				63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */,
 				5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */,
 				5AF0E0272CBB17D63465D1DA /* Monster.swift */,
+				5AF0E0D00D319755BFED14CC /* Billboard.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -879,6 +883,7 @@
 				6317831B279B386E00226875 /* Rect.swift in Sources */,
 				63178314279B386E00226875 /* Color.swift in Sources */,
 				5AF0E5385F555047261D9F8F /* Monster.swift in Sources */,
+				5AF0E58905C14C9C4BB36A75 /* Billboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -938,6 +943,7 @@
 				5AF0E98E0DAA0C64BEC923B4 /* Ray.swift in Sources */,
 				5AF0EF097DCAD6426FB33C10 /* ScopeFunc.swift in Sources */,
 				5AF0E95EEAD347DA4F89451D /* Monster.swift in Sources */,
+				5AF0E7094CCDB14F4EDB7965 /* Billboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
