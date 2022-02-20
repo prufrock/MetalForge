@@ -7,9 +7,11 @@ import simd
 public struct World {
     public let map: Tilemap
     public var player: Player!
+    var monsters: [Monster]
 
     public init(map: Tilemap) {
         self.map = map
+        self.monsters = []
 
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
@@ -20,6 +22,8 @@ public struct World {
                     break
                 case .player:
                     self.player = Player(position: position)
+                case .monster:
+                    self.monsters.append(Monster(position: position))
                 }
             }
         }
