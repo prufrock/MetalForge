@@ -306,6 +306,17 @@ public class Renderer: NSObject {
             )
             columnPosition += step
         }
+
+        // Draw sprites
+        for line in world.sprites {
+            renderables.append(
+                ([
+                    line.start.toFloat3(),
+                    line.end.toFloat3()
+                ], [], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .green, .line)
+            )
+        }
+
         // Draw wall
 //        step = viewPlane / Float(columns)
         columnPosition = viewStart
