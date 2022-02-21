@@ -10,3 +10,11 @@ public struct Ray {
         self.direction = direction
     }
 }
+
+extension Ray {
+    var slopeIntercept: (slope: Float, intercept: Float) {
+        let slope = direction.y / direction.x
+        let intercept = origin.y - slope * origin.x
+        return (slope, intercept)
+    }
+}

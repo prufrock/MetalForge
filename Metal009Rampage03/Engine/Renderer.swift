@@ -297,7 +297,19 @@ public class Renderer: NSObject {
             let rayDirection = columnPosition - world.player.position
             let viewPlaneDistance = rayDirection.length
             let ray = Ray(origin: world.player.position, direction: rayDirection / viewPlaneDistance)
-            let end = world.map.hitTest(ray)
+
+            var end = world.map.hitTest(ray)
+            for sprite in world.sprites {
+                guard let hit = sprite.hitTest(ray) else {
+                    continue
+                }
+                let spriteDistance = (hit - ray.origin).length
+                if spriteDistance > (end - ray.origin).length {
+                    continue
+                }
+                end = hit
+            }
+
             renderables.append(
                 ([
                     ray.origin.toFloat3(),
