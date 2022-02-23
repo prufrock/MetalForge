@@ -53,7 +53,8 @@ public extension World {
             Billboard(
                 start: monster.position - spritePlane / 2,
                 direction: spritePlane,
-                length: 1
+                length: 1,
+                position: monster.position
             )
         }
     }

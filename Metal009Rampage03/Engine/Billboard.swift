@@ -6,11 +6,13 @@ public struct Billboard {
     public var start: Float2
     public var direction: Float2
     public var length: Float
+    public var position: Float2
 
-    public init(start: Float2, direction: Float2, length: Float) {
+    public init(start: Float2, direction: Float2, length: Float, position: Float2) {
         self.start = start
         self.direction = direction
         self.length = length
+        self.position = position
     }
 }
 

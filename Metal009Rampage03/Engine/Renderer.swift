@@ -206,12 +206,12 @@ public class Renderer: NSObject {
 
         renderables += world.sprites.map { billboard in
             ([
-                Float3(0.0, 0.0, 0.0),
-                Float3(1.0, 1.0, 0.0),
-                Float3(0.0, 1.0, 0.0),
-                Float3(0.0, 0.0, 0.0),
-                Float3(1.0, 0.0, 0.0),
-                Float3(1.0, 1.0, 0.0),
+                Float3(-0.5, -0.5, 0.0),
+                Float3(0.5, 0.5, 0.0),
+                Float3(-0.5, 0.5, 0.0),
+                Float3(-0.5, -0.5, 0.0),
+                Float3(0.5, -0.5, 0.0),
+                Float3(0.5, 0.5, 0.0),
             ], [
                 Float2(0.2,0.2),
                 Float2(0.0,0.0),
@@ -220,8 +220,12 @@ public class Renderer: NSObject {
                 Float2(0.2,0.0),
                 Float2(0.0,0.0)],
                 Float4x4.identity()
-                    * Float4x4.init(translateX: Float(billboard.start.x), y: Float(billboard.start.y), z: 0)
-                    * Float4x4.init(rotateY: -.pi/2)
+                    * Float4x4(translateX: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
+                    * (Float4x4.identity()
+                    * Float4x4(rotateX: -(3 * .pi)/2)
+                    * Float4x4(rotateY: .pi / 2)
+                    * world.player.direction3d * Float4x4(rotateY: .pi/2)
+                )
                 , Color.red, MTLPrimitiveType.triangle, Tile.floor)
         }
 
