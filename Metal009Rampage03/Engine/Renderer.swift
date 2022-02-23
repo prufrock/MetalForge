@@ -14,6 +14,15 @@ public class Renderer: NSObject {
     let depthStencilState: MTLDepthStencilState
     public var aspect: Float = 1.0
 
+    // textures
+    var ceiling: MTLTexture!
+    var colorMapTexture: MTLTexture!
+    var crackedFloor: MTLTexture!
+    var crackedWallTexture: MTLTexture!
+    var floor: MTLTexture!
+    var slimeWallTexture: MTLTexture!
+    var wallTexture: MTLTexture!
+
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
 
@@ -84,6 +93,14 @@ public class Renderer: NSObject {
         vertexPipeline = vertexPipelineState
 
         super.init()
+
+        ceiling = loadTexture(name: "Ceiling")!
+        colorMapTexture = loadTexture(name: "ColorMap")!
+        crackedFloor = loadTexture(name: "CrackedFloor")!
+        crackedWallTexture = loadTexture(name: "CrackedWall")!
+        floor = loadTexture(name: "Floor")!
+        slimeWallTexture = loadTexture(name: "SlimeWall")!
+        wallTexture = loadTexture(name: "Wall")!
     }
 
     public func render(_ world: World) {
@@ -259,15 +276,6 @@ public class Renderer: NSObject {
         renderables += (TileImage(map: world.map).tiles)
 
         let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
-
-        //TODO don't load textures everytime you draw the world
-        let ceiling = loadTexture(name: "Ceiling")!
-        let colorMapTexture = loadTexture(name: "ColorMap")!
-        let crackedFloor = loadTexture(name: "CrackedFloor")!
-        let crackedWallTexture = loadTexture(name: "CrackedWall")!
-        let floor = loadTexture(name: "Floor")!
-        let slimeWallTexture = loadTexture(name: "SlimeWall")!
-        let wallTexture = loadTexture(name: "Wall")!
 
         renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, tile) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
