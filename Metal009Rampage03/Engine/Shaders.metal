@@ -64,5 +64,9 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
 
     half4 colorSample = texture.sample(colorSampler, in.texcoord);
 
+    if (colorSample.a < 0.1) {
+        discard_fragment();
+    }
+
     return float4(colorSample);
 }
