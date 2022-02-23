@@ -124,6 +124,8 @@ public class Renderer: NSObject {
 
         drawGameworld(world: world, encoder: encoder, camera: playerCamera)
 
+        drawSprites(world: world, encoder: encoder, camera: playerCamera)
+
         drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
 
         encoder.endEncoding()
@@ -188,6 +190,54 @@ public class Renderer: NSObject {
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setDepthStencilState(depthStencilState)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+
+            var fragmentColor = Float3(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
+        }
+    }
+
+    func drawSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)] = []
+
+        renderables += world.sprites.map { billboard in
+            ([
+                Float3(0.0, 0.0, 0.0),
+                Float3(1.0, 1.0, 0.0),
+                Float3(0.0, 1.0, 0.0),
+                Float3(0.0, 0.0, 0.0),
+                Float3(1.0, 0.0, 0.0),
+                Float3(1.0, 1.0, 0.0),
+            ], [
+                Float2(0.2,0.2),
+                Float2(0.0,0.0),
+                Float2(0.0,0.2),
+                Float2(0.2,0.2),
+                Float2(0.2,0.0),
+                Float2(0.0,0.0)],
+                Float4x4.identity()
+                    * Float4x4.init(translateX: Float(billboard.start.x), y: Float(billboard.start.y), z: 0)
+                    * Float4x4.init(rotateY: -.pi/2)
+                , Color.red, MTLPrimitiveType.triangle, Tile.floor)
+        }
+
+        let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
+
+        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, _) in
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+
+            var pixelSize = 1
+
+            var finalTransform = camera * worldTransform * objTransform
+
+            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setDepthStencilState(depthStencilState)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setCullMode(.back)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
 
