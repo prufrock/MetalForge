@@ -22,6 +22,7 @@ public class Renderer: NSObject {
     var floor: MTLTexture!
     var slimeWallTexture: MTLTexture!
     var wallTexture: MTLTexture!
+    var monster: MTLTexture!
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
@@ -101,6 +102,7 @@ public class Renderer: NSObject {
         floor = loadTexture(name: "Floor")!
         slimeWallTexture = loadTexture(name: "SlimeWall")!
         wallTexture = loadTexture(name: "Wall")!
+        monster = loadTexture(name: "Monster")!
     }
 
     public func render(_ world: World) {
@@ -230,12 +232,12 @@ public class Renderer: NSObject {
                 Float3(0.5, -0.5, 0.0),
                 Float3(0.5, 0.5, 0.0),
             ], [
-                Float2(0.2,0.2),
                 Float2(0.0,0.0),
-                Float2(0.0,0.2),
                 Float2(0.2,0.2),
+                Float2(0.0,0.2),
+                Float2(0.0,0.0),
                 Float2(0.2,0.0),
-                Float2(0.0,0.0)],
+                Float2(0.2,0.2)],
                 Float4x4.identity()
                     * Float4x4(translateX: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
                     * (Float4x4.identity()
@@ -250,22 +252,25 @@ public class Renderer: NSObject {
 
         renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, _) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
 
             var pixelSize = 1
 
             var finalTransform = camera * worldTransform * objTransform
 
-            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setRenderPipelineState(texturePipeline)
             encoder.setDepthStencilState(depthStencilState)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setCullMode(.back)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
 
             var fragmentColor = Float3(color)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentTexture(monster, index: 0)
             encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
     }
