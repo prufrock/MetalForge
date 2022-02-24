@@ -20,6 +20,7 @@ class GameViewController: NSViewController {
     private var moveBackward = false
     private var turnLeft = false
     private var turnRight = false
+    private var showMap = false
 
     private var world = World(map: loadMap())
     private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
@@ -85,6 +86,9 @@ class GameViewController: NSViewController {
         case "d":
             print(event.characters!)
             turnRight = true
+        case "m":
+            print(event.characters!)
+            showMap.toggle()
         case "W":
             print(event.characters!)
         case "S":
@@ -155,7 +159,8 @@ extension GameViewController: MTKViewDelegate {
         let input = Input(
             speed: -inputVector.y,
             rotation: Float2x2(rotate: rotation),
-            rotation3d: Float4x4(rotateY: inputVector.x * world.player.turningSpeed * worldTimeStep)
+            rotation3d: Float4x4(rotateY: inputVector.x * world.player.turningSpeed * worldTimeStep),
+            showMap: showMap
         )
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {

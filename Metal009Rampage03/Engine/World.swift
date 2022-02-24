@@ -8,6 +8,7 @@ public struct World {
     public let map: Tilemap
     public var player: Player!
     var monsters: [Monster]
+    var showMap: Bool = false
 
     public init(map: Tilemap) {
         self.map = map
@@ -37,6 +38,7 @@ public extension World {
         player.direction = player.direction.rotated(by: input.rotation)
         player.direction3d = player.direction3d * input.rotation3d
         player.velocity = player.direction * Float(input.speed) * player.speed
+        showMap = input.showMap
 
         player.position += player.velocity * timeStep
         player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)

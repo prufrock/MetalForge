@@ -145,7 +145,9 @@ public class Renderer: NSObject {
 
         drawSprites(world: world, encoder: encoder, camera: playerCamera)
 
-        drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
+        if world.showMap {
+            drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
+        }
 
         encoder.endEncoding()
 
@@ -334,15 +336,7 @@ public class Renderer: NSObject {
                 .map { ($0.0, $0.1, $0.2, $0.3, $0.4) }
         //Draw player
         renderables.append(world.player.rect.renderable())
-        //Draw line of sight line
-        let ray = Ray(origin: world.player.position, direction: world.player.direction)
-        let end = world.map.hitTest(ray)
-        renderables.append(
-            ([
-                world.player.position.toFloat3(),
-                end.toFloat3()
-            ], [], Float4x4.identity(), .green, .line)
-        )
+
         //Draw view plane
         let focalLength: Float = 1.0
         let viewWidth: Float = 1.0
@@ -357,7 +351,7 @@ public class Renderer: NSObject {
             ], [], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .red, .line)
         )
         // Cast rays
-        let columns = 300
+        let columns = 3
         let step = viewPlane / Float(columns)
         var columnPosition = viewStart
         for _ in 0 ..< columns {
@@ -396,8 +390,6 @@ public class Renderer: NSObject {
             )
         }
 
-        // Draw wall
-//        step = viewPlane / Float(columns)
         columnPosition = viewStart
         let bitmapHeight = 1
         for x in 0 ..< columns {
@@ -410,18 +402,17 @@ public class Renderer: NSObject {
             let end = world.map.hitTest(ray)
             let wallDistance = (end - ray.origin).length
 
-            // Draw wall
-            let wallHeight:Float = 5.0
-            let height = wallHeight * focalLength / wallDistance * Float(1.0)
-            let wallColor: Color
-            if end.x.rounded(.down) == end.x {
-                wallColor = .white
-            } else {
-                wallColor = .grey
-            }
 
             let drawWalls = false
             if (drawWalls) {
+                let wallHeight:Float = 5.0
+                let height = wallHeight * focalLength / wallDistance * Float(1.0)
+                let wallColor: Color
+                if end.x.rounded(.down) == end.x {
+                    wallColor = .white
+                } else {
+                    wallColor = .grey
+                }
                 renderables.append(
                     ([
                         Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
