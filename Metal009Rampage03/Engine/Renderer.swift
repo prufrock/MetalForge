@@ -10,6 +10,7 @@ public class Renderer: NSObject {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     let texturePipeline: MTLRenderPipelineState
+    let textureIndexedPipeline: MTLRenderPipelineState
     let vertexPipeline: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
     public var aspect: Float = 1.0
@@ -67,7 +68,7 @@ public class Renderer: NSObject {
 
         self.depthStencilState = depthStencilState
 
-        let vertexPipelineState = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+        vertexPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
             $0.tessellationOutputWindingOrder = .counterClockwise
             $0.vertexFunction = library.makeFunction(name: "vertex_main")
             $0.fragmentFunction = library.makeFunction(name: "fragment_main")
@@ -75,7 +76,7 @@ public class Renderer: NSObject {
             $0.depthAttachmentPixelFormat = .depth32Float
         })
 
-        let texturePipelineState = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+        texturePipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
             $0.tessellationOutputWindingOrder = .clockwise
             $0.vertexFunction = library.makeFunction(name: "vertex_with_texcoords")
             $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
@@ -93,8 +94,13 @@ public class Renderer: NSObject {
             }
         })
 
-        texturePipeline = texturePipelineState
-        vertexPipeline = vertexPipelineState
+        textureIndexedPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+            $0.tessellationOutputWindingOrder = .clockwise
+            $0.vertexFunction = library.makeFunction(name: "vertex_indexed")
+            $0.fragmentFunction = library.makeFunction(name: "fragment_main")
+            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
+            $0.depthAttachmentPixelFormat = .depth32Float
+        })
 
         super.init()
 
@@ -148,9 +154,10 @@ public class Renderer: NSObject {
 
         drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
 
-        drawGameworld(world: world, encoder: encoder, camera: playerCamera)
+//        drawGameworld(world: world, encoder: encoder, camera: playerCamera)
 
-        drawSprites(world: world, encoder: encoder, camera: playerCamera)
+//        drawSprites(world: world, encoder: encoder, camera: playerCamera)
+        drawIndexedSprites(world: world, encoder: encoder, camera: playerCamera)
 
         if world.showMap {
             drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
@@ -282,6 +289,80 @@ public class Renderer: NSObject {
             encoder.setFragmentTexture(monster, index: 0)
             encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
+    }
+
+    func drawIndexedSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)] = []
+
+        let old = [
+            Float3(-0.5, -0.5, 0.0), // 0
+            Float3(0.5, 0.5, 0.0), // 1
+            Float3(-0.5, 0.5, 0.0), // 2
+            Float3(-0.5, -0.5, 0.0), // 0
+            Float3(0.5, -0.5, 0.0), // 3
+            Float3(0.5, 0.5, 0.0), // 1
+        ]
+
+        renderables += world.sprites.map { billboard in
+            ([
+                Float3(-0.5, -0.5, 0.0), // lower left
+                Float3(0.5, 0.5, 0.0), // upper right
+                Float3(-0.5, 0.5, 0.0), // upper left
+                Float3(0.5, -0.5, 0.0), // lower right
+            ], [
+                Float2(0.0,0.0),
+                Float2(0.2,0.2),
+                Float2(0.0,0.2),
+                Float2(0.0,0.0),
+                Float2(0.2,0.0),
+                Float2(0.2,0.2)],
+                Float4x4.identity()
+                    * Float4x4(translateX: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
+                    * (Float4x4.identity()
+                    * Float4x4(rotateX: -(3 * .pi)/2)
+                    * Float4x4(rotateY: .pi / 2)
+                    * world.player.direction3d * Float4x4(rotateY: .pi/2)
+                )
+                , Color.red, MTLPrimitiveType.line, Tile.floor)
+        }
+
+        let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
+
+        let indexedObjTransform = renderables.map { _, _, transform, _, _, _ -> Float4x4 in transform }
+
+        let index: [[UInt16]] = [[0, 1, 2], [0, 3, 1]]
+
+        let vertices = renderables[0].0
+        let texCoords = renderables[0].1
+        let color = renderables[0].3
+        let primitiveType = renderables[0].4
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+            let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
+
+            var pixelSize = 1
+
+            var finalTransform = camera * worldTransform
+
+            encoder.setRenderPipelineState(textureIndexedPipeline)
+            encoder.setDepthStencilState(depthStencilState)
+            encoder.setCullMode(.back)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+            encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 3)
+
+            var fragmentColor = Float3(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.drawIndexedPrimitives(
+                type: primitiveType,
+                indexCount: index.count,
+                indexType: .uint16,
+                indexBuffer: indexBuffer,
+                indexBufferOffset: 0,
+                instanceCount: renderables.count
+            )
     }
 
     func drawGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {

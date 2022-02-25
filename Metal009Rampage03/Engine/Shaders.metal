@@ -42,6 +42,23 @@ fragment float4 fragment_main(constant float4 &color [[buffer(0)]]) {
     return color;
 }
 
+vertex VertexOut vertex_indexed(constant float3 *vertices [[buffer(0)]],
+                             constant matrix_float4x4 &matrix [[buffer(1)]],
+                             constant float &point_size [[buffer(2)]],
+                             constant matrix_float4x4 *indexedModelMatrix [[buffer(3)]],
+                             uint vid [[vertex_id]],
+                             uint iid [[instance_id]]
+                             ) {
+    VertexOut vertex_out {
+        .position = matrix * indexedModelMatrix[iid] * float4(vertices[vid], 1),
+//        .position = matrix * float4(vertices[vid], 1),
+        .texcoord = float2(),
+        .point_size = point_size
+    };
+
+    return vertex_out;
+}
+
 vertex VertexOut vertex_with_texcoords(Vertex in [[stage_in]],
                              constant matrix_float4x4 &matrix [[buffer(3)]],
                              constant float &point_size [[buffer(4)]],
@@ -68,5 +85,5 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
         discard_fragment();
     }
 
-    return float4(colorSample);
+    return color;
 }
