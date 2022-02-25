@@ -24,6 +24,9 @@ public class Renderer: NSObject {
     var wallTexture: MTLTexture!
     var monster: MTLTexture!
 
+    // static renderables
+    var worldTiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)]?
+
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
 
@@ -106,6 +109,10 @@ public class Renderer: NSObject {
     }
 
     public func render(_ world: World) {
+
+        if worldTiles == nil {
+            worldTiles = (TileImage(map: world.map).tiles)
+        }
 
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
             fatalError("""
@@ -278,13 +285,9 @@ public class Renderer: NSObject {
     }
 
     func drawGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)] = []
-
-        renderables += (TileImage(map: world.map).tiles)
-
         let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
 
-        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType, tile) in
+        worldTiles!.forEach { (vertices, texCoords, objTransform, color, primitiveType, tile) in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
             let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
 
