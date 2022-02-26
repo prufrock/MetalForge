@@ -85,5 +85,5 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
         discard_fragment();
     }
 
-    return color;
+    return float4(colorSample);
 }

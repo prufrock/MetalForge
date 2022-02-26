@@ -154,7 +154,7 @@ public class Renderer: NSObject {
 
         drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
 
-//        drawGameworld(world: world, encoder: encoder, camera: playerCamera)
+        drawGameworld(world: world, encoder: encoder, camera: playerCamera)
 
 //        drawSprites(world: world, encoder: encoder, camera: playerCamera)
         drawIndexedSprites(world: world, encoder: encoder, camera: playerCamera)
