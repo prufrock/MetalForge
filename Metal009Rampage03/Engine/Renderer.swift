@@ -323,14 +323,14 @@ public class Renderer: NSObject {
                     * Float4x4(rotateY: .pi / 2)
                     * world.player.direction3d * Float4x4(rotateY: .pi/2)
                 )
-                , Color.red, MTLPrimitiveType.line, Tile.floor)
+                , Color.red, MTLPrimitiveType.triangle, Tile.floor)
         }
 
         let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
 
         let indexedObjTransform = renderables.map { _, _, transform, _, _, _ -> Float4x4 in transform }
 
-        let index: [[UInt16]] = [[0, 1, 2], [0, 3, 1]]
+        let index: [UInt16] = [0, 1, 2, 0, 3, 1]
 
         let vertices = renderables[0].0
         let texCoords = renderables[0].1
