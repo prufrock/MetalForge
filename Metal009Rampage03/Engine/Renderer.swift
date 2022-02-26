@@ -97,9 +97,19 @@ public class Renderer: NSObject {
         textureIndexedPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
             $0.tessellationOutputWindingOrder = .clockwise
             $0.vertexFunction = library.makeFunction(name: "vertex_indexed")
-            $0.fragmentFunction = library.makeFunction(name: "fragment_main")
+            $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
             $0.colorAttachments[0].pixelFormat = .bgra8Unorm
             $0.depthAttachmentPixelFormat = .depth32Float
+            $0.vertexDescriptor = MTLVertexDescriptor().apply {
+                $0.attributes[0].format = MTLVertexFormat.float3
+                $0.attributes[0].bufferIndex = 0
+                $0.attributes[0].offset = 0
+                $0.attributes[1].format = MTLVertexFormat.float2
+                $0.attributes[1].bufferIndex = 1
+                $0.attributes[1].offset = 0
+                $0.layouts[0].stride = MemoryLayout<Float3>.stride
+                $0.layouts[1].stride = MemoryLayout<Float2>.stride
+            }
         })
 
         super.init()
@@ -311,11 +321,11 @@ public class Renderer: NSObject {
                 Float3(0.5, -0.5, 0.0), // lower right
             ], [
                 Float2(0.0,0.0),
-                Float2(0.2,0.2),
-                Float2(0.0,0.2),
+                Float2(1.0,1.0),
+                Float2(0.0,1.0),
+                Float2(1.0,0.0),
                 Float2(0.0,0.0),
-                Float2(0.2,0.0),
-                Float2(0.2,0.2)],
+                Float2(1.0,1.0)],
                 Float4x4.identity()
                     * Float4x4(translateX: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
                     * (Float4x4.identity()
@@ -338,6 +348,7 @@ public class Renderer: NSObject {
         let primitiveType = renderables[0].4
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
             let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
+            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
 
             var pixelSize = 1
 
@@ -347,14 +358,16 @@ public class Renderer: NSObject {
             encoder.setDepthStencilState(depthStencilState)
             encoder.setCullMode(.back)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
-            encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 3)
+            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
+            encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
 
             var fragmentColor = Float3(color)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentTexture(monster, index: 0)
             encoder.drawIndexedPrimitives(
                 type: primitiveType,
                 indexCount: index.count,
