@@ -164,9 +164,14 @@ public class Renderer: NSObject {
 
         drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
 
-        drawGameworld(world: world, encoder: encoder, camera: playerCamera)
+        if world.normalWorld {
+            drawGameworld(world: world, encoder: encoder, camera: playerCamera)
+        }
 
         if world.indexedWorld {
+            drawIndexedGameworld(world: world, encoder: encoder, camera: playerCamera)
+        }
+
         drawIndexedSprites(world: world, encoder: encoder, camera: playerCamera)
 
         if world.showMap {
@@ -368,6 +373,10 @@ public class Renderer: NSObject {
             encoder.setFragmentTexture(texture, index: 0)
             encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
         }
+    }
+
+    private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+
     }
 
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
