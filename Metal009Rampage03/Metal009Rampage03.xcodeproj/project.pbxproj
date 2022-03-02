@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AF0E355FDCD548C4FBCDB8D /* ArrayExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ECDF0E0452176A9655E9 /* ArrayExt.swift */; };
 		5AF0E5385F555047261D9F8F /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0272CBB17D63465D1DA /* Monster.swift */; };
 		5AF0E58905C14C9C4BB36A75 /* Billboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0D00D319755BFED14CC /* Billboard.swift */; };
 		5AF0E7094CCDB14F4EDB7965 /* Billboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0D00D319755BFED14CC /* Billboard.swift */; };
@@ -75,6 +76,7 @@
 		63772CE4277D3B2B00DD59C8 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63772CD5277D3B2300DD59C8 /* Shaders.metal */; };
 		63772CE7277D3B7300DD59C8 /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE5277D3B7300DD59C8 /* Map16.json */; };
 		63772CE8277D3B7300DD59C8 /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE6277D3B7300DD59C8 /* Map.json */; };
+		63A4D9B627CF0946003A2C48 /* ArrayExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ECDF0E0452176A9655E9 /* ArrayExt.swift */; };
 		63EBDAE627AA3D1F0052EC6B /* ShaderTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */; };
 		63EBDAE727AA3D1F0052EC6B /* ShaderTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 63EBDAE527AA3D1F0052EC6B /* ShaderTypes.h */; };
 /* End PBXBuildFile section */
@@ -182,6 +184,7 @@
 		5AF0E0D00D319755BFED14CC /* Billboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Billboard.swift; sourceTree = "<group>"; };
 		5AF0E81E2E7026C99BD6CABD /* Ray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScopeFunc.swift; sourceTree = "<group>"; };
+		5AF0ECDF0E0452176A9655E9 /* ArrayExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExt.swift; sourceTree = "<group>"; };
 		631782B7279B2C2E00226875 /* Metal009Rampage03macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal009Rampage03macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		631782B9279B2C2E00226875 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		631782BB279B2C2E00226875 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -456,6 +459,7 @@
 				5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */,
 				5AF0E0272CBB17D63465D1DA /* Monster.swift */,
 				5AF0E0D00D319755BFED14CC /* Billboard.swift */,
+				5AF0ECDF0E0452176A9655E9 /* ArrayExt.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -878,6 +882,7 @@
 				63178317279B386E00226875 /* Input.swift in Sources */,
 				63178318279B386E00226875 /* Tile.swift in Sources */,
 				63178319279B386E00226875 /* Shaders.metal in Sources */,
+				63A4D9B627CF0946003A2C48 /* ArrayExt.swift in Sources */,
 				6317831D279B38AE00226875 /* Ray.swift in Sources */,
 				63178313279B386E00226875 /* World.swift in Sources */,
 				6317831B279B386E00226875 /* Rect.swift in Sources */,
@@ -944,6 +949,7 @@
 				5AF0EF097DCAD6426FB33C10 /* ScopeFunc.swift in Sources */,
 				5AF0E95EEAD347DA4F89451D /* Monster.swift in Sources */,
 				5AF0E7094CCDB14F4EDB7965 /* Billboard.swift in Sources */,
+				5AF0E355FDCD548C4FBCDB8D /* ArrayExt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

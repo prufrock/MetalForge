@@ -376,7 +376,95 @@ public class Renderer: NSObject {
     }
 
     private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+        let old = [
+            Float3(0.0, 0.0, 0.0),
+            Float3(1.0, 1.0, 0.0),
+            Float3(0.0, 1.0, 0.0),
 
+            Float3(0.0, 0.0, 0.0),
+            Float3(1.0, 0.0, 0.0),
+            Float3(1.0, 1.0, 0.0),
+        ]
+
+
+        let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
+
+        let texCoords = [
+            Float2(0.2,0.2),
+            Float2(0.0,0.0),
+            Float2(0.0,0.2),
+            Float2(0.2,0.2),
+            Float2(0.2,0.0),
+            Float2(0.0,0.0)
+        ]
+
+        let vertices = [
+            Float3(0.0, 0.0, 0.0), // lower left
+            Float3(1.0, 1.0, 0.0), // upper right
+            Float3(0.0, 1.0, 0.0), // upper left
+            Float3(1.0, 0.0, 0.0), // lower right
+        ]
+//        let indexedObjTransform = worldTiles!.map { _, _, transform, _, _, _ -> Float4x4 in transform }
+        let color = Color.blue
+        let primitiveType = MTLPrimitiveType.triangle
+        let index: [UInt16] = [0, 1, 2, 0, 3, 1]
+
+
+        worldTiles!.chunked(into: 5).forEach { chunk in
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+            let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
+            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
+            let indexedObjTransform = chunk.map { _, _, transform, _, _, _ -> Float4x4 in transform }
+
+
+            var pixelSize = 1
+
+            var finalTransform = camera * worldTransform
+
+            let texture: MTLTexture
+
+//            switch(tile) {
+//            case .wall:
+//                texture = wallTexture
+//            case .crackWall:
+//                texture = crackedWallTexture
+//            case .slimeWall:
+//                texture = slimeWallTexture
+//            case .floor:
+//                texture = floor
+//            case .crackFloor:
+//                texture = crackedFloor
+//            case .ceiling:
+//                texture = ceiling
+//            default:
+//                texture = colorMapTexture
+//            }
+
+            texture = colorMapTexture
+
+            encoder.setRenderPipelineState(textureIndexedPipeline)
+            encoder.setDepthStencilState(depthStencilState)
+            encoder.setCullMode(.back)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
+            encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
+
+            var fragmentColor = Float3(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentTexture(texture, index: 0)
+        encoder.drawIndexedPrimitives(
+            type: primitiveType,
+            indexCount: index.count,
+            indexType: .uint16,
+            indexBuffer: indexBuffer,
+            indexBufferOffset: 0,
+            instanceCount: chunk.count
+        )
+        }
     }
 
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
