@@ -69,7 +69,6 @@ public class Renderer: NSObject {
         self.depthStencilState = depthStencilState
 
         vertexPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
-            $0.tessellationOutputWindingOrder = .counterClockwise
             $0.vertexFunction = library.makeFunction(name: "vertex_main")
             $0.fragmentFunction = library.makeFunction(name: "fragment_main")
             $0.colorAttachments[0].pixelFormat = .bgra8Unorm
@@ -77,7 +76,6 @@ public class Renderer: NSObject {
         })
 
         texturePipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
-            $0.tessellationOutputWindingOrder = .clockwise
             $0.vertexFunction = library.makeFunction(name: "vertex_with_texcoords")
             $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
             $0.colorAttachments[0].pixelFormat = .bgra8Unorm
@@ -95,7 +93,6 @@ public class Renderer: NSObject {
         })
 
         textureIndexedPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
-            $0.tessellationOutputWindingOrder = .clockwise
             $0.vertexFunction = library.makeFunction(name: "vertex_indexed")
             $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
             $0.colorAttachments[0].pixelFormat = .bgra8Unorm
@@ -389,13 +386,11 @@ public class Renderer: NSObject {
 
         let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
 
-        let texCoords = [
-            Float2(0.2,0.2),
-            Float2(0.0,0.0),
-            Float2(0.0,0.2),
-            Float2(0.2,0.2),
-            Float2(0.2,0.0),
-            Float2(0.0,0.0)
+        var texCoords = [
+            Float2(0.0,1.0), // mirrored across the y
+            Float2(1.0,0.0), //
+            Float2(1.0,1.0), //
+            Float2(0.0,0.0), //
         ]
 
         let vertices = [
@@ -404,18 +399,16 @@ public class Renderer: NSObject {
             Float3(0.0, 1.0, 0.0), // upper left
             Float3(1.0, 0.0, 0.0), // lower right
         ]
-//        let indexedObjTransform = worldTiles!.map { _, _, transform, _, _, _ -> Float4x4 in transform }
+        let indexedObjTransform = worldTiles!.map { _, _, transform, _, _, _ -> Float4x4 in transform }
         let color = Color.blue
         let primitiveType = MTLPrimitiveType.triangle
         let index: [UInt16] = [0, 1, 2, 0, 3, 1]
 
-
-        worldTiles!.chunked(into: 5).forEach { chunk in
+        worldTiles!.chunked(into: 64).forEach { chunk in
             let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
             let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
             let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
             let indexedObjTransform = chunk.map { _, _, transform, _, _, _ -> Float4x4 in transform }
-
 
             var pixelSize = 1
 
@@ -440,7 +433,7 @@ public class Renderer: NSObject {
 //                texture = colorMapTexture
 //            }
 
-            texture = colorMapTexture
+            texture = wallTexture
 
             encoder.setRenderPipelineState(textureIndexedPipeline)
             encoder.setDepthStencilState(depthStencilState)
