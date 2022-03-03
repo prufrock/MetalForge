@@ -2,7 +2,7 @@
 // Created by David Kanenwisher on 12/26/21.
 //
 
-public enum Tile: Int, Decodable {
+public enum Tile: Int, Decodable, CaseIterable {
     // Ceiling
     case ceiling = 5
 
