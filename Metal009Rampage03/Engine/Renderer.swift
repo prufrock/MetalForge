@@ -248,15 +248,6 @@ public class Renderer: NSObject {
     func drawIndexedSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)] = []
 
-        let old = [
-            Float3(-0.5, -0.5, 0.0), // 0
-            Float3(0.5, 0.5, 0.0), // 1
-            Float3(-0.5, 0.5, 0.0), // 2
-            Float3(-0.5, -0.5, 0.0), // 0
-            Float3(0.5, -0.5, 0.0), // 3
-            Float3(0.5, 0.5, 0.0), // 1
-        ]
-
         renderables += world.sprites.map { billboard in
             ([
                 Float3(-0.5, -0.5, 0.0), // lower left
@@ -264,12 +255,11 @@ public class Renderer: NSObject {
                 Float3(-0.5, 0.5, 0.0), // upper left
                 Float3(0.5, -0.5, 0.0), // lower right
             ], [
-                Float2(0.0,0.0),
-                Float2(1.0,1.0),
-                Float2(0.0,1.0),
                 Float2(1.0,0.0),
+                Float2(0.0,1.0),
+                Float2(1.0,1.0),
                 Float2(0.0,0.0),
-                Float2(1.0,1.0)],
+            ],
                 Float4x4.identity()
                     * Float4x4(translateX: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
                     * (Float4x4.identity()
