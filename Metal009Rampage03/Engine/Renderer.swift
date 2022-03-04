@@ -162,11 +162,7 @@ public class Renderer: NSObject {
 
         drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
 
-        if world.normalWorld {
-            drawGameworld(world: world, encoder: encoder, camera: playerCamera)
-        }
-
-        if world.indexedWorld {
+        if world.drawWorld {
             drawIndexedGameworld(world: world, encoder: encoder, camera: playerCamera)
         }
 
@@ -325,53 +321,6 @@ public class Renderer: NSObject {
             indexBufferOffset: 0,
             instanceCount: renderables.count
         )
-    }
-
-    func drawGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
-
-        worldTiles!.forEach { (vertices, texCoords, objTransform, color, primitiveType, tile) in
-            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
-
-            var pixelSize = 1
-
-            var finalTransform = camera * worldTransform * objTransform
-
-            let texture: MTLTexture
-
-            switch(tile) {
-            case .wall:
-                texture = wallTexture
-            case .crackWall:
-                texture = crackedWallTexture
-            case .slimeWall:
-                texture = slimeWallTexture
-            case .floor:
-                texture = floor
-            case .crackFloor:
-                texture = crackedFloor
-            case .ceiling:
-                texture = ceiling
-            default:
-                texture = colorMapTexture
-            }
-
-            encoder.setRenderPipelineState(texturePipeline)
-            encoder.setDepthStencilState(depthStencilState)
-            encoder.setCullMode(.back)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
-
-            var fragmentColor = Float3(color)
-
-            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.setFragmentTexture(texture, index: 0)
-            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
-        }
     }
 
     private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
