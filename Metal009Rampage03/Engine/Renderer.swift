@@ -293,36 +293,37 @@ public class Renderer: NSObject {
         let texCoords = renderables[0].1
         let color = renderables[0].3
         let primitiveType = renderables[0].4
-            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-            let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
-            let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
 
-            var pixelSize = 1
+        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
+        let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
 
-            var finalTransform = camera * worldTransform
+        var pixelSize = 1
 
-            encoder.setRenderPipelineState(textureIndexedPipeline)
-            encoder.setDepthStencilState(depthStencilState)
-            encoder.setCullMode(.back)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
-            encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
+        var finalTransform = camera * worldTransform
 
-            var fragmentColor = Float3(color)
+        encoder.setRenderPipelineState(textureIndexedPipeline)
+        encoder.setDepthStencilState(depthStencilState)
+        encoder.setCullMode(.back)
+        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
+        encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
+        encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
 
-            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.setFragmentTexture(monster, index: 0)
-            encoder.drawIndexedPrimitives(
-                type: primitiveType,
-                indexCount: index.count,
-                indexType: .uint16,
-                indexBuffer: indexBuffer,
-                indexBufferOffset: 0,
-                instanceCount: renderables.count
-            )
+        var fragmentColor = Float3(color)
+
+        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+        encoder.setFragmentTexture(monster, index: 0)
+        encoder.drawIndexedPrimitives(
+            type: primitiveType,
+            indexCount: index.count,
+            indexType: .uint16,
+            indexBuffer: indexBuffer,
+            indexBufferOffset: 0,
+            instanceCount: renderables.count
+        )
     }
 
     func drawGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
@@ -373,17 +374,6 @@ public class Renderer: NSObject {
     }
 
     private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        let old = [
-            Float3(0.0, 0.0, 0.0),
-            Float3(1.0, 1.0, 0.0),
-            Float3(0.0, 1.0, 0.0),
-
-            Float3(0.0, 0.0, 0.0),
-            Float3(1.0, 0.0, 0.0),
-            Float3(1.0, 1.0, 0.0),
-        ]
-
-
         let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
 
         // is something getting flipped somewhere?
