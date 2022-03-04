@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5AF0E355FDCD548C4FBCDB8D /* ArrayExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ECDF0E0452176A9655E9 /* ArrayExt.swift */; };
+		5AF0E4E810A4CB65F71E8737 /* MetalTileBuffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EC3A29962F9D1EB6E15C /* MetalTileBuffers.swift */; };
 		5AF0E5385F555047261D9F8F /* Monster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0272CBB17D63465D1DA /* Monster.swift */; };
 		5AF0E58905C14C9C4BB36A75 /* Billboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0D00D319755BFED14CC /* Billboard.swift */; };
 		5AF0E7094CCDB14F4EDB7965 /* Billboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E0D00D319755BFED14CC /* Billboard.swift */; };
@@ -46,6 +47,7 @@
 		6319278327A3A09D00CB3257 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6319278127A3A09D00CB3257 /* wall.png */; };
 		6360215027BDFA8800C0A8B2 /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 63772CE5277D3B7300DD59C8 /* Map16.json */; };
 		6361036627B4C4AC0094392F /* ScopeFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */; };
+		63700C9227D1BC5400A38729 /* MetalTileBuffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EC3A29962F9D1EB6E15C /* MetalTileBuffers.swift */; };
 		63772C79277D39A000DD59C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C78277D39A000DD59C8 /* AppDelegate.swift */; };
 		63772C7B277D39A000DD59C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C7A277D39A000DD59C8 /* SceneDelegate.swift */; };
 		63772C7D277D39A000DD59C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63772C7C277D39A000DD59C8 /* ViewController.swift */; };
@@ -184,6 +186,7 @@
 		5AF0E0D00D319755BFED14CC /* Billboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Billboard.swift; sourceTree = "<group>"; };
 		5AF0E81E2E7026C99BD6CABD /* Ray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ray.swift; sourceTree = "<group>"; };
 		5AF0EBAA5EFE81E95AD2DCCF /* ScopeFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScopeFunc.swift; sourceTree = "<group>"; };
+		5AF0EC3A29962F9D1EB6E15C /* MetalTileBuffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalTileBuffers.swift; sourceTree = "<group>"; };
 		5AF0ECDF0E0452176A9655E9 /* ArrayExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExt.swift; sourceTree = "<group>"; };
 		631782B7279B2C2E00226875 /* Metal009Rampage03macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Metal009Rampage03macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		631782B9279B2C2E00226875 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -460,6 +463,7 @@
 				5AF0E0272CBB17D63465D1DA /* Monster.swift */,
 				5AF0E0D00D319755BFED14CC /* Billboard.swift */,
 				5AF0ECDF0E0452176A9655E9 /* ArrayExt.swift */,
+				5AF0EC3A29962F9D1EB6E15C /* MetalTileBuffers.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -879,6 +883,7 @@
 				63178311279B386E00226875 /* Tilemap.swift in Sources */,
 				63178310279B386E00226875 /* MathUtils.swift in Sources */,
 				63178315279B386E00226875 /* Player.swift in Sources */,
+				63700C9227D1BC5400A38729 /* MetalTileBuffers.swift in Sources */,
 				63178317279B386E00226875 /* Input.swift in Sources */,
 				63178318279B386E00226875 /* Tile.swift in Sources */,
 				63178319279B386E00226875 /* Shaders.metal in Sources */,
@@ -950,6 +955,7 @@
 				5AF0E95EEAD347DA4F89451D /* Monster.swift in Sources */,
 				5AF0E7094CCDB14F4EDB7965 /* Billboard.swift in Sources */,
 				5AF0E355FDCD548C4FBCDB8D /* ArrayExt.swift in Sources */,
+				5AF0E4E810A4CB65F71E8737 /* MetalTileBuffers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

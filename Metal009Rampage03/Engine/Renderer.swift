@@ -27,6 +27,7 @@ public class Renderer: NSObject {
 
     // static renderables
     var worldTiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)]?
+    var worldTilesBuffers: [MetalTileBuffers]?
 
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
@@ -376,8 +377,73 @@ public class Renderer: NSObject {
     private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let worldTransform = Float4x4.identity() * Float4x4(scaleX: 0.2, y: 0.2, z: 0.2)
 
+        let color = Color.blue
+        let primitiveType = MTLPrimitiveType.triangle
+
+        if worldTilesBuffers == nil {
+            initializeWorldTilesBuffer()
+        }
+
+        worldTilesBuffers?.forEach { buffers in
+            let buffer = buffers.vertexBuffer
+            let indexBuffer = buffers.indexBuffer
+            let coordsBuffer = buffers.uvBuffer
+            let indexedObjTransform = buffers.indexedTransformations
+
+            var pixelSize = 1
+
+            var finalTransform = camera * worldTransform
+
+            let texture: MTLTexture
+
+            switch(buffers.tile) {
+            case .wall:
+                texture = wallTexture
+            case .crackWall:
+                texture = crackedWallTexture
+            case .slimeWall:
+                texture = slimeWallTexture
+            case .floor:
+                texture = floor
+            case .crackFloor:
+                texture = crackedFloor
+            case .ceiling:
+                texture = ceiling
+            default:
+                texture = colorMapTexture
+            }
+
+            encoder.setRenderPipelineState(textureIndexedPipeline)
+            encoder.setDepthStencilState(depthStencilState)
+            encoder.setCullMode(.back)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
+            encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
+
+            var fragmentColor = Float3(color)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentTexture(texture, index: 0)
+            encoder.drawIndexedPrimitives(
+                type: primitiveType,
+                indexCount: buffers.indexCount,
+                indexType: .uint16,
+                indexBuffer: indexBuffer,
+                indexBufferOffset: 0,
+                instanceCount: buffers.tileCount
+            )
+        }
+    }
+
+    private func initializeWorldTilesBuffer() {
+        worldTilesBuffers = Array()
+        let index: [UInt16] = [0, 1, 2, 0, 3, 1]
+
         // is something getting flipped somewhere?
-        var  texCoords = [
+        let  uvCoords = [
             Float2(1.0,1.0),
             Float2(0.0,0.0),
             Float2(0.0,1.0),
@@ -390,65 +456,28 @@ public class Renderer: NSObject {
             Float3(0.0, 1.0, 0.0),
             Float3(1.0, 0.0, 0.0),
         ]
-        let color = Color.blue
-        let primitiveType = MTLPrimitiveType.triangle
-        let index: [UInt16] = [0, 1, 2, 0, 3, 1]
 
         Tile.allCases.forEach { tile in
-            worldTiles!.filter{$0.5 == tile }.chunked(into: 64).forEach { chunk in
-                let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+            worldTiles!.filter {$0.5 == tile}.chunked(into: 64).forEach { chunk in
+                let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])!
                 let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
-                let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
-                let indexedObjTransform = chunk.map { _, _, transform, _, _, _ -> Float4x4 in transform }
-
-                var pixelSize = 1
-
-                var finalTransform = camera * worldTransform
-
-                let texture: MTLTexture
-
-                switch(tile) {
-                case .wall:
-                    texture = wallTexture
-                case .crackWall:
-                    texture = crackedWallTexture
-                case .slimeWall:
-                    texture = slimeWallTexture
-                case .floor:
-                    texture = floor
-                case .crackFloor:
-                    texture = crackedFloor
-                case .ceiling:
-                    texture = ceiling
-                default:
-                    texture = colorMapTexture
+                let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
+                let indexedObjTransform = chunk.map { _, _, transform, _, _, _ -> Float4x4 in
+                    transform
                 }
-
-                encoder.setRenderPipelineState(textureIndexedPipeline)
-                encoder.setDepthStencilState(depthStencilState)
-                encoder.setCullMode(.back)
-                encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-                encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
-                encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
-                encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
-                encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
-
-                var fragmentColor = Float3(color)
-
-                encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-                encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-                encoder.setFragmentTexture(texture, index: 0)
-                encoder.drawIndexedPrimitives(
-                    type: primitiveType,
-                    indexCount: index.count,
-                    indexType: .uint16,
-                    indexBuffer: indexBuffer,
-                    indexBufferOffset: 0,
-                    instanceCount: chunk.count
+                worldTilesBuffers?.append(
+                    MetalTileBuffers(
+                        vertexBuffer: buffer,
+                        indexBuffer: indexBuffer,
+                        uvBuffer: coordsBuffer,
+                        indexedTransformations: indexedObjTransform,
+                        tile: tile,
+                        tileCount: chunk.count,
+                        index: index,
+                        indexCount: index.count)
                 )
             }
         }
-
     }
 
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
