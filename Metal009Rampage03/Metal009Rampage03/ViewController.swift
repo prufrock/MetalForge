@@ -80,7 +80,9 @@ extension ViewController: MTKViewDelegate {
         let input = Input(
             speed: -inputVector.y,
             rotation: Float2x2(rotate: rotation),
-            rotation3d: Float4x4(rotateY: inputVector.x * world.player.turningSpeed * worldTimeStep)
+            rotation3d: Float4x4(rotateY: inputVector.x * world.player.turningSpeed * worldTimeStep),
+            showMap: false,
+            drawWorld: true
         )
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
