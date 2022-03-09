@@ -13,7 +13,7 @@ public class Renderer: NSObject {
     let textureIndexedPipeline: MTLRenderPipelineState
     let vertexPipeline: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
-    public var aspect: Float = 1.0
+    private var aspect: Float = 1.0
 
     // textures
     var ceiling: MTLTexture!
@@ -120,6 +120,10 @@ public class Renderer: NSObject {
         slimeWallTexture = loadTexture(name: "SlimeWall")!
         wallTexture = loadTexture(name: "Wall")!
         monster = loadTexture(name: "Monster")!
+    }
+
+    public func updateAspect(width: Float, height: Float) {
+        aspect = (width / height)
     }
 
     public func render(_ world: World) {

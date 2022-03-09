@@ -151,7 +151,7 @@ extension GameViewController: MTKViewDelegate {
         print("height: \(size.height) width: \(size.width)")
         print("height: \(view.frame.height) width: \(view.frame.width)")
 
-        renderer.aspect = Float(size.height / size.width)
+        renderer.updateAspect(width: Float(size.width), height: Float(size.height))
     }
 
     public func draw(in view: MTKView) {
