@@ -31,8 +31,8 @@ public extension Float4x4 {
         return Float4x4(X, Y, Z, W)
     }
 
-    init(scaleX x: Float, y: Float, z: Float) {
-        self.init(
+    static func scale(x: Float, y: Float, z: Float) -> Float4x4 {
+        Float4x4(
             [x, 0, 0, 0],
             [0, y, 0, 0],
             [0, 0, z, 0],
