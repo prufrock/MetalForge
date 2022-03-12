@@ -12,11 +12,11 @@ public typealias Float2x2 = simd_float2x2
 public typealias Float4x4 = simd_float4x4
 
 public extension Float4x4 {
-    internal static func identity() -> Float4x4 {
+    internal static func identity() -> Self {
         matrix_identity_float4x4
     }
 
-    static func perspectiveProjection(fov: Float, aspect: Float, nearPlane: Float, farPlane: Float) -> Float4x4 {
+    static func perspectiveProjection(fov: Float, aspect: Float, nearPlane: Float, farPlane: Float) -> Self {
         let zoom = 1 / tan(fov / 2) // objects get smaller as fov increases
 
         let y = zoom
@@ -28,11 +28,11 @@ public extension Float4x4 {
         let Z = Float4(0, 0, z, 1)
         let W = Float4(0, 0, w, 0)
 
-        return Float4x4(X, Y, Z, W)
+        return Self(X, Y, Z, W)
     }
 
-    static func scale(x: Float, y: Float, z: Float) -> Float4x4 {
-        Float4x4(
+    static func scale(x: Float, y: Float, z: Float) -> Self {
+        Self(
             [x, 0, 0, 0],
             [0, y, 0, 0],
             [0, 0, z, 0],
@@ -40,8 +40,8 @@ public extension Float4x4 {
         )
     }
 
-    static func scaleX(_ x: Float) -> Float4x4 {
-        Float4x4(
+    static func scaleX(_ x: Float) -> Self {
+        Self(
             [x, 0, 0, 0],
             [0, 1, 0, 0],
             [0, 0, 1, 0],
@@ -49,8 +49,8 @@ public extension Float4x4 {
         )
     }
 
-    static func scaleY(_ y: Float) -> Float4x4 {
-        Float4x4(
+    static func scaleY(_ y: Float) -> Self {
+        Self(
             [1, 0, 0, 0],
             [0, y, 0, 0],
             [0, 0, 1, 0],
@@ -58,8 +58,8 @@ public extension Float4x4 {
         )
     }
 
-    static func scaleZ(_ z: Float) -> Float4x4 {
-        Float4x4(
+    static func scaleZ(_ z: Float) -> Self {
+        Self(
             [1, 0, 0, 0],
             [0, 1, 0, 0],
             [0, 0, z, 0],
@@ -67,7 +67,7 @@ public extension Float4x4 {
         )
     }
 
-    static func rotateX(_ angle: Float) -> Float4x4 {
+    static func rotateX(_ angle: Float) -> Self {
          Self(
             [1,           0,          0, 0],
             [0,  cos(angle), sin(angle), 0],
@@ -76,7 +76,7 @@ public extension Float4x4 {
         )
     }
 
-    static func rotateY(_ angle: Float) -> Float4x4 {
+    static func rotateY(_ angle: Float) -> Self {
         Self(
             [cos(angle), 0, -sin(angle), 0],
             [         0, 1,           0, 0],
@@ -85,7 +85,7 @@ public extension Float4x4 {
         )
     }
 
-    static func rotateZ(_ angle: Float) -> Float4x4 {
+    static func rotateZ(_ angle: Float) -> Self {
         Self(
             [ cos(angle), sin(angle), 0, 0],
             [-sin(angle), cos(angle), 0, 0],
