@@ -67,17 +67,17 @@ public extension Float4x4 {
         )
     }
 
-    init(rotateZ angle: Float) {
-        self.init(
-            [ cos(angle), sin(angle), 0, 0],
-            [-sin(angle), cos(angle), 0, 0],
-            [          0,          0, 1, 0],
-            [          0,          0, 0, 1]
+    static func rotateX(_ angle: Float) -> Float4x4 {
+         Self(
+            [1,           0,          0, 0],
+            [0,  cos(angle), sin(angle), 0],
+            [0, -sin(angle), cos(angle), 0],
+            [0,           0,          0, 1]
         )
     }
 
-    init(rotateY angle: Float) {
-        self.init(
+    static func rotateY(_ angle: Float) -> Float4x4 {
+        Self(
             [cos(angle), 0, -sin(angle), 0],
             [         0, 1,           0, 0],
             [sin(angle), 0,  cos(angle), 0],
@@ -85,12 +85,12 @@ public extension Float4x4 {
         )
     }
 
-    init(rotateX angle: Float) {
-        self.init(
-            [1,           0,          0, 0],
-            [0,  cos(angle), sin(angle), 0],
-            [0, -sin(angle), cos(angle), 0],
-            [0,           0,          0, 1]
+    static func rotateZ(_ angle: Float) -> Float4x4 {
+        Self(
+            [ cos(angle), sin(angle), 0, 0],
+            [-sin(angle), cos(angle), 0, 0],
+            [          0,          0, 1, 0],
+            [          0,          0, 0, 1]
         )
     }
 

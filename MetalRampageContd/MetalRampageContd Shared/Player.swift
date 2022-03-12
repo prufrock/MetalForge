@@ -15,7 +15,7 @@ public struct Player {
         self.position = position
         self.velocity = Float2(0, 0)
         self.direction = Float2(1, 0)
-        self.direction3d = Float4x4(rotateY: .pi/2)
+        self.direction3d = Float4x4.rotateY(.pi/2)
     }
 }
 

@@ -160,7 +160,7 @@ public class Renderer: NSObject {
                 * Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
                 * Float4x4(translateX: 0.0, y: 0.0, z: 0.5)
                 * world.player.position.toTranslation()
-                * Float4x4(rotateX: -(3 * .pi)/2)
+                * Float4x4.rotateX(-(3 * .pi)/2)
                 * (world.player.direction3d * Float4x4.scale(x: 1.0, y: 1.0, z: 1.0))
               ).inverse
 
@@ -267,9 +267,9 @@ public class Renderer: NSObject {
                 Float4x4.identity()
                     * Float4x4(translateX: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
                     * (Float4x4.identity()
-                    * Float4x4(rotateX: -(3 * .pi)/2)
-                    * Float4x4(rotateY: .pi / 2)
-                    * world.player.direction3d * Float4x4(rotateY: .pi/2)
+                    * Float4x4.rotateX(-(3 * .pi)/2)
+                    * Float4x4.rotateY(.pi / 2)
+                    * world.player.direction3d * Float4x4.rotateY(.pi/2)
                 )
                 , Color.red, MTLPrimitiveType.triangle, Tile.floor)
         }

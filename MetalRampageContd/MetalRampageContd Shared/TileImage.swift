@@ -51,24 +51,25 @@ struct TileImage {
         tiles = myTiles
     }
 
+    //TODO find a home for these
     private func rotateY(_ angle: Float) -> Float4x4 {
         Float4x4.identity()
             * Float4x4.init(translateX: Float(0.5), y: Float(0.5), z: 0.5)
-            * Float4x4.init(rotateY: angle)
+            * Float4x4.rotateY(angle)
             * Float4x4.init(translateX: -0.5, y: -0.5, z: -0.5)
     }
 
     private func rotateZ(_ angle: Float) -> Float4x4 {
         Float4x4.identity()
             * Float4x4.init(translateX: 0.5, y: 0.5, z: 0.5)
-            * Float4x4.init(rotateZ: angle)
+            * Float4x4.rotateZ(angle)
             * Float4x4.init(translateX: -0.5, y: -0.5, z: -0.5)
     }
 
     private func rotateX(_ angle: Float) -> Float4x4 {
         Float4x4.identity()
             * Float4x4.init(translateX: 0.5, y: 0.5, z: 0.5)
-            * Float4x4.init(rotateX: angle)
+            * Float4x4.rotateX(angle)
             * Float4x4.init(translateX: -0.5, y: -0.5, z: -0.5)
     }
 }
