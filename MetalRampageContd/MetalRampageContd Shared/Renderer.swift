@@ -150,7 +150,7 @@ public class Renderer: NSObject {
             * Float4x4.scaleY(-1)
 
         let mapCamera = Float4x4.identity()
-            * Float4x4(translateX: -0.7, y: 0.9, z: 0)
+            * Float4x4.translate(x: -0.7, y: 0.9, z: 0)
             * Float4x4.scale(x: 0.03, y: 0.03, z: 1.0)
             * Float4x4.scaleY(aspect)
 
@@ -158,7 +158,7 @@ public class Renderer: NSObject {
             * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
             * (Float4x4.identity()
                 * Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
-                * Float4x4(translateX: 0.0, y: 0.0, z: 0.5)
+                * Float4x4.translate(x: 0.0, y: 0.0, z: 0.5)
                 * world.player.position.toTranslation()
                 * Float4x4.rotateX(-(3 * .pi)/2)
                 * (world.player.direction3d * Float4x4.scale(x: 1.0, y: 1.0, z: 1.0))
@@ -194,35 +194,35 @@ public class Renderer: NSObject {
         renderables += LineCube(Float4x4.scale(x: 0.1, y: 0.1, z: 0.1))
         renderables += LineCube(
             Float4x4.identity()
-                * Float4x4(translateX: 1.0, y: 0.0, z: 0.0)
+                * Float4x4.translate(x: 1.0, y: 0.0, z: 0.0)
                 * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
         )
         renderables += LineCube(
             Float4x4.identity()
-                * Float4x4(translateX: -1.0, y: 0.0, z: 0.0)
+                * Float4x4.translate(x: -1.0, y: 0.0, z: 0.0)
                 * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
         )
         renderables += LineCube(
             Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: 1.0, z: 0.0)
-                * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
-        )
-
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: -1.0, z: 0.0)
+                * Float4x4.translate(x: 0.0, y: 1.0, z: 0.0)
                 * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
         )
 
         renderables += LineCube(
             Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: 0.0, z: 1.0)
+                * Float4x4.translate(x: 0.0, y: -1.0, z: 0.0)
                 * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
         )
 
         renderables += LineCube(
             Float4x4.identity()
-                * Float4x4(translateX: 0.0, y: 0.0, z: -1.0)
+                * Float4x4.translate(x: 0.0, y: 0.0, z: 1.0)
+                * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
+        )
+
+        renderables += LineCube(
+            Float4x4.identity()
+                * Float4x4.translate(x: 0.0, y: 0.0, z: -1.0)
                 * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
         )
 
@@ -265,7 +265,7 @@ public class Renderer: NSObject {
                 Float2(0.0,1.0),
             ],
                 Float4x4.identity()
-                    * Float4x4(translateX: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
+                    * Float4x4.translate(x: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
                     * (Float4x4.identity()
                     * Float4x4.rotateX(-(3 * .pi)/2)
                     * Float4x4.rotateY(.pi / 2)
@@ -443,7 +443,7 @@ public class Renderer: NSObject {
             ([
                 viewStart.toFloat3(),
                 viewEnd.toFloat3()
-            ], [], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .red, .line)
+            ], [], Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), .red, .line)
         )
         // Cast rays
         let columns = 3
@@ -470,7 +470,7 @@ public class Renderer: NSObject {
                 ([
                     ray.origin.toFloat3(),
                     end.toFloat3()
-                ], [], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .green, .line)
+                ], [], Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), .green, .line)
             )
             columnPosition += step
         }
@@ -481,7 +481,7 @@ public class Renderer: NSObject {
                 ([
                     line.start.toFloat3(),
                     line.end.toFloat3()
-                ], [], Float4x4.init(translateX: 0.0, y: 0.0, z: 0.0), .green, .line)
+                ], [], Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), .green, .line)
             )
         }
 
@@ -513,7 +513,7 @@ public class Renderer: NSObject {
                         Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
                         Float3(x: Float(x), y: Float(bitmapHeight) + height, z: 0.0),
                     ], [], Float4x4.identity()
-                        * Float4x4.init(translateX: -7.0, y: 2.0, z: 0.0)
+                        * Float4x4.translate(x: -7.0, y: 2.0, z: 0.0)
                         * Float4x4.scale(x: 0.1, y: 1.0, z: 1.0), wallColor, .line)
                 )
             }

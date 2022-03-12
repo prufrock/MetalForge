@@ -94,8 +94,8 @@ public extension Float4x4 {
         )
     }
 
-    init(translateX x: Float, y: Float, z: Float) {
-        self.init(
+    static func translate(x: Float, y: Float, z: Float) -> Self {
+        Self(
             [1, 0, 0, 0],
             [0, 1, 0, 0],
             [0, 0, 1, 0],
@@ -131,7 +131,7 @@ public extension Float2 {
     }
 
     func toTranslation() -> Float4x4 {
-        Float4x4(translateX: self.x, y: self.y, z: 0.0)
+        Float4x4.translate(x: self.x, y: self.y, z: 0.0)
     }
 }
 
