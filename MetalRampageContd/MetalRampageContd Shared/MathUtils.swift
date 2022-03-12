@@ -40,11 +40,29 @@ public extension Float4x4 {
         )
     }
 
-    init(scaleY y: Float) {
-        self.init(
+    static func scaleX(_ x: Float) -> Float4x4 {
+        Float4x4(
+            [x, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        )
+    }
+
+    static func scaleY(_ y: Float) -> Float4x4 {
+        Float4x4(
             [1, 0, 0, 0],
             [0, y, 0, 0],
             [0, 0, 1, 0],
+            [0, 0, 0, 1]
+        )
+    }
+
+    static func scaleZ(_ z: Float) -> Float4x4 {
+        Float4x4(
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, z, 0],
             [0, 0, 0, 1]
         )
     }
