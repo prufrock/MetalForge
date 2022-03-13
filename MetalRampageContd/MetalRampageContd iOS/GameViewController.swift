@@ -79,7 +79,7 @@ extension GameViewController: MTKViewDelegate {
         let rotation = inputVector.x * world.player.turningSpeed * worldTimeStep
         let input = Input(
             speed: -inputVector.y,
-            rotation: Float2x2(rotate: rotation),
+            rotation: Float2x2.rotate(rotation),
             rotation3d: Float4x4.rotateY(inputVector.x * world.player.turningSpeed * worldTimeStep),
             showMap: false,
             drawWorld: true

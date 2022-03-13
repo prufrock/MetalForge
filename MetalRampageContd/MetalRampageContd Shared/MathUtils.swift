@@ -105,8 +105,8 @@ public extension Float4x4 {
 }
 
 public extension Float2x2 {
-    init(rotate angle: Float) {
-        self.init(
+    static func rotate(_ angle: Float) -> Self {
+        Self(
             [ cos(angle), sin(angle)],
             [-sin(angle), cos(angle)]
         )
