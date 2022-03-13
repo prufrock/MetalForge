@@ -118,20 +118,20 @@ public extension Float2 {
         (x * x + y * y).squareRoot()
     }
 
-    var orthogonal: Float2 {
-        return Float2(x: -y, y: x)
+    var orthogonal: Self {
+        Float2(x: -y, y: x)
     }
 
     internal func toFloat3() -> Float3 {
         Float3(self)
     }
 
-    func rotated(by rotation: Float2x2) -> Float2 {
+    func rotated(by rotation: Float2x2) -> Self {
         rotation * self
     }
 
     func toTranslation() -> Float4x4 {
-        Float4x4.translate(x: self.x, y: self.y, z: 0.0)
+        Float4x4.translate(x: x, y: y, z: 0.0)
     }
 }
 
