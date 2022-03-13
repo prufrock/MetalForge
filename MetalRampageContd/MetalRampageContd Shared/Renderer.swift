@@ -151,17 +151,17 @@ public class Renderer: NSObject {
 
         let mapCamera = Float4x4.identity()
             * Float4x4.translate(x: -0.7, y: 0.9, z: 0)
-            * Float4x4.scale(x: 0.03, y: 0.03, z: 1.0)
+                .scaled(x: 0.03, y: 0.03, z: 1.0)
             * Float4x4.scaleY(aspect)
 
         let playerCamera = Float4x4.identity()
             * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
             * (Float4x4.identity()
-                * Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
+                .scaled(x: 0.2, y: 0.2, z: 0.2)
                 * Float4x4.translate(x: 0.0, y: 0.0, z: 0.5)
                 * world.player.position.toTranslation()
                 * Float4x4.rotateX(-(3 * .pi)/2)
-                * (world.player.direction3d * Float4x4.scale(x: 1.0, y: 1.0, z: 1.0))
+                * (world.player.direction3d.scaled(x: 1.0, y: 1.0, z: 1.0))
               ).inverse
 
         drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
@@ -195,35 +195,35 @@ public class Renderer: NSObject {
         renderables += LineCube(
             Float4x4.identity()
                 * Float4x4.translate(x: 1.0, y: 0.0, z: 0.0)
-                * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
+                    .scaled(x: 0.1, y: 0.1, z: 0.1)
         )
         renderables += LineCube(
             Float4x4.identity()
                 * Float4x4.translate(x: -1.0, y: 0.0, z: 0.0)
-                * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
+                    .scaled(x: 0.1, y: 0.1, z: 0.1)
         )
         renderables += LineCube(
             Float4x4.identity()
                 * Float4x4.translate(x: 0.0, y: 1.0, z: 0.0)
-                * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
+                    .scaled(x: 0.1, y: 0.1, z: 0.1)
         )
 
         renderables += LineCube(
             Float4x4.identity()
                 * Float4x4.translate(x: 0.0, y: -1.0, z: 0.0)
-                * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
+                    .scaled(x: 0.1, y: 0.1, z: 0.1)
         )
 
         renderables += LineCube(
             Float4x4.identity()
                 * Float4x4.translate(x: 0.0, y: 0.0, z: 1.0)
-                * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
+                    .scaled(x: 0.1, y: 0.1, z: 0.1)
         )
 
         renderables += LineCube(
             Float4x4.identity()
                 * Float4x4.translate(x: 0.0, y: 0.0, z: -1.0)
-                * Float4x4.scale(x: 0.1, y: 0.1, z: 0.1)
+                .scaled(x: 0.1, y: 0.1, z: 0.1)
         )
 
         let worldTransform = Float4x4.identity()
@@ -274,7 +274,7 @@ public class Renderer: NSObject {
                 , Color.red, MTLPrimitiveType.triangle, Tile.floor)
         }
 
-        let worldTransform = Float4x4.identity() * Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
+        let worldTransform = Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
 
         let indexedObjTransform = renderables.map { _, _, transform, _, _, _ -> Float4x4 in transform }
 
@@ -318,7 +318,7 @@ public class Renderer: NSObject {
     }
 
     private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        let worldTransform = Float4x4.identity() * Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
+        let worldTransform = Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
 
         let color = Color.blue
         let primitiveType = MTLPrimitiveType.triangle
@@ -512,9 +512,7 @@ public class Renderer: NSObject {
                     ([
                         Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
                         Float3(x: Float(x), y: Float(bitmapHeight) + height, z: 0.0),
-                    ], [], Float4x4.identity()
-                        * Float4x4.translate(x: -7.0, y: 2.0, z: 0.0)
-                        * Float4x4.scale(x: 0.1, y: 1.0, z: 1.0), wallColor, .line)
+                    ], [], Float4x4.translate(x: -7.0, y: 2.0, z: 0.0).scaled(x: 0.1, y: 1.0, z: 1.0), wallColor, .line)
                 )
             }
             columnPosition += step

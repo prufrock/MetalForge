@@ -40,6 +40,10 @@ public extension Float4x4 {
         )
     }
 
+    func scaled(x: Float, y: Float, z: Float) -> Self {
+        self * Self.scale(x: x, y: y, z: z)
+    }
+
     static func scaleX(_ x: Float) -> Self {
         Self(
             [x, 0, 0, 0],
