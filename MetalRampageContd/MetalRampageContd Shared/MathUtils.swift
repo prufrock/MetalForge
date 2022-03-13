@@ -12,7 +12,7 @@ public typealias Float2x2 = simd_float2x2
 public typealias Float4x4 = simd_float4x4
 
 public extension Float4x4 {
-    internal static func identity() -> Self {
+    static func identity() -> Self {
         matrix_identity_float4x4
     }
 
