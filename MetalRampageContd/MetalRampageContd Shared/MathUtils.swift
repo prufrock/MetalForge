@@ -40,7 +40,7 @@ public extension Float4x4 {
         )
     }
 
-    func scaled(x: Float, y: Float, z: Float) -> Self {
+    func scaledBy(x: Float, y: Float, z: Float) -> Self {
         self * Self.scale(x: x, y: y, z: z)
     }
 
@@ -53,7 +53,7 @@ public extension Float4x4 {
         )
     }
 
-    func scaledX(_ x: Float) -> Self {
+    func scaledX(by x: Float) -> Self {
         self * Self.scaleX(x)
     }
 
@@ -66,7 +66,7 @@ public extension Float4x4 {
         )
     }
 
-    func scaledY(_ y: Float) -> Self {
+    func scaledY(by y: Float) -> Self {
         self * Self.scaleY(y)
     }
 
@@ -79,7 +79,7 @@ public extension Float4x4 {
         )
     }
 
-    func scaledZ(_ z: Float) -> Self {
+    func scaledZ(by z: Float) -> Self {
         self * Self.scaleZ(z)
     }
 
