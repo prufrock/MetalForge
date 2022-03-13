@@ -67,7 +67,7 @@ public extension Float4x4 {
     }
 
     func scaledY(_ y: Float) -> Self {
-        self * Self.scaleX(y)
+        self * Self.scaleY(y)
     }
 
     static func scaleZ(_ z: Float) -> Self {
