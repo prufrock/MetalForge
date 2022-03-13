@@ -53,6 +53,10 @@ public extension Float4x4 {
         )
     }
 
+    func scaledX(_ x: Float) -> Self {
+        self * Self.scaleX(x)
+    }
+
     static func scaleY(_ y: Float) -> Self {
         Self(
             [1, 0, 0, 0],
@@ -62,6 +66,10 @@ public extension Float4x4 {
         )
     }
 
+    func scaledY(_ y: Float) -> Self {
+        self * Self.scaleX(y)
+    }
+
     static func scaleZ(_ z: Float) -> Self {
         Self(
             [1, 0, 0, 0],
@@ -69,6 +77,10 @@ public extension Float4x4 {
             [0, 0, z, 0],
             [0, 0, 0, 1]
         )
+    }
+
+    func scaledZ(_ z: Float) -> Self {
+        self * Self.scaleZ(z)
     }
 
     static func rotateX(_ angle: Float) -> Self {

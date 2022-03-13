@@ -146,13 +146,12 @@ public class Renderer: NSObject {
 
         }
 
-        let worldTransform = Float4x4.identity()
-            * Float4x4.scaleY(-1)
+        let worldTransform = Float4x4.scaleY(-1)
 
         let mapCamera = Float4x4.identity()
             * Float4x4.translate(x: -0.7, y: 0.9, z: 0)
                 .scaled(x: 0.03, y: 0.03, z: 1.0)
-            * Float4x4.scaleY(aspect)
+                .scaledY(aspect)
 
         let playerCamera = Float4x4.identity()
             * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
