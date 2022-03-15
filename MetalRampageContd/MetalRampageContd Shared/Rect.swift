@@ -26,6 +26,20 @@ public struct Rect {
 
         return (vertices, [], Float4x4.identity(), .blue, .triangle)
     }
+
+    func renderableObject() -> RNDRObject {
+        var vertices:[Float3] = []
+
+        vertices.append(Float3(min.x, max.y, 0.0))
+        vertices.append(Float3(max.x, max.y, 0.0))
+        vertices.append(Float3(max.x, min.y, 0.0))
+
+        vertices.append(Float3(min.x, max.y, 0.0))
+        vertices.append(Float3(min.x, min.y, 0.0))
+        vertices.append(Float3(max.x, min.y, 0.0))
+
+        return RNDRObject(vertices: vertices, uv: [], transform: Float4x4.identity(), color: .blue, primitiveType: .triangle)
+    }
 }
 
 public extension Rect {

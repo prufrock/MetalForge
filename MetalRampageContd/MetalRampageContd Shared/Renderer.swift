@@ -425,11 +425,11 @@ public class Renderer: NSObject {
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         //Draw map
         //TODO make this a type
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = TileImage(map: world.map).tiles
+        var renderables: [RNDRObject] = TileImage(map: world.map).tiles
                 .filter { $0.5 == .crackWall || $0.5 == .wall || $0.5 == .slimeWall }
-                .map { ($0.0, $0.1, $0.2, $0.3, $0.4) }
+                .map { RNDRObject(vertices: $0.0, uv: $0.1, transform: $0.2, color: $0.3, primitiveType: $0.4) }
         //Draw player
-        renderables.append(world.player.rect.renderable())
+        renderables.append(world.player.rect.renderableObject())
 
         //Draw view plane
         let focalLength: Float = 1.0
@@ -439,10 +439,10 @@ public class Renderer: NSObject {
         let viewStart = viewCenter - viewPlane / 2
         let viewEnd = viewStart + viewPlane
         renderables.append(
-            ([
+            RNDRObject(vertices: [
                 viewStart.toFloat3(),
                 viewEnd.toFloat3()
-            ], [], Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), .red, .line)
+            ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .red, primitiveType: .line)
         )
         // Cast rays
         let columns = 3
@@ -466,10 +466,10 @@ public class Renderer: NSObject {
             }
 
             renderables.append(
-                ([
+                RNDRObject(vertices: [
                     ray.origin.toFloat3(),
                     end.toFloat3()
-                ], [], Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), .green, .line)
+                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line)
             )
             columnPosition += step
         }
@@ -477,10 +477,10 @@ public class Renderer: NSObject {
         // Draw sprites
         for line in world.sprites {
             renderables.append(
-                ([
+                RNDRObject(vertices: [
                     line.start.toFloat3(),
                     line.end.toFloat3()
-                ], [], Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), .green, .line)
+                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line)
             )
         }
 
@@ -508,21 +508,21 @@ public class Renderer: NSObject {
                     wallColor = .grey
                 }
                 renderables.append(
-                    ([
+                    RNDRObject(vertices: [
                         Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
                         Float3(x: Float(x), y: Float(bitmapHeight) + height, z: 0.0),
-                    ], [], Float4x4.translate(x: -7.0, y: 2.0, z: 0.0).scaledBy(x: 0.1, y: 1.0, z: 1.0), wallColor, .line)
+                    ], uv: [], transform: Float4x4.translate(x: -7.0, y: 2.0, z: 0.0).scaledBy(x: 0.1, y: 1.0, z: 1.0), color: wallColor, primitiveType: .line)
                 )
             }
             columnPosition += step
         }
 
-        renderables.forEach { (vertices, _, objTransform, color, primitiveType) in
-            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        renderables.forEach { rndrObject in
+            let buffer = device.makeBuffer(bytes: rndrObject.vertices, length: MemoryLayout<Float3>.stride * rndrObject.vertices.count, options: [])
 
             var pixelSize = 1
 
-            var finalTransform = camera * worldTransform * objTransform
+            var finalTransform = camera * worldTransform * rndrObject.transform
 
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setCullMode(.back)
@@ -530,11 +530,11 @@ public class Renderer: NSObject {
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
 
-            var fragmentColor = Float3(color)
+            var fragmentColor = Float3(rndrObject.color)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
+            encoder.drawPrimitives(type: rndrObject.primitiveType, vertexStart: 0, vertexCount: rndrObject.vertices.count)
         }
     }
 

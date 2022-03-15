@@ -6,7 +6,8 @@ import simd
 import MetalKit
 
 struct TileImage {
-    var tiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)]
+    var tiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)] = []
+    var rndrTiles: [(RNDRObject, Tile)] = []
     private let size = Float(1.0)
     private let start = Float(0.0)
     private let tile1: [Float3]
@@ -29,8 +30,6 @@ struct TileImage {
             Float3(1.0, 1.0, 0.0),
         ]
 
-        tiles = [(tile1, texCoords, matrix_identity_float4x4, .white, .triangle, .floor)]
-
         var myTiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)] = []
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
@@ -49,6 +48,10 @@ struct TileImage {
         }
 
         tiles = myTiles
+
+        rndrTiles = tiles.map { vertices, uv, transform, color, primitiveType, tile in
+            (RNDRObject(vertices: vertices, uv: uv, transform: transform, color: color, primitiveType: primitiveType), tile)
+        }
     }
 
     //TODO find a home for these
