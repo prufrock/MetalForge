@@ -188,7 +188,7 @@ public class Renderer: NSObject {
     }
 
     func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] = []
+        var renderables: [RNDRObject] = []
 
         renderables += LineCube(Float4x4.scale(x: 0.1, y: 0.1, z: 0.1))
         renderables += LineCube(
@@ -227,12 +227,12 @@ public class Renderer: NSObject {
 
         let worldTransform = Float4x4.identity()
 
-        renderables.forEach { (vertices, texCoords, objTransform, color, primitiveType) in
-            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        renderables.forEach { rndrObject in
+            let buffer = device.makeBuffer(bytes: rndrObject.vertices, length: MemoryLayout<Float3>.stride * rndrObject.vertices.count, options: [])
 
             var pixelSize = 1
 
-            var finalTransform = camera * worldTransform * objTransform
+            var finalTransform = camera * worldTransform * rndrObject.transform
 
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setDepthStencilState(depthStencilState)
@@ -240,11 +240,11 @@ public class Renderer: NSObject {
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
 
-            var fragmentColor = Float3(color)
+            var fragmentColor = Float3(rndrObject.color)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.drawPrimitives(type: primitiveType, vertexStart: 0, vertexCount: vertices.count)
+            encoder.drawPrimitives(type: rndrObject.primitiveType, vertexStart: 0, vertexCount: rndrObject.vertices.count)
         }
     }
 
@@ -554,12 +554,13 @@ public class Renderer: NSObject {
     }
 }
 
+// TODO Find a home for this
 // Sitting with its bottom center on the origin
-func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType)] {
+func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] {
     return [
-        (
+        RNDRObject(
             // xy z-0.5
-            [
+            vertices: [
                 Float3(-0.5, 0.0, -0.5),
                 Float3(-0.5, 1.0, -0.5),
 
@@ -571,14 +572,14 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], [
 
                 Float3(0.5, 0.0, -0.5),
                 Float3(-0.5, 0.0, -0.5),
-            ], [],
-            transformation,
-            .green,
-            .line
+            ], uv: [],
+            transform: transformation,
+            color: .green,
+            primitiveType: .line
         ),
-        (
+        RNDRObject(
             // xy z1
-            [
+            vertices: [
                 Float3(-0.5, 0.0, 0.5),
                 Float3(-0.5, 1.0, 0.5),
 
@@ -590,14 +591,14 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], [
 
                 Float3(0.5, 0.0, 0.5),
                 Float3(-0.5, 0.0, 0.5),
-            ], [],
-            transformation,
-            .red,
-            .line
+            ], uv: [],
+            transform: transformation,
+            color: .red,
+            primitiveType: .line
         ),
-        (
+        RNDRObject(
              //xz y0
-            [
+            vertices: [
                 Float3(-0.5, 0.0, -0.5),
                 Float3(-0.5, 0.0, 0.5),
 
@@ -609,14 +610,14 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], [
 
                 Float3(0.5, 0.0, -0.5),
                 Float3(-0.5, 0.0, -0.5),
-            ], [],
-            transformation,
-            .blue,
-            .line
+            ], uv: [],
+            transform: transformation,
+            color: .blue,
+            primitiveType: .line
         ),
-        (
+        RNDRObject(
             //xz y1
-            [
+            vertices: [
                 Float3(-0.5, 1.0, -0.5),
                 Float3(-0.5, 1.0, 0.5),
 
@@ -628,10 +629,10 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [([Float3], [
 
                 Float3(0.5, 1.0, -0.5),
                 Float3(-0.5, 1.0, -0.5),
-            ], [],
-            transformation,
-            .white,
-            .line
+            ], uv: [],
+            transform: transformation,
+            color: .white,
+            primitiveType: .line
         )
     ]
 }
