@@ -539,17 +539,6 @@ public class Renderer: NSObject {
     }
 
     func loadTexture(name: String) -> MTLTexture? {
-//        let loader = MTKTextureLoader(device: device)
-//
-//        let options: [MTKTextureLoader.Option: Any] = [.origin: MTKTextureLoader.Origin.bottomLeft]
-//
-//        guard let url = Bundle.main.url(forResource: name, withExtension: "png") else {
-//            print("Couldn't load the texture.")
-//            return nil
-//        }
-//
-//        let texture = try! loader.newTexture(URL: url, options: options)
-
         let textureLoader = MTKTextureLoader(device: device)
 
         let textureLoaderOptions = [
@@ -562,7 +551,6 @@ public class Renderer: NSObject {
                                             bundle: nil,
                                             options: textureLoaderOptions)
 
-//        return texture
     }
 }
 
