@@ -26,7 +26,7 @@ public class Renderer: NSObject {
     var monster: MTLTexture!
 
     // static renderables
-    var worldTiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)]?
+    var worldTiles: [(RNDRObject, Tile)]?
     var worldTilesBuffers: [MetalTileBuffers]?
 
     public init(_ view: MTKView, width: Int, height: Int) {
@@ -129,7 +129,7 @@ public class Renderer: NSObject {
     public func render(_ world: World) {
 
         if worldTiles == nil {
-            worldTiles = (TileImage(map: world.map).tiles)
+            worldTiles = (TileImage(map: world.map).rndrTiles)
         }
 
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
@@ -400,12 +400,12 @@ public class Renderer: NSObject {
         ]
 
         Tile.allCases.forEach { tile in
-            worldTiles!.filter {$0.5 == tile}.chunked(into: 64).forEach { chunk in
+            worldTiles!.filter {$0.1 == tile}.chunked(into: 64).forEach { chunk in
                 let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])!
                 let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
                 let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
-                let indexedObjTransform = chunk.map { _, _, transform, _, _, _ -> Float4x4 in
-                    transform
+                let indexedObjTransform = chunk.map { (rndrObject, _)-> Float4x4 in
+                    rndrObject.transform
                 }
                 worldTilesBuffers?.append(
                     MetalTileBuffers(
@@ -424,10 +424,9 @@ public class Renderer: NSObject {
 
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         //Draw map
-        //TODO make this a type
-        var renderables: [RNDRObject] = TileImage(map: world.map).tiles
-                .filter { $0.5 == .crackWall || $0.5 == .wall || $0.5 == .slimeWall }
-                .map { RNDRObject(vertices: $0.0, uv: $0.1, transform: $0.2, color: $0.3, primitiveType: $0.4) }
+        var renderables: [RNDRObject] = TileImage(map: world.map).rndrTiles
+                .filter { $0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall }
+                .map { $0.0 }
         //Draw player
         renderables.append(world.player.rect.renderableObject())
 
