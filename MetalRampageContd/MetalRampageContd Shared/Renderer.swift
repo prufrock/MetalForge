@@ -129,7 +129,7 @@ public class Renderer: NSObject {
     public func render(_ world: World) {
 
         if worldTiles == nil {
-            worldTiles = (TileImage(map: world.map).rndrTiles)
+            worldTiles = (TileImage(map: world.map).tiles)
         }
 
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
@@ -424,7 +424,7 @@ public class Renderer: NSObject {
 
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         //Draw map
-        var renderables: [RNDRObject] = TileImage(map: world.map).rndrTiles
+        var renderables: [RNDRObject] = TileImage(map: world.map).tiles
                 .filter { $0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall }
                 .map { $0.0 }
         //Draw player

@@ -6,11 +6,12 @@ import simd
 import MetalKit
 
 struct TileImage {
-    var tiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)] = []
-    var rndrTiles: [(RNDRObject, Tile)] = []
+    var tiles: [(RNDRObject, Tile)] = []
     private let size = Float(1.0)
     private let start = Float(0.0)
     private let tile1: [Float3]
+    //TODO remove texCoords and vertices. There should be some reasonable way to have a collection of objects that all
+    // share the same vertices, uv, and normals but have different transforms and such.
     private let texCoords: [Float2] = [
         Float2(0.2,0.2),
         Float2(0.0,0.0),
@@ -47,9 +48,7 @@ struct TileImage {
             }
         }
 
-        tiles = myTiles
-
-        rndrTiles = tiles.map { vertices, uv, transform, color, primitiveType, tile in
+        tiles = myTiles.map { vertices, uv, transform, color, primitiveType, tile in
             (RNDRObject(vertices: vertices, uv: uv, transform: transform, color: color, primitiveType: primitiveType), tile)
         }
     }
