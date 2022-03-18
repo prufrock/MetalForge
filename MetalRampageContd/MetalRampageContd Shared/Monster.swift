@@ -8,6 +8,7 @@ public struct Monster: Actor {
     let speed: Float = 0.5
     var velocity: Float2 = Float2(x: 0, y: 0)
     var state: MonsterState = .idle
+    var animation: Animation = .monsterIdle
 
     public init(position: Float2) {
         self.position = position
@@ -18,11 +19,13 @@ public struct Monster: Actor {
         case .idle:
             if canSeePlayer(in: world) {
                 state = .chasing
+                animation = .monsterWalk
             }
             velocity = Float2(x: 0, y: 0)
         case .chasing:
             guard canSeePlayer(in: world)  else {
                 state = .idle
+                animation = .monsterIdle
                 break
             }
             let direction = world.player.position - position

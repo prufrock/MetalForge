@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AF0E3D1E041257B8F4CFF87 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34EF644B0191228B1AB /* Texture.swift */; };
+		5AF0E5969CE480B9F16DEECA /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34EF644B0191228B1AB /* Texture.swift */; };
+		5AF0E5CDF968880D3209EB4B /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E66BFFFB0273764BF7B0 /* Animation.swift */; };
 		5AF0E67F757BD6EA5A05A6F5 /* RNDRObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */; };
+		5AF0E7B82FA1CF32BBD15327 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34EF644B0191228B1AB /* Texture.swift */; };
 		5AF0E9F3834695D3D8A90C38 /* RNDRObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */; };
 		5AF0EB3A833228CB9B86F941 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6A9347E4C6047BABDF2 /* Actor.swift */; };
+		5AF0EC86C25636B92D7B519C /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E66BFFFB0273764BF7B0 /* Animation.swift */; };
 		5AF0ECE66029C28BC81B68B5 /* RNDRObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */; };
+		5AF0ED5CA3CAA12CFA4BE95A /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E66BFFFB0273764BF7B0 /* Animation.swift */; };
 		5AF0EED887C084AB8A596AEA /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6A9347E4C6047BABDF2 /* Actor.swift */; };
 		5AF0EF80DF7BCBEFCF2A01CD /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6A9347E4C6047BABDF2 /* Actor.swift */; };
 		63D44B2727D427CF00D4BE7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D44B2627D427CF00D4BE7D /* AppDelegate.swift */; };
@@ -93,6 +99,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5AF0E34EF644B0191228B1AB /* Texture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
+		5AF0E66BFFFB0273764BF7B0 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		5AF0E6A9347E4C6047BABDF2 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRObject.swift; sourceTree = "<group>"; };
 		63D44B1B27D427CD00D4BE7D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
@@ -205,6 +213,8 @@
 				63D44BF127D42D0000D4BE7D /* Map16.json */,
 				5AF0E0798E8831278C37A79A /* Render */,
 				5AF0E6A9347E4C6047BABDF2 /* Actor.swift */,
+				5AF0E34EF644B0191228B1AB /* Texture.swift */,
+				5AF0E66BFFFB0273764BF7B0 /* Animation.swift */,
 			);
 			path = "MetalRampageContd Shared";
 			sourceTree = "<group>";
@@ -415,6 +425,8 @@
 				63D44BD627D42AE600D4BE7D /* Ray.swift in Sources */,
 				5AF0E67F757BD6EA5A05A6F5 /* RNDRObject.swift in Sources */,
 				5AF0EF80DF7BCBEFCF2A01CD /* Actor.swift in Sources */,
+				5AF0E7B82FA1CF32BBD15327 /* Texture.swift in Sources */,
+				5AF0ED5CA3CAA12CFA4BE95A /* Animation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +456,8 @@
 				63D44BD727D42AE600D4BE7D /* Ray.swift in Sources */,
 				5AF0E9F3834695D3D8A90C38 /* RNDRObject.swift in Sources */,
 				5AF0EED887C084AB8A596AEA /* Actor.swift in Sources */,
+				5AF0E5969CE480B9F16DEECA /* Texture.swift in Sources */,
+				5AF0E5CDF968880D3209EB4B /* Animation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +487,8 @@
 				63D44BD827D42AE600D4BE7D /* Ray.swift in Sources */,
 				5AF0ECE66029C28BC81B68B5 /* RNDRObject.swift in Sources */,
 				5AF0EB3A833228CB9B86F941 /* Actor.swift in Sources */,
+				5AF0E3D1E041257B8F4CFF87 /* Texture.swift in Sources */,
+				5AF0EC86C25636B92D7B519C /* Animation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

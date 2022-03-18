@@ -23,7 +23,7 @@ public class Renderer: NSObject {
     var floor: MTLTexture!
     var slimeWallTexture: MTLTexture!
     var wallTexture: MTLTexture!
-    var monster: MTLTexture!
+    var monster: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -119,7 +119,9 @@ public class Renderer: NSObject {
         floor = loadTexture(name: "Floor")!
         slimeWallTexture = loadTexture(name: "SlimeWall")!
         wallTexture = loadTexture(name: "Wall")!
-        monster = loadTexture(name: "Monster")!
+        monster[.monster] = loadTexture(name: "Monster")!
+        monster[.monsterWalk1] = loadTexture(name: "MonsterWalk1")!
+        monster[.monsterWalk2] = loadTexture(name: "MonsterWalk2")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -249,7 +251,7 @@ public class Renderer: NSObject {
     }
 
     func drawIndexedSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile)] = []
+        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Texture)] = []
 
         renderables += world.sprites.map { billboard in
             ([
@@ -270,7 +272,7 @@ public class Renderer: NSObject {
                     * Float4x4.rotateY(.pi / 2)
                     * world.player.direction3d * Float4x4.rotateY(.pi/2)
                 )
-                , Color.red, MTLPrimitiveType.triangle, Tile.floor)
+                , Color.red, MTLPrimitiveType.triangle, billboard.texture)
         }
 
         let worldTransform = Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
@@ -305,7 +307,9 @@ public class Renderer: NSObject {
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        encoder.setFragmentTexture(monster, index: 0)
+        encoder.setFragmentTexture(monster[.monster]!, index: 0)
+        encoder.setFragmentTexture(monster[.monsterWalk1]!, index: 1)
+        encoder.setFragmentTexture(monster[.monsterWalk2]!, index: 2)
         encoder.drawIndexedPrimitives(
             type: primitiveType,
             indexCount: index.count,

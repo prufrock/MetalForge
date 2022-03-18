@@ -90,7 +90,8 @@ public extension World {
                 start: monster.position - spritePlane / 2,
                 direction: spritePlane,
                 length: 1,
-                position: monster.position
+                position: monster.position,
+                texture: .monster
             )
         }
     }
