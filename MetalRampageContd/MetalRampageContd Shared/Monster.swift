@@ -28,8 +28,18 @@ public struct Monster: Actor {
                 animation = .monsterIdle
                 break
             }
+            if canReachPlayer(in: world) {
+                state = .scratching
+                animation = .monsterScratch
+            }
             let direction = world.player.position - position
             velocity = direction * (speed / direction.length)
+        case .scratching:
+            guard canReachPlayer(in: world) else {
+                state = .chasing
+                animation = .monsterWalk
+                break
+            }
         }
     }
 }
@@ -43,9 +53,31 @@ extension Monster {
         let wallDistance = (wallHit - position).length
         return wallDistance > playerDistance
     }
+
+    func canReachPlayer(in world: World) -> Bool {
+        let reach: Float = 0.25
+        let playerDistance = (world.player.position - position).length
+        return playerDistance - radius - world.player.radius < reach
+    }
 }
 
 enum MonsterState {
     case idle
     case chasing
+    case scratching
+}
+
+extension Animation {
+    static let monsterIdle = Animation(frames: [.monster], duration: 0)
+    static let monsterWalk = Animation(frames: [.monsterWalk1, .monsterWalk2], duration: 0.5)
+    static let monsterScratch = Animation(frames: [
+        .monsterScratch1,
+        .monsterScratch2,
+        .monsterScratch3,
+        .monsterScratch4,
+        .monsterScratch5,
+        .monsterScratch6,
+        .monsterScratch7,
+        .monsterScratch8,
+    ], duration: 0.8)
 }

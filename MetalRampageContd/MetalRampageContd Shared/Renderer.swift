@@ -122,6 +122,14 @@ public class Renderer: NSObject {
         monster[.monster] = loadTexture(name: "Monster")!
         monster[.monsterWalk1] = loadTexture(name: "MonsterWalk1")!
         monster[.monsterWalk2] = loadTexture(name: "MonsterWalk2")!
+        monster[.monsterScratch1] = loadTexture(name: "MonsterScratch1")!
+        monster[.monsterScratch2] = loadTexture(name: "MonsterScratch2")!
+        monster[.monsterScratch3] = loadTexture(name: "MonsterScratch3")!
+        monster[.monsterScratch4] = loadTexture(name: "MonsterScratch4")!
+        monster[.monsterScratch5] = loadTexture(name: "MonsterScratch5")!
+        monster[.monsterScratch6] = loadTexture(name: "MonsterScratch6")!
+        monster[.monsterScratch7] = loadTexture(name: "MonsterScratch6")!
+        monster[.monsterScratch8] = loadTexture(name: "MonsterScratch8")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -286,6 +294,22 @@ public class Renderer: NSObject {
                 return 1
             case .monsterWalk2:
                 return 2
+            case .monsterScratch1:
+                return 3
+            case .monsterScratch2:
+                return 4
+            case .monsterScratch3:
+                return 5
+            case .monsterScratch4:
+                return 6
+            case .monsterScratch5:
+                return 7
+            case .monsterScratch6:
+                return 8
+            case .monsterScratch7:
+                return 9
+            case .monsterScratch8:
+                return 10
             }
         }
 
@@ -321,6 +345,14 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(monster[.monster]!, index: 0)
         encoder.setFragmentTexture(monster[.monsterWalk1]!, index: 1)
         encoder.setFragmentTexture(monster[.monsterWalk2]!, index: 2)
+        encoder.setFragmentTexture(monster[.monsterScratch1]!, index: 3)
+        encoder.setFragmentTexture(monster[.monsterScratch2]!, index: 4)
+        encoder.setFragmentTexture(monster[.monsterScratch3]!, index: 5)
+        encoder.setFragmentTexture(monster[.monsterScratch4]!, index: 6)
+        encoder.setFragmentTexture(monster[.monsterScratch5]!, index: 7)
+        encoder.setFragmentTexture(monster[.monsterScratch6]!, index: 8)
+        encoder.setFragmentTexture(monster[.monsterScratch7]!, index: 9)
+        encoder.setFragmentTexture(monster[.monsterScratch8]!, index: 10)
         encoder.drawIndexedPrimitives(
             type: primitiveType,
             indexCount: index.count,

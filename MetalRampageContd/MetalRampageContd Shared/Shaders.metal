@@ -79,6 +79,14 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
                               texture2d<half> texture0 [[ texture(0) ]],
                               texture2d<half> texture1 [[ texture(1) ]],
                               texture2d<half> texture2 [[ texture(2) ]],
+                              texture2d<half> texture3 [[ texture(3) ]],
+                              texture2d<half> texture4 [[ texture(4) ]],
+                              texture2d<half> texture5 [[ texture(5) ]],
+                              texture2d<half> texture6 [[ texture(6) ]],
+                              texture2d<half> texture7 [[ texture(7) ]],
+                              texture2d<half> texture8 [[ texture(8) ]],
+                              texture2d<half> texture9 [[ texture(9) ]],
+                              texture2d<half> texture10 [[ texture(10) ]],
                               constant float4 &color [[buffer(0)]]
                               ) {
     constexpr sampler colorSampler(coord::normalized, address::repeat, filter::nearest);
@@ -91,6 +99,22 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
         colorSample = texture1.sample(colorSampler, in.texcoord);
     } else if (in.textureId == 2) {
         colorSample = texture2.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 3) {
+        colorSample = texture3.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 4) {
+        colorSample = texture4.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 5) {
+        colorSample = texture5.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 6) {
+        colorSample = texture6.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 7) {
+        colorSample = texture7.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 8) {
+        colorSample = texture8.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 9) {
+        colorSample = texture9.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 10) {
+        colorSample = texture10.sample(colorSampler, in.texcoord);
     }
 
     if (colorSample.a < 0.1) {
