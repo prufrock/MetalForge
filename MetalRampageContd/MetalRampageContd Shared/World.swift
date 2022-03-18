@@ -53,6 +53,11 @@ public extension World {
                 player.position -= intersection / 2
                 monster.position += intersection / 2
             }
+
+            while let intersection = monster.intersection(with: map) {
+                monster.position -= intersection
+            }
+
             monsters[i] = monster
         }
 
