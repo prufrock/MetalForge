@@ -47,10 +47,13 @@ public extension World {
         player.position.y.formTruncatingRemainder(dividingBy: size.y - 1)
 
         //handle collisions
-        for monster in monsters {
+        for i in monsters.indices {
+            var monster = monsters[i]
             if let intersection = player.intersection(with: monster) {
-                player.position -= intersection
+                player.position -= intersection / 2
+                monster.position += intersection / 2
             }
+            monsters[i] = monster
         }
 
 
