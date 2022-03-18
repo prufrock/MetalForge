@@ -54,6 +54,13 @@ public extension World {
                 monster.position += intersection / 2
             }
 
+            for j in monsters.indices where i != j {
+                if let intersection = monster.intersection(with: monsters[j]) {
+                    monster.position -= intersection / 2
+                    monsters[j].position += intersection / 2
+                }
+            }
+
             while let intersection = monster.intersection(with: map) {
                 monster.position -= intersection
             }
