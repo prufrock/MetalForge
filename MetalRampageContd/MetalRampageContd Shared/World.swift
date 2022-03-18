@@ -46,6 +46,14 @@ public extension World {
         player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)
         player.position.y.formTruncatingRemainder(dividingBy: size.y - 1)
 
+        //update monsters
+        for i in 0 ..< monsters.count {
+            var monster = monsters[i]
+            monster.position += monster.velocity * timeStep
+            monster.update(in: self)
+            monsters[i] = monster
+        }
+
         //handle collisions
         for i in monsters.indices {
             var monster = monsters[i]
