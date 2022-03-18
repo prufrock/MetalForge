@@ -278,6 +278,16 @@ public class Renderer: NSObject {
         let worldTransform = Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
 
         let indexedObjTransform = renderables.map { _, _, transform, _, _, _ -> Float4x4 in transform }
+        let indexedTextureId: [UInt32] = world.sprites.map { (billboard) -> UInt32 in
+            switch billboard.texture {
+            case .monster:
+                return 0
+            case .monsterWalk1:
+                return 1
+            case .monsterWalk2:
+                return 2
+            }
+        }
 
         let index: [UInt16] = [0, 1, 2, 0, 3, 1]
 
@@ -302,6 +312,7 @@ public class Renderer: NSObject {
         encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
         encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
         encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
+        encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt32>.stride * indexedTextureId.count, index: 5)
 
         var fragmentColor = Float3(color)
 
@@ -335,6 +346,7 @@ public class Renderer: NSObject {
             let indexBuffer = buffers.indexBuffer
             let coordsBuffer = buffers.uvBuffer
             let indexedObjTransform = buffers.indexedTransformations
+            let indexedTextureId: [UInt] = buffers.indexedTransformations.map { _ in 0 }
 
             var pixelSize = 1
 
@@ -367,6 +379,7 @@ public class Renderer: NSObject {
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
             encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
+            encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt>.stride * indexedTextureId.count, index: 5)
 
             var fragmentColor = Float3(color)
 

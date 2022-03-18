@@ -22,6 +22,7 @@ struct VertexOut {
     float4 position [[position]];
     float2 texcoord;
     float point_size [[point_size]];
+    uint textureId;
 };
 
 vertex VertexOut vertex_main(constant float3 *vertices [[buffer(0)]],
@@ -46,13 +47,15 @@ vertex VertexOut vertex_indexed(Vertex in [[stage_in]],
                              constant matrix_float4x4 &matrix [[buffer(2)]],
                              constant float &point_size [[buffer(3)]],
                              constant matrix_float4x4 *indexedModelMatrix [[buffer(4)]],
+                             constant uint *textureId [[buffer(5)]],
                              uint vid [[vertex_id]],
                              uint iid [[instance_id]]
                              ) {
     VertexOut vertex_out {
         .position = matrix * indexedModelMatrix[iid] * float4(in.position, 1),
         .texcoord = float2(in.texcoord.x, in.texcoord.y),
-        .point_size = point_size
+        .point_size = point_size,
+        .textureId = textureId[iid]
     };
 
     return vertex_out;
@@ -73,12 +76,22 @@ vertex VertexOut vertex_with_texcoords(Vertex in [[stage_in]],
 }
 
 fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
-                              texture2d<half> texture [[ texture(0) ]],
+                              texture2d<half> texture0 [[ texture(0) ]],
+                              texture2d<half> texture1 [[ texture(1) ]],
+                              texture2d<half> texture2 [[ texture(2) ]],
                               constant float4 &color [[buffer(0)]]
                               ) {
     constexpr sampler colorSampler(coord::normalized, address::repeat, filter::nearest);
 
-    half4 colorSample = texture.sample(colorSampler, in.texcoord);
+    half4 colorSample;
+
+    if (in.textureId == 0) {
+        colorSample = texture0.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 1) {
+        colorSample = texture1.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 2) {
+        colorSample = texture2.sample(colorSampler, in.texcoord);
+    }
 
     if (colorSample.a < 0.1) {
         discard_fragment();
