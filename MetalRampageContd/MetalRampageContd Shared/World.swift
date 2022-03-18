@@ -50,6 +50,7 @@ public extension World {
         for i in 0 ..< monsters.count {
             var monster = monsters[i]
             monster.position += monster.velocity * timeStep
+            monster.animation.time += timeStep
             monster.update(in: self)
             monsters[i] = monster
         }
@@ -91,7 +92,7 @@ public extension World {
                 direction: spritePlane,
                 length: 1,
                 position: monster.position,
-                texture: .monster
+                texture: monster.animation.texture
             )
         }
     }
