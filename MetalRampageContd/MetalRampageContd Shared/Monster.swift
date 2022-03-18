@@ -4,7 +4,7 @@
 
 public struct Monster: Actor {
     var position: Float2
-    let radius: Float = 0.25
+    let radius: Float = 0.4375
 
     public init(position: Float2) {
         self.position = position
