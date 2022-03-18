@@ -44,4 +44,8 @@ public extension Player {
         }
         return largestIntersection
     }
+
+    func intersection(with monster: Monster) -> Float2? {
+        rect.intersection(with: monster.rect)
+    }
 }

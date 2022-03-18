@@ -45,6 +45,15 @@ public extension World {
         player.position += player.velocity * timeStep
         player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)
         player.position.y.formTruncatingRemainder(dividingBy: size.y - 1)
+
+        //handle collisions
+        for monster in monsters {
+            if let intersection = player.intersection(with: monster) {
+                player.position -= intersection
+            }
+        }
+
+
         while let intersection = player.intersection(with: map) {
             player.position -= intersection
         }
