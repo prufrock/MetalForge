@@ -8,12 +8,14 @@ public struct World {
     public let map: Tilemap
     public private(set) var player: Player!
     public private(set) var monsters: [Monster]
+    private(set) var effects: [Effect]
     var showMap: Bool = false
     var drawWorld: Bool = true
 
     public init(map: Tilemap) {
         self.map = map
         self.monsters = []
+        self.effects = []
         reset()
     }
 }
@@ -22,6 +24,17 @@ public extension World {
     var size: Float2 { map.size }
 
     mutating func update(timeStep: Float, input: Input) {
+        //update effects
+        effects = effects.compactMap { effect  in
+            if effect.isCompleted {
+                return nil
+            }
+            var effect = effect
+            effect.time += timeStep
+            return effect
+        }
+
+        //update player
         if player.isDead {
             reset()
             return
@@ -75,6 +88,7 @@ public extension World {
     }
 
     mutating func hurtPlayer(_ damage: Float) {
+        effects.append(Effect(type: .fadeIn, color: .red, duration: 0.2))
         player.health -= damage
     }
 

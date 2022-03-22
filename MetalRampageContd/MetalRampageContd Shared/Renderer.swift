@@ -152,8 +152,6 @@ public class Renderer: NSObject {
             fatalError("""
                        Dang it, couldn't create a command encoder.
                        """)
-
-
         }
 
         let worldTransform = Float4x4.scaleY(-1)
@@ -184,6 +182,8 @@ public class Renderer: NSObject {
         if world.showMap {
             drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
         }
+
+        drawEffects(world: world, encoder: encoder, camera: playerCamera, worldTransform: worldTransform)
 
         encoder.endEncoding()
 
@@ -427,6 +427,54 @@ public class Renderer: NSObject {
                 instanceCount: buffers.tileCount
             )
         }
+    }
+
+    private func drawEffects(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+//        world.effects.forEach { effect in
+            let vertices = [
+                Float3(0.0, 0.0, 0.0),
+                Float3(1.0, 1.0, 0.0),
+                Float3(0.0, 1.0, 0.0),
+
+                Float3(0.0, 0.0, 0.0),
+                Float3(1.0, 0.0, 0.0),
+                Float3(1.0, 1.0, 0.0),
+            ]
+
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+
+            var pixelSize = 1
+
+            var cameraPosition = (Float4x4.identity()
+                    .scaledBy(x: 0.2, y: 0.2, z: 0.2)
+                * Float4x4.translate(x: 0.0, y: 0.0, z: 0.5)
+                * world.player.position.toTranslation()
+                * Float4x4.rotateX(-(3 * .pi)/2)
+                * (world.player.direction3d.scaledBy(x: 1.0, y: 1.0, z: 1.0))
+            )
+
+            var finalTransform = camera *
+        (Float4x4.identity()
+                .scaledBy(x: 0.2, y: 0.2, z: 0.2)
+            * Float4x4.translate(x: 0.1, y: 0.1, z: 0.0)
+            * world.player.position.toTranslation()
+//            * Float4x4.rotateY(.pi/2)
+//            * Float4x4.rotateX(-2 * .pi)
+            * Float4x4.rotateX(-(3 * .pi)/2)
+            * (world.player.direction3d.scaledBy(x: 1.0, y: 1.0, z: 1.0)).inverse
+            )
+
+            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+
+            var fragmentColor = Float3(Color.red)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+//        }
     }
 
     private func initializeWorldTilesBuffer() {
