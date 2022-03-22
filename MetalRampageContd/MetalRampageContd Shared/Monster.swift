@@ -9,12 +9,14 @@ public struct Monster: Actor {
     var velocity: Float2 = Float2(x: 0, y: 0)
     var state: MonsterState = .idle
     var animation: Animation = .monsterIdle
+    let attackCooldown: Float = 0.4
+    private(set) var lastAttackTime: Float = 0
 
     public init(position: Float2) {
         self.position = position
     }
 
-    mutating func update(in world: World) {
+    mutating func update(in world: inout World) {
         switch state {
         case .idle:
             if canSeePlayer(in: world) {
@@ -31,6 +33,7 @@ public struct Monster: Actor {
             if canReachPlayer(in: world) {
                 state = .scratching
                 animation = .monsterScratch
+                lastAttackTime = -attackCooldown
             }
             let direction = world.player.position - position
             velocity = direction * (speed / direction.length)
@@ -39,6 +42,10 @@ public struct Monster: Actor {
                 state = .chasing
                 animation = .monsterWalk
                 break
+            }
+            if animation.time - lastAttackTime >= attackCooldown {
+                lastAttackTime = animation.time
+                world.hurtPlayer(10)
             }
         }
     }

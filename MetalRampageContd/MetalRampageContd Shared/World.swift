@@ -6,29 +6,15 @@ import simd
 
 public struct World {
     public let map: Tilemap
-    public var player: Player!
-    var monsters: [Monster]
+    public private(set) var player: Player!
+    public private(set) var monsters: [Monster]
     var showMap: Bool = false
     var drawWorld: Bool = true
 
     public init(map: Tilemap) {
         self.map = map
         self.monsters = []
-
-        for y in 0 ..< map.height {
-            for x in 0 ..< map.width {
-                let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5) // in the center of the tile
-                let thing = map.things[y * map.width + x]
-                switch thing {
-                case .nothing:
-                    break
-                case .player:
-                    self.player = Player(position: position)
-                case .monster:
-                    self.monsters.append(Monster(position: position))
-                }
-            }
-        }
+        reset()
     }
 }
 
@@ -36,6 +22,11 @@ public extension World {
     var size: Float2 { map.size }
 
     mutating func update(timeStep: Float, input: Input) {
+        if player.isDead {
+            reset()
+            return
+        }
+
         player.direction = player.direction.rotated(by: input.rotation)
         player.direction3d = player.direction3d * input.rotation3d
         player.velocity = player.direction * Float(input.speed) * player.speed
@@ -51,7 +42,7 @@ public extension World {
             var monster = monsters[i]
             monster.position += monster.velocity * timeStep
             monster.animation.time += timeStep
-            monster.update(in: self)
+            monster.update(in: &self)
             monsters[i] = monster
         }
 
@@ -80,6 +71,28 @@ public extension World {
 
         while let intersection = player.intersection(with: map) {
             player.position -= intersection
+        }
+    }
+
+    mutating func hurtPlayer(_ damage: Float) {
+        player.health -= damage
+    }
+
+    mutating func reset() {
+        monsters = []
+        for y in 0 ..< map.height {
+            for x in 0 ..< map.width {
+                let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5) // in the center of the tile
+                let thing = map.things[y * map.width + x]
+                switch thing {
+                case .nothing:
+                    break
+                case .player:
+                    player = Player(position: position)
+                case .monster:
+                    monsters.append(Monster(position: position))
+                }
+            }
         }
     }
 

@@ -10,11 +10,19 @@ public struct Player: Actor {
     public var direction: Float2
     public var direction3d: Float4x4
     public let turningSpeed: Float = .pi/2
+    public var health: Float
 
     public init(position: Float2) {
         self.position = position
         self.velocity = Float2(0, 0)
         self.direction = Float2(1, 0)
         self.direction3d = Float4x4.rotateY(.pi/2)
+        self.health = 100
+    }
+}
+
+public extension Player {
+    var isDead: Bool {
+        health <= 0
     }
 }
