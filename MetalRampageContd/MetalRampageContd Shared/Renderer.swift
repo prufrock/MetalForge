@@ -12,6 +12,7 @@ public class Renderer: NSObject {
     let texturePipeline: MTLRenderPipelineState
     let textureIndexedPipeline: MTLRenderPipelineState
     let vertexPipeline: MTLRenderPipelineState
+    let effectPipeline: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
     private var aspect: Float = 1.0
 
@@ -108,6 +109,18 @@ public class Renderer: NSObject {
                 $0.layouts[0].stride = MemoryLayout<Float3>.stride
                 $0.layouts[1].stride = MemoryLayout<Float2>.stride
             }
+        })
+
+        effectPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+            $0.vertexFunction = library.makeFunction(name: "vertex_main")
+            $0.fragmentFunction = library.makeFunction(name: "fragment_effect")
+            $0.depthAttachmentPixelFormat = .depth32Float
+            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
+            // Enable blending on the effects pipeline
+            $0.colorAttachments[0].isBlendingEnabled = true
+            $0.colorAttachments[0].rgbBlendOperation = .add
+            $0.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
+            $0.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
         })
 
         super.init()
@@ -459,7 +472,7 @@ public class Renderer: NSObject {
                 * Float4x4.rotateY(-.pi)
 
             encoder.setCullMode(.back)
-            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setRenderPipelineState(effectPipeline)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
