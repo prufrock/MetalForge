@@ -82,7 +82,7 @@ class ColorA {
         self.a = a
     }
 
-    init(_ color: Color, a: Float) {
+    init(_ color: Color, a: Float = 1.0) {
         r = color.rFloat()
         g = color.gFloat()
         b = color.bFloat()

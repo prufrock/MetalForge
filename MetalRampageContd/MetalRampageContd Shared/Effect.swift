@@ -4,6 +4,7 @@
 
 enum EffectType {
     case fadeIn
+    case fadeOut
 }
 
 class Effect {
@@ -19,7 +20,7 @@ class Effect {
     }
 
     func asFloat4() -> Float4 {
-        Float4(color.r, color.g, color.b, color.a - progress)
+        Float4(color.r, color.g, color.b, progress)
     }
 }
 
@@ -29,6 +30,12 @@ extension Effect {
     }
 
     var progress: Float {
-        min(1, time / duration)
+        let t = min(1, time / duration)
+        switch type {
+        case .fadeIn:
+            return color.a - Easing.easeIn(t)
+        case .fadeOut:
+            return Easing.easeOut(t)
+        }
     }
 }

@@ -35,20 +35,28 @@ public extension World {
         }
 
         //update player
-        if player.isDead {
+        if player.isDead, effects.isEmpty {
+            reset()
+            effects.append(Effect(type: .fadeIn, color: ColorA(.red, a: 1.0), duration: 0.5))
+            return
+        }
+
+        if player.isDead == false {
+            player.direction = player.direction.rotated(by: input.rotation)
+            player.direction3d = player.direction3d * input.rotation3d
+            player.velocity = player.direction * Float(input.speed) * player.speed
+
+
+            player.position += player.velocity * timeStep
+            player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)
+            player.position.y.formTruncatingRemainder(dividingBy: size.y - 1)
+        } else if effects.isEmpty {
             reset()
             return
         }
 
-        player.direction = player.direction.rotated(by: input.rotation)
-        player.direction3d = player.direction3d * input.rotation3d
-        player.velocity = player.direction * Float(input.speed) * player.speed
         showMap = input.showMap
         drawWorld = input.drawWorld
-
-        player.position += player.velocity * timeStep
-        player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)
-        player.position.y.formTruncatingRemainder(dividingBy: size.y - 1)
 
         //update monsters
         for i in 0 ..< monsters.count {
@@ -88,8 +96,16 @@ public extension World {
     }
 
     mutating func hurtPlayer(_ damage: Float) {
-        effects.append(Effect(type: .fadeIn, color: ColorA(.red, a: 0.75), duration: 0.2))
+        if player.isDead {
+            return
+        }
+
+        effects.append(Effect(type: .fadeIn, color: ColorA(.red), duration: 0.2))
         player.health -= damage
+
+        if player.isDead {
+            effects.append(Effect(type: .fadeOut, color: ColorA(.red), duration: 2))
+        }
     }
 
     mutating func reset() {
