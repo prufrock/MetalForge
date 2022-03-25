@@ -8,18 +8,18 @@ enum EffectType {
 
 class Effect {
     let type: EffectType
-    let color: Color
+    let color: ColorA
     let duration: Float
     var time: Float = 0
 
-    init(type: EffectType, color: Color, duration: Float) {
+    init(type: EffectType, color: ColorA, duration: Float) {
         self.type = type
         self.color = color
         self.duration = duration
     }
 
     func asFloat4() -> Float4 {
-        Float4(color, alpha: Float(1 - progress))
+        Float4(color.r, color.g, color.b, color.a - progress)
     }
 }
 

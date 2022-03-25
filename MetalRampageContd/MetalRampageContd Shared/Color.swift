@@ -54,10 +54,38 @@ extension Float4 {
     init(_ color: Color, alpha: Float) {
         self.init(color.rFloat(), color.gFloat(), color.bFloat(), alpha)
     }
+
+    init(_ color: ColorA) {
+        self.init(color.r, color.g, color.b, color.a)
+    }
 }
 
 extension MTLClearColor {
     init(_ color: Color) {
         self.init(red: Double(color.rFloat()), green: Double(color.gFloat()), blue: Double(color.bFloat()), alpha: 1.0)
+    }
+}
+
+/**
+ Color with alpha.
+ */
+class ColorA {
+    let r: Float
+    let g: Float
+    let b: Float
+    let a: Float
+
+    init(r: Float, g: Float, b: Float, a: Float) {
+        self.r = r
+        self.g = g
+        self.b = b
+        self.a = a
+    }
+
+    init(_ color: Color, a: Float) {
+        r = color.rFloat()
+        g = color.gFloat()
+        b = color.bFloat()
+        self.a = a
     }
 }
