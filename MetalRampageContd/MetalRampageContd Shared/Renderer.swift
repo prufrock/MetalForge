@@ -477,10 +477,9 @@ public class Renderer: NSObject {
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
 
-            var fragmentColor = Float3(Color.red)
-
+            var fragmentColor = effect.asFloat4()
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float4>.stride, index: 0)
             encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
         }
     }

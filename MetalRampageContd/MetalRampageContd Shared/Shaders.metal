@@ -125,5 +125,5 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
 }
 
 fragment float4 fragment_effect(constant float4 &color [[buffer(0)]]) {
-    return float4(color.x, color.y, color.z, 0.4);
+    return float4(color.x, color.y, color.z, color.w);
 }

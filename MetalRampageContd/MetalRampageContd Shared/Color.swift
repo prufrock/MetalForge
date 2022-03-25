@@ -46,6 +46,16 @@ extension Float3 {
     }
 }
 
+extension Float4 {
+    init(_ color: Color) {
+        self.init(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
+    }
+
+    init(_ color: Color, alpha: Float) {
+        self.init(color.rFloat(), color.gFloat(), color.bFloat(), alpha)
+    }
+}
+
 extension MTLClearColor {
     init(_ color: Color) {
         self.init(red: Double(color.rFloat()), green: Double(color.gFloat()), blue: Double(color.bFloat()), alpha: 1.0)

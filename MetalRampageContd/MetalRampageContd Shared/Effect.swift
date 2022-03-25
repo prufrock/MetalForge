@@ -17,6 +17,10 @@ class Effect {
         self.color = color
         self.duration = duration
     }
+
+    func asFloat4() -> Float4 {
+        Float4(color, alpha: Float(1 - progress))
+    }
 }
 
 extension Effect {
