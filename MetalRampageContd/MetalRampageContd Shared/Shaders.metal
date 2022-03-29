@@ -70,7 +70,7 @@ vertex VertexOut vertex_with_texcoords(Vertex in [[stage_in]],
         .position = matrix * float4(in.position, 1),
         .texcoord = float2(5 * in.texcoord.x, 5 * in.texcoord.y), // I'm pretty sure the problem has something to do with texcoords not being passed to vertex_main correctly
         .point_size = point_size,
-        .textureId = 0
+        .textureId = 11
     };
 
     return vertex_out;
@@ -116,6 +116,8 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
         colorSample = texture9.sample(colorSampler, in.texcoord);
     } else if (in.textureId == 10) {
         colorSample = texture10.sample(colorSampler, in.texcoord);
+    } else {
+        return color;
     }
 
     if (colorSample.a < 0.1) {

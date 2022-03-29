@@ -454,12 +454,12 @@ public class Renderer: NSObject {
     private func drawWeapon(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         let vertices = [
             Float3(0.0, 0.0, 0.0),
-            Float3(1.0, 1.0, 0.0),
             Float3(0.0, 1.0, 0.0),
-
-            Float3(0.0, 0.0, 0.0),
-            Float3(1.0, 0.0, 0.0),
             Float3(1.0, 1.0, 0.0),
+
+            Float3(1.0, 1.0, 0.0),
+            Float3(1.0, 0.0, 0.0),
+            Float3(0.0, 0.0, 0.0),
         ]
 
 //        let uvCoords = [
@@ -486,13 +486,12 @@ public class Renderer: NSObject {
         var pixelSize = 1
 
         var finalTransform = camera
-            * Float4x4.translate(x: 1.0, y: -1.4, z: 0.1)
+            * Float4x4.translate(x: -1.0, y: -1.0, z: 0.1)
             * Float4x4.scale(x: 2.0, y: 2.0, z: 0.0)
-            * Float4x4.rotateY(-.pi)
 
         encoder.setRenderPipelineState(texturePipeline)
         encoder.setDepthStencilState(depthStencilState)
-        encoder.setCullMode(.none)
+        encoder.setCullMode(.back)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
         encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
         encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
