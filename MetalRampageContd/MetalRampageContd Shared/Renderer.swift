@@ -25,6 +25,7 @@ public class Renderer: NSObject {
     var slimeWallTexture: MTLTexture!
     var wallTexture: MTLTexture!
     var monster: [Texture:MTLTexture?] = [:]
+    var magicWand: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -143,6 +144,7 @@ public class Renderer: NSObject {
         monster[.monsterScratch6] = loadTexture(name: "MonsterScratch6")!
         monster[.monsterScratch7] = loadTexture(name: "MonsterScratch6")!
         monster[.monsterScratch8] = loadTexture(name: "MonsterScratch8")!
+        magicWand[.monster] = loadTexture(name: "MagicWand")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -323,6 +325,8 @@ public class Renderer: NSObject {
                 return 9
             case .monsterScratch8:
                 return 10
+            default:
+                return 0
             }
         }
 
