@@ -144,7 +144,7 @@ public class Renderer: NSObject {
         monster[.monsterScratch6] = loadTexture(name: "MonsterScratch6")!
         monster[.monsterScratch7] = loadTexture(name: "MonsterScratch6")!
         monster[.monsterScratch8] = loadTexture(name: "MonsterScratch8")!
-        magicWand[.monster] = loadTexture(name: "MagicWand")!
+        magicWand[.magicWand] = loadTexture(name: "MagicWand")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -462,25 +462,48 @@ public class Renderer: NSObject {
             Float3(1.0, 1.0, 0.0),
         ]
 
+//        let uvCoords = [
+//            Float2(0.0,0.0),
+//            Float2(0.25,0.25),
+//            Float2(0.0,0.25),
+//            Float2(0.0,0.0),
+//            Float2(0.25,0.0),
+//            Float2(0.25,0.25),
+//        ]
+
+        let  uvCoords = [
+            Float2(0.0,0.25),
+            Float2(0.25,0.0),
+            Float2(0.0,0.0),
+            Float2(0.0,0.25),
+            Float2(0.25,0.25),
+            Float2(0.25,0.0),
+        ]
+
         let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
 
         var pixelSize = 1
 
         var finalTransform = camera
-            * Float4x4.translate(x: 1.0, y: -1.0, z: 0.0)
+            * Float4x4.translate(x: 1.0, y: -1.4, z: 0.0)
             * Float4x4.scale(x: 2.0, y: 2.0, z: 0.0)
             * Float4x4.rotateY(-.pi)
 
-        encoder.setCullMode(.back)
-        encoder.setRenderPipelineState(effectPipeline)
+        encoder.setRenderPipelineState(texturePipeline)
+        encoder.setDepthStencilState(depthStencilState)
+        encoder.setCullMode(.none)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
-        encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
+        encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
 
         let color = Color.red
         var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
+
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float4>.stride, index: 0)
+        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+        encoder.setFragmentTexture(magicWand[.magicWand]!, index: 0)
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 
