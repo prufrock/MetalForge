@@ -462,14 +462,6 @@ public class Renderer: NSObject {
 
             var pixelSize = 1
 
-            var cameraPosition = (Float4x4.identity()
-                    .scaledBy(x: 0.2, y: 0.2, z: 0.2)
-                * Float4x4.translate(x: 0.0, y: 0.0, z: 0.5)
-                * world.player.position.toTranslation()
-                * Float4x4.rotateX(-(3 * .pi)/2)
-                * (world.player.direction3d.scaledBy(x: 1.0, y: 1.0, z: 1.0))
-            )
-
             var finalTransform = Float4x4.identity()
                 * Float4x4.translate(x: 1.0, y: -1.0, z: 0.0)
                 * Float4x4.scale(x: 2.0, y: 2.0, z: 1.99)
