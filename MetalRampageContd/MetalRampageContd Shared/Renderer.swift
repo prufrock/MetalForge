@@ -462,14 +462,13 @@ public class Renderer: NSObject {
             Float3(0.0, 0.0, 0.0),
         ]
 
-        let uvValue: Float = 1.0 / 5 //??
         let  uvCoords = [
-            Float2(0.0, uvValue),
+            Float2(0.0, 1.0),
             Float2(0.0 ,0.0),
-            Float2(uvValue, 0.0),
-            Float2(uvValue, 0.0),
-            Float2(uvValue, uvValue),
-            Float2(0.0, uvValue),
+            Float2(1.0, 0.0),
+            Float2(1.0, 0.0),
+            Float2(1.0, 1.0),
+            Float2(0.0, 1.0),
         ]
 
         let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
