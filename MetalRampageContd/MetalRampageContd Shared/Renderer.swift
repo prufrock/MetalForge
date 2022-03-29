@@ -486,7 +486,7 @@ public class Renderer: NSObject {
         var pixelSize = 1
 
         var finalTransform = camera
-            * Float4x4.translate(x: 1.0, y: -1.4, z: 0.0)
+            * Float4x4.translate(x: 1.0, y: -1.4, z: 0.1)
             * Float4x4.scale(x: 2.0, y: 2.0, z: 0.0)
             * Float4x4.rotateY(-.pi)
 
