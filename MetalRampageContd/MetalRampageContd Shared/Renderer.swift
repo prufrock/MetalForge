@@ -186,6 +186,9 @@ public class Renderer: NSObject {
                 * (world.player.direction3d.scaledBy(x: 1.0, y: 1.0, z: 1.0))
               ).inverse
 
+        let hudCamera = Float4x4.identity()
+                .scaledX(by: 1/aspect)
+
         drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
 
         if world.drawWorld {
@@ -197,6 +200,8 @@ public class Renderer: NSObject {
         if world.showMap {
             drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
         }
+
+        drawWeapon(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
 
         drawEffects(world: world, encoder: encoder, camera: playerCamera, worldTransform: worldTransform)
 
@@ -445,6 +450,40 @@ public class Renderer: NSObject {
             )
         }
     }
+
+    private func drawWeapon(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+        let vertices = [
+            Float3(0.0, 0.0, 0.0),
+            Float3(1.0, 1.0, 0.0),
+            Float3(0.0, 1.0, 0.0),
+
+            Float3(0.0, 0.0, 0.0),
+            Float3(1.0, 0.0, 0.0),
+            Float3(1.0, 1.0, 0.0),
+        ]
+
+        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+
+        var pixelSize = 1
+
+        var finalTransform = camera
+            * Float4x4.translate(x: 1.0, y: -1.0, z: 0.0)
+            * Float4x4.scale(x: 2.0, y: 2.0, z: 0.0)
+            * Float4x4.rotateY(-.pi)
+
+        encoder.setCullMode(.back)
+        encoder.setRenderPipelineState(effectPipeline)
+        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
+        encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+
+        let color = Color.red
+        var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
+        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float4>.stride, index: 0)
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+    }
+
 
     private func drawEffects(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         world.effects.forEach { effect in
