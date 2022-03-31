@@ -25,7 +25,7 @@ public class Renderer: NSObject {
     var slimeWallTexture: MTLTexture!
     var wallTexture: MTLTexture!
     var monster: [Texture:MTLTexture?] = [:]
-    var magicWand: [Texture:MTLTexture?] = [:]
+    var wand: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -144,7 +144,7 @@ public class Renderer: NSObject {
         monster[.monsterScratch6] = loadTexture(name: "MonsterScratch6")!
         monster[.monsterScratch7] = loadTexture(name: "MonsterScratch6")!
         monster[.monsterScratch8] = loadTexture(name: "MonsterScratch8")!
-        magicWand[.magicWand] = loadTexture(name: "MagicWand")!
+        wand[.magicWand] = loadTexture(name: "Wand")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -493,7 +493,7 @@ public class Renderer: NSObject {
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        encoder.setFragmentTexture(magicWand[.magicWand]!, index: 0)
+        encoder.setFragmentTexture(wand[.magicWand]!, index: 0)
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 
