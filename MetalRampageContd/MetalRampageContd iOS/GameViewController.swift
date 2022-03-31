@@ -17,6 +17,8 @@ class GameViewController: UIViewController {
     private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
     private let worldTimeStep: Float = 1 / 120 // number of steps to take each frame
     private var lastFrameTime = CACurrentMediaTime()
+
+    // variables for using the touch screen as a joystick
     private let panGesture = UIPanGestureRecognizer()
     private var inputVector: Float2 {
         switch panGesture.state {
@@ -40,11 +42,19 @@ class GameViewController: UIViewController {
     // travel distance of 80 screen points ~0.5" so 40 radius
     private let joystickRadius: Float = 40
 
+    // variables for using the touch screen as a fire button
+    private let tapGesture = UITapGestureRecognizer()
+    private var lastFiredTime: Double = 0.0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMetalView()
 
         renderer = Renderer(metalView, width: 8, height: 8)
+
+        // attach the UITapGestureRecognizer to turn the screen into a button
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.addTarget(self, action: #selector(fire))
     }
 
     func setupMetalView() {
@@ -58,6 +68,13 @@ class GameViewController: UIViewController {
         metalView.backgroundColor = .black
         metalView.delegate = self
         metalView.addGestureRecognizer(panGesture)
+    }
+}
+
+// Methods for turning the screen into a fire button
+extension GameViewController {
+    @objc func fire(_ gestureRecognizer: UITapGestureRecognizer) {
+        lastFiredTime = CACurrentMediaTime()
     }
 }
 
@@ -81,6 +98,9 @@ extension GameViewController: MTKViewDelegate {
             speed: -inputVector.y,
             rotation: Float2x2.rotate(rotation),
             rotation3d: Float4x4.rotateY(inputVector.x * world.player.turningSpeed * worldTimeStep),
+            // pressing fire happens while rendering new frames so the press we care about is the one that happened after
+            // the last frame was rendered.
+            isFiring: lastFiredTime > lastFrameTime,
             showMap: false,
             drawWorld: true
         )

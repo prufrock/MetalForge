@@ -84,6 +84,8 @@ extension GameViewController: MTKViewDelegate {
             speed: -inputVector.y,
             rotation: Float2x2.rotate(rotation),
             rotation3d: Float4x4.rotateY(inputVector.x * world.player.turningSpeed * worldTimeStep),
+            // Holding off on implementing this for tvOS
+            isFiring: false,
             showMap: showMap,
             drawWorld: drawWorld
         )
