@@ -66,6 +66,18 @@ extension Monster {
         let playerDistance = (world.player.position - position).length
         return playerDistance - radius - world.player.radius < reach
     }
+
+    func billboard(for ray: Ray) -> Billboard {
+        // Since the sprites all face the player, the plane of every sprite will be parallel to the view plane, which is itself orthogonal to the player's direction
+        let plane = ray.direction.orthogonal
+        return Billboard(
+            start: position - plane / 2,
+            direction: plane,
+            length: 1,
+            position: position,
+            texture: animation.texture
+        )
+    }
 }
 
 enum MonsterState {

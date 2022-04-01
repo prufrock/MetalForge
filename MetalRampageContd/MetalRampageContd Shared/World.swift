@@ -125,16 +125,8 @@ public extension World {
     }
 
     var sprites: [Billboard] {
-        // Since the sprites all face the player, the plane of every sprite will be parallel to the view plane, which is itself orthogonal to the player's direction
-        let spritePlane = player.direction.orthogonal
-        return monsters.map { monster in
-            Billboard(
-                start: monster.position - spritePlane / 2,
-                direction: spritePlane,
-                length: 1,
-                position: monster.position,
-                texture: monster.animation.texture
-            )
-        }
+        // The ray is used to make the billboard orthogonal to the player(or any ray)
+        let ray = Ray(origin: player.position, direction: player.direction)
+        return monsters.map { $0.billboard(for: ray)}
     }
 }
