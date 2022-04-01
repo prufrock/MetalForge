@@ -30,6 +30,7 @@ public class Renderer: NSObject {
     var wandFiring2: [Texture:MTLTexture?] = [:]
     var wandFiring3: [Texture:MTLTexture?] = [:]
     var wandFiring4: [Texture:MTLTexture?] = [:]
+    var door: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -157,6 +158,8 @@ public class Renderer: NSObject {
         wand[.wandFiring2] = loadTexture(name: "WandFiring2")!
         wand[.wandFiring3] = loadTexture(name: "WandFiring3")!
         wand[.wandFiring4] = loadTexture(name: "WandFiring4")!
+        door[.door1] = loadTexture(name: "Door1")!
+        door[.door2] = loadTexture(name: "Door2")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -310,7 +313,10 @@ public class Renderer: NSObject {
                     * (Float4x4.identity()
                     * Float4x4.rotateX(-(3 * .pi)/2)
                     * Float4x4.rotateY(.pi / 2)
-                    * world.player.direction3d * Float4x4.rotateY(.pi/2)
+                    // use atan2 to convert the direction vector to an angle
+                    // this works because these sprites only rotate about the y axis.
+                    * Float4x4.rotateY(atan2(billboard.direction.y, billboard.direction.x))
+                    * Float4x4.rotateY(.pi/2)
                 )
                 , Color.red, MTLPrimitiveType.triangle, billboard.texture)
         }
@@ -350,6 +356,10 @@ public class Renderer: NSObject {
                 return 13
             case .monsterDead:
                 return 14
+            case .door1:
+                return 15
+            case .door2:
+                 return 16
             default:
                 return 0
             }
@@ -372,7 +382,8 @@ public class Renderer: NSObject {
 
         encoder.setRenderPipelineState(textureIndexedPipeline)
         encoder.setDepthStencilState(depthStencilState)
-        encoder.setCullMode(.back)
+        // Setting this to none for now until I can figure out how to make doors draw on both sides.
+        encoder.setCullMode(.none)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
         encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
         encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
@@ -399,6 +410,8 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(monster[.monsterDeath1]!, index: 12)
         encoder.setFragmentTexture(monster[.monsterDeath2]!, index: 13)
         encoder.setFragmentTexture(monster[.monsterDead]!, index: 14)
+        encoder.setFragmentTexture(door[.door1]!, index: 15)
+        encoder.setFragmentTexture(door[.door2]!, index: 16)
         encoder.drawIndexedPrimitives(
             type: primitiveType,
             indexCount: index.count,

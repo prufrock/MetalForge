@@ -183,7 +183,8 @@ public extension World {
     var sprites: [Billboard] {
         // The ray is used to make the billboard orthogonal to the player(or any ray)
         let ray = Ray(origin: player.position, direction: player.direction)
-        return monsters.map { $0.billboard(for: ray)}
+        // append billboards here to draw more sprites
+        return monsters.map { $0.billboard(for: ray)} + doors.map { $0.billboard }
     }
 
     /**

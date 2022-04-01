@@ -93,6 +93,8 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
                               texture2d<half> texture12 [[ texture(12) ]],
                               texture2d<half> texture13 [[ texture(13) ]],
                               texture2d<half> texture14 [[ texture(14) ]],
+                              texture2d<half> texture15 [[ texture(15) ]],
+                              texture2d<half> texture16 [[ texture(16) ]],
                               constant float4 &color [[buffer(0)]]
                               ) {
     constexpr sampler colorSampler(coord::normalized, address::repeat, filter::nearest);
@@ -129,6 +131,10 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
         colorSample = texture13.sample(colorSampler, in.texcoord);
     } else if (in.textureId == 14) {
         colorSample = texture14.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 15) {
+        colorSample = texture15.sample(colorSampler, in.texcoord);
+    } else if (in.textureId == 16) {
+        colorSample = texture16.sample(colorSampler, in.texcoord);
     } else {
         return color;
     }

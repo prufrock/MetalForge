@@ -12,7 +12,7 @@ struct Door {
 
         if isVertical {
             self.direction = Float2(x:0, y: 1)
-            self.texture = .door
+            self.texture = .door1
         } else {
             self.direction = Float2(x:1, y:0)
             self.texture = .door2
