@@ -7,6 +7,7 @@ import Foundation
 protocol Actor {
     var radius: Float {get}
     var position: Float2 {get set}
+    var isDead: Bool { get }
 }
 
 extension Actor {
@@ -36,6 +37,12 @@ extension Actor {
     }
 
     func intersection(with actor: Actor) -> Float2? {
-        rect.intersection(with: actor.rect)
+        // if either are dead don't consider it an intersection
+        // basically this makes it so you can move through dead monsters
+        if isDead || actor.isDead {
+            return nil
+        }
+
+        return rect.intersection(with: actor.rect)
     }
 }

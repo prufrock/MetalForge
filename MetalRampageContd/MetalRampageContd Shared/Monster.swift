@@ -102,7 +102,8 @@ extension Monster {
      - Returns: Float2?
      */
     func hitTest(_ ray: Ray) -> Float2? {
-        guard let hit = billboard(for: ray).hitTest(ray) else {
+        // if the monster is dead let the ray go through(don't get hit by attacks)
+        guard isDead == false, let hit = billboard(for: ray).hitTest(ray) else {
             return nil
         }
 
