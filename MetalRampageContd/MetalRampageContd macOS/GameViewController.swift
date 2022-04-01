@@ -47,6 +47,11 @@ class GameViewController: NSViewController {
     // travel distance of 80 screen points ~0.5" so 40 radius
     private let joystickRadius: Float = 40
 
+    // variables to manage when weapon fire input is entered
+    // lastFiredTime is a Double because CACurrentMediaTime() returns a double it makes it easier to compare against
+    // lastFrameTime.
+    private var lastFiredTime: Double = 0.0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMetalView()
@@ -98,6 +103,9 @@ class GameViewController: NSViewController {
             print(event.characters!)
         case "S":
             print(event.characters!)
+        case " ":
+            print("space!")
+            lastFiredTime = CACurrentMediaTime()
         default:
             return
         }
@@ -165,8 +173,7 @@ extension GameViewController: MTKViewDelegate {
             speed: -inputVector.y,
             rotation: Float2x2.rotate(rotation),
             rotation3d: Float4x4.rotateY(inputVector.x * world.player.turningSpeed * worldTimeStep),
-            // Holding off on implementing this for macOS
-            isFiring: false,
+            isFiring: lastFiredTime > lastFrameTime,
             showMap: showMap,
             drawWorld: drawWorld
         )
