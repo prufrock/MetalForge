@@ -10,11 +10,14 @@
 		5AF0E0067D684C95067BA34F /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2B7A360CC6C2CA22602 /* Easing.swift */; };
 		5AF0E2795700BE109D38D018 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */; };
 		5AF0E3D1E041257B8F4CFF87 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34EF644B0191228B1AB /* Texture.swift */; };
+		5AF0E4258E6502313E4F0B91 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */; };
+		5AF0E45FBDF6C702B022C69D /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */; };
 		5AF0E5969CE480B9F16DEECA /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34EF644B0191228B1AB /* Texture.swift */; };
 		5AF0E5CDF968880D3209EB4B /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E66BFFFB0273764BF7B0 /* Animation.swift */; };
 		5AF0E67F757BD6EA5A05A6F5 /* RNDRObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */; };
 		5AF0E7B82FA1CF32BBD15327 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34EF644B0191228B1AB /* Texture.swift */; };
 		5AF0E83C2C9C610884DAFB62 /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2B7A360CC6C2CA22602 /* Easing.swift */; };
+		5AF0E85D4EBEB4E9719368C1 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */; };
 		5AF0E9A0138057E81E4D2C0D /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */; };
 		5AF0E9F3834695D3D8A90C38 /* RNDRObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */; };
 		5AF0EB3A833228CB9B86F941 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6A9347E4C6047BABDF2 /* Actor.swift */; };
@@ -105,6 +108,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Door.swift; sourceTree = "<group>"; };
 		5AF0E2B7A360CC6C2CA22602 /* Easing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easing.swift; sourceTree = "<group>"; };
 		5AF0E34EF644B0191228B1AB /* Texture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 		5AF0E66BFFFB0273764BF7B0 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 				5AF0E66BFFFB0273764BF7B0 /* Animation.swift */,
 				5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */,
 				5AF0E2B7A360CC6C2CA22602 /* Easing.swift */,
+				5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */,
 			);
 			path = "MetalRampageContd Shared";
 			sourceTree = "<group>";
@@ -439,6 +444,7 @@
 				5AF0ED5CA3CAA12CFA4BE95A /* Animation.swift in Sources */,
 				5AF0E2795700BE109D38D018 /* Effect.swift in Sources */,
 				5AF0EEA3DE6B6147C6B00FB7 /* Easing.swift in Sources */,
+				5AF0E85D4EBEB4E9719368C1 /* Door.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +478,7 @@
 				5AF0E5CDF968880D3209EB4B /* Animation.swift in Sources */,
 				5AF0ED4E06E72980DE576860 /* Effect.swift in Sources */,
 				5AF0E0067D684C95067BA34F /* Easing.swift in Sources */,
+				5AF0E4258E6502313E4F0B91 /* Door.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +512,7 @@
 				5AF0EC86C25636B92D7B519C /* Animation.swift in Sources */,
 				5AF0E9A0138057E81E4D2C0D /* Effect.swift in Sources */,
 				5AF0E83C2C9C610884DAFB62 /* Easing.swift in Sources */,
+				5AF0E45FBDF6C702B022C69D /* Door.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

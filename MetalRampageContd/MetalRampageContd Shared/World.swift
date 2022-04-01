@@ -6,6 +6,7 @@ import simd
 
 public struct World {
     public let map: Tilemap
+    private(set) var doors: [Door]
     public private(set) var player: Player!
     public private(set) var monsters: [Monster]
     private(set) var effects: [Effect]
@@ -14,6 +15,7 @@ public struct World {
 
     public init(map: Tilemap) {
         self.map = map
+        self.doors = []
         self.monsters = []
         self.effects = []
         reset()
@@ -150,6 +152,9 @@ public extension World {
 
     mutating func reset() {
         monsters = []
+
+        self.doors = []
+
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
                 let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5) // in the center of the tile
@@ -161,6 +166,15 @@ public extension World {
                     player = Player(position: position)
                 case .monster:
                     monsters.append(Monster(position: position))
+                case .door:
+                    // crash early if the door is on the map edge
+                    precondition(y > 0 && y < map.height, "Door cannot be placed on map edge")
+                    // if there is a wall above and below the door then it's vertical
+                    let isVertical = map[x, y - 1].isWall && map[x, y + 1].isWall
+                    doors.append(Door(
+                        position: position,
+                        isVertical: isVertical
+                    ))
                 }
             }
         }
