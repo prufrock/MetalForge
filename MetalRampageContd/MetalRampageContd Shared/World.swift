@@ -108,6 +108,9 @@ public extension World {
 
         effects.append(Effect(type: .fadeIn, color: ColorA(.red), duration: 0.2))
         player.health -= damage
+        // putting this here to make sure the player doesn't keep moving if they die
+        // Should there be a state change when they die?
+        player.velocity = Float2(x: 0, y: 0)
 
         if player.isDead {
             effects.append(Effect(type: .fadeOut, color: ColorA(.red), duration: 2))
@@ -134,6 +137,8 @@ public extension World {
         if monster.isDead {
             monster.state = .dead
             monster.animation = .monsterDeath
+            // change velocity when changing state
+            monster.velocity = Float2(x: 0, y: 0)
         } else {
             monster.state = .hurt
             monster.animation = .monsterHurt

@@ -25,17 +25,20 @@ public struct Monster: Actor {
                 state = .chasing
                 animation = .monsterWalk
             }
-            velocity = Float2(x: 0, y: 0)
         case .chasing:
             guard canSeePlayer(in: world)  else {
                 state = .idle
                 animation = .monsterIdle
+                // change velocity when changing state
+                velocity = Float2(x: 0, y: 0)
                 break
             }
             if canReachPlayer(in: world) {
                 state = .scratching
                 animation = .monsterScratch
                 lastAttackTime = -attackCooldown
+                // change velocity when changing state
+                velocity = Float2(x: 0, y: 0)
             }
             let direction = world.player.position - position
             velocity = direction * (speed / direction.length)

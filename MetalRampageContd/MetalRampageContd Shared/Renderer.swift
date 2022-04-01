@@ -148,6 +148,10 @@ public class Renderer: NSObject {
         monster[.monsterScratch6] = loadTexture(name: "MonsterScratch6")!
         monster[.monsterScratch7] = loadTexture(name: "MonsterScratch6")!
         monster[.monsterScratch8] = loadTexture(name: "MonsterScratch8")!
+        monster[.monsterHurt] = loadTexture(name: "MonsterHurt")!
+        monster[.monsterDeath1] = loadTexture(name: "MonsterDeath1")!
+        monster[.monsterDeath2] = loadTexture(name: "MonsterDeath2")!
+        monster[.monsterDead] = loadTexture(name: "MonsterDead")!
         wand[.wand] = loadTexture(name: "Wand")!
         wand[.wandFiring1] = loadTexture(name: "WandFiring1")!
         wand[.wandFiring2] = loadTexture(name: "WandFiring2")!
@@ -338,6 +342,14 @@ public class Renderer: NSObject {
                 return 9
             case .monsterScratch8:
                 return 10
+            case .monsterHurt:
+                return 11
+            case .monsterDeath1:
+                return 12
+            case .monsterDeath2:
+                return 13
+            case .monsterDead:
+                return 14
             default:
                 return 0
             }
@@ -383,6 +395,10 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(monster[.monsterScratch6]!, index: 8)
         encoder.setFragmentTexture(monster[.monsterScratch7]!, index: 9)
         encoder.setFragmentTexture(monster[.monsterScratch8]!, index: 10)
+        encoder.setFragmentTexture(monster[.monsterHurt]!, index: 11)
+        encoder.setFragmentTexture(monster[.monsterDeath1]!, index: 12)
+        encoder.setFragmentTexture(monster[.monsterDeath2]!, index: 13)
+        encoder.setFragmentTexture(monster[.monsterDead]!, index: 14)
         encoder.drawIndexedPrimitives(
             type: primitiveType,
             indexCount: index.count,
