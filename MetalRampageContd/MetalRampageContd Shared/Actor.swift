@@ -36,6 +36,32 @@ extension Actor {
         return largestIntersection
     }
 
+    /**
+     If this rectangle intersection with the door return the response vector
+     - Parameter door: Door
+     - Returns: Float2
+     */
+    func intersection(with door: Door) -> Float2? {
+        rect.intersection(with: door.rect)
+    }
+
+    /**
+     Checks for intersection with the world and doors and returns a response vector if it does.
+     - Parameter world: Door
+     - Returns: Float2
+     */
+    func intersection(with world: World) -> Float2? {
+        if let intersection = intersection(with: world.map) {
+            return intersection
+        }
+        for door in world.doors {
+            if let intersection = intersection(with: door) {
+                return intersection
+            }
+        }
+        return nil
+    }
+
     func intersection(with actor: Actor) -> Float2? {
         // if either are dead don't consider it an intersection
         // basically this makes it so you can move through dead monsters

@@ -90,15 +90,16 @@ public extension World {
                 }
             }
 
-            while let intersection = monster.intersection(with: map) {
+            // check if the monster intersects with the world
+            while let intersection = monster.intersection(with: self) {
                 monster.position -= intersection
             }
 
             monsters[i] = monster
         }
 
-
-        while let intersection = player.intersection(with: map) {
+        // check if the player intersects with the world
+        while let intersection = player.intersection(with: self) {
             player.position -= intersection
         }
     }
