@@ -49,6 +49,15 @@ public struct Monster: Actor {
                 lastAttackTime = animation.time
                 world.hurtPlayer(10)
             }
+        case .hurt:
+            if animation.isCompleted {
+                state = .idle
+                animation = .monsterIdle
+            }
+        case .dead:
+            if animation.isCompleted {
+                animation = .monsterDead
+            }
         }
     }
 }
@@ -106,6 +115,8 @@ enum MonsterState {
     case idle
     case chasing
     case scratching
+    case hurt
+    case dead
 }
 
 extension Animation {
@@ -121,4 +132,15 @@ extension Animation {
         .monsterScratch7,
         .monsterScratch8,
     ], duration: 0.8)
+    static let monsterHurt = Animation(frames: [
+        .monsterHurt
+    ], duration: 0.2)
+    static let monsterDeath = Animation(frames: [
+        .monsterHurt,
+        .monsterDeath1,
+        .monsterDeath2
+    ], duration: 0.5)
+    static let monsterDead = Animation(frames: [
+        .monsterDead
+    ], duration: 0)
 }

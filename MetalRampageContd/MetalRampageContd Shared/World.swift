@@ -121,7 +121,26 @@ public extension World {
        - damage: Float
      */
     mutating func hurtMonster(at index: Int, damage: Float) {
-        monsters[index].health -= damage
+        var monster = monsters[index]
+        // you can't hurt what's already dead
+        if monster.isDead {
+            return
+        }
+
+        // Do the damage
+        monster.health -= damage
+
+        // Check to see if it's hurt or dead and respond accordingly
+        if monster.isDead {
+            monster.state = .dead
+            monster.animation = .monsterDeath
+        } else {
+            monster.state = .hurt
+            monster.animation = .monsterHurt
+        }
+
+        // Write the monster back to the world
+        monsters[index] = monster
     }
 
     mutating func reset() {

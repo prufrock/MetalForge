@@ -20,4 +20,9 @@ extension Animation {
         let t = time.truncatingRemainder(dividingBy: duration) / duration
         return frames[Int(Float(frames.count) * t)]
     }
+
+    // makes it possible to know when an animation has finished and perform some action in response
+    var isCompleted: Bool {
+        time >= duration
+    }
 }
