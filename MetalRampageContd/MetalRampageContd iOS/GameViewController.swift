@@ -52,7 +52,12 @@ class GameViewController: UIViewController {
 
         renderer = Renderer(metalView, width: 8, height: 8)
 
+        // attach the pan gesture recognizer so there's an on screen joystick
+        panGesture.delegate = self
+        view.addGestureRecognizer(panGesture)
+
         // attach the UITapGestureRecognizer to turn the screen into a button
+        tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
         tapGesture.addTarget(self, action: #selector(fire))
     }
@@ -67,7 +72,6 @@ class GameViewController: UIViewController {
         metalView.contentMode = .scaleAspectFit
         metalView.backgroundColor = .black
         metalView.delegate = self
-        metalView.addGestureRecognizer(panGesture)
     }
 }
 
@@ -111,6 +115,17 @@ extension GameViewController: MTKViewDelegate {
         lastFrameTime = time
 
         renderer.render(world)
+    }
+}
+
+extension GameViewController: UIGestureRecognizerDelegate {
+
+    // Allow for more than on gesture recognizer to do its thing at the same time.
+    public func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        true
     }
 }
 
