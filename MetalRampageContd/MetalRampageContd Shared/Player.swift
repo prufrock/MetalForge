@@ -15,7 +15,7 @@ public struct Player: Actor {
     // player animation
     public var state: PlayerState = .idle
     var animation: Animation = .wandIdle
-    public let attackCooldown: Float = 0.2
+    public let attackCooldown: Float = 0.25
 
     public init(position: Float2) {
         self.position = position
@@ -36,6 +36,19 @@ public extension Player {
         health <= 0
     }
 
+    var canFire: Bool {
+        switch state {
+        // can fire when idle
+        case .idle:
+            return true
+
+        // if firing you can fire again the time since last fired exceeds the attack cool down. The animation time is
+        // used as a way to determine how much time has passed since last fired.
+        case .firing:
+            return animation.time >= attackCooldown
+        }
+    }
+
     /**
      Updates the player's state and direction via *input* and allows them to act on the *world*.
      - Parameters:
@@ -47,21 +60,22 @@ public extension Player {
         direction3d = direction3d * input.rotation3d
         velocity = direction * Float(input.speed) * speed
 
+        // you can keep firing as long as you *canFire*
+        if input.isFiring, canFire {
+            state = .firing
+            animation = .wandFire
+            let ray = Ray(origin: position, direction: direction)
+            if let index = world.hitTest(ray) {
+                world.hurtMonster(at: index, damage: 10)
+            }
+        }
+
         switch state {
         case .idle:
-            if input.isFiring {
-                state = .firing
-                animation = .wandFire
-
-                // fire a ray and see if a monster was hit
-                let ray = Ray(origin: position, direction: direction)
-                if let index = world.hitTest(ray) {
-                    world.hurtMonster(at: index, damage: 10)
-                    print("hit monster \(index)")
-                }
-            }
+            break
         case .firing:
-            if animation.time >= attackCooldown {
+            // you are no longer firing when the firing animation finishes
+            if animation.isCompleted {
                 state = .idle
                 animation = .wandIdle
             }
