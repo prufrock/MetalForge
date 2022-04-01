@@ -42,10 +42,8 @@ public extension World {
         }
 
         if player.isDead == false {
-            player.direction = player.direction.rotated(by: input.rotation)
-            player.direction3d = player.direction3d * input.rotation3d
-            player.velocity = player.direction * Float(input.speed) * player.speed
-
+            player.animation.time += timeStep
+            player.update(with: input)
 
             player.position += player.velocity * timeStep
             player.position.x.formTruncatingRemainder(dividingBy: size.x - 1)

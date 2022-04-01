@@ -64,13 +64,14 @@ vertex VertexOut vertex_indexed(Vertex in [[stage_in]],
 vertex VertexOut vertex_with_texcoords(Vertex in [[stage_in]],
                              constant matrix_float4x4 &matrix [[buffer(3)]],
                              constant float &point_size [[buffer(4)]],
+                             constant uint &textureId [[buffer(5)]],
                              uint id [[vertex_id]]
                              ) {
     VertexOut vertex_out {
         .position = matrix * float4(in.position, 1),
         .texcoord = float2(in.texcoord.x, in.texcoord.y), // I'm pretty sure the problem has something to do with texcoords not being passed to vertex_main correctly
         .point_size = point_size,
-        .textureId = 0
+        .textureId = textureId
     };
 
     return vertex_out;

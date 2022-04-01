@@ -3,6 +3,7 @@
 //
 public enum Texture {
     case wand
+    case wandFiring1, wandFiring2, wandFiring3, wandFiring4
     case monster
     case monsterWalk1, monsterWalk2
     case monsterScratch1, monsterScratch2, monsterScratch3, monsterScratch4

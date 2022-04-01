@@ -26,6 +26,10 @@ public class Renderer: NSObject {
     var wallTexture: MTLTexture!
     var monster: [Texture:MTLTexture?] = [:]
     var wand: [Texture:MTLTexture?] = [:]
+    var wandFiring1: [Texture:MTLTexture?] = [:]
+    var wandFiring2: [Texture:MTLTexture?] = [:]
+    var wandFiring3: [Texture:MTLTexture?] = [:]
+    var wandFiring4: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -145,6 +149,10 @@ public class Renderer: NSObject {
         monster[.monsterScratch7] = loadTexture(name: "MonsterScratch6")!
         monster[.monsterScratch8] = loadTexture(name: "MonsterScratch8")!
         wand[.wand] = loadTexture(name: "Wand")!
+        wand[.wandFiring1] = loadTexture(name: "WandFiring1")!
+        wand[.wandFiring2] = loadTexture(name: "WandFiring2")!
+        wand[.wandFiring3] = loadTexture(name: "WandFiring3")!
+        wand[.wandFiring4] = loadTexture(name: "WandFiring4")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -474,6 +482,23 @@ public class Renderer: NSObject {
         let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
         let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
 
+        // select the texture
+        var textureId: UInt32
+        switch world.player.animation.texture {
+        case .wand:
+            textureId = 0
+        case .wandFiring1:
+            textureId = 1
+        case .wandFiring2:
+            textureId = 2
+        case .wandFiring3:
+            textureId = 3
+        case .wandFiring4:
+            textureId = 4
+        default:
+            textureId = 0
+        }
+
         var pixelSize = 1
 
         var finalTransform = camera
@@ -487,6 +512,7 @@ public class Renderer: NSObject {
         encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
         encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
         encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
+        encoder.setVertexBytes(&textureId, length: MemoryLayout<Float>.stride, index: 5)
 
         let color = Color.red
         var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
@@ -494,6 +520,10 @@ public class Renderer: NSObject {
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
         encoder.setFragmentTexture(wand[.wand]!, index: 0)
+        encoder.setFragmentTexture(wand[.wandFiring1]!, index: 1)
+        encoder.setFragmentTexture(wand[.wandFiring2]!, index: 2)
+        encoder.setFragmentTexture(wand[.wandFiring3]!, index: 3)
+        encoder.setFragmentTexture(wand[.wandFiring4]!, index: 4)
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 
