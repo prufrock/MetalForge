@@ -36,7 +36,13 @@ public extension Player {
         health <= 0
     }
 
-    mutating func update(with input: Input) {
+    /**
+     Updates the player's state and direction via *input* and allows them to act on the *world*.
+     - Parameters:
+       - input: Input
+       - world: World
+     */
+    mutating func update(with input: Input, in world: inout World) {
         direction = direction.rotated(by: input.rotation)
         direction3d = direction3d * input.rotation3d
         velocity = direction * Float(input.speed) * speed
@@ -46,6 +52,13 @@ public extension Player {
             if input.isFiring {
                 state = .firing
                 animation = .wandFire
+
+                // fire a ray and see if a monster was hit
+                let ray = Ray(origin: position, direction: direction)
+                if let index = world.hitTest(ray) {
+                    world.hurtMonster(at: index, damage: 10)
+                    print("hit monster \(index)")
+                }
             }
         case .firing:
             if animation.time >= attackCooldown {

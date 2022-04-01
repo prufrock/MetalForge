@@ -19,5 +19,13 @@ extension ScopeFunc {
         block(self)
         return self
     }
+
+    // run statements on an object where you need an expression
+    // useful for updating structs in place without adding additional variables to the local scope
+    @inline(__always) func run<T>(block: (Self) -> T) -> T {
+        block(self)
+    }
 }
 extension NSObject: ScopeFunc {}
+
+extension Player: ScopeFunc {}

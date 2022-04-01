@@ -12,6 +12,8 @@ public struct Monster: Actor {
     let attackCooldown: Float = 0.4
     private(set) var lastAttackTime: Float = 0
 
+    var health: Float = 50
+
     public init(position: Float2) {
         self.position = position
     }
@@ -52,6 +54,8 @@ public struct Monster: Actor {
 }
 
 extension Monster {
+    var isDead: Bool { health <= 0 }
+
     func canSeePlayer(in world: World) -> Bool {
         let direction = world.player.position - position
         let playerDistance = direction.length
@@ -77,6 +81,24 @@ extension Monster {
             position: position,
             texture: animation.texture
         )
+    }
+
+    /**
+     Checks to see if the ray *hits* the monster's billboard. If it does it returns the position of the hit, otherwise
+     nil.
+     - Parameter ray: Ray
+     - Returns: Float2?
+     */
+    func hitTest(_ ray: Ray) -> Float2? {
+        guard let hit = billboard(for: ray).hitTest(ray) else {
+            return nil
+        }
+
+        // Make sure the hit location is on the monster
+        guard (hit - position).length < radius else {
+            return nil
+        }
+        return hit
     }
 }
 
