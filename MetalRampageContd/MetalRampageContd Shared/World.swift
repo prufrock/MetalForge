@@ -188,14 +188,37 @@ public extension World {
         return monsters.map { $0.billboard(for: ray)} + doors.map { $0.billboard }
     }
 
+    func hitTest(_ ray: Ray) -> Float2 {
+        // Figure out how far away the wall is from the origin of the ray.
+        var wallHit = map.hitTest(ray)
+        var distance = (wallHit - ray.origin).length
+
+        for door in doors {
+            // if we don't hit this door check the next one
+            guard let hit = door.hitTest(ray) else {
+                continue
+            }
+
+            // if this door is closer than the last one use this door for the next iteration
+            let hitDistance = (hit - ray.origin).length
+            guard hitDistance < distance else {
+                continue
+            }
+            wallHit = hit
+            distance = hitDistance
+        }
+
+        return wallHit
+    }
+
     /**
     Determines if and which monster was hit.
      - Parameter ray: Ray
      - Returns: Int?
      */
-    func hitTest(_ ray: Ray) -> Int? {
-        // hit test with the map to later see if we hit a wall instead of a monster
-        let wallHit = map.hitTest(ray)
+    func pickMonster(_ ray: Ray) -> Int? {
+        // hit test to see if we hit a wall instead of a monster
+        let wallHit = hitTest(ray)
         var distance = (wallHit - ray.origin).length
 
         var result: Int? = nil

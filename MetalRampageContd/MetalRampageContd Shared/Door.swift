@@ -35,4 +35,11 @@ extension Door {
             texture: texture
         )
     }
+
+    /*
+     Determines if a ray hit the door. If it does returns the displacement vector.
+     */
+    func hitTest(_ ray: Ray) -> Float2? {
+        billboard.hitTest(ray)
+    }
 }
