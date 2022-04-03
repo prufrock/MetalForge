@@ -10,4 +10,5 @@ public enum Texture {
     case monsterScratch5, monsterScratch6, monsterScratch7, monsterScratch8
     case monsterHurt, monsterDeath1, monsterDeath2, monsterDead
     case door1, door2
+    case doorJamb1, doorJamb2
 }

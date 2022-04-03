@@ -31,6 +31,7 @@ public class Renderer: NSObject {
     var wandFiring3: [Texture:MTLTexture?] = [:]
     var wandFiring4: [Texture:MTLTexture?] = [:]
     var door: [Texture:MTLTexture?] = [:]
+    var doorJamb: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -160,6 +161,8 @@ public class Renderer: NSObject {
         wand[.wandFiring4] = loadTexture(name: "WandFiring4")!
         door[.door1] = loadTexture(name: "Door1")!
         door[.door2] = loadTexture(name: "Door2")!
+        doorJamb[.doorJamb1] = loadTexture(name: "DoorJamb1")!
+        doorJamb[.doorJamb2] = loadTexture(name: "DoorJamb2")!
     }
 
     public func updateAspect(width: Float, height: Float) {
