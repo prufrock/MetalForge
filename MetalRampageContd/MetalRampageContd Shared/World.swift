@@ -99,17 +99,13 @@ public extension World {
             }
 
             // check if the monster intersects with the world
-            while let intersection = monster.intersection(with: self) {
-                monster.position -= intersection
-            }
+            monster.avoidWalls(in: self)
 
             monsters[i] = monster
         }
 
         // check if the player intersects with the world
-        while let intersection = player.intersection(with: self) {
-            player.position -= intersection
-        }
+        player.avoidWalls(in: self)
     }
 
     mutating func hurtPlayer(_ damage: Float) {

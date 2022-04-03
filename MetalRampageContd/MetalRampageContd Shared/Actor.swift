@@ -71,4 +71,16 @@ extension Actor {
 
         return rect.intersection(with: actor.rect)
     }
+
+    /*
+     A collision check where collisions are checked only so many times before simply allowing it so the game doesn't
+     lock up.
+     */
+    mutating func avoidWalls(in world: World) {
+        var attempts = 10
+        while attempts > 0, let intersection = intersection(with: world) {
+            position -= intersection
+            attempts -= 1
+        }
+    }
 }
