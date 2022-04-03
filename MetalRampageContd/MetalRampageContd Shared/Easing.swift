@@ -21,9 +21,9 @@ extension Easing {
 
     static func easeInEaseOut(_ t: Float, a: Float = 1.0) -> Float {
         if t < 0.5 {
-            return min(a, 2 * easeIn(t))
+            return 2 * easeIn(t)
         } else {
-            return min(a, 4 * t - 2 * easeIn(t) - 1)
+            return 4 * t - 2 * easeIn(t) - 1
         }
     }
 }
