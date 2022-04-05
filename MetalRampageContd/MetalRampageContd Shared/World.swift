@@ -244,4 +244,32 @@ public extension World {
         }
         return result
     }
+
+    /**
+     Check to see if the thing at x,y is a door.
+     - Parameters:
+       - x: Int
+       - y: Int
+     - Returns:
+     */
+    func isDoor(at x: Int, _ y: Int) -> Bool {
+        // remember the things are held in a one dimensional array
+        map.things[y * map.width + x] == .door
+    }
+
+    internal func wallTiles(at x: Int, _ y: Int) -> WallTiles {
+        return WallTiles(
+            north: map[x, y],
+            south: map[x, y],
+            east: map[x, y],
+            west: map[x, y]
+        )
+    }
+}
+
+struct WallTiles {
+    let north: Tile
+    let south: Tile
+    let east: Tile
+    let west: Tile
 }

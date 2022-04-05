@@ -172,7 +172,7 @@ public class Renderer: NSObject {
     public func render(_ world: World) {
 
         if worldTiles == nil {
-            worldTiles = (TileImage(map: world.map).tiles)
+            worldTiles = (TileImage(world: world).tiles)
         }
 
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
@@ -432,7 +432,7 @@ public class Renderer: NSObject {
         let primitiveType = MTLPrimitiveType.triangle
 
         if worldTilesBuffers == nil {
-            initializeWorldTilesBuffer()
+            initializeWorldTilesBuffer(world: world)
         }
 
         worldTilesBuffers?.forEach { buffers in
@@ -461,6 +461,10 @@ public class Renderer: NSObject {
                 texture = crackedFloor
             case .ceiling:
                 texture = ceiling
+            case .doorJamb1:
+                texture = doorJamb[.doorJamb1]!!
+            case .doorJamb2:
+                texture = doorJamb[.doorJamb2]!!
             default:
                 texture = colorMapTexture
             }
@@ -594,7 +598,7 @@ public class Renderer: NSObject {
         }
     }
 
-    private func initializeWorldTilesBuffer() {
+    private func initializeWorldTilesBuffer(world: World) {
         worldTilesBuffers = Array()
         let index: [UInt16] = [0, 1, 2, 0, 3, 1]
 
@@ -638,7 +642,7 @@ public class Renderer: NSObject {
 
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         //Draw map
-        var renderables: [RNDRObject] = TileImage(map: world.map).tiles
+        var renderables: [RNDRObject] = TileImage(world: world).tiles
                 .filter { $0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall }
                 .map { $0.0 }
         //Draw player
