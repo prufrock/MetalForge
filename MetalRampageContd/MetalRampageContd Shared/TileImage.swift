@@ -38,10 +38,10 @@ struct TileImage {
                 if map[x, y].isWall {
                     let wallTiles = world.wallTiles(at: x, y)
                     myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y), z: 0), wallColor, .triangle, map[x, y]))
-                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 1.0, y: Float(y), z: 0) * rotateY(.pi/2), .green, .triangle, wallTiles.west)) // west wall
+                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 1.0, y: Float(y), z: 0) * rotateY(.pi/2), .green, .triangle, wallTiles.east))
                     myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y) + 1.0, z: 0) * rotateZ(.pi/2) * rotateY(.pi/2), .red, .triangle, wallTiles.north)) // north wall
                     myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y) - 1.0, z: 0) * rotateZ((3 * .pi)/2) * rotateY(.pi/2), .grey, .triangle, wallTiles.south)) // south wall
-                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) - 1.0, y: Float(y), z: 0) * rotateZ((2 * .pi)/2) * rotateY(.pi/2), .orange, .triangle, wallTiles.east)) // east wall
+                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) - 1.0, y: Float(y), z: 0) * rotateZ((2 * .pi)/2) * rotateY(.pi/2), .orange, .triangle, wallTiles.west))
                 }
                 if !map[x, y].isWall {
                     myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y), z: 0), wallColor, .triangle, map[x, y]))

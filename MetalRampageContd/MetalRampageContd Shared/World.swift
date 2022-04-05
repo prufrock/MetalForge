@@ -253,16 +253,19 @@ public extension World {
      - Returns:
      */
     func isDoor(at x: Int, _ y: Int) -> Bool {
+        if ( x < 0 || y < 0 || x >= map.width || y >= map.height) {
+            return false
+        }
         // remember the things are held in a one dimensional array
-        map.things[y * map.width + x] == .door
+        return map.things[y * map.width + x] == .door
     }
 
     internal func wallTiles(at x: Int, _ y: Int) -> WallTiles {
         return WallTiles(
-            north: map[x, y],
-            south: map[x, y],
-            east: map[x, y],
-            west: map[x, y]
+            north: isDoor(at: x, y + 1) ? .doorJamb2 : map[x, y],
+            south: isDoor(at: x, y - 1) ? .doorJamb2 : map[x, y],
+            east: isDoor(at: x + 1, y) ? .doorJamb1 : map[x, y],
+            west: isDoor(at: x - 1, y) ? .doorJamb1 : map[x, y]
         )
     }
 }
