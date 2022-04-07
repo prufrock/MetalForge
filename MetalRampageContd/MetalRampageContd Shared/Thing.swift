@@ -9,4 +9,5 @@ public enum Thing: Int, Decodable {
     case player
     case monster
     case door
+    case pushWall
 }

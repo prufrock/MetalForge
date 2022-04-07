@@ -363,6 +363,10 @@ public class Renderer: NSObject {
                 return 15
             case .door2:
                  return 16
+            case .wall:
+                return 17
+            case .slimeWall:
+                return 18
             default:
                 return 0
             }
@@ -415,6 +419,8 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(monster[.monsterDead]!, index: 14)
         encoder.setFragmentTexture(door[.door1]!, index: 15)
         encoder.setFragmentTexture(door[.door2]!, index: 16)
+        encoder.setFragmentTexture(wallTexture!, index: 17)
+        encoder.setFragmentTexture(slimeWallTexture!, index: 18)
         encoder.drawIndexedPrimitives(
             type: primitiveType,
             indexCount: index.count,

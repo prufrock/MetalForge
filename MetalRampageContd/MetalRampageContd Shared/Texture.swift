@@ -2,6 +2,9 @@
 // Created by David Kanenwisher on 3/18/22.
 //
 public enum Texture {
+    case floor, crackFloor
+    case ceiling
+    case wall, crackWall, crackWall2, slimeWall, slimeWall2
     case wand
     case wandFiring1, wandFiring2, wandFiring3, wandFiring4
     case monster

@@ -9,6 +9,7 @@ public struct World {
     private(set) var doors: [Door]
     public private(set) var player: Player!
     public private(set) var monsters: [Monster]
+    private(set) var pushWalls: [PushWall]
     private(set) var effects: [Effect]
     var showMap: Bool = false
     var drawWorld: Bool = true
@@ -18,6 +19,7 @@ public struct World {
         self.doors = []
         self.monsters = []
         self.effects = []
+        self.pushWalls = []
         reset()
     }
 }
@@ -157,8 +159,8 @@ public extension World {
 
     mutating func reset() {
         monsters = []
-
-        self.doors = []
+        doors = []
+        pushWalls = []
 
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
@@ -180,6 +182,9 @@ public extension World {
                         position: position,
                         isVertical: isVertical
                     ))
+                case .pushWall:
+                    precondition(!map[x, y].isWall, "PushWall mut be placed on a floor tile")
+                    pushWalls.append(PushWall(position: position, tile: .wall))
                 }
             }
         }
@@ -189,7 +194,7 @@ public extension World {
         // The ray is used to make the billboard orthogonal to the player(or any ray)
         let ray = Ray(origin: player.position, direction: player.direction)
         // append billboards here to draw more sprites
-        return monsters.map { $0.billboard(for: ray)} + doors.map { $0.billboard }
+        return monsters.map { $0.billboard(for: ray)} + doors.map { $0.billboard } + pushWalls.flatMap { $0.billboards }
     }
 
     func hitTest(_ ray: Ray) -> Float2 {
@@ -249,7 +254,7 @@ public extension World {
      Check to see if the thing at x,y is a door.
      - Parameters:
        - x: Int
-       - y: Int
+a       - y: Int
      - Returns:
      */
     func isDoor(at x: Int, _ y: Int) -> Bool {
