@@ -21,6 +21,7 @@ extension PushWall {
         )
     }
 
+    // The billboards are used for hitTest what things can see and for rendering
     var billboards: [Billboard] {
         let topLeft = rect.min, bottomRight = rect.max
         let topRight = Float2(x: bottomRight.x, y: topLeft.y)

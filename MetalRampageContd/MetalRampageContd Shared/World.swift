@@ -202,9 +202,10 @@ public extension World {
         var wallHit = map.hitTest(ray)
         var distance = (wallHit - ray.origin).length
 
-        for door in doors {
-            // if we don't hit this door check the next one
-            guard let hit = door.hitTest(ray) else {
+        let billboards = doors.map { $0.billboard } + pushWalls.flatMap { $0.billboards }
+        // if we don't hit this billboard check the next one
+        for billboard in billboards {
+            guard let hit = billboard.hitTest(ray) else {
                 continue
             }
 
