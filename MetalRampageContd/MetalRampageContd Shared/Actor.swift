@@ -45,8 +45,12 @@ extension Actor {
         rect.intersection(with: door.rect)
     }
 
+    func intersection(with pushWall: PushWall) -> Float2? {
+        rect.intersection(with: pushWall.rect)
+    }
+
     /**
-     Checks for intersection with the world and doors and returns a response vector if it does.
+     Checks for intersection with the world and doors and push walls and returns a response vector if it does.
      - Parameter world: Door
      - Returns: Float2
      */
@@ -54,11 +58,19 @@ extension Actor {
         if let intersection = intersection(with: world.map) {
             return intersection
         }
+
         for door in world.doors {
             if let intersection = intersection(with: door) {
                 return intersection
             }
         }
+
+        for pushWall in world.pushWalls {
+            if let intersection = intersection(with: pushWall) {
+                return intersection
+            }
+        }
+
         return nil
     }
 
