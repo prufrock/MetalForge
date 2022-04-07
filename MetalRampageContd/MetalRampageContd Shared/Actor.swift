@@ -65,7 +65,8 @@ extension Actor {
             }
         }
 
-        for pushWall in world.pushWalls {
+        // push walls shouldn't collide with themselves
+        for pushWall in world.pushWalls where pushWall.position != position {
             if let intersection = intersection(with: pushWall) {
                 return intersection
             }

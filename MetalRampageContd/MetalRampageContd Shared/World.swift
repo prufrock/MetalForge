@@ -85,6 +85,14 @@ public extension World {
             doors[i] = door
         }
 
+        //update push walls
+        for i in 0 ..< pushWalls.count {
+            var pushWall = pushWalls[i]
+            pushWall.update(in: &self)
+            pushWall.position += pushWall.velocity * timeStep
+            pushWalls[i] = pushWall
+        }
+
         //handle collisions
         for i in monsters.indices {
             var monster = monsters[i]

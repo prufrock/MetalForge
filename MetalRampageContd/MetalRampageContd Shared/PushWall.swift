@@ -2,13 +2,21 @@
 // Created by David Kanenwisher on 4/6/22.
 //
 
-struct PushWall {
+struct PushWall: Actor {
+    // don't store an unneeded property
+    var isDead: Bool { false }
+    let radius: Float = 0.5
     var position: Float2
     let tile: Tile
+
+    // make it movable
+    let speed: Float = 0.25
+    var velocity: Float2
 
     init(position: Float2, tile: Tile) {
         self.position = position
         self.tile = tile
+        self.velocity = Float2(x: 0, y: 0)
     }
 }
 
@@ -19,6 +27,37 @@ extension PushWall {
             min: position - Float2(x: 0.5, y: 0.5),
             max: position + Float2(x: 0.5, y: 0.5)
         )
+    }
+
+    var isMoving: Bool {
+        velocity.x != 0 || velocity.y != 0
+    }
+
+    mutating func update(in world: inout World) {
+        // if wall is moving don't change anything
+        // otherwise move it in the direction it was pushed but only along the axis is was pushed the most from since it
+        // can't be allowed to go sideways.
+        if isMoving == false, let intersection = world.player.intersection(with: self) {
+            let direction: Float2
+            if abs(intersection.x) > abs(intersection.y) {
+                direction = Float2(x: intersection.x > 0 ? 1 : -1, y: 0)
+            } else {
+                direction = Float2(x: 0, y: intersection.y > 0 ? 1 : -1)
+            }
+            if !world.map.tile(at: position + direction, from: position).isWall {
+                print("pushed the wall")
+                velocity += direction * speed
+            }
+        }
+
+        // is that another wall? stop moving and give it a tiny bit of rounding error to keep it from getting hung up.
+        if let intersection = self.intersection(with: world), abs(intersection.x) > 0.001 || abs(intersection.y) > 0.001 {
+            // let it rest
+            velocity = Float2(x: 0, y: 0)
+            // center it in the tile just in case
+            position.x = position.x.rounded(.down) + 0.5
+            position.y = position.y.rounded(.down) + 0.5
+        }
     }
 
     // The billboards are used for hitTest what things can see and for rendering
