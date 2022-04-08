@@ -39,9 +39,9 @@ public extension Tile {
         case .wall:
             return [.wall, .slimeWall]
         case .crackWall:
-            return [.crackWall, .crackWall2]
+            return [.crackWall, .crackWall]
         case .slimeWall:
-            return [.slimeWall, .slimeWall2]
+            return [.slimeWall, .slimeWall]
         case .doorJamb1:
             return [.doorJamb1]
         case .doorJamb2:

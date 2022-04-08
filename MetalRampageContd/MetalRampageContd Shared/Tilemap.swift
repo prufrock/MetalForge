@@ -3,7 +3,7 @@
 //
 
 public struct Tilemap: Decodable {
-    private let tiles: [Tile]
+    private(set) var tiles: [Tile]
     public let things: [Thing]
     public let width: Int
 }
@@ -18,7 +18,8 @@ public extension Tilemap {
     }
 
     subscript(x: Int, y: Int) -> Tile {
-       tiles[y * width + x]
+        get { tiles[y * width + x] }
+        set { tiles[y * width + x] = newValue}
     }
 
     func tile(at position: Float2, from direction: Float2) -> Tile {

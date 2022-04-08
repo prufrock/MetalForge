@@ -5,7 +5,7 @@
 import simd
 
 public struct World {
-    public let map: Tilemap
+    public private(set) var map: Tilemap
     private(set) var doors: [Door]
     public private(set) var player: Player!
     public private(set) var monsters: [Monster]
@@ -176,7 +176,7 @@ public extension World {
     mutating func reset() {
         monsters = []
         doors = []
-        pushWalls = []
+        var pushWallCount = 0
 
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
@@ -199,8 +199,25 @@ public extension World {
                         isVertical: isVertical
                     ))
                 case .pushWall:
-                    precondition(!map[x, y].isWall, "PushWall mut be placed on a floor tile")
-                    pushWalls.append(PushWall(position: position, tile: .wall))
+                    // if we've already replace the walls with push walls just use tile from the existing push wall
+                    // but reset it's position.
+                    pushWallCount += 1
+                    if pushWalls.count >= pushWallCount {
+                        let tile = pushWalls[pushWallCount - 1].tile
+                        pushWalls[pushWallCount - 1] = PushWall(position: position, tile: tile)
+                        break
+                    }
+                    // take the tile from the map
+                    var tile = map[x, y]
+                    // if it's a wall replace it with a floor
+                    if tile.isWall {
+                        map[x, y] = .floor
+                    } else {
+                        // if it's a floor use the default wall tile
+                        tile = .wall
+                    }
+                    // now add a PushWall at the current position with the tile we agreed on
+                    pushWalls.append(PushWall(position: position, tile: tile))
                 }
             }
         }
