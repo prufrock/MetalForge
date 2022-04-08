@@ -211,7 +211,7 @@ public extension World {
                     var tile = map[x, y]
                     // if it's a wall replace it with a floor
                     if tile.isWall {
-                        map[x, y] = .floor
+                        map[x, y] = map.closestFloorTile(to: x, y) ?? .floor
                     } else {
                         // if it's a floor use the default wall tile
                         tile = .wall

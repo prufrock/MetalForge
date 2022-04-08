@@ -35,6 +35,20 @@ public extension Tilemap {
         return self[Int(position.x) + offsetX, Int(position.y) + offsetY]
     }
 
+    func closestFloorTile(to x: Int, _ y: Int) -> Tile? {
+        // search for a floor tile(not wall) by searching in the immediate vicinity for a
+        // floor tile to use otherwise give up.
+        for y in max(0, y - 1) ... min(height - 1, y + 1) {
+            for x in max(0, x - 1) ... min(width - 1, x + 1) {
+                let tile = self[x, y]
+                if tile.isWall == false {
+                    return tile
+                }
+            }
+        }
+        return nil
+    }
+
     func hitTest(_ ray: Ray) -> Float2 {
         var position = ray.origin
         let slope = ray.direction.x / ray.direction.y
