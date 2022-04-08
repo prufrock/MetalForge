@@ -85,6 +85,23 @@ extension Actor {
         return rect.intersection(with: actor.rect)
     }
 
+    func isStuck(in world: World) -> Bool {
+        // If outside map
+        if position.x < 1 || position.x > world.map.size.x - 1 || position.y < 1 || position.y > world.map.size.y - 1 {
+            return true
+        }
+
+        // If stuck in a wall
+        if world.map[Int(position.x), Int(position.y)].isWall {
+            return true
+        }
+
+        // If stuck in a push wall
+        return world.pushWalls.contains(where: {
+            abs(position.x - $0.position.x) < 0.6 && abs(position.y - $0.position.y) < 0.6
+        })
+    }
+
     /*
      A collision check where collisions are checked only so many times before simply allowing it so the game doesn't
      lock up.

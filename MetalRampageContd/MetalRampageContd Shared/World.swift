@@ -108,6 +108,14 @@ public extension World {
                 }
             }
 
+            // Check for stuck actors
+            if player.isStuck(in: self) {
+                hurtPlayer(1)
+            }
+            for i in 0 ..< monsters.count where monsters[i].isStuck(in: self) {
+                hurtMonster(at: i, damage: 1)
+            }
+
             // check if the monster intersects with the world
             monster.avoidWalls(in: self)
 
