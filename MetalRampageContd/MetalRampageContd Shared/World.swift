@@ -12,6 +12,7 @@ public struct World {
     private(set) var pushWalls: [PushWall]
     private(set) var switches: [Switch]
     private(set) var effects: [Effect]
+    private(set) var isLevelEnded: Bool
     var showMap: Bool = false
     var drawWorld: Bool = true
 
@@ -22,6 +23,7 @@ public struct World {
         self.effects = []
         self.pushWalls = []
         self.switches = []
+        self.isLevelEnded = false
         reset()
     }
 }
@@ -38,6 +40,19 @@ public extension World {
             var effect = effect
             effect.time += timeStep
             return effect
+        }
+
+        //check for level end
+        //do this early so nothing bad can happen to the player before the level ends
+        //also, let the effects run to completion
+        if isLevelEnded {
+            if effects.isEmpty {
+                //put the pieces back in place
+                reset()
+                //fade to black when the level ends
+                effects.append(Effect(type: .fadeIn, color: ColorA(.black), duration: 0.5))
+            }
+            return
         }
 
         //update player
@@ -183,10 +198,17 @@ public extension World {
         monsters[index] = monster
     }
 
+    mutating func endLevel() {
+        isLevelEnded = true
+        effects.append(Effect(type: .fadeOut, color: ColorA(.black), duration: 2))
+    }
+
     mutating func reset() {
         monsters = []
         doors = []
         switches = []
+        isLevelEnded = false
+
         var pushWallCount = 0
 
         for y in 0 ..< map.height {

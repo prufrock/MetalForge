@@ -29,6 +29,12 @@ extension Switch {
                 animation = .switchFlip
             }
         case .on:
+            // once the animation is over end the level
+            // don't end in .off  then animations stop updating before they're done
+            if animation.time >= animation.duration {
+                animation = .switchOn
+                world.endLevel()
+            }
             // Make sure the switch doesn't animate forever
             if animation.isCompleted {
                 animation = .switchOn
