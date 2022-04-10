@@ -669,7 +669,7 @@ public class Renderer: NSObject {
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         //Draw map
         var renderables: [RNDRObject] = TileImage(world: world).tiles
-                .filter { $0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall }
+                .filter { $0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall || $0.1 == .elevatorSideWall || $0.1 == .elevatorBackWall }
                 .map { $0.0 }
         //Draw player
         renderables.append(world.player.rect.renderableObject())
