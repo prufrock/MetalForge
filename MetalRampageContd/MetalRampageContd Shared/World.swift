@@ -218,6 +218,8 @@ public extension World {
                     }
                     // now add a PushWall at the current position with the tile we agreed on
                     pushWalls.append(PushWall(position: position, tile: tile))
+                case .switch:
+                    break
                 }
             }
         }

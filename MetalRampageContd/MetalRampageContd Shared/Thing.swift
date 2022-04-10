@@ -10,4 +10,5 @@ public enum Thing: Int, Decodable {
     case monster
     case door
     case pushWall
+    case `switch`
 }
