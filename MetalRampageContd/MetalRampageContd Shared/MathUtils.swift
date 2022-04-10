@@ -138,6 +138,10 @@ public extension Float2 {
         Float2(x: -y, y: x)
     }
 
+    init(_ x: Int, _ y: Int) {
+        self.init(Float(x), Float(y))
+    }
+
     internal func toFloat3() -> Float3 {
         Float3(self)
     }

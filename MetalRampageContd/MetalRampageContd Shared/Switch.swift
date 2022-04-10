@@ -24,6 +24,7 @@ extension Switch {
         // Is that the player?! Change to the "on" state
         case .off:
             if world.player.rect.intersection(with: self.rect) != nil {
+                print("flipped the switch")
                 state = .on
                 animation = .switchFlip
             }
