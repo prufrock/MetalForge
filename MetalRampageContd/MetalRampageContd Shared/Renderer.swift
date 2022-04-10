@@ -654,7 +654,7 @@ public class Renderer: NSObject {
                         tileCount: chunk.count,
                         index: index,
                         indexCount: index.count,
-                        positions:  chunk.map { (rndrObject, _) -> Float2 in rndrObject.position }
+                        positions:  chunk.map { (rndrObject, _) -> Int2 in rndrObject.position }
                     )
                 )
             }
@@ -680,7 +680,7 @@ public class Renderer: NSObject {
             RNDRObject(vertices: [
                 viewStart.toFloat3(),
                 viewEnd.toFloat3()
-            ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .red, primitiveType: .line, position: Float2())
+            ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .red, primitiveType: .line, position: Int2())
         )
         // Cast rays
         let columns = 3
@@ -707,7 +707,7 @@ public class Renderer: NSObject {
                 RNDRObject(vertices: [
                     ray.origin.toFloat3(),
                     end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Float2())
+                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
             )
             columnPosition += step
         }
@@ -718,7 +718,7 @@ public class Renderer: NSObject {
                 RNDRObject(vertices: [
                     line.start.toFloat3(),
                     line.end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Float2())
+                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
             )
         }
 
@@ -749,7 +749,7 @@ public class Renderer: NSObject {
                     RNDRObject(vertices: [
                         Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
                         Float3(x: Float(x), y: Float(bitmapHeight) + height, z: 0.0),
-                    ], uv: [], transform: Float4x4.translate(x: -7.0, y: 2.0, z: 0.0).scaledBy(x: 0.1, y: 1.0, z: 1.0), color: wallColor, primitiveType: .line, position: Float2())
+                    ], uv: [], transform: Float4x4.translate(x: -7.0, y: 2.0, z: 0.0).scaledBy(x: 0.1, y: 1.0, z: 1.0), color: wallColor, primitiveType: .line, position: Int2())
                 )
             }
             columnPosition += step
@@ -814,7 +814,7 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] 
             transform: transformation,
             color: .green,
             primitiveType: .line,
-            position: Float2()
+            position: Int2()
         ),
         RNDRObject(
             // xy z1
@@ -834,7 +834,7 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] 
             transform: transformation,
             color: .red,
             primitiveType: .line,
-            position: Float2()
+            position: Int2()
         ),
         RNDRObject(
              //xz y0
@@ -854,7 +854,7 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] 
             transform: transformation,
             color: .blue,
             primitiveType: .line,
-            position: Float2()
+            position: Int2()
         ),
         RNDRObject(
             //xz y1
@@ -874,7 +874,7 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] 
             transform: transformation,
             color: .white,
             primitiveType: .line,
-            position: Float2()
+            position: Int2()
         )
     ]
 }

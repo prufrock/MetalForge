@@ -13,7 +13,7 @@ struct RNDRObject {
     let transform: Float4x4
     let color: Color
     let primitiveType: MTLPrimitiveType
-    let position: Float2
+    let position: Int2
 }
 
 extension RNDRObject {

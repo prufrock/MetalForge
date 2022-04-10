@@ -13,5 +13,5 @@ struct MetalTileBuffers {
     let tileCount: Int
     let index: [UInt16]
     let indexCount: Int
-    let positions: [Float2]
+    let positions: [Int2]
 }
