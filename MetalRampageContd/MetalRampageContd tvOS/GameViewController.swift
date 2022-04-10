@@ -23,7 +23,9 @@ class GameViewController: UIViewController {
     private var showMap = false
     private var drawWorld = true
 
-    private var world = World(map: loadMap())
+    private let levels = loadLevels()
+    private lazy var world = World(map: levels[0])
+
     private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
     private let worldTimeStep: Float = 1 / 120 // number of steps to take each frame
     private var lastFrameTime = CACurrentMediaTime()
@@ -91,7 +93,15 @@ extension GameViewController: MTKViewDelegate {
         )
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
-            world.update(timeStep: Float(timeStep /  worldSteps), input: input)
+            if let action = world.update(timeStep: Float(timeStep /  worldSteps), input: input) {
+                switch action {
+                case .loadLevel(let index):
+                    let index = index % levels.count
+                    world.setLevel(levels[index])
+                    //TODO look for a way to create a new renderer when a new World is created
+                    renderer = Renderer(metalView, width: 8, height: 8)
+                }
+            }
         }
         lastFrameTime = time
 
@@ -100,9 +110,14 @@ extension GameViewController: MTKViewDelegate {
 }
 
 
-private func loadMap() -> Tilemap {
-    let jsonUrl = Bundle.main.url(forResource: "Map", withExtension: "json")!
+/**
+ Loads levels from Levels.json and creating a Tilemap for each level and returning the array of Tilemaps.
+ - Returns: [Tilemap]
+ */
+private func loadLevels() -> [Tilemap] {
+    let jsonUrl = Bundle.main.url(forResource: "Levels", withExtension: "json")!
     let jsonData = try! Data(contentsOf: jsonUrl)
-    return try! JSONDecoder().decode(Tilemap.self, from: jsonData)
+    let levels = try! JSONDecoder().decode([MapData].self, from: jsonData)
+    return levels.enumerated().map { Tilemap($0.element, index: $0.offset) }
 }
 

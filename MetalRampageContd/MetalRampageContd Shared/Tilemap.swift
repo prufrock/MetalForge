@@ -2,10 +2,26 @@
 // Created by David Kanenwisher on 12/26/21.
 //
 
-public struct Tilemap: Decodable {
+public struct Tilemap {
     private(set) var tiles: [Tile]
     public let things: [Thing]
     public let width: Int
+
+    // for switching between levels
+    public let index: Int
+
+    init(_ map: MapData, index: Int) {
+        tiles = map.tiles
+        things = map.things
+        width = map.width
+        self.index = index
+    }
+}
+
+struct MapData: Decodable {
+    fileprivate let tiles: [Tile]
+    fileprivate let things: [Thing]
+    fileprivate let width: Int
 }
 
 public extension Tilemap {

@@ -105,9 +105,9 @@
 		63D44BEA27D42B7700D4BE7D /* MetalTileBuffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D44BE927D42B7700D4BE7D /* MetalTileBuffers.swift */; };
 		63D44BEB27D42B7700D4BE7D /* MetalTileBuffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D44BE927D42B7700D4BE7D /* MetalTileBuffers.swift */; };
 		63D44BEC27D42B7700D4BE7D /* MetalTileBuffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D44BE927D42B7700D4BE7D /* MetalTileBuffers.swift */; };
-		63D44BEE27D42CE800D4BE7D /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 63D44BED27D42CE800D4BE7D /* Map.json */; };
-		63D44BEF27D42CE800D4BE7D /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 63D44BED27D42CE800D4BE7D /* Map.json */; };
-		63D44BF027D42CE800D4BE7D /* Map.json in Resources */ = {isa = PBXBuildFile; fileRef = 63D44BED27D42CE800D4BE7D /* Map.json */; };
+		63D44BEE27D42CE800D4BE7D /* Levels.json in Resources */ = {isa = PBXBuildFile; fileRef = 63D44BED27D42CE800D4BE7D /* Levels.json */; };
+		63D44BEF27D42CE800D4BE7D /* Levels.json in Resources */ = {isa = PBXBuildFile; fileRef = 63D44BED27D42CE800D4BE7D /* Levels.json */; };
+		63D44BF027D42CE800D4BE7D /* Levels.json in Resources */ = {isa = PBXBuildFile; fileRef = 63D44BED27D42CE800D4BE7D /* Levels.json */; };
 		63D44BF227D42D0000D4BE7D /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 63D44BF127D42D0000D4BE7D /* Map16.json */; };
 		63D44BF327D42D0000D4BE7D /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 63D44BF127D42D0000D4BE7D /* Map16.json */; };
 		63D44BF427D42D0000D4BE7D /* Map16.json in Resources */ = {isa = PBXBuildFile; fileRef = 63D44BF127D42D0000D4BE7D /* Map16.json */; };
@@ -158,7 +158,7 @@
 		63D44BE127D42B4A00D4BE7D /* Billboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Billboard.swift; sourceTree = "<group>"; };
 		63D44BE527D42B6500D4BE7D /* ArrayExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExt.swift; sourceTree = "<group>"; };
 		63D44BE927D42B7700D4BE7D /* MetalTileBuffers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalTileBuffers.swift; sourceTree = "<group>"; };
-		63D44BED27D42CE800D4BE7D /* Map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Map.json; sourceTree = "<group>"; };
+		63D44BED27D42CE800D4BE7D /* Levels.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Levels.json; sourceTree = "<group>"; };
 		63D44BF127D42D0000D4BE7D /* Map16.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Map16.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -229,7 +229,7 @@
 				63D44BCD27D42AB900D4BE7D /* Tilemap.swift */,
 				63D44BD127D42AD000D4BE7D /* World.swift */,
 				63D44B1E27D427CF00D4BE7D /* Assets.xcassets */,
-				63D44BED27D42CE800D4BE7D /* Map.json */,
+				63D44BED27D42CE800D4BE7D /* Levels.json */,
 				63D44BF127D42D0000D4BE7D /* Map16.json */,
 				5AF0E0798E8831278C37A79A /* Render */,
 				5AF0E6A9347E4C6047BABDF2 /* Actor.swift */,
@@ -391,7 +391,7 @@
 				63D44B2C27D427CF00D4BE7D /* Main.storyboard in Resources */,
 				63D44B5727D427CF00D4BE7D /* Assets.xcassets in Resources */,
 				63D44B2F27D427CF00D4BE7D /* LaunchScreen.storyboard in Resources */,
-				63D44BEE27D42CE800D4BE7D /* Map.json in Resources */,
+				63D44BEE27D42CE800D4BE7D /* Levels.json in Resources */,
 				63D44BF227D42D0000D4BE7D /* Map16.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,7 +404,7 @@
 				63D44B3C27D427CF00D4BE7D /* Main.storyboard in Resources */,
 				63D44B5827D427CF00D4BE7D /* Assets.xcassets in Resources */,
 				63D44B3F27D427CF00D4BE7D /* LaunchScreen.storyboard in Resources */,
-				63D44BEF27D42CE800D4BE7D /* Map.json in Resources */,
+				63D44BEF27D42CE800D4BE7D /* Levels.json in Resources */,
 				63D44BF327D42D0000D4BE7D /* Map16.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,7 +415,7 @@
 			files = (
 				63D44B4C27D427CF00D4BE7D /* Main.storyboard in Resources */,
 				63D44B5927D427CF00D4BE7D /* Assets.xcassets in Resources */,
-				63D44BF027D42CE800D4BE7D /* Map.json in Resources */,
+				63D44BF027D42CE800D4BE7D /* Levels.json in Resources */,
 				63D44B5627D427CF00D4BE7D /* ShaderTypes.h in Resources */,
 				63D44BF427D42D0000D4BE7D /* Map16.json in Resources */,
 			);

@@ -331,6 +331,11 @@ public class Renderer: NSObject {
 
         let worldTransform = Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
 
+        // if there's nothing to render bail out
+        guard renderables.count > 0 else {
+            return
+        }
+
         let indexedObjTransform = renderables.map { _, _, transform, _, _, _ -> Float4x4 in transform }
         let indexedTextureId: [UInt32] = world.sprites.map { (billboard) -> UInt32 in
             switch billboard.texture {

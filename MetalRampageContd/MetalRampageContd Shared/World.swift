@@ -28,10 +28,17 @@ public struct World {
     }
 }
 
-public extension World {
+extension World {
     var size: Float2 { map.size }
 
-    mutating func update(timeStep: Float, input: Input) {
+    /**
+     Update the world and send an action backup to the caller if needed.
+     - Parameters:
+       - timeStep: The amount to advance the world
+       - input: Any thing from the application layer that should change the world.
+     - Returns: An action the caller can execute if needed.
+     */
+    mutating func update(timeStep: Float, input: Input) -> WorldAction? {
         //update effects
         effects = effects.compactMap { effect  in
             if effect.isCompleted {
@@ -47,19 +54,19 @@ public extension World {
         //also, let the effects run to completion
         if isLevelEnded {
             if effects.isEmpty {
-                //put the pieces back in place
-                reset()
                 //fade to black when the level ends
                 effects.append(Effect(type: .fadeIn, color: ColorA(.black), duration: 0.5))
+                // tell the application to load the next level
+                return .loadLevel(map.index + 1)
             }
-            return
+            return nil
         }
 
         //update player
         if player.isDead, effects.isEmpty {
             reset()
             effects.append(Effect(type: .fadeIn, color: ColorA(.red, a: 1.0), duration: 0.5))
-            return
+            return nil
         }
 
         if player.isDead == false {
@@ -79,7 +86,7 @@ public extension World {
 
         } else if effects.isEmpty {
             reset()
-            return
+            return nil
         }
 
         showMap = input.showMap
@@ -149,6 +156,8 @@ public extension World {
 
         // check if the player intersects with the world
         player.avoidWalls(in: self)
+
+        return nil
     }
 
     mutating func hurtPlayer(_ damage: Float) {
@@ -201,6 +210,16 @@ public extension World {
     mutating func endLevel() {
         isLevelEnded = true
         effects.append(Effect(type: .fadeOut, color: ColorA(.black), duration: 2))
+    }
+
+    /**
+     Create a new world for the level preserving the in flight effects from the last world.
+     - Parameter map: The Tilemap to load representing the next level.
+     */
+    mutating func setLevel(_ map: Tilemap) {
+        let effects = self.effects
+        self = World(map: map)
+        self.effects = effects
     }
 
     mutating func reset() {
@@ -371,6 +390,13 @@ a       - y: Int
             west: isDoor(at: x - 1, y) ? .doorJamb1 : map[x, y]
         )
     }
+}
+
+/**
+ Actions World can pass to the application layer to run.
+ */
+enum WorldAction {
+    case loadLevel(Int)
 }
 
 struct WallTiles {
