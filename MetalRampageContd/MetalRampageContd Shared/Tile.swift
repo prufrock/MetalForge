@@ -18,12 +18,15 @@ public enum Tile: Int, Decodable, CaseIterable {
     // Doorjambs
     case doorJamb1 = 6
     case doorJamb2 = 7
+
+    // Switches
+    case wallSwitch = 8
 }
 
 public extension Tile {
     var isWall: Bool {
         switch self {
-        case .wall, .crackWall, .slimeWall, .doorJamb1, .doorJamb2:
+        case .wall, .crackWall, .slimeWall, .doorJamb1, .doorJamb2, .wallSwitch:
             return true
         case .floor, .crackFloor, .ceiling:
             return false
@@ -48,6 +51,8 @@ public extension Tile {
             return [.doorJamb2]
         case .ceiling:
             return [.ceiling]
+        case .wallSwitch:
+            return [.switch1]
         }
     }
 }

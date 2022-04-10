@@ -32,7 +32,7 @@ public class Renderer: NSObject {
     var wandFiring4: [Texture:MTLTexture?] = [:]
     var door: [Texture:MTLTexture?] = [:]
     var doorJamb: [Texture:MTLTexture?] = [:]
-    var elevatorSwitch: [Texture:MTLTexture?] = [:]
+    var wallSwitch: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -164,10 +164,10 @@ public class Renderer: NSObject {
         door[.door2] = loadTexture(name: "Door2")!
         doorJamb[.doorJamb1] = loadTexture(name: "DoorJamb1")!
         doorJamb[.doorJamb2] = loadTexture(name: "DoorJamb2")!
-        elevatorSwitch[.switch1] = loadTexture(name: "Switch1")!
-        elevatorSwitch[.switch2] = loadTexture(name: "Switch2")!
-        elevatorSwitch[.switch3] = loadTexture(name: "Switch3")!
-        elevatorSwitch[.switch4] = loadTexture(name: "Switch4")!
+        wallSwitch[.switch1] = loadTexture(name: "Switch1")!
+        wallSwitch[.switch2] = loadTexture(name: "Switch2")!
+        wallSwitch[.switch3] = loadTexture(name: "Switch3")!
+        wallSwitch[.switch4] = loadTexture(name: "Switch4")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -476,6 +476,8 @@ public class Renderer: NSObject {
                 texture = doorJamb[.doorJamb1]!!
             case .doorJamb2:
                 texture = doorJamb[.doorJamb2]!!
+            case .wallSwitch:
+                texture = wallSwitch[.switch1]!!
             default:
                 texture = colorMapTexture
             }

@@ -10,6 +10,7 @@ public struct World {
     public private(set) var player: Player!
     public private(set) var monsters: [Monster]
     private(set) var pushWalls: [PushWall]
+    private(set) var switches: [Switch]
     private(set) var effects: [Effect]
     var showMap: Bool = false
     var drawWorld: Bool = true
@@ -20,6 +21,7 @@ public struct World {
         self.monsters = []
         self.effects = []
         self.pushWalls = []
+        self.switches = []
         reset()
     }
 }
@@ -91,6 +93,14 @@ public extension World {
             pushWall.update(in: &self)
             pushWall.position += pushWall.velocity * timeStep
             pushWalls[i] = pushWall
+        }
+
+        //update switches
+        for i in 0 ..< switches.count {
+            var s = switches[i]
+            s.animation.time += timeStep
+            s.update(in: &self)
+            switches[i] = s
         }
 
         //handle collisions
@@ -176,6 +186,7 @@ public extension World {
     mutating func reset() {
         monsters = []
         doors = []
+        switches = []
         var pushWallCount = 0
 
         for y in 0 ..< map.height {
@@ -219,7 +230,8 @@ public extension World {
                     // now add a PushWall at the current position with the tile we agreed on
                     pushWalls.append(PushWall(position: position, tile: tile))
                 case .switch:
-                    break
+                    precondition(map[x, y].isWall, "Switch must be placed on a wall tile")
+                    switches.append(Switch(position: position))
                 }
             }
         }
@@ -301,7 +313,35 @@ a       - y: Int
         return map.things[y * map.width + x] == .door
     }
 
+    /**
+     Check to see if the thing at x,y is a switch
+     - Parameters:
+       - x: Int
+       - y: Int
+     - Returns: Bool
+     */
+    internal func `switch`(at x: Int, _ y: Int) -> Switch? {
+        // make sure the switch is in things
+        guard map.things[y * map.width + x] == .switch else {
+            return nil
+        }
+        // if it is grab the object so we can access the texture
+        return switches.first {
+            Int($0.position.x) == x && Int($0.position.y) == y
+        }
+    }
+
     internal func wallTiles(at x: Int, _ y: Int) -> WallTiles {
+        if let _ = `switch`(at: x, y) {
+            return WallTiles(
+                north: .wallSwitch,
+                south: .wallSwitch,
+                east: .wallSwitch,
+                west: .wallSwitch
+            )
+        }
+
+
         return WallTiles(
             north: isDoor(at: x, y + 1) ? .doorJamb2 : map[x, y],
             south: isDoor(at: x, y - 1) ? .doorJamb2 : map[x, y],
