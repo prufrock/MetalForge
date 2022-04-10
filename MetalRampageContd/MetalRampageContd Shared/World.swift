@@ -363,7 +363,7 @@ a       - y: Int
             )
         }
 
-
+        //TODO make it so map[x, y] refers maps Tile to Texture
         return WallTiles(
             north: isDoor(at: x, y + 1) ? .doorJamb2 : map[x, y],
             south: isDoor(at: x, y - 1) ? .doorJamb2 : map[x, y],

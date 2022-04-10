@@ -460,13 +460,13 @@ public class Renderer: NSObject {
             var texture: MTLTexture = colorMapTexture
 
             switch(buffers.tile) {
-            case .wall:
+            case .wall, .elevatorBackWall, .elevatorSideWall:
                 texture = wallTexture
             case .crackWall:
                 texture = crackedWallTexture
             case .slimeWall:
                 texture = slimeWallTexture
-            case .floor:
+            case .floor, .elevatorFloor:
                 texture = floor
             case .crackFloor:
                 texture = crackedFloor
@@ -874,7 +874,7 @@ func LineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] 
             transform: transformation,
             color: .white,
             primitiveType: .line,
-            position: Int2()
+            position: Int2 ()
         )
     ]
 }

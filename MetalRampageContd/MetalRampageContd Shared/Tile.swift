@@ -21,25 +21,30 @@ public enum Tile: Int, Decodable, CaseIterable {
 
     // Switches
     case wallSwitch = 8
+
+    // Elevator
+    case elevatorFloor = 9
+    case elevatorSideWall = 10
+    case elevatorBackWall = 11
 }
 
 public extension Tile {
     var isWall: Bool {
         switch self {
-        case .wall, .crackWall, .slimeWall, .doorJamb1, .doorJamb2, .wallSwitch:
+        case .wall, .crackWall, .slimeWall, .doorJamb1, .doorJamb2, .wallSwitch, .elevatorSideWall, .elevatorBackWall:
             return true
-        case .floor, .crackFloor, .ceiling:
+        case .floor, .crackFloor, .ceiling, .elevatorFloor:
             return false
         }
     }
 
     var textures: [Texture] {
         switch self {
-        case .floor:
+        case .floor, .elevatorFloor:
             return [.floor, .ceiling]
         case .crackFloor:
             return [.crackFloor, .ceiling]
-        case .wall:
+        case .wall, .elevatorBackWall, .elevatorSideWall:
             return [.wall, .slimeWall]
         case .crackWall:
             return [.crackWall, .crackWall]
