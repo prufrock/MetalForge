@@ -108,7 +108,7 @@ extension GameViewController: MTKViewDelegate {
             // the last frame was rendered.
             isFiring: lastFiredTime > lastFrameTime,
             showMap: false,
-            drawWorld: truew
+            drawWorld: true
         )
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
