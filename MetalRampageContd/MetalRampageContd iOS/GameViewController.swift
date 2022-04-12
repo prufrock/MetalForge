@@ -108,7 +108,7 @@ extension GameViewController: MTKViewDelegate {
             // the last frame was rendered.
             isFiring: lastFiredTime > lastFrameTime,
             showMap: false,
-            drawWorld: true
+            drawWorld: truew
         )
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
@@ -117,7 +117,10 @@ extension GameViewController: MTKViewDelegate {
                 case .loadLevel(let index):
                     let index = index % levels.count
                     world.setLevel(levels[index])
-                    renderer = Renderer(metalView, width: 8, height: 8)
+                    // quick work around to make sure aspect is passed when a new renderer is created
+                    renderer = Renderer(metalView, width: 8, height: 8).also {
+                        $0.updateAspect(renderer.aspect)
+                    }
                 }
             }
         }

@@ -14,7 +14,8 @@ public class Renderer: NSObject {
     let vertexPipeline: MTLRenderPipelineState
     let effectPipeline: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
-    private var aspect: Float = 1.0
+    // need to pass the aspect ratio to the new renderer
+    private(set) var aspect: Float = 1.0
 
     // textures
     var ceiling: MTLTexture!
@@ -172,6 +173,10 @@ public class Renderer: NSObject {
 
     public func updateAspect(width: Float, height: Float) {
         aspect = (width / height)
+    }
+
+    public func updateAspect(_ aspect: Float) {
+        self.aspect = aspect
     }
 
     public func render(_ world: World) {

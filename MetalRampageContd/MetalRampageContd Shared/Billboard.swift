@@ -26,16 +26,22 @@ public extension Billboard {
     func hitTest(_ ray: Ray) -> Float2? {
         var lhs = ray, rhs = Ray(origin: start, direction: direction)
 
-        // calculate slopes and intercepts
-        let (slope1, intercept1) = lhs.slopeIntercept
-        let (slope2, intercept2) = rhs.slopeIntercept
-
         // ensure rays are never exactly vertical
         let epsilon: Float = 0.00001
         if abs(lhs.direction.x) < epsilon {
             lhs.direction.x = epsilon
         }
+        if abs(rhs.direction.x) < epsilon {
+            rhs.direction.x = epsilon
+        }
 
+        // the rays need to be corrected before you calculate the slope and intercept otherwise things like vertical
+        // doors cause a divide by 0 and a hit isn't detected.
+        // calculate slopes and intercepts
+        let (slope1, intercept1) = lhs.slopeIntercept
+        let (slope2, intercept2) = rhs.slopeIntercept
+
+        // if the slopes are parallel then they can't hit
         if slope1 == slope2 {
             return nil
         }
