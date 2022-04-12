@@ -187,7 +187,10 @@ extension GameViewController: MTKViewDelegate {
                    let index = index % levels.count
                    world.setLevel(levels[index])
                    //TODO look for a way to create a new renderer when a new World is created
-                   renderer = Renderer(metalView, width: 8, height: 8)
+                   // quick work around to make sure aspect is passed when a new renderer is created
+                   renderer = Renderer(metalView, width: 8, height: 8).also {
+                       $0.updateAspect(renderer.aspect)
+                   }
                }
            }
         }

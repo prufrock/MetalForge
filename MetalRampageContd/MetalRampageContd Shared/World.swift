@@ -297,7 +297,7 @@ extension World {
                 continue
             }
 
-            // if this door is closer than the last one use this door for the next iteration
+            // if this billboard is closer than the last one use this door for the next iteration
             let hitDistance = (hit - ray.origin).length
             guard hitDistance < distance else {
                 continue
