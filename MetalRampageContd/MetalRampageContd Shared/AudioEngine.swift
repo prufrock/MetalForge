@@ -8,6 +8,9 @@ class AudioEngine {
             precondition(name.url != nil, "Missing mp3 file for \(name.rawValue)")
         }
         try? SoundManager.shared.activate()
+
+        // Boot up the sound manager by loading a file
+        _ = try? SoundManager.shared.preload(SoundName.allCases[0].url!)
     }
 
     func play(_ sounds: [Sound]) {

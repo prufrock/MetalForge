@@ -6,6 +6,7 @@
 public enum SoundName: String, CaseIterable {
     case castFireSpell //pistolFire
     case fireSpellMiss //ricochet
+    case fireSpellHit
     case monsterHit
     case monsterGroan
     case monsterDeath

@@ -68,6 +68,9 @@ public extension Player {
             let ray = Ray(origin: position, direction: direction)
             if let index = world.pickMonster(ray) {
                 world.hurtMonster(at: index, damage: 10)
+                world.playSound(.fireSpellHit)
+            } else {
+                world.playSound(.fireSpellMiss)
             }
         }
 

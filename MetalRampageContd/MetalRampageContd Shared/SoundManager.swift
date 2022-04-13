@@ -30,9 +30,15 @@ class SoundManager: NSObject, AVAudioPlayerDelegate {
 extension SoundManager {
     // hey OS, we're going to use sound!
     func activate() throws {
+        // AVAudioSession is only available on iOS
         #if os(iOS)
         try AVAudioSession.sharedInstance().setActive(true)
         #endif
+    }
+
+    // Boot up AVAudioPlayer by loading a file since AVAudioPlayer briefly blocks when it's loaded.
+    func preload(_ url: URL) throws -> AVAudioPlayer {
+        try AVAudioPlayer(contentsOf: url)
     }
 
     func play(_ url: URL) throws {
