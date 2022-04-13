@@ -64,6 +64,7 @@ public extension Player {
         if input.isFiring, canFire {
             state = .firing
             animation = .wandFire
+            world.playSound(.castFireSpell)
             let ray = Ray(origin: position, direction: direction)
             if let index = world.pickMonster(ray) {
                 world.hurtMonster(at: index, damage: 10)

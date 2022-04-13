@@ -12,6 +12,8 @@ public struct World {
     private(set) var pushWalls: [PushWall]
     private(set) var switches: [Switch]
     private(set) var effects: [Effect]
+    // The list of sounds that should be used for a frame.
+    private var sounds: [Sound] = []
     private(set) var isLevelEnded: Bool
     var showMap: Bool = false
     var drawWorld: Bool = true
@@ -157,7 +159,10 @@ extension World {
         // check if the player intersects with the world
         player.avoidWalls(in: self)
 
-        return nil
+        // Play sounds
+        // after the method returns remove all of the sounds so they won't be played next frame.
+        defer { sounds.removeAll() }
+        return .playSounds(sounds)
     }
 
     mutating func hurtPlayer(_ damage: Float) {
@@ -210,6 +215,15 @@ extension World {
     mutating func endLevel() {
         isLevelEnded = true
         effects.append(Effect(type: .fadeOut, color: ColorA(.black), duration: 2))
+    }
+
+    /**
+     Appends sounds to the list of sounds because it will pass all the sounds for frame
+     to be handled by the audio layer after processing the frame.
+     - Parameter name: The name of the sound to add to the list of sounds for the frame.
+     */
+    mutating func playSound(_ name: SoundName) {
+        sounds.append(Sound(name: name))
     }
 
     /**
@@ -397,6 +411,8 @@ a       - y: Int
  */
 enum WorldAction {
     case loadLevel(Int)
+    // the command to pass up with the list of sounds to play
+    case playSounds([Sound])
 }
 
 struct WallTiles {

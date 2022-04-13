@@ -12,6 +12,7 @@ import MetalKit
 class GameViewController: UIViewController {
     private let metalView = MTKView()
     private var renderer: Renderer!
+    private var audioEngine = AudioEngine()
 
     private let levels = loadLevels()
     private lazy var world = World(map: levels[0])
@@ -50,6 +51,7 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        audioEngine.setUpAudio()
         setupMetalView()
 
         renderer = Renderer(metalView, width: 8, height: 8)
@@ -121,6 +123,8 @@ extension GameViewController: MTKViewDelegate {
                     renderer = Renderer(metalView, width: 8, height: 8).also {
                         $0.updateAspect(renderer.aspect)
                     }
+                case .playSounds(let sounds):
+                    audioEngine.play(sounds)
                 }
             }
         }
