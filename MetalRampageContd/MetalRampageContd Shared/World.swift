@@ -177,6 +177,10 @@ extension World {
         player.velocity = Float2(x: 0, y: 0)
 
         if player.isDead {
+            playSound(.playerDeath, at: player.position)
+            if player.isStuck(in: self) {
+                playSound(.squelch, at: player.position)
+            }
             effects.append(Effect(type: .fadeOut, color: ColorA(.red), duration: 2))
         }
     }
@@ -203,6 +207,11 @@ extension World {
             monster.animation = .monsterDeath
             // change velocity when changing state
             monster.velocity = Float2(x: 0, y: 0)
+            playSound(.monsterDeath, at: monster.position)
+
+            if monster.isStuck(in: self) {
+                playSound(.squelch, at: monster.position)
+            }
         } else {
             monster.state = .hurt
             monster.animation = .monsterHurt

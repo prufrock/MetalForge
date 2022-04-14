@@ -27,6 +27,7 @@ extension Switch {
                 print("flipped the switch")
                 state = .on
                 animation = .switchFlip
+                world.playSound(.switchFlip, at: position)
             }
         case .on:
             // once the animation is over end the level

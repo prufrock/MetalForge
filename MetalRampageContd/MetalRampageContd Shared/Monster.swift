@@ -24,6 +24,7 @@ public struct Monster: Actor {
             if canSeePlayer(in: world) {
                 state = .chasing
                 animation = .monsterWalk
+                world.playSound(.monsterGroan, at: position)
             }
         case .chasing:
             guard canSeePlayer(in: world)  else {
@@ -31,6 +32,7 @@ public struct Monster: Actor {
                 animation = .monsterIdle
                 // change velocity when changing state
                 velocity = Float2(x: 0, y: 0)
+                world.playSound(.monsterGroan, at: position)
                 break
             }
             if canReachPlayer(in: world) {
@@ -51,11 +53,12 @@ public struct Monster: Actor {
             if animation.time - lastAttackTime >= attackCooldown {
                 lastAttackTime = animation.time
                 world.hurtPlayer(10)
+                world.playSound(.monsterSwipe, at: position)
             }
         case .hurt:
             if animation.isCompleted {
-                state = .idle
-                animation = .monsterIdle
+                state = .chasing
+                animation = .monsterWalk
             }
         case .dead:
             if animation.isCompleted {
