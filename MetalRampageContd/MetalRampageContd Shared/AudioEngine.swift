@@ -15,10 +15,13 @@ class AudioEngine {
 
     func play(_ sounds: [Sound]) {
         for sound in sounds {
-            guard let url = sound.name.url else {
-                continue
+            // delay before playing the sound to mimic the speed of sound
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(sound.delay)) {
+                guard let url = sound.name.url else {
+                    return
+                }
+                try? SoundManager.shared.play(url, volume: sound.volume)
             }
-            try? SoundManager.shared.play(url)
         }
     }
 }

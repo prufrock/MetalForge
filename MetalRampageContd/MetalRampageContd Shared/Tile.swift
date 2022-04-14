@@ -60,4 +60,6 @@ public extension Tile {
             return [.switch1]
         }
     }
+
+    static let lengthMeters: Float = 2.0
 }

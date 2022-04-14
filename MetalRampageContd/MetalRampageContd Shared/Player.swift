@@ -64,13 +64,17 @@ public extension Player {
         if input.isFiring, canFire {
             state = .firing
             animation = .wandFire
-            world.playSound(.castFireSpell)
+            // make the sound at the player's position
+            world.playSound(.castSpell, at: position)
             let ray = Ray(origin: position, direction: direction)
             if let index = world.pickMonster(ray) {
                 world.hurtMonster(at: index, damage: 10)
-                world.playSound(.fireSpellHit)
+                // make the sound at the monter's position
+                world.playSound(.fireSpellHit, at: world.monsters[index].position)
             } else {
-                world.playSound(.fireSpellMiss)
+                // make the sound at place on the wall where hit happens
+                let hitPosition = world.hitTest(ray)
+                world.playSound(.spellMiss, at: hitPosition)
             }
         }
 

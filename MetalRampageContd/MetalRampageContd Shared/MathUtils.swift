@@ -168,3 +168,7 @@ extension Double {
         self * (.pi / 180)
     }
 }
+
+struct PhysicalConstants {
+    static let speedOfSoundMetersPerSecond: Float = 343.0
+}

@@ -4,8 +4,10 @@
 
 // These will be mapped to actual sound files
 public enum SoundName: String, CaseIterable {
-    case castFireSpell //pistolFire
-    case fireSpellMiss //ricochet
+    case castSpell //pistolFire
+    case spellMiss //ricochet
+    case castFireSpell
+    case fireSpellMiss
     case fireSpellHit
     case monsterHit
     case monsterGroan
@@ -22,4 +24,6 @@ public enum SoundName: String, CaseIterable {
 
 public struct Sound {
     let name: SoundName
+    let volume: Float
+    let delay: Float
 }

@@ -220,10 +220,26 @@ extension World {
     /**
      Appends sounds to the list of sounds because it will pass all the sounds for frame
      to be handled by the audio layer after processing the frame.
-     - Parameter name: The name of the sound to add to the list of sounds for the frame.
+     - Parameters:
+         - name: The name of the sound to add to the list of sounds for the frame.
+         - position: The position where the sound should occur.
      */
-    mutating func playSound(_ name: SoundName) {
-        sounds.append(Sound(name: name))
+    mutating func playSound(_ name: SoundName, at position: Float2) {
+        // find the distance to where sound should be
+        let delta = position - player.position
+        let distance = delta.length
+
+        // use a drop off to prevent it from getting to quiet
+        let dropOff: Float = 0.5
+        // use the inverse square law to find the volume
+        // the +1 ensures the volume is 1.0 and not infinity when distance is 0
+        let volume = 1 / (distance * distance * dropOff + 1)
+
+        // sound travels at about 343 meters per second
+        // the tiles are about 2 meters square
+        // thus the delay
+        let delay = distance * Tile.lengthMeters / PhysicalConstants.speedOfSoundMetersPerSecond
+        sounds.append(Sound(name: name, volume: volume, delay: delay))
     }
 
     /**
