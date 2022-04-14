@@ -89,6 +89,7 @@ extension Door {
             if time >= duration {
                 state = .open
                 time = 0
+                world.playSound(.doorSlide, at: position)
             }
         case .open:
             if time >= closeDelay {
@@ -100,6 +101,7 @@ extension Door {
             if time >= duration {
                 state = .closed
                 time = 0
+                world.playSound(.doorSlide, at: position)
             }
         }
     }

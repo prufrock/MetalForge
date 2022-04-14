@@ -239,7 +239,16 @@ extension World {
         // the tiles are about 2 meters square
         // thus the delay
         let delay = distance * Tile.lengthMeters / PhysicalConstants.speedOfSoundMetersPerSecond
-        sounds.append(Sound(name: name, volume: volume, delay: delay))
+
+        let direction = distance > 0 ? delta / distance : player.direction
+        // pan is between -1 and 1
+        // we need the angle between the player and the sound source
+        // the sine of the angle can tell us this
+        // turns out the sine of an angle is equal to the cosine of the orthogonal angle
+        // dot product is equivalent to the cosine of two direction vectors
+        // so you can use the dot product of the orthogonal vector with the direction to get the pan!
+        let pan = simd_dot(player.direction.orthogonal, direction)
+        sounds.append(Sound(name: name, volume: volume, pan: pan, delay: delay))
     }
 
     /**

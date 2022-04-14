@@ -46,15 +46,17 @@ extension SoundManager {
      - Parameters:
        - url: path to the sound to play
        - volume: the volume to play it at
+       - pan: the pan to play it at
      - Throws:
      */
-    func play(_ url: URL, volume: Float) throws {
+    func play(_ url: URL, volume: Float, pan: Float) throws {
         let player = try AVAudioPlayer(contentsOf: url)
         // Add the playing players to a Set so they don't get destroyed before they finish playing.
         playing.insert(player)
         // Set the sounds manager as the delegate so it's called when the player finishes.
         player.delegate = self
         player.volume = volume
+        player.pan = pan
         player.play()
     }
 }

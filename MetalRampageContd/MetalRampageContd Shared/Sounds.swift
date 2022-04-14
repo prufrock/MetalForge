@@ -25,5 +25,7 @@ public enum SoundName: String, CaseIterable {
 public struct Sound {
     let name: SoundName
     let volume: Float
+    // controls the balance of sound
+    let pan: Float
     let delay: Float
 }
