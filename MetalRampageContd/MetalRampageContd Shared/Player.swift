@@ -11,19 +11,22 @@ public struct Player: Actor {
     public var direction3d: Float4x4
     public let turningSpeed: Float = .pi/2
     public var health: Float
-    public let soundChannel: Int = 0
+
+    // allow it to loop it's sound
+    public let soundChannel: Int
 
     // player animation
     public var state: PlayerState = .idle
     var animation: Animation = .wandIdle
     public let attackCooldown: Float = 0.25
 
-    public init(position: Float2) {
+    public init(position: Float2, soundChannel: Int) {
         self.position = position
         self.velocity = Float2(0, 0)
         self.direction = Float2(1, 0)
         self.direction3d = Float4x4.rotateY(.pi/2)
         self.health = 100
+        self.soundChannel = soundChannel
     }
 }
 

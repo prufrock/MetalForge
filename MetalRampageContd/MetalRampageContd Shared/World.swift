@@ -282,6 +282,9 @@ extension World {
         switches = []
         isLevelEnded = false
 
+        // keep track of the sound channels assigned
+        var soundChannel = 0
+
         var pushWallCount = 0
 
         for y in 0 ..< map.height {
@@ -292,7 +295,8 @@ extension World {
                 case .nothing:
                     break
                 case .player:
-                    player = Player(position: position)
+                    player = Player(position: position, soundChannel: soundChannel)
+                    soundChannel += 1
                 case .monster:
                     monsters.append(Monster(position: position))
                 case .door:
@@ -310,7 +314,13 @@ extension World {
                     pushWallCount += 1
                     if pushWalls.count >= pushWallCount {
                         let tile = pushWalls[pushWallCount - 1].tile
-                        pushWalls[pushWallCount - 1] = PushWall(position: position, tile: tile)
+                        pushWalls[pushWallCount - 1] = PushWall(
+                            position: position,
+                            tile: tile,
+                            soundChannel: soundChannel
+                        )
+                        // each push wall gets its own sound channel
+                        soundChannel += 1
                         break
                     }
                     // take the tile from the map
@@ -323,7 +333,13 @@ extension World {
                         tile = .wall
                     }
                     // now add a PushWall at the current position with the tile we agreed on
-                    pushWalls.append(PushWall(position: position, tile: tile))
+                    pushWalls.append(PushWall(
+                        position: position,
+                        tile: tile,
+                        soundChannel: soundChannel
+                    ))
+                    // each push wall gets its own sound channel
+                    soundChannel += 1
                 case .switch:
                     precondition(map[x, y].isWall, "Switch must be placed on a wall tile")
                     switches.append(Switch(position: position))
