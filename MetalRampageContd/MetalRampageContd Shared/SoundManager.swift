@@ -11,6 +11,8 @@ class SoundManager: NSObject, AVAudioPlayerDelegate {
     // Holds AVAudioPlayer instances that are currently playing a sound.
     private var playing = Set<AVAudioPlayer>()
 
+    private var channels = [Int: (url: URL, player: AVAudioPlayer)]()
+
     static let shared = SoundManager()
 
     private override init() {}
@@ -45,12 +47,22 @@ extension SoundManager {
      Play the sound at volume. The volume helps create a sense of how near the sound is to the player.
      - Parameters:
        - url: path to the sound to play
+       - channel: allows control of looping sounds
        - volume: the volume to play it at
        - pan: the pan to play it at
      - Throws:
      */
-    func play(_ url: URL, volume: Float, pan: Float) throws {
+    func play(_ url: URL, channel: Int?, volume: Float, pan: Float) throws {
         let player = try AVAudioPlayer(contentsOf: url)
+
+        // if it has a channel
+        // store the sound in channels
+        // and loop it indefinitely
+        if let channel = channel {
+            channels[channel] = (url, player)
+            player.numberOfLoops = -1
+        }
+
         // Add the playing players to a Set so they don't get destroyed before they finish playing.
         playing.insert(player)
         // Set the sounds manager as the delegate so it's called when the player finishes.
@@ -58,5 +70,14 @@ extension SoundManager {
         player.volume = volume
         player.pan = pan
         player.play()
+    }
+
+    func clearChannel(_ channel: Int) {
+        channels[channel]?.player.stop()
+        channels[channel] = nil
+    }
+
+    func clearAll() {
+        channels.keys.forEach(clearChannel)
     }
 }

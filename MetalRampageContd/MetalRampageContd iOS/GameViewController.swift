@@ -123,6 +123,8 @@ extension GameViewController: MTKViewDelegate {
                     renderer = Renderer(metalView, width: 8, height: 8).also {
                         $0.updateAspect(renderer.aspect)
                     }
+                    // stop playing sounds when new level is loaded
+                    SoundManager.shared.clearAll()
                 case .playSounds(let sounds):
                     audioEngine.play(sounds)
                 }

@@ -233,7 +233,7 @@ extension World {
          - name: The name of the sound to add to the list of sounds for the frame.
          - position: The position where the sound should occur.
      */
-    mutating func playSound(_ name: SoundName, at position: Float2) {
+    mutating func playSound(_ name: SoundName?, at position: Float2, in channel: Int? = nil) {
         // find the distance to where sound should be
         let delta = position - player.position
         let distance = delta.length
@@ -257,7 +257,13 @@ extension World {
         // dot product is equivalent to the cosine of two direction vectors
         // so you can use the dot product of the orthogonal vector with the direction to get the pan!
         let pan = simd_dot(player.direction.orthogonal, direction)
-        sounds.append(Sound(name: name, volume: volume, pan: pan, delay: delay))
+        sounds.append(Sound(
+            name: name,
+            volume: volume,
+            pan: pan,
+            delay: delay,
+            channel: channel
+        ))
     }
 
     /**

@@ -17,10 +17,14 @@ class AudioEngine {
         for sound in sounds {
             // delay before playing the sound to mimic the speed of sound
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(sound.delay)) {
-                guard let url = sound.name.url else {
+                // if the sound doesn't have a name clear it's channel
+                guard let url = sound.name?.url else {
+                    if let channel = sound.channel {
+                        SoundManager.shared.clearChannel(channel)
+                    }
                     return
                 }
-                try? SoundManager.shared.play(url, volume: sound.volume, pan: sound.pan)
+                try? SoundManager.shared.play(url, channel: sound.channel, volume: sound.volume, pan: sound.pan)
             }
         }
     }

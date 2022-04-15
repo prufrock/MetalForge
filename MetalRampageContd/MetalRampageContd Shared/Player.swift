@@ -11,6 +11,7 @@ public struct Player: Actor {
     public var direction3d: Float4x4
     public let turningSpeed: Float = .pi/2
     public var health: Float
+    public let soundChannel: Int = 0
 
     // player animation
     public var state: PlayerState = .idle
@@ -36,6 +37,11 @@ public extension Player {
         health <= 0
     }
 
+    // useful for sound effects
+    var isMoving: Bool {
+        velocity.x != 0 || velocity.y != 0
+    }
+
     var canFire: Bool {
         switch state {
         // can fire when idle
@@ -56,6 +62,9 @@ public extension Player {
        - world: World
      */
     mutating func update(with input: Input, in world: inout World) {
+        // like in push wall allows `update` to determine the moment when the player starts or stops moving.
+        let wasMoving = isMoving
+
         direction = direction.rotated(by: input.rotation)
         direction3d = direction3d * input.rotation3d
         velocity = direction * Float(input.speed) * speed
@@ -87,6 +96,13 @@ public extension Player {
                 state = .idle
                 animation = .wandIdle
             }
+        }
+
+        if isMoving, !wasMoving {
+            world.playSound(.playerWalk, at: position, in: soundChannel)
+        } else if !isMoving {
+            // stop playing the sound
+            world.playSound(nil, at: position, in: soundChannel)
         }
     }
 }
