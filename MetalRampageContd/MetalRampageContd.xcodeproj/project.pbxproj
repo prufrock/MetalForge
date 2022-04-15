@@ -192,6 +192,9 @@
 		5AF0EF80473FF89C2F69122A /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		63B33F212807C08D00734353 /* spellMiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spellMiss.mp3; sourceTree = "<group>"; };
 		63B33F252807C14E00734353 /* castSpell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = castSpell.mp3; sourceTree = "<group>"; };
+		63B33F292809AC4600734353 /* MetalRampageContd-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MetalRampageContd-macOS-Info.plist"; sourceTree = SOURCE_ROOT; };
+		63B33F2A2809AC6E00734353 /* MetalRampageContd-tvOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MetalRampageContd-tvOS-Info.plist"; sourceTree = SOURCE_ROOT; };
+		63B33F2B2809AC7900734353 /* MetalRampageContd-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MetalRampageContd-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		63D44B1B27D427CD00D4BE7D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		63D44B1C27D427CD00D4BE7D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		63D44B1D27D427CD00D4BE7D /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
@@ -347,6 +350,7 @@
 		63D44B2527D427CF00D4BE7D /* MetalRampageContd iOS */ = {
 			isa = PBXGroup;
 			children = (
+				63B33F2B2809AC7900734353 /* MetalRampageContd-iOS-Info.plist */,
 				63D44B2627D427CF00D4BE7D /* AppDelegate.swift */,
 				63D44B2827D427CF00D4BE7D /* GameViewController.swift */,
 				63D44B2A27D427CF00D4BE7D /* Main.storyboard */,
@@ -358,6 +362,7 @@
 		63D44B3527D427CF00D4BE7D /* MetalRampageContd tvOS */ = {
 			isa = PBXGroup;
 			children = (
+				63B33F2A2809AC6E00734353 /* MetalRampageContd-tvOS-Info.plist */,
 				63D44B3627D427CF00D4BE7D /* AppDelegate.swift */,
 				63D44B3827D427CF00D4BE7D /* GameViewController.swift */,
 				63D44B3A27D427CF00D4BE7D /* Main.storyboard */,
@@ -369,6 +374,7 @@
 		63D44B4527D427CF00D4BE7D /* MetalRampageContd macOS */ = {
 			isa = PBXGroup;
 			children = (
+				63B33F292809AC4600734353 /* MetalRampageContd-macOS-Info.plist */,
 				63D44B4627D427CF00D4BE7D /* AppDelegate.swift */,
 				63D44B4827D427CF00D4BE7D /* GameViewController.swift */,
 				63D44B4A27D427CF00D4BE7D /* Main.storyboard */,
@@ -876,6 +882,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VUGNZY6N5J;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MetalRampageContd-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -907,6 +914,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VUGNZY6N5J;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MetalRampageContd-iOS-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -939,6 +947,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VUGNZY6N5J;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MetalRampageContd-tvOS-Info.plist";
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
@@ -967,6 +976,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VUGNZY6N5J;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MetalRampageContd-tvOS-Info.plist";
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
@@ -1000,6 +1010,7 @@
 				DEVELOPMENT_TEAM = VUGNZY6N5J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MetalRampageContd-macOS-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -1031,6 +1042,7 @@
 				DEVELOPMENT_TEAM = VUGNZY6N5J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MetalRampageContd-macOS-Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
