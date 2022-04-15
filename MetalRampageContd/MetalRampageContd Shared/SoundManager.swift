@@ -38,9 +38,17 @@ extension SoundManager {
         #endif
     }
 
-    // Boot up AVAudioPlayer by loading a file since AVAudioPlayer briefly blocks when it's loaded.
-    func preload(_ url: URL) throws -> AVAudioPlayer {
-        try AVAudioPlayer(contentsOf: url)
+    // Can preload a sound to stop AVAudioPLayer from blocking during the game
+    // Also, prepares audio players to playback a sound,
+    // checking to see if the sound is already playing on a channel.
+    func preload(_ url: URL, channel: Int? = nil) throws -> AVAudioPlayer {
+        if let channel = channel, let (oldUrl, oldSound) = channels[channel] {
+            if oldUrl == url {
+                return oldSound
+            }
+            oldSound.stop()
+        }
+        return try AVAudioPlayer(contentsOf: url)
     }
 
     /**
@@ -53,7 +61,7 @@ extension SoundManager {
      - Throws:
      */
     func play(_ url: URL, channel: Int?, volume: Float, pan: Float) throws {
-        let player = try AVAudioPlayer(contentsOf: url)
+        let player = try preload(url, channel: channel)
 
         // if it has a channel
         // store the sound in channels

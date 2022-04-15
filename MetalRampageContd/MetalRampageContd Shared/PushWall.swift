@@ -67,7 +67,7 @@ extension PushWall {
         }
 
 
-        if isMoving, !wasMoving {
+        if isMoving {
             world.playSound(.wallSlide, at: position, in: soundChannel)
         } else if !isMoving {
             world.playSound(nil, at: position, in: soundChannel)
