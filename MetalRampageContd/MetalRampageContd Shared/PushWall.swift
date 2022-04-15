@@ -34,6 +34,9 @@ extension PushWall {
     }
 
     mutating func update(in world: inout World) {
+        // allows `update` to know the exact moment the wall starts moving or comes to a rest
+        // if it started moving `wasMoving` is false and if it stopped moving `wasMoving` is true.
+        let wasMoving = isMoving
         // if wall is moving don't change anything
         // otherwise move it in the direction it was pushed but only along the axis is was pushed the most from since it
         // can't be allowed to go sideways.
@@ -46,7 +49,7 @@ extension PushWall {
             }
             if !world.map.tile(at: position + direction, from: position).isWall {
                 print("pushed the wall")
-                velocity += direction * speed
+                velocity = direction * speed
             }
         }
 
@@ -57,6 +60,13 @@ extension PushWall {
             // center it in the tile just in case
             position.x = position.x.rounded(.down) + 0.5
             position.y = position.y.rounded(.down) + 0.5
+        }
+
+
+        if isMoving, !wasMoving {
+            world.playSound(.wallSlide, at: position)
+        } else if !isMoving, wasMoving {
+            world.playSound(.wallThud, at: position)
         }
     }
 
