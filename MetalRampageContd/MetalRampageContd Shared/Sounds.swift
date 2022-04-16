@@ -21,6 +21,8 @@ public enum SoundName: String, CaseIterable {
     case playerWalk
     case squelch
     case medkit // healingPotion
+    case fireBlastFire
+    case fireBlastPickup
 }
 
 public struct Sound {

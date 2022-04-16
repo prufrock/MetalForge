@@ -16,4 +16,7 @@ public enum Texture {
     case doorJamb1, doorJamb2
     case switch1, switch2, switch3, switch4
     case healingPotion
+    case fireBlastIdle
+    case fireBlastFire1, fireBlastFire2,  fireBlastFire3, fireBlastFire4
+    case fireBlastPickup
 }

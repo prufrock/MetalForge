@@ -17,7 +17,8 @@ public struct Player: Actor {
 
     // player animation
     public var state: PlayerState = .idle
-    var animation: Animation = .wandIdle
+    private(set) var weapon: Weapon = .fireBlast
+    var animation: Animation
     public let attackCooldown: Float = 0.25
 
     public init(position: Float2, soundChannel: Int) {
@@ -27,6 +28,7 @@ public struct Player: Actor {
         self.direction3d = Float4x4.rotateY(.pi/2)
         self.health = 100
         self.soundChannel = soundChannel
+        self.animation = weapon.attributes.idleAnimation
     }
 }
 
@@ -58,6 +60,11 @@ public extension Player {
         }
     }
 
+    internal mutating func setWeapon(_ weapon: Weapon) {
+        self.weapon = weapon
+        self.animation = weapon.attributes.idleAnimation
+    }
+
     /**
      Updates the player's state and direction via *input* and allows them to act on the *world*.
      - Parameters:
@@ -75,9 +82,9 @@ public extension Player {
         // you can keep firing as long as you *canFire*
         if input.isFiring, canFire {
             state = .firing
-            animation = .wandFire
+            animation = weapon.attributes.fireAnimation
             // make the sound at the player's position
-            world.playSound(.castSpell, at: position)
+            world.playSound(weapon.attributes.fireSound, at: position)
             let ray = Ray(origin: position, direction: direction)
             if let index = world.pickMonster(ray) {
                 world.hurtMonster(at: index, damage: 10)
@@ -97,7 +104,7 @@ public extension Player {
             // you are no longer firing when the firing animation finishes
             if animation.isCompleted {
                 state = .idle
-                animation = .wandIdle
+                animation = weapon.attributes.idleAnimation
             }
         }
 
@@ -110,15 +117,3 @@ public extension Player {
     }
 }
 
-extension Animation {
-    static let wandIdle = Animation(frames: [
-        .wand
-    ], duration: 0)
-    static let wandFire = Animation(frames: [
-        .wandFiring1,
-        .wandFiring2,
-        .wandFiring3,
-        .wandFiring4,
-        .wand
-    ], duration: 0.5)
-}

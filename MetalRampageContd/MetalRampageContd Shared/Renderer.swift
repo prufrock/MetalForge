@@ -35,6 +35,7 @@ public class Renderer: NSObject {
     var doorJamb: [Texture:MTLTexture?] = [:]
     var wallSwitch: [Texture:MTLTexture?] = [:]
     var healingPotionTexture: MTLTexture!
+    var fireBlast: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -171,6 +172,11 @@ public class Renderer: NSObject {
         wallSwitch[.switch3] = loadTexture(name: "Switch3")!
         wallSwitch[.switch4] = loadTexture(name: "Switch4")!
         healingPotionTexture = loadTexture(name: "HealingPotion")!
+        fireBlast[.fireBlastIdle] = loadTexture(name: "FireBlastIdle")!
+        fireBlast[.fireBlastFire1] = loadTexture(name: "FireBlastFire1")!
+        fireBlast[.fireBlastFire2] = loadTexture(name: "FireBlastFire2")!
+        fireBlast[.fireBlastFire3] = loadTexture(name: "FireBlastFire3")!
+        fireBlast[.fireBlastFire4] = loadTexture(name: "FireBlastFire4")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -565,6 +571,16 @@ public class Renderer: NSObject {
             textureId = 3
         case .wandFiring4:
             textureId = 4
+        case .fireBlastIdle:
+            textureId = 5
+        case .fireBlastFire1:
+            textureId = 6
+        case .fireBlastFire2:
+            textureId = 7
+        case .fireBlastFire3:
+            textureId = 8
+        case .fireBlastFire4:
+             textureId = 9
         default:
             textureId = 0
         }
@@ -594,6 +610,11 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(wand[.wandFiring2]!, index: 2)
         encoder.setFragmentTexture(wand[.wandFiring3]!, index: 3)
         encoder.setFragmentTexture(wand[.wandFiring4]!, index: 4)
+        encoder.setFragmentTexture(fireBlast[.fireBlastIdle]!, index: 5)
+        encoder.setFragmentTexture(fireBlast[.fireBlastFire1]!, index: 6)
+        encoder.setFragmentTexture(fireBlast[.fireBlastFire2]!, index: 7)
+        encoder.setFragmentTexture(fireBlast[.fireBlastFire3]!, index: 8)
+        encoder.setFragmentTexture(fireBlast[.fireBlastFire4]!, index: 9)
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 
