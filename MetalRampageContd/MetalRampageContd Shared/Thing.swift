@@ -5,10 +5,11 @@
 import Foundation
 
 public enum Thing: Int, Decodable {
-    case nothing
-    case player
-    case monster
-    case door
-    case pushWall
-    case `switch`
+    case nothing          // 0
+    case player           // 1
+    case monster          // 2
+    case door             // 3
+    case pushWall         // 4
+    case `switch`         // 5
+    case healingPotion    // 6
 }

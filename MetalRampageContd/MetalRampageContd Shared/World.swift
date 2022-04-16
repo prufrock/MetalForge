@@ -11,6 +11,7 @@ public struct World {
     public private(set) var monsters: [Monster]
     private(set) var pushWalls: [PushWall]
     private(set) var switches: [Switch]
+    private(set) var pickups: [Pickup]
     private(set) var effects: [Effect]
     // The list of sounds that should be used for a frame.
     private var sounds: [Sound] = []
@@ -25,6 +26,7 @@ public struct World {
         self.effects = []
         self.pushWalls = []
         self.switches = []
+        self.pickups = []
         self.isLevelEnded = false
         reset()
     }
@@ -280,6 +282,7 @@ extension World {
         monsters = []
         doors = []
         switches = []
+        pickups = []
         isLevelEnded = false
 
         // keep track of the sound channels assigned
@@ -343,6 +346,8 @@ extension World {
                 case .switch:
                     precondition(map[x, y].isWall, "Switch must be placed on a wall tile")
                     switches.append(Switch(position: position))
+                case .healingPotion:
+                    pickups.append(Pickup(type: .healingPotion, position: position))
                 }
             }
         }
@@ -352,7 +357,10 @@ extension World {
         // The ray is used to make the billboard orthogonal to the player(or any ray)
         let ray = Ray(origin: player.position, direction: player.direction)
         // append billboards here to draw more sprites
-        return monsters.map { $0.billboard(for: ray)} + doors.map { $0.billboard } + pushWalls.flatMap { $0.billboards }
+        return monsters.map { $0.billboard(for: ray)}
+            + doors.map { $0.billboard }
+            + pushWalls.flatMap { $0.billboards }
+            + pickups.map { $0.billboard(for: ray) }
     }
 
     func hitTest(_ ray: Ray) -> Float2 {

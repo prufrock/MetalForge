@@ -34,6 +34,7 @@ public class Renderer: NSObject {
     var door: [Texture:MTLTexture?] = [:]
     var doorJamb: [Texture:MTLTexture?] = [:]
     var wallSwitch: [Texture:MTLTexture?] = [:]
+    var healingPotionTexture: MTLTexture!
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -169,6 +170,7 @@ public class Renderer: NSObject {
         wallSwitch[.switch2] = loadTexture(name: "Switch2")!
         wallSwitch[.switch3] = loadTexture(name: "Switch3")!
         wallSwitch[.switch4] = loadTexture(name: "Switch4")!
+        healingPotionTexture = loadTexture(name: "HealingPotion")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -382,6 +384,8 @@ public class Renderer: NSObject {
                 return 17
             case .slimeWall:
                 return 18
+            case .healingPotion:
+                return 19
             default:
                 return 0
             }
@@ -436,6 +440,7 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(door[.door2]!, index: 16)
         encoder.setFragmentTexture(wallTexture!, index: 17)
         encoder.setFragmentTexture(slimeWallTexture!, index: 18)
+        encoder.setFragmentTexture(healingPotionTexture!, index: 19)
         encoder.drawIndexedPrimitives(
             type: primitiveType,
             indexCount: index.count,
