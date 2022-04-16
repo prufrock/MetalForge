@@ -129,6 +129,13 @@ public extension Float2x2 {
             [-sin(angle), cos(angle)]
         )
     }
+
+    static func rotate(sine: Float, cosine: Float) -> Self {
+        Self(
+            [ cosine, sine],
+            [-sine, cosine]
+        )
+    }
 }
 
 public extension Float2 {

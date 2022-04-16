@@ -84,15 +84,38 @@ public extension Player {
             animation = weapon.attributes.fireAnimation
             // make the sound at the player's position
             world.playSound(weapon.attributes.fireSound, at: position)
-            let ray = Ray(origin: position, direction: direction)
-            if let index = world.pickMonster(ray) {
-                world.hurtMonster(at: index, damage: weapon.attributes.damage)
-                // make the sound at the monster's position
-                world.playSound(.fireSpellHit, at: world.monsters[index].position)
-            } else {
-                // make the sound at place on the wall where hit happens
-                let hitPosition = world.hitTest(ray)
-                world.playSound(.spellMiss, at: hitPosition)
+            // fire a ray for each projectile
+            let projectiles = weapon.attributes.projectiles
+
+            // make it so the hit and impact sounds play at most once by storing one for each
+            // and then playing the sound after it's calculated
+            var hitPosition, missPosition: Float2?
+            for _ in 0 ..< projectiles {
+
+                // calculate how the projectiles randomly spread in front of the player
+                let spread = weapon.attributes.spread
+                let sine = Float.random(in: -spread ... spread)
+                let cosine = (1 - sine * sine).squareRoot()
+                let direction = self.direction.rotated(by: Float2x2.rotate(sine: sine, cosine: cosine))
+
+                let ray = Ray(origin: position, direction: direction)
+                if let index = world.pickMonster(ray) {
+                    // Divide the amount of damage by the number of projectiles
+                    world.hurtMonster(at: index, damage: weapon.attributes.damage / Float(projectiles))
+                    // make the sound at the monster's position
+                    hitPosition = world.monsters[index].position
+                } else {
+                    // make the sound at place on the wall where hit happens
+                    missPosition = world.hitTest(ray)
+                }
+            }
+
+            // play the sounds no more than once
+            if let hitPosition = hitPosition {
+                world.playSound(.monsterHit, at: hitPosition)
+            }
+            if let missPosition = missPosition {
+                world.playSound(.spellMiss, at: missPosition)
             }
         }
 

@@ -14,6 +14,10 @@ extension Weapon {
         let fireSound: SoundName
         let damage: Float
         let coolDown: Float
+        // the number of projectiles fired
+        let projectiles: Int
+        // the length of the arc the projects are spread over
+        let spread: Float
     }
 
     var attributes: Attributes {
@@ -24,7 +28,9 @@ extension Weapon {
                 fireAnimation: .wandFire,
                 fireSound: .castSpell,
                 damage: 10,
-                coolDown: 0.25
+                coolDown: 0.25,
+                projectiles: 1,
+                spread: 0
             )
         case .fireBlast:
             return Attributes(
@@ -32,7 +38,9 @@ extension Weapon {
                 fireAnimation: .fireBlastFire,
                 fireSound: .castFireSpell,
                 damage: 50,
-                coolDown: 0.5
+                coolDown: 0.5,
+                projectiles: 5,
+                spread: 0.4
             )
         }
     }
