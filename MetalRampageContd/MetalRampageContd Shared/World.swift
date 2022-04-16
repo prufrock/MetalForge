@@ -158,6 +158,22 @@ extension World {
             monsters[i] = monster
         }
 
+        // handle pickups
+        // iterate in reverse so that removing an item doesn't break the indices
+        for i in (0 ..< pickups.count).reversed() {
+            let pickup = pickups[i]
+            // remove any pickups that intersect with the player
+            if player.intersection(with: pickup) != nil {
+                pickups.remove(at: i)
+                switch pickup.type {
+                case .healingPotion:
+                    player.health += 25
+                    playSound(.medkit, at: pickup.position)
+                    effects.append(Effect(type: .fadeIn, color: ColorA(.green), duration: 0.5))
+                }
+            }
+        }
+
         // check if the player intersects with the world
         player.avoidWalls(in: self)
 

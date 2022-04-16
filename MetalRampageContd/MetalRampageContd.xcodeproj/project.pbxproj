@@ -52,6 +52,9 @@
 		63B33F31280A3EFC00734353 /* Pickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B33F30280A3EFC00734353 /* Pickup.swift */; };
 		63B33F32280A3EFC00734353 /* Pickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B33F30280A3EFC00734353 /* Pickup.swift */; };
 		63B33F33280A3EFC00734353 /* Pickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B33F30280A3EFC00734353 /* Pickup.swift */; };
+		63B33F35280AFC9600734353 /* medkit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 63B33F34280AFC9600734353 /* medkit.mp3 */; };
+		63B33F36280AFC9600734353 /* medkit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 63B33F34280AFC9600734353 /* medkit.mp3 */; };
+		63B33F37280AFC9600734353 /* medkit.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 63B33F34280AFC9600734353 /* medkit.mp3 */; };
 		63D44B2727D427CF00D4BE7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D44B2627D427CF00D4BE7D /* AppDelegate.swift */; };
 		63D44B2927D427CF00D4BE7D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D44B2827D427CF00D4BE7D /* GameViewController.swift */; };
 		63D44B2C27D427CF00D4BE7D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63D44B2A27D427CF00D4BE7D /* Main.storyboard */; };
@@ -199,6 +202,7 @@
 		63B33F2B2809AC7900734353 /* MetalRampageContd-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MetalRampageContd-iOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		63B33F2C2809C25000734353 /* castSpell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = castSpell.mp3; sourceTree = "<group>"; };
 		63B33F30280A3EFC00734353 /* Pickup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pickup.swift; sourceTree = "<group>"; };
+		63B33F34280AFC9600734353 /* medkit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = medkit.mp3; sourceTree = "<group>"; };
 		63D44B1B27D427CD00D4BE7D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		63D44B1C27D427CD00D4BE7D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		63D44B1D27D427CD00D4BE7D /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
@@ -391,6 +395,7 @@
 		63F914762806706F00A91EBF /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				63B33F34280AFC9600734353 /* medkit.mp3 */,
 				63B33F2C2809C25000734353 /* castSpell.mp3 */,
 				63B33F212807C08D00734353 /* spellMiss.mp3 */,
 				63F914B3280676B300A91EBF /* fireSpellHit.mp3 */,
@@ -514,6 +519,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D44B5427D427CF00D4BE7D /* ShaderTypes.h in Resources */,
+				63B33F35280AFC9600734353 /* medkit.mp3 in Resources */,
 				63F914AD280675B600A91EBF /* monsterGroan.mp3 in Resources */,
 				63F9148F280675B600A91EBF /* switchFlip.mp3 in Resources */,
 				63F914B4280676B300A91EBF /* fireSpellHit.mp3 in Resources */,
@@ -545,6 +551,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D44B5527D427CF00D4BE7D /* ShaderTypes.h in Resources */,
+				63B33F36280AFC9600734353 /* medkit.mp3 in Resources */,
 				63F914AE280675B600A91EBF /* monsterGroan.mp3 in Resources */,
 				63F91490280675B600A91EBF /* switchFlip.mp3 in Resources */,
 				63F914B5280676B300A91EBF /* fireSpellHit.mp3 in Resources */,
@@ -589,6 +596,7 @@
 				63F914AC280675B600A91EBF /* playerDeath.mp3 in Resources */,
 				63F914A9280675B600A91EBF /* squelch.mp3 in Resources */,
 				63F91497280675B600A91EBF /* doorSlide.mp3 in Resources */,
+				63B33F37280AFC9600734353 /* medkit.mp3 in Resources */,
 				63F914AF280675B600A91EBF /* monsterGroan.mp3 in Resources */,
 				63F91488280675B600A91EBF /* monsterDeath.mp3 in Resources */,
 				63F9148E280675B600A91EBF /* pistolFire.mp3 in Resources */,
