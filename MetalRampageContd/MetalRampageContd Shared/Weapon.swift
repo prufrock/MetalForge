@@ -12,6 +12,8 @@ extension Weapon {
         let idleAnimation: Animation
         let fireAnimation: Animation
         let fireSound: SoundName
+        let damage: Float
+        let coolDown: Float
     }
 
     var attributes: Attributes {
@@ -20,13 +22,17 @@ extension Weapon {
             return Attributes(
                 idleAnimation: .wandIdle,
                 fireAnimation: .wandFire,
-                fireSound: .castSpell
+                fireSound: .castSpell,
+                damage: 10,
+                coolDown: 0.25
             )
         case .fireBlast:
             return Attributes(
                 idleAnimation: .fireBlastIdle,
                 fireAnimation: .fireBlastFire,
-                fireSound: .castFireSpell
+                fireSound: .castFireSpell,
+                damage: 50,
+                coolDown: 0.5
             )
         }
     }

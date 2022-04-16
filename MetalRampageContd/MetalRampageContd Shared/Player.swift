@@ -19,7 +19,6 @@ public struct Player: Actor {
     public var state: PlayerState = .idle
     private(set) var weapon: Weapon = .fireBlast
     var animation: Animation
-    public let attackCooldown: Float = 0.25
 
     public init(position: Float2, soundChannel: Int) {
         self.position = position
@@ -53,10 +52,10 @@ public extension Player {
         case .idle:
             return true
 
-        // if firing you can fire again the time since last fired exceeds the attack cool down. The animation time is
+        // if firing you can fire again the time since last fired exceeds the weapon cool down. The animation time is
         // used as a way to determine how much time has passed since last fired.
         case .firing:
-            return animation.time >= attackCooldown
+            return animation.time >= weapon.attributes.coolDown
         }
     }
 
@@ -87,8 +86,8 @@ public extension Player {
             world.playSound(weapon.attributes.fireSound, at: position)
             let ray = Ray(origin: position, direction: direction)
             if let index = world.pickMonster(ray) {
-                world.hurtMonster(at: index, damage: 10)
-                // make the sound at the monter's position
+                world.hurtMonster(at: index, damage: weapon.attributes.damage)
+                // make the sound at the monster's position
                 world.playSound(.fireSpellHit, at: world.monsters[index].position)
             } else {
                 // make the sound at place on the wall where hit happens
