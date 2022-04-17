@@ -67,7 +67,34 @@ public struct Monster: Actor {
             if animation.isCompleted {
                 animation = .monsterDead
             }
+        case .blocked:
+            // once blocked is done resume the chase
+            if animation.isCompleted {
+                state = .chasing
+                animation = .monsterWalk
+            }
         }
+    }
+
+    func isBlocked(by other: Monster) -> Bool {
+        // if the other monster is dead or not chasing
+        // push past it.
+        if other.isDead || other.state != .chasing {
+            return false
+        }
+        // ignore it if the other monster is too far way
+        let direction = other.position - position
+        let distance = direction.length
+        if distance > radius + other.radius + 0.5 {
+            return false
+        }
+
+        // direction / distance is the normalized direction
+        // velocity / velocity.length is the normalized length
+        // the dot product gives the cosine of the angle between them
+        // 0.5 is a 120 degree arc in front of the monster
+        // if the other monster is in that arc it's blocking
+        return simd_dot(direction / distance, velocity / velocity.length) > 0.5
     }
 }
 
@@ -126,13 +153,20 @@ extension Monster {
 enum MonsterState {
     case idle
     case chasing
+    case blocked
     case scratching
     case hurt
     case dead
 }
 
 extension Animation {
-    static let monsterIdle = Animation(frames: [.monster], duration: 0)
+    static let monsterIdle = Animation(frames: [
+        .monster
+    ], duration: 0)
+    // if blocked pause for a moment by using the animation time
+    static let monsterBlocked = Animation(frames: [
+        .monster
+    ], duration: 1)
     static let monsterWalk = Animation(frames: [.monsterWalk1, .monsterWalk2], duration: 0.5)
     static let monsterScratch = Animation(frames: [
         .monsterScratch1,
