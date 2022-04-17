@@ -12,6 +12,8 @@ public struct Monster: Actor {
     let attackCooldown: Float = 0.4
     private(set) var lastAttackTime: Float = 0
 
+    private(set) var lastKnownPlayerPosition: Float2?
+
     var health: Float = 50
 
     public init(position: Float2) {
@@ -29,6 +31,8 @@ public struct Monster: Actor {
         case .chasing:
             // only scratch at the player if you can see them
             if canSeePlayer(in: world) {
+                // store the player's position for later chasing
+                lastKnownPlayerPosition = world.player.position
                 if canReachPlayer(in: world) {
                     state = .scratching
                     animation = .monsterScratch
@@ -37,7 +41,11 @@ public struct Monster: Actor {
                     velocity = Float2(x: 0, y: 0)
                 }
             }
-            let direction = world.player.position - position
+            // walk towards the last place the player was seen
+            guard let destination = lastKnownPlayerPosition else {
+                break
+            }
+            let direction = destination - position
             velocity = direction * (speed / direction.length)
         case .scratching:
             guard canReachPlayer(in: world) else {
