@@ -49,6 +49,9 @@
 		632BBB7D280BBBB400E1E4C3 /* fireBlastPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */; };
 		632BBB7E280BBBB400E1E4C3 /* fireBlastPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */; };
 		632BBB7F280BBBB400E1E4C3 /* fireBlastPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */; };
+		63AE0CC3280C922A00B9A613 /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AE0CC2280C922A00B9A613 /* Pathfinder.swift */; };
+		63AE0CC4280C922A00B9A613 /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AE0CC2280C922A00B9A613 /* Pathfinder.swift */; };
+		63AE0CC5280C922A00B9A613 /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AE0CC2280C922A00B9A613 /* Pathfinder.swift */; };
 		63B33F222807C08D00734353 /* spellMiss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 63B33F212807C08D00734353 /* spellMiss.mp3 */; };
 		63B33F232807C08D00734353 /* spellMiss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 63B33F212807C08D00734353 /* spellMiss.mp3 */; };
 		63B33F242807C08D00734353 /* spellMiss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 63B33F212807C08D00734353 /* spellMiss.mp3 */; };
@@ -207,6 +210,7 @@
 		5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		5AF0EF80473FF89C2F69122A /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireBlastPickup.mp3; sourceTree = "<group>"; };
+		63AE0CC2280C922A00B9A613 /* Pathfinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pathfinder.swift; sourceTree = "<group>"; };
 		63B33F212807C08D00734353 /* spellMiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spellMiss.mp3; sourceTree = "<group>"; };
 		63B33F292809AC4600734353 /* MetalRampageContd-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MetalRampageContd-macOS-Info.plist"; sourceTree = SOURCE_ROOT; };
 		63B33F2A2809AC6E00734353 /* MetalRampageContd-tvOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MetalRampageContd-tvOS-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -355,6 +359,7 @@
 				5AF0EF80473FF89C2F69122A /* AudioEngine.swift */,
 				63B33F30280A3EFC00734353 /* Pickup.swift */,
 				5AF0E62A45CAB2481AE93A5E /* Weapon.swift */,
+				63AE0CC2280C922A00B9A613 /* Pathfinder.swift */,
 			);
 			path = "MetalRampageContd Shared";
 			sourceTree = "<group>";
@@ -662,6 +667,7 @@
 				5AF0E7B82FA1CF32BBD15327 /* Texture.swift in Sources */,
 				5AF0ED5CA3CAA12CFA4BE95A /* Animation.swift in Sources */,
 				63B33F31280A3EFC00734353 /* Pickup.swift in Sources */,
+				63AE0CC3280C922A00B9A613 /* Pathfinder.swift in Sources */,
 				5AF0E2795700BE109D38D018 /* Effect.swift in Sources */,
 				5AF0EEA3DE6B6147C6B00FB7 /* Easing.swift in Sources */,
 				5AF0E85D4EBEB4E9719368C1 /* Door.swift in Sources */,
@@ -703,6 +709,7 @@
 				5AF0E5969CE480B9F16DEECA /* Texture.swift in Sources */,
 				5AF0E5CDF968880D3209EB4B /* Animation.swift in Sources */,
 				63B33F32280A3EFC00734353 /* Pickup.swift in Sources */,
+				63AE0CC4280C922A00B9A613 /* Pathfinder.swift in Sources */,
 				5AF0ED4E06E72980DE576860 /* Effect.swift in Sources */,
 				5AF0E0067D684C95067BA34F /* Easing.swift in Sources */,
 				5AF0E4258E6502313E4F0B91 /* Door.swift in Sources */,
@@ -744,6 +751,7 @@
 				5AF0E3D1E041257B8F4CFF87 /* Texture.swift in Sources */,
 				5AF0EC86C25636B92D7B519C /* Animation.swift in Sources */,
 				63B33F33280A3EFC00734353 /* Pickup.swift in Sources */,
+				63AE0CC5280C922A00B9A613 /* Pathfinder.swift in Sources */,
 				5AF0E9A0138057E81E4D2C0D /* Effect.swift in Sources */,
 				5AF0E83C2C9C610884DAFB62 /* Easing.swift in Sources */,
 				5AF0E45FBDF6C702B022C69D /* Door.swift in Sources */,

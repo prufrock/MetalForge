@@ -461,6 +461,19 @@ a       - y: Int
     }
 
     /**
+     Check to see if the thing at x,y is a PushWall
+     - Parameters:
+       - x: the x coordinate
+       - y: the y coordinate
+     - Returns: whether or not it's a PushWall
+     */
+    func pushWall(at x: Int, _ y: Int) -> PushWall? {
+        pushWalls.first(where: {
+            Int($0.position.x) == x && Int($0.position.y) == y
+        })
+    }
+
+    /**
      Check to see if the thing at x,y is a switch
      - Parameters:
        - x: Int
@@ -512,4 +525,48 @@ struct WallTiles {
     let south: Tile
     let east: Tile
     let west: Tile
+}
+
+extension World: Graph {
+    struct Node: Hashable {
+        let x, y: Float
+
+        // enforce grid alignment
+        init(x: Float, y: Float) {
+            self.x = x.rounded(.down) + 0.5
+            self.y = y.rounded(.down) + 0.5
+        }
+    }
+
+    func findPath(from start: Float2, to end: Float2) -> [Float2] {
+        return findPath(
+            from: Node(x: start.x, y: start.y),
+            to: Node(x: end.x, y: end.y)
+        ).map { node in
+            Float2(x: node.x, y: node.y)
+        }
+    }
+
+    func nodesConnectedTo(_ node: Node) -> [Node] {
+        return [
+            Node(x: node.x - 1, y: node.y),
+            Node(x: node.x + 1, y: node.y),
+            Node(x: node.x, y: node.y - 1),
+            Node(x: node.x, y: node.y + 1)
+        ].filter { node in
+            // remove any walls
+            let x = Int(node.x), y = Int(node.y)
+            return map[x, y].isWall == false && pushWall(at: x, y) == nil
+        }
+    }
+
+    func estimatedDistance(from a: Node, to b: Node) -> Float {
+        // the distance between nodes without considering obstacles
+        abs(b.x - a.x) + abs(b.y - a.y)
+    }
+
+    func stepDistance(from a: Node, to b: Node) -> Float {
+        // uniform square tiles always 1 apart
+        1
+    }
 }

@@ -12,7 +12,7 @@ public struct Monster: Actor {
     let attackCooldown: Float = 0.4
     private(set) var lastAttackTime: Float = 0
 
-    private(set) var lastKnownPlayerPosition: Float2?
+    private(set) var path: [Float2] = []
 
     var health: Float = 50
 
@@ -32,7 +32,7 @@ public struct Monster: Actor {
             // only scratch at the player if you can see them
             if canSeePlayer(in: world) {
                 // store the player's position for later chasing
-                lastKnownPlayerPosition = world.player.position
+                path = world.findPath(from: position, to: world.player.position)
                 if canReachPlayer(in: world) {
                     state = .scratching
                     animation = .monsterScratch
@@ -42,11 +42,24 @@ public struct Monster: Actor {
                 }
             }
             // walk towards the last place the player was seen
-            guard let destination = lastKnownPlayerPosition else {
+            guard let destination = path.first else {
                 break
             }
             let direction = destination - position
-            velocity = direction * (speed / direction.length)
+
+            let distance = direction.length
+            // remove the node once it's reached
+            if distance < 0.1 {
+                path.removeFirst()
+                break
+            }
+            velocity = direction * (speed / distance)
+            // if the monster is blocked it stops for the length of monsterBlocked animation
+            if world.monsters.contains(where: isBlocked(by:)) {
+                state = .blocked
+                animation = .monsterBlocked
+                velocity = Float2(x: 0, y: 0)
+            }
         case .scratching:
             guard canReachPlayer(in: world) else {
                 state = .chasing
