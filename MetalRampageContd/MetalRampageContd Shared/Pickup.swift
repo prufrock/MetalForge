@@ -24,6 +24,8 @@ extension Pickup {
         switch type {
         case .healingPotion:
             return .healingPotion
+        case .fireBlast:
+            return .fireBlastPickup
         }
     }
 
@@ -44,4 +46,5 @@ extension Pickup {
 
 enum PickupType {
     case healingPotion
+    case fireBlast
 }

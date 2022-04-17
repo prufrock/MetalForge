@@ -172,6 +172,7 @@ public class Renderer: NSObject {
         wallSwitch[.switch3] = loadTexture(name: "Switch3")!
         wallSwitch[.switch4] = loadTexture(name: "Switch4")!
         healingPotionTexture = loadTexture(name: "HealingPotion")!
+        fireBlast[.fireBlastPickup] = loadTexture(name: "FireBlastPickup")!
         fireBlast[.fireBlastIdle] = loadTexture(name: "FireBlastIdle")!
         fireBlast[.fireBlastFire1] = loadTexture(name: "FireBlastFire1")!
         fireBlast[.fireBlastFire2] = loadTexture(name: "FireBlastFire2")!
@@ -392,6 +393,8 @@ public class Renderer: NSObject {
                 return 18
             case .healingPotion:
                 return 19
+            case .fireBlastPickup:
+                return 20
             default:
                 return 0
             }
@@ -447,6 +450,7 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(wallTexture!, index: 17)
         encoder.setFragmentTexture(slimeWallTexture!, index: 18)
         encoder.setFragmentTexture(healingPotionTexture!, index: 19)
+        encoder.setFragmentTexture(fireBlast[.fireBlastPickup]!, index: 20)
         encoder.drawIndexedPrimitives(
             type: primitiveType,
             indexCount: index.count,

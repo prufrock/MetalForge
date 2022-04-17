@@ -12,4 +12,5 @@ public enum Thing: Int, Decodable {
     case pushWall         // 4
     case `switch`         // 5
     case healingPotion    // 6
+    case fireBlast        // 7
 }

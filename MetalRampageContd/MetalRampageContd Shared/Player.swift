@@ -17,7 +17,7 @@ public struct Player: Actor {
 
     // player animation
     public var state: PlayerState = .idle
-    private(set) var weapon: Weapon = .fireBlast
+    private(set) var weapon: Weapon = .wand
     var animation: Animation
 
     public init(position: Float2, soundChannel: Int) {

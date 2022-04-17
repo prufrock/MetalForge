@@ -170,6 +170,10 @@ extension World {
                     player.health += 25
                     playSound(.medkit, at: pickup.position)
                     effects.append(Effect(type: .fadeIn, color: ColorA(.green), duration: 0.5))
+                case .fireBlast:
+                    player.setWeapon(.fireBlast)
+                    playSound(.fireBlastPickup, at: pickup.position)
+                    effects.append(Effect(type: .fadeIn, color: ColorA(.white), duration: 0.5))
                 }
             }
         }
@@ -364,6 +368,8 @@ extension World {
                     switches.append(Switch(position: position))
                 case .healingPotion:
                     pickups.append(Pickup(type: .healingPotion, position: position))
+                case .fireBlast:
+                    pickups.append(Pickup(type: .fireBlast, position: position))
                 }
             }
         }
