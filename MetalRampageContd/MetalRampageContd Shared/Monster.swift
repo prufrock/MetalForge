@@ -27,20 +27,15 @@ public struct Monster: Actor {
                 world.playSound(.monsterGroan, at: position)
             }
         case .chasing:
-            guard canSeePlayer(in: world)  else {
-                state = .idle
-                animation = .monsterIdle
-                // change velocity when changing state
-                velocity = Float2(x: 0, y: 0)
-                world.playSound(.monsterGroan, at: position)
-                break
-            }
-            if canReachPlayer(in: world) {
-                state = .scratching
-                animation = .monsterScratch
-                lastAttackTime = -attackCooldown
-                // change velocity when changing state
-                velocity = Float2(x: 0, y: 0)
+            // only scratch at the player if you can see them
+            if canSeePlayer(in: world) {
+                if canReachPlayer(in: world) {
+                    state = .scratching
+                    animation = .monsterScratch
+                    lastAttackTime = -attackCooldown
+                    // change velocity when changing state
+                    velocity = Float2(x: 0, y: 0)
+                }
             }
             let direction = world.player.position - position
             velocity = direction * (speed / direction.length)

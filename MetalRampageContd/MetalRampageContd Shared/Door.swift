@@ -39,7 +39,9 @@ extension Door {
     var rect: Rect {
         // open the door along the axis by the offset for collision handling
         let position = self.position + direction * (offset - 0.5)
-        return Rect(min: position, max: position + direction)
+        // make the collision rectangle a little thicker(0.2 units thick)
+        let depth = direction.orthogonal * 0.1
+        return Rect(min: position + depth, max: position + direction - depth)
     }
 
     // The amount the door should be open, also animates opening and closing depending on state
@@ -79,7 +81,12 @@ extension Door {
         switch state {
         case .closed:
             // open the door if the player touches it
-            if world.player.intersection(with: self) != nil {
+            // or if a living monster touches it
+            if world.player.intersection(with: self) != nil  ||
+                   world.monsters.contains(where: { monster in
+                       monster.isDead == false &&
+                           monster.intersection(with: self) != nil
+                   }) {
                 print("transition to open")
                 state = .opening
                 time = 0
