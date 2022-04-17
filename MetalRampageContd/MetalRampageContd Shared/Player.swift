@@ -17,8 +17,11 @@ public struct Player: Actor {
 
     // player animation
     public var state: PlayerState = .idle
-    private(set) var weapon: Weapon = .wand
     var animation: Animation
+
+    // weapon/spell related
+    private(set) var weapon: Weapon = .wand
+    private(set) var charges: Float
 
     public init(position: Float2, soundChannel: Int) {
         self.position = position
@@ -28,6 +31,7 @@ public struct Player: Actor {
         self.health = 100
         self.soundChannel = soundChannel
         self.animation = weapon.attributes.idleAnimation
+        self.charges = weapon.attributes.defaultCharges
     }
 }
 
@@ -47,6 +51,11 @@ public extension Player {
     }
 
     var canFire: Bool {
+        // can't cast if there aren't any charges
+        guard charges > 0 else {
+            return false
+        }
+
         switch state {
         // can fire when idle
         case .idle:
@@ -62,12 +71,14 @@ public extension Player {
     internal mutating func setWeapon(_ weapon: Weapon) {
         self.weapon = weapon
         self.animation = weapon.attributes.idleAnimation
+        self.charges = weapon.attributes.defaultCharges
     }
 
     // Used to pass properties to new player instances between levels
     internal mutating func inherit(from player: Player) {
         health = player.health
         setWeapon(player.weapon)
+        charges = player.charges
     }
 
     /**
@@ -87,6 +98,8 @@ public extension Player {
         // you can keep firing as long as you *canFire*
         if input.isFiring, canFire {
             state = .firing
+            // take away a charge after firing
+            charges -= 1
             animation = weapon.attributes.fireAnimation
             // make the sound at the player's position
             world.playSound(weapon.attributes.fireSound, at: position)
@@ -127,7 +140,10 @@ public extension Player {
 
         switch state {
         case .idle:
-            break
+            // when out of charges switch to default spell
+            if charges == 0 {
+                setWeapon(.wand)
+            }
         case .firing:
             // you are no longer firing when the firing animation finishes
             if animation.isCompleted {

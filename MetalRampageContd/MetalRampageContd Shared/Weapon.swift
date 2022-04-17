@@ -18,6 +18,8 @@ extension Weapon {
         let projectiles: Int
         // the length of the arc the projects are spread over
         let spread: Float
+        // the amount of charges the spell starts with
+        let defaultCharges: Float
     }
 
     var attributes: Attributes {
@@ -30,7 +32,8 @@ extension Weapon {
                 damage: 10,
                 coolDown: 0.25,
                 projectiles: 1,
-                spread: 0
+                spread: 0,
+                defaultCharges: .infinity
             )
         case .fireBlast:
             return Attributes(
@@ -40,7 +43,8 @@ extension Weapon {
                 damage: 50,
                 coolDown: 0.5,
                 projectiles: 5,
-                spread: 0.4
+                spread: 0.4,
+                defaultCharges: 5
             )
         }
     }
