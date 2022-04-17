@@ -102,14 +102,25 @@ extension Monster {
     var isDead: Bool { health <= 0 }
 
     func canSeePlayer(in world: World) -> Bool {
-        let direction = world.player.position - position
+        // figure out the normalized direction to the player
+        var direction = world.player.position - position
         let playerDistance = direction.length
-        let ray = Ray(origin: position, direction: direction / playerDistance)
+        direction /= playerDistance
 
-        // Is it a wall or a player?
-        let wallHit = world.hitTest(ray)
-        let wallDistance = (wallHit - position).length
-        return wallDistance > playerDistance
+        let orthogonal = direction.orthogonal
+
+        // fire two rays from the monster separated by 0.2 units from the monster's center
+        // should mean that if you see the monster's eyes it sees you
+        for offset in [-0.2, 0.2] {
+            let origin = position + orthogonal * Float(offset)
+            let ray = Ray(origin: origin, direction: direction)
+            let wallHit = world.hitTest(ray)
+            let wallDistance = (wallHit - position).length
+            if wallDistance > playerDistance {
+                return true
+            }
+        }
+        return false
     }
 
     func canReachPlayer(in world: World) -> Bool {
