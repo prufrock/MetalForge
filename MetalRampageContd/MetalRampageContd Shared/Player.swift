@@ -64,6 +64,12 @@ public extension Player {
         self.animation = weapon.attributes.idleAnimation
     }
 
+    // Used to pass properties to new player instances between levels
+    internal mutating func inherit(from player: Player) {
+        health = player.health
+        setWeapon(player.weapon)
+    }
+
     /**
      Updates the player's state and direction via *input* and allows them to act on the *world*.
      - Parameters:

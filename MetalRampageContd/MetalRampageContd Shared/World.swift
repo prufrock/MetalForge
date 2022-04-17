@@ -293,9 +293,15 @@ extension World {
      - Parameter map: The Tilemap to load representing the next level.
      */
     mutating func setLevel(_ map: Tilemap) {
+        // still in the old world
         let effects = self.effects
+        let player = self.player!
+
+        // replace with the new world
         self = World(map: map)
+        // use the local scope properties from the old world
         self.effects = effects
+        self.player.inherit(from: player)
     }
 
     mutating func reset() {
