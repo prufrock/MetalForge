@@ -461,6 +461,22 @@ a       - y: Int
     }
 
     /**
+     Returns the door at a given position.
+     - Parameters:
+       - x: the x coordinate
+       - y: the y coordinate
+     - Returns: Returns the door if it exists at the x, y.
+     */
+    func door(at x: Int, _ y: Int) -> Door? {
+        guard isDoor(at: x, y) else {
+            return nil
+        }
+        return doors.first(where: {
+            Int($0.position.x) == x && Int($0.position.y) == y
+        })
+    }
+
+    /**
      Check to see if the thing at x,y is a PushWall
      - Parameters:
        - x: the x coordinate
@@ -538,10 +554,11 @@ extension World: Graph {
         }
     }
 
-    func findPath(from start: Float2, to end: Float2) -> [Float2] {
-        return findPath(
+    func findPath(from start: Float2, to end: Float2, maxDistance: Float = 50) -> [Float2] {
+        findPath(
             from: Node(x: start.x, y: start.y),
-            to: Node(x: end.x, y: end.y)
+            to: Node(x: end.x, y: end.y),
+            maxDistance: maxDistance
         ).map { node in
             Float2(x: node.x, y: node.y)
         }
@@ -566,7 +583,12 @@ extension World: Graph {
     }
 
     func stepDistance(from a: Node, to b: Node) -> Float {
+        let x = Int(b.x), y = Int(b.y)
+        if door(at: x, y)?.state == .closed {
+            return 5
+        }
+
         // uniform square tiles always 1 apart
-        1
+        return 1
     }
 }

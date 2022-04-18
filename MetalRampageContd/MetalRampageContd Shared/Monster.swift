@@ -23,14 +23,14 @@ public struct Monster: Actor {
     mutating func update(in world: inout World) {
         switch state {
         case .idle:
-            if canSeePlayer(in: world) {
+            if canSeePlayer(in: world) || canHearPlayer(in: world) {
                 state = .chasing
                 animation = .monsterWalk
                 world.playSound(.monsterGroan, at: position)
             }
         case .chasing:
             // only scratch at the player if you can see them
-            if canSeePlayer(in: world) {
+            if canSeePlayer(in: world) || canHearPlayer(in: world) {
                 // store the player's position for later chasing
                 path = world.findPath(from: position, to: world.player.position)
                 if canReachPlayer(in: world) {
@@ -134,6 +134,20 @@ extension Monster {
             }
         }
         return false
+    }
+
+    func canHearPlayer(in world: World) -> Bool {
+        // no need to check if the player isn't firing
+        guard world.player.state == .firing else {
+            return false
+        }
+        // make sure there are paths to the player
+        // with in earshot
+        return world.findPath(
+            from: position,
+            to: world.player.position,
+            maxDistance: 12
+        ).isEmpty == false
     }
 
     func canReachPlayer(in world: World) -> Bool {

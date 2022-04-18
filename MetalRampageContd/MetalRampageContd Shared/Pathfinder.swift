@@ -68,7 +68,7 @@ private class Path<Node> {
 }
 
 extension Graph {
-    func findPath(from start: Node, to end: Node) -> [Node] {
+    func findPath(from start: Node, to end: Node, maxDistance: Float) -> [Node] {
         var visited = Set([start])
         var paths = [Path(
             head: start,
@@ -92,6 +92,10 @@ extension Graph {
                     stepDistance: stepDistance(from: path.head, to: node),
                     remaining: estimatedDistance(from: node, to: end)
                 )
+                // go on to the next if the distance is greater than the max distance
+                if next.totalDistance > maxDistance {
+                    break
+                }
                 // put the shortest path last
                 // keeping the list organized by distance
                 if let index = paths.firstIndex(where: {
