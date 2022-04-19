@@ -36,6 +36,7 @@ public class Renderer: NSObject {
     var wallSwitch: [Texture:MTLTexture?] = [:]
     var healingPotionTexture: MTLTexture!
     var fireBlast: [Texture:MTLTexture?] = [:]
+    var hud: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -178,6 +179,7 @@ public class Renderer: NSObject {
         fireBlast[.fireBlastFire2] = loadTexture(name: "FireBlastFire2")!
         fireBlast[.fireBlastFire3] = loadTexture(name: "FireBlastFire3")!
         fireBlast[.fireBlastFire4] = loadTexture(name: "FireBlastFire4")!
+        hud[.crosshair] = loadTexture(name: "Crosshairs")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -237,6 +239,8 @@ public class Renderer: NSObject {
         if world.showMap {
             drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
         }
+
+        drawHud(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
 
         drawWeapon(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
 
@@ -619,6 +623,66 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(fireBlast[.fireBlastFire2]!, index: 7)
         encoder.setFragmentTexture(fireBlast[.fireBlastFire3]!, index: 8)
         encoder.setFragmentTexture(fireBlast[.fireBlastFire4]!, index: 9)
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+    }
+
+    private func drawHud(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+        let vertices = [
+            Float3(0.0, 0.0, 0.0),
+            Float3(0.0, 1.0, 0.0),
+            Float3(1.0, 1.0, 0.0),
+
+            Float3(1.0, 1.0, 0.0),
+            Float3(1.0, 0.0, 0.0),
+            Float3(0.0, 0.0, 0.0),
+        ]
+
+        let  uvCoords = [
+            Float2(0.0, 1.0),
+            Float2(0.0 ,0.0),
+            Float2(1.0, 0.0),
+            Float2(1.0, 0.0),
+            Float2(1.0, 1.0),
+            Float2(0.0, 1.0),
+        ]
+
+        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
+
+        let chosenTexture: Texture = .crosshair
+
+        // select the texture
+        var textureId: UInt32
+        switch chosenTexture {
+        case .crosshair:
+            textureId = 1
+        default:
+            textureId = 0
+        }
+
+        var pixelSize = 1
+
+        var finalTransform = camera
+            // crosshair transform
+            * Float4x4.translate(x: -0.15, y: -0.15, z: 0.1)
+            * Float4x4.scale(x: 0.25, y: 0.25, z: 0.0)
+
+        encoder.setRenderPipelineState(texturePipeline)
+        encoder.setDepthStencilState(depthStencilState)
+        encoder.setCullMode(.back)
+        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
+        encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
+        encoder.setVertexBytes(&textureId, length: MemoryLayout<Float>.stride, index: 5)
+
+        let color = Color.red
+        var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
+
+        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+        encoder.setFragmentTexture(colorMapTexture!, index: 0)
+        encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 
