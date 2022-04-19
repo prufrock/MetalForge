@@ -627,14 +627,16 @@ public class Renderer: NSObject {
     }
 
     private func drawHud(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+        // TODO put this somewhere shareable
+        // a centered square
         let vertices = [
-            Float3(0.0, 0.0, 0.0),
-            Float3(0.0, 1.0, 0.0),
-            Float3(1.0, 1.0, 0.0),
+            Float3(-0.5, -0.5, -0.5),
+            Float3(-0.5, 0.5, -0.5),
+            Float3(0.5, 0.5, -0.5),
 
-            Float3(1.0, 1.0, 0.0),
-            Float3(1.0, 0.0, 0.0),
-            Float3(0.0, 0.0, 0.0),
+            Float3(0.5, 0.5, -0.5),
+            Float3(0.5, -0.5, -0.5),
+            Float3(-0.5, -0.5, -0.5),
         ]
 
         let  uvCoords = [
@@ -664,7 +666,6 @@ public class Renderer: NSObject {
 
         var finalTransform = camera
             // crosshair transform
-            * Float4x4.translate(x: -0.15, y: -0.15, z: 0.1)
             * Float4x4.scale(x: 0.25, y: 0.25, z: 0.0)
 
         encoder.setRenderPipelineState(texturePipeline)
