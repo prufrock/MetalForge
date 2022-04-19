@@ -20,4 +20,5 @@ public enum Texture {
     case fireBlastFire1, fireBlastFire2,  fireBlastFire3, fireBlastFire4
     case fireBlastPickup
     case crosshair
+    case fullHeart
 }

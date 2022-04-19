@@ -629,6 +629,7 @@ public class Renderer: NSObject {
 
     private func drawHud(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         // TODO put this somewhere shareable
+        // TODO reduce to 4 vertices when indexed
         // a centered square
         let vertices = [
             Float3(-0.5, -0.5, -0.5),
@@ -659,44 +660,67 @@ public class Renderer: NSObject {
             position: Int2(0, 0)
         ), .crosshair)
 
+        let heart1: (RNDRObject, Texture) = (RNDRObject(
+            vertices: vertices,
+            uv: uvCoords,
+            transform: Float4x4.translate(x: -1.2, y: -0.87, z: 0.0) * Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
+            color: .red,
+            primitiveType: .triangle,
+            position: Int2(0, 0)
+        ), .fullHeart)
+
         var renderables: [(RNDRObject, Texture)] = []
         renderables.append(crossHairs)
+        renderables.append(heart1)
 
-        renderables.forEach { object, texture in
-            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-            let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
-
-            // select the texture
-            var textureId: UInt32
+        let indexedObjTransform = renderables.map { (object, _) -> Float4x4 in object.transform }
+        let indexedTextureId: [UInt32] = renderables.map { (_, texture) -> UInt32 in
             switch texture {
             case .crosshair:
-                textureId = 1
+                return 1
             default:
-                textureId = 0
+                return 0
             }
-
-            var pixelSize = 1
-
-            var finalTransform = camera * object.transform
-
-            encoder.setRenderPipelineState(texturePipeline)
-            encoder.setDepthStencilState(depthStencilState)
-            encoder.setCullMode(.back)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
-            encoder.setVertexBytes(&textureId, length: MemoryLayout<Float>.stride, index: 5)
-
-            let color = Color.red
-            var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
-
-            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.setFragmentTexture(colorMapTexture!, index: 0)
-            encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
-            encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
         }
+        let index: [UInt16] = [0, 1, 2, 3, 4, 5]
+
+        let color = renderables[0].0.color
+        let primitiveType = renderables[0].0.primitiveType
+
+        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
+        let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])
+
+        var pixelSize = 1
+
+        var finalTransform = camera * worldTransform
+
+        encoder.setRenderPipelineState(textureIndexedPipeline)
+        encoder.setDepthStencilState(depthStencilState)
+        // Setting this to none for now until I can figure out how to make doors draw on both sides.
+        encoder.setCullMode(.none)
+        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
+        encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
+        encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
+        encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt32>.stride * indexedTextureId.count, index: 5)
+
+        var fragmentColor = Float3(color)
+
+        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+        encoder.setFragmentTexture(colorMapTexture!, index: 0)
+        encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
+
+        encoder.drawIndexedPrimitives(
+            type: primitiveType,
+            indexCount: index.count,
+            indexType: .uint16,
+            indexBuffer: indexBuffer,
+            indexBufferOffset: 0,
+            instanceCount: renderables.count
+        )
     }
 
 
