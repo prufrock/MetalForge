@@ -320,6 +320,7 @@ public class Renderer: NSObject {
     }
 
     func drawIndexedSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+        // TODO RNDRObject?
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Texture)] = []
 
         renderables += world.sprites.map { billboard in
@@ -648,43 +649,54 @@ public class Renderer: NSObject {
             Float2(0.0, 1.0),
         ]
 
-        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-        let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
+        // TODO: Add Texture to RNDRObject?
+        let crossHairs: (RNDRObject, Texture) = (RNDRObject(
+            vertices: vertices,
+            uv: uvCoords,
+            transform: Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
+            color: .red,
+            primitiveType: .triangle,
+            position: Int2(0, 0)
+        ), .crosshair)
 
-        let chosenTexture: Texture = .crosshair
+        var renderables: [(RNDRObject, Texture)] = []
+        renderables.append(crossHairs)
 
-        // select the texture
-        var textureId: UInt32
-        switch chosenTexture {
-        case .crosshair:
-            textureId = 1
-        default:
-            textureId = 0
+        renderables.forEach { object, texture in
+            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+            let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
+
+            // select the texture
+            var textureId: UInt32
+            switch texture {
+            case .crosshair:
+                textureId = 1
+            default:
+                textureId = 0
+            }
+
+            var pixelSize = 1
+
+            var finalTransform = camera * object.transform
+
+            encoder.setRenderPipelineState(texturePipeline)
+            encoder.setDepthStencilState(depthStencilState)
+            encoder.setCullMode(.back)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
+            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
+            encoder.setVertexBytes(&textureId, length: MemoryLayout<Float>.stride, index: 5)
+
+            let color = Color.red
+            var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
+
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentTexture(colorMapTexture!, index: 0)
+            encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
+            encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
         }
-
-        var pixelSize = 1
-
-        var finalTransform = camera
-            // crosshair transform
-            * Float4x4.scale(x: 0.25, y: 0.25, z: 0.0)
-
-        encoder.setRenderPipelineState(texturePipeline)
-        encoder.setDepthStencilState(depthStencilState)
-        encoder.setCullMode(.back)
-        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
-        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
-        encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
-        encoder.setVertexBytes(&textureId, length: MemoryLayout<Float>.stride, index: 5)
-
-        let color = Color.red
-        var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
-
-        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        encoder.setFragmentTexture(colorMapTexture!, index: 0)
-        encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
-        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 
 
