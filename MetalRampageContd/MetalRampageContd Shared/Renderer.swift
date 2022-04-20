@@ -660,10 +660,41 @@ public class Renderer: NSObject {
             position: Int2(0, 0)
         ), .crosshair)
 
+        let heartSpace: Float = 0.11
+        // the hudCamera adjusts x by the aspect ratio so the x needs to be adjusted by the aspect here as well.
+        let heartStart: Float2 = Float2(aspect * -0.95, -0.95)
+
         let heart1: (RNDRObject, Texture) = (RNDRObject(
             vertices: vertices,
             uv: uvCoords,
-            transform: Float4x4.translate(x: -1.2, y: -0.87, z: 0.0) * Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
+            transform: Float4x4.translate(x: heartStart.x + heartSpace * 0, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+            color: .red,
+            primitiveType: .triangle,
+            position: Int2(0, 0)
+        ), .fullHeart)
+
+        let heart2: (RNDRObject, Texture) = (RNDRObject(
+            vertices: vertices,
+            uv: uvCoords,
+            transform: Float4x4.translate(x: heartStart.x + heartSpace * 1, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+            color: .red,
+            primitiveType: .triangle,
+            position: Int2(0, 0)
+        ), .fullHeart)
+
+        let heart3: (RNDRObject, Texture) = (RNDRObject(
+            vertices: vertices,
+            uv: uvCoords,
+            transform: Float4x4.translate(x: heartStart.x + heartSpace * 2, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+            color: .red,
+            primitiveType: .triangle,
+            position: Int2(0, 0)
+        ), .fullHeart)
+
+        let heart4: (RNDRObject, Texture) = (RNDRObject(
+            vertices: vertices,
+            uv: uvCoords,
+            transform: Float4x4.translate(x: heartStart.x + heartSpace * 3, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: .red,
             primitiveType: .triangle,
             position: Int2(0, 0)
@@ -671,7 +702,19 @@ public class Renderer: NSObject {
 
         var renderables: [(RNDRObject, Texture)] = []
         renderables.append(crossHairs)
-        renderables.append(heart1)
+        let health = world.player.health
+        if health > 0 {
+            renderables.append(heart1)
+        }
+        if health > 25 {
+            renderables.append(heart2)
+        }
+        if health > 50 {
+            renderables.append(heart3)
+        }
+        if health > 75 {
+            renderables.append(heart4)
+        }
 
         let indexedObjTransform = renderables.map { (object, _) -> Float4x4 in object.transform }
         let indexedTextureId: [UInt32] = renderables.map { (_, texture) -> UInt32 in
