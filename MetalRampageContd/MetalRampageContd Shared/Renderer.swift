@@ -180,6 +180,7 @@ public class Renderer: NSObject {
         fireBlast[.fireBlastFire3] = loadTexture(name: "FireBlastFire3")!
         fireBlast[.fireBlastFire4] = loadTexture(name: "FireBlastFire4")!
         hud[.crosshair] = loadTexture(name: "Crosshairs")!
+        hud[.healthIcon] = loadTexture(name: "HealthIcon")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -642,12 +643,12 @@ public class Renderer: NSObject {
         ]
 
         let  uvCoords = [
-            Float2(0.0, 1.0),
-            Float2(0.0 ,0.0),
-            Float2(1.0, 0.0),
             Float2(1.0, 0.0),
             Float2(1.0, 1.0),
             Float2(0.0, 1.0),
+            Float2(0.0, 1.0),
+            Float2(0.0 ,0.0),
+            Float2(1.0, 0.0),
         ]
 
         // TODO: Add Texture to RNDRObject?
@@ -671,7 +672,7 @@ public class Renderer: NSObject {
             color: .red,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), .fullHeart)
+        ), .healthIcon)
 
         let heart2: (RNDRObject, Texture) = (RNDRObject(
             vertices: vertices,
@@ -680,7 +681,7 @@ public class Renderer: NSObject {
             color: .red,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), .fullHeart)
+        ), .healthIcon)
 
         let heart3: (RNDRObject, Texture) = (RNDRObject(
             vertices: vertices,
@@ -689,7 +690,7 @@ public class Renderer: NSObject {
             color: .red,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), .fullHeart)
+        ), .healthIcon)
 
         let heart4: (RNDRObject, Texture) = (RNDRObject(
             vertices: vertices,
@@ -698,7 +699,7 @@ public class Renderer: NSObject {
             color: .red,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), .fullHeart)
+        ), .healthIcon)
 
         var renderables: [(RNDRObject, Texture)] = []
         renderables.append(crossHairs)
@@ -721,6 +722,8 @@ public class Renderer: NSObject {
             switch texture {
             case .crosshair:
                 return 1
+            case .healthIcon:
+                return 2
             default:
                 return 0
             }
@@ -755,6 +758,7 @@ public class Renderer: NSObject {
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
         encoder.setFragmentTexture(colorMapTexture!, index: 0)
         encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
+        encoder.setFragmentTexture(hud[.healthIcon]!, index: 2)
 
         encoder.drawIndexedPrimitives(
             type: primitiveType,
