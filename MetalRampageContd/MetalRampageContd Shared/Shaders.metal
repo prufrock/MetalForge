@@ -69,7 +69,7 @@ vertex VertexOut vertex_with_texcoords(Vertex in [[stage_in]],
                              ) {
     VertexOut vertex_out {
         .position = matrix * float4(in.position, 1),
-        .texcoord = float2(in.texcoord.x, in.texcoord.y), // I'm pretty sure the problem has something to do with texcoords not being passed to vertex_main correctly
+        .texcoord = float2(in.texcoord.x, in.texcoord.y),
         .point_size = point_size,
         .textureId = textureId
     };

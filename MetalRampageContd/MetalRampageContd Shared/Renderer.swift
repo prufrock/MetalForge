@@ -645,12 +645,12 @@ public class Renderer: NSObject {
 
         let uvX: Float = 0.0
         let  uvCoords = [
-            Float2(0.1 + uvX, 0.0),
-            Float2(0.1 + uvX, 1.0),
-            Float2(0.0 + uvX, 1.0),
             Float2(0.0 + uvX, 1.0),
             Float2(0.0 + uvX,0.0),
             Float2(0.1 + uvX, 0.0),
+            Float2(0.1 + uvX, 0.0),
+            Float2(0.1 + uvX, 1.0),
+            Float2(0.0 + uvX, 1.0),
         ]
                 //.map { ($0.toFloat3() * Float3x3.translate(x: -0.9, y: 0) * Float3x3.scale(x: 1.0, y: 1.0)).toFloat2() }
 
@@ -666,7 +666,7 @@ public class Renderer: NSObject {
 
         let heartSpace: Float = 0.11
         // the hudCamera adjusts x by the aspect ratio so the x needs to be adjusted by the aspect here as well.
-        let heartStart: Float2 = Float2(aspect * -0.95, -0.95)
+        let heartStart: Float2 = Float2(aspect * -0.95, 0.95)
 
         let heart1: (RNDRObject, Texture) = (RNDRObject(
             vertices: vertices,
@@ -744,7 +744,7 @@ public class Renderer: NSObject {
 
         var pixelSize = 1
 
-        var finalTransform = camera * worldTransform
+        var finalTransform = camera
 
         encoder.setRenderPipelineState(textureIndexedPipeline)
         encoder.setDepthStencilState(depthStencilState)
