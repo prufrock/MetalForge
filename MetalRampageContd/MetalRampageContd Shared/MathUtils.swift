@@ -7,10 +7,11 @@ import simd
 typealias Int2 = SIMD2<Int>
 
 public typealias Float2 = SIMD2<Float>
-typealias Float3 = SIMD3<Float>
+public typealias Float3 = SIMD3<Float>
 typealias Float4 = SIMD4<Float>
 
 public typealias Float2x2 = simd_float2x2
+public typealias Float3x3 = simd_float3x3
 public typealias Float4x4 = simd_float4x4
 
 public extension Float4x4 {
@@ -122,6 +123,34 @@ public extension Float4x4 {
     }
 }
 
+public extension Float3 {
+    func toFloat2() -> Float2 {
+        Float2(x: x, y: y)
+    }
+}
+
+public extension Float3x3 {
+    static func scale(x: Float, y: Float, z: Float = 1.0) -> Self {
+        Self(
+            [x, 0, 0],
+            [0, y, 0],
+            [0, 0, z]
+        )
+    }
+
+    func scaledBy(x: Float, y: Float, z: Float) -> Self {
+        self * Self.scale(x: x, y: y, z: z)
+    }
+
+    static func translate(x: Float, y: Float, z: Float = 1.0) -> Self {
+        Self(
+            [1, 0, 0],
+            [0, 1, 0],
+            [x, y, z]
+        )
+    }
+}
+
 public extension Float2x2 {
     static func rotate(_ angle: Float) -> Self {
         Self(
@@ -135,6 +164,17 @@ public extension Float2x2 {
             [ cosine, sine],
             [-sine, cosine]
         )
+    }
+
+    static func scale(x: Float, y: Float) -> Self {
+        Self(
+            [x, 0],
+            [0, y]
+        )
+    }
+
+    func scaledBy(x: Float, y: Float) -> Self {
+        self * Self.scale(x: x, y: y)
     }
 }
 

@@ -21,4 +21,5 @@ public enum Texture {
     case fireBlastPickup
     case crosshair
     case healthIcon
+    case font
 }
