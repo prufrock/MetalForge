@@ -61,6 +61,34 @@ vertex VertexOut vertex_indexed(Vertex in [[stage_in]],
     return vertex_out;
 }
 
+vertex VertexOut vertex_indexed_sprite_sheet(Vertex in [[stage_in]],
+                             constant matrix_float4x4 &matrix [[buffer(2)]],
+                             constant float &point_size [[buffer(3)]],
+                             constant matrix_float4x4 *indexedModelMatrix [[buffer(4)]],
+                             constant uint *textureId [[buffer(5)]],
+                             uint vid [[vertex_id]],
+                             uint iid [[instance_id]]
+                             ) {
+
+    uint txIndex = 0;
+    float txOffsetX = 0.1;
+    float txX = in.texcoord.x;
+    if (txX == 1.0) {
+        txX = txOffsetX + txOffsetX * txIndex;
+    } else if (txX == 0.0) {
+        txX = txOffsetX * txIndex;
+    }
+
+    VertexOut vertex_out {
+        .position = matrix * indexedModelMatrix[iid] * float4(in.position, 1),
+        .texcoord = float2(txX, in.texcoord.y),
+        .point_size = point_size,
+        .textureId = textureId[iid]
+    };
+
+    return vertex_out;
+}
+
 vertex VertexOut vertex_with_texcoords(Vertex in [[stage_in]],
                              constant matrix_float4x4 &matrix [[buffer(3)]],
                              constant float &point_size [[buffer(4)]],
@@ -99,9 +127,7 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
                               texture2d<half> texture18 [[ texture(18) ]],
                               texture2d<half> texture19 [[ texture(19) ]],
                               texture2d<half> texture20 [[ texture(20) ]],
-                              constant float4 &color [[buffer(0)]],
-                              constant SpriteSheet &fontSheet [[buffer(1)]]
-                              ) {
+                              constant float4 &color [[buffer(0)]]                              ) {
     constexpr sampler colorSampler(coord::normalized, address::repeat, filter::nearest);
 
     half4 colorSample;

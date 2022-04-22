@@ -11,6 +11,7 @@ public class Renderer: NSObject {
     let commandQueue: MTLCommandQueue
     let texturePipeline: MTLRenderPipelineState
     let textureIndexedPipeline: MTLRenderPipelineState
+    let textureIndexedSpriteSheetPipeline: MTLRenderPipelineState
     let vertexPipeline: MTLRenderPipelineState
     let effectPipeline: MTLRenderPipelineState
     let depthStencilState: MTLDepthStencilState
@@ -108,6 +109,23 @@ public class Renderer: NSObject {
 
         textureIndexedPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
             $0.vertexFunction = library.makeFunction(name: "vertex_indexed")
+            $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
+            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
+            $0.depthAttachmentPixelFormat = .depth32Float
+            $0.vertexDescriptor = MTLVertexDescriptor().apply {
+                $0.attributes[0].format = MTLVertexFormat.float3
+                $0.attributes[0].bufferIndex = 0
+                $0.attributes[0].offset = 0
+                $0.attributes[1].format = MTLVertexFormat.float2
+                $0.attributes[1].bufferIndex = 1
+                $0.attributes[1].offset = 0
+                $0.layouts[0].stride = MemoryLayout<Float3>.stride
+                $0.layouts[1].stride = MemoryLayout<Float2>.stride
+            }
+        })
+
+        textureIndexedSpriteSheetPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+            $0.vertexFunction = library.makeFunction(name: "vertex_indexed_sprite_sheet")
             $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
             $0.colorAttachments[0].pixelFormat = .bgra8Unorm
             $0.depthAttachmentPixelFormat = .depth32Float
@@ -645,12 +663,12 @@ public class Renderer: NSObject {
 
         let uvX: Float = 0.0
         let  uvCoords = [
-            Float2(0.0 + uvX, 1.0),
-            Float2(0.0 + uvX,0.0),
-            Float2(0.1 + uvX, 0.0),
-            Float2(0.1 + uvX, 0.0),
-            Float2(0.1 + uvX, 1.0),
-            Float2(0.0 + uvX, 1.0),
+            Float2(0.0, 1.0),
+            Float2(0.0 ,0.0),
+            Float2(1.0, 0.0),
+            Float2(1.0, 0.0),
+            Float2(1.0, 1.0),
+            Float2(0.0 , 1.0),
         ]
                 //.map { ($0.toFloat3() * Float3x3.translate(x: -0.9, y: 0) * Float3x3.scale(x: 1.0, y: 1.0)).toFloat2() }
 
@@ -705,6 +723,7 @@ public class Renderer: NSObject {
         ), .font)
 
         var fontSpriteSheet = SpriteSheet(textureWidth: 40, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
+        var fontSpriteIndex: UInt32 = 0
 
         var renderables: [(RNDRObject, Texture)] = []
         renderables.append(crossHairs)
@@ -748,7 +767,7 @@ public class Renderer: NSObject {
 
         var finalTransform = camera
 
-        encoder.setRenderPipelineState(textureIndexedPipeline)
+        encoder.setRenderPipelineState(textureIndexedSpriteSheetPipeline)
         encoder.setDepthStencilState(depthStencilState)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
@@ -764,6 +783,7 @@ public class Renderer: NSObject {
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
         encoder.setFragmentBytes(&fontSpriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 1)
+        encoder.setFragmentBytes(&fontSpriteIndex, length: MemoryLayout<UInt32>.stride, index: 2)
         encoder.setFragmentTexture(colorMapTexture!, index: 0)
         encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
         encoder.setFragmentTexture(hud[.healthIcon]!, index: 2)
