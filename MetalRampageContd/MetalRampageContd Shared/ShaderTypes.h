@@ -44,5 +44,13 @@ typedef struct
     matrix_float4x4 modelViewMatrix;
 } Uniforms;
 
+typedef struct
+{
+    uint textureWidth;
+    uint textureHeight;
+    uint spriteWidth;
+    uint spriteHeight;
+} SpriteSheet;
+
 #endif /* ShaderTypes_h */
 

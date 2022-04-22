@@ -8,7 +8,7 @@
 #include <metal_stdlib>
 #include <simd/simd.h>
 // Including header shared between this Metal shader code and Swift/C code executing Metal API commands
-//#import "ShaderTypes.h"
+#import "ShaderTypes.h"
 
 using namespace metal;
 
@@ -99,7 +99,8 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
                               texture2d<half> texture18 [[ texture(18) ]],
                               texture2d<half> texture19 [[ texture(19) ]],
                               texture2d<half> texture20 [[ texture(20) ]],
-                              constant float4 &color [[buffer(0)]]
+                              constant float4 &color [[buffer(0)]],
+                              constant SpriteSheet &fontSheet [[buffer(1)]]
                               ) {
     constexpr sampler colorSampler(coord::normalized, address::repeat, filter::nearest);
 

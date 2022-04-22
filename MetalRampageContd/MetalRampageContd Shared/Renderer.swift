@@ -704,6 +704,8 @@ public class Renderer: NSObject {
             position: Int2(0, 0)
         ), .font)
 
+        var fontSpriteSheet = SpriteSheet(textureWidth: 40, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
+
         var renderables: [(RNDRObject, Texture)] = []
         renderables.append(crossHairs)
         let health = world.player.health
@@ -761,6 +763,7 @@ public class Renderer: NSObject {
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+        encoder.setFragmentBytes(&fontSpriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 1)
         encoder.setFragmentTexture(colorMapTexture!, index: 0)
         encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
         encoder.setFragmentTexture(hud[.healthIcon]!, index: 2)

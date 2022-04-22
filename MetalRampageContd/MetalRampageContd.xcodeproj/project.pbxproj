@@ -210,6 +210,7 @@
 		5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		5AF0EF80473FF89C2F69122A /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireBlastPickup.mp3; sourceTree = "<group>"; };
+		63750CDF28124E5D00DC4937 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		63AE0CC2280C922A00B9A613 /* Pathfinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pathfinder.swift; sourceTree = "<group>"; };
 		63B33F212807C08D00734353 /* spellMiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spellMiss.mp3; sourceTree = "<group>"; };
 		63B33F292809AC4600734353 /* MetalRampageContd-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MetalRampageContd-macOS-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -322,44 +323,45 @@
 		63D44B1A27D427CD00D4BE7D /* MetalRampageContd Shared */ = {
 			isa = PBXGroup;
 			children = (
-				63F914762806706F00A91EBF /* Sounds */,
 				63D44B1D27D427CD00D4BE7D /* ShaderTypes.h */,
+				63D44BED27D42CE800D4BE7D /* Levels.json */,
+				63D44BF127D42D0000D4BE7D /* Map16.json */,
 				63D44B1B27D427CD00D4BE7D /* Shaders.metal */,
+				5AF0E6A9347E4C6047BABDF2 /* Actor.swift */,
+				5AF0E66BFFFB0273764BF7B0 /* Animation.swift */,
 				63D44BE527D42B6500D4BE7D /* ArrayExt.swift */,
+				5AF0EF80473FF89C2F69122A /* AudioEngine.swift */,
 				63D44BE127D42B4A00D4BE7D /* Billboard.swift */,
 				63D44BAD27D429DF00D4BE7D /* Color.swift */,
+				5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */,
+				5AF0E2B7A360CC6C2CA22602 /* Easing.swift */,
+				5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */,
 				63D44BB127D429FA00D4BE7D /* Input.swift */,
 				63D44BB527D42A1B00D4BE7D /* MathUtils.swift */,
 				63D44BE927D42B7700D4BE7D /* MetalTileBuffers.swift */,
 				63D44BDD27D42B3300D4BE7D /* Monster.swift */,
+				63AE0CC2280C922A00B9A613 /* Pathfinder.swift */,
+				63B33F30280A3EFC00734353 /* Pickup.swift */,
 				63D44BB927D42A3200D4BE7D /* Player.swift */,
+				5AF0E2567D6CF888EE20D2AC /* PushWall.swift */,
 				63D44BD527D42AE600D4BE7D /* Ray.swift */,
 				63D44BBD27D42A5100D4BE7D /* Rect.swift */,
 				63D44B1C27D427CD00D4BE7D /* Renderer.swift */,
 				63D44BD927D42B0C00D4BE7D /* ScopeFunc.swift */,
+				5AF0E7F0E05A621E275B3C0A /* SoundManager.swift */,
+				5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */,
+				5AF0E3AFA423D30605A1C56D /* Switch.swift */,
+				5AF0E34EF644B0191228B1AB /* Texture.swift */,
 				63D44BC127D42A7C00D4BE7D /* Thing.swift */,
 				63D44BC527D42A9200D4BE7D /* Tile.swift */,
 				63D44BC927D42AA600D4BE7D /* TileImage.swift */,
 				63D44BCD27D42AB900D4BE7D /* Tilemap.swift */,
+				5AF0E62A45CAB2481AE93A5E /* Weapon.swift */,
 				63D44BD127D42AD000D4BE7D /* World.swift */,
 				63D44B1E27D427CF00D4BE7D /* Assets.xcassets */,
-				63D44BED27D42CE800D4BE7D /* Levels.json */,
-				63D44BF127D42D0000D4BE7D /* Map16.json */,
 				5AF0E0798E8831278C37A79A /* Render */,
-				5AF0E6A9347E4C6047BABDF2 /* Actor.swift */,
-				5AF0E34EF644B0191228B1AB /* Texture.swift */,
-				5AF0E66BFFFB0273764BF7B0 /* Animation.swift */,
-				5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */,
-				5AF0E2B7A360CC6C2CA22602 /* Easing.swift */,
-				5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */,
-				5AF0E2567D6CF888EE20D2AC /* PushWall.swift */,
-				5AF0E3AFA423D30605A1C56D /* Switch.swift */,
-				5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */,
-				5AF0E7F0E05A621E275B3C0A /* SoundManager.swift */,
-				5AF0EF80473FF89C2F69122A /* AudioEngine.swift */,
-				63B33F30280A3EFC00734353 /* Pickup.swift */,
-				5AF0E62A45CAB2481AE93A5E /* Weapon.swift */,
-				63AE0CC2280C922A00B9A613 /* Pathfinder.swift */,
+				63F914762806706F00A91EBF /* Sounds */,
+				63750CDF28124E5D00DC4937 /* Common.h */,
 			);
 			path = "MetalRampageContd Shared";
 			sourceTree = "<group>";
@@ -865,6 +867,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "MetalRampageContd Shared/ShaderTypes.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -917,6 +920,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "MetalRampageContd Shared/ShaderTypes.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
