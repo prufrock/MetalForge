@@ -713,7 +713,7 @@ public class Renderer: NSObject {
             position: Int2(0, 0)
         ), .healthIcon)
 
-        let heart4: (RNDRObject, Texture) = (RNDRObject(
+        let health1: (RNDRObject, Texture) = (RNDRObject(
             vertices: vertices,
             uv: uvCoords,
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 3, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.05, y: 0.1, z: 0.0),
@@ -723,23 +723,27 @@ public class Renderer: NSObject {
         ), .font)
 
         var fontSpriteSheet = SpriteSheet(textureWidth: 40, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
-        var fontSpriteIndex: UInt32 = 1
+        //TODO pass a sprite index for instance being rendered
+        //TODO find a way to pass whether a texture uses a sprite sheet
+        var fontSpriteIndex = 0
 
         var renderables: [(RNDRObject, Texture)] = []
         renderables.append(crossHairs)
         let health = world.player.health
         if health > 0 {
-            renderables.append(heart1)
+            fontSpriteIndex = 1
         }
         if health > 25 {
-            renderables.append(heart2)
+            fontSpriteIndex = 2
         }
         if health > 50 {
-            renderables.append(heart3)
+            fontSpriteIndex = 3
         }
         if health > 75 {
-            renderables.append(heart4)
+            fontSpriteIndex = 4
         }
+        renderables.append(heart1)
+        renderables.append(health1)
 
         let indexedObjTransform = renderables.map { (object, _) -> Float4x4 in object.transform }
         let indexedTextureId: [UInt32] = renderables.map { (_, texture) -> UInt32 in

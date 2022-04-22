@@ -72,17 +72,27 @@ vertex VertexOut vertex_indexed_sprite_sheet(Vertex in [[stage_in]],
                              uint iid [[instance_id]]
                              ) {
 
-    float txOffsetX = 0.1;
     float txX = in.texcoord.x;
-    if (txX == 1.0) {
-        txX = txOffsetX + txOffsetX * spriteIndex;
-    } else if (txX == 0.0) {
-        txX = txOffsetX * spriteIndex;
+    float txY = in.texcoord.y;
+    // get it working with the font texture
+    if (textureId[iid] == 3) {
+        float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
+        float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
+        if (txX == 1.0) {
+            txX = txOffsetX + txOffsetX * spriteIndex;
+        } else if (txX == 0.0) {
+            txX = txOffsetX * spriteIndex;
+        }
+        if (txY == 1.0) {
+            txY = txOffsetY + txOffsetY * spriteIndex;
+        } else if (txY == 0.0) {
+            txY = txOffsetY * spriteIndex;
+        }
     }
 
     VertexOut vertex_out {
         .position = matrix * indexedModelMatrix[iid] * float4(in.position, 1),
-        .texcoord = float2(txX, in.texcoord.y),
+        .texcoord = float2(txX, txY),
         .point_size = point_size,
         .textureId = textureId[iid]
     };

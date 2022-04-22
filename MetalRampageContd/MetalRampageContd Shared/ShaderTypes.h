@@ -46,10 +46,10 @@ typedef struct
 
 typedef struct
 {
-    uint textureWidth;
-    uint textureHeight;
-    uint spriteWidth;
-    uint spriteHeight;
+    float textureWidth;
+    float textureHeight;
+    float spriteWidth;
+    float spriteHeight;
 } SpriteSheet;
 
 #endif /* ShaderTypes_h */
