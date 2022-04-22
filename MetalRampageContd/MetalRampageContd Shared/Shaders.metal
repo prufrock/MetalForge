@@ -66,17 +66,18 @@ vertex VertexOut vertex_indexed_sprite_sheet(Vertex in [[stage_in]],
                              constant float &point_size [[buffer(3)]],
                              constant matrix_float4x4 *indexedModelMatrix [[buffer(4)]],
                              constant uint *textureId [[buffer(5)]],
+                             constant SpriteSheet &spriteSheet [[buffer(6)]],
+                             constant uint &spriteIndex [[buffer(7)]],
                              uint vid [[vertex_id]],
                              uint iid [[instance_id]]
                              ) {
 
-    uint txIndex = 0;
     float txOffsetX = 0.1;
     float txX = in.texcoord.x;
     if (txX == 1.0) {
-        txX = txOffsetX + txOffsetX * txIndex;
+        txX = txOffsetX + txOffsetX * spriteIndex;
     } else if (txX == 0.0) {
-        txX = txOffsetX * txIndex;
+        txX = txOffsetX * spriteIndex;
     }
 
     VertexOut vertex_out {

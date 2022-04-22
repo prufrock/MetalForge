@@ -723,7 +723,7 @@ public class Renderer: NSObject {
         ), .font)
 
         var fontSpriteSheet = SpriteSheet(textureWidth: 40, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
-        var fontSpriteIndex: UInt32 = 0
+        var fontSpriteIndex: UInt32 = 1
 
         var renderables: [(RNDRObject, Texture)] = []
         renderables.append(crossHairs)
@@ -777,13 +777,13 @@ public class Renderer: NSObject {
         encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
         encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
         encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt32>.stride * indexedTextureId.count, index: 5)
+        encoder.setVertexBytes(&fontSpriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 6)
+        encoder.setVertexBytes(&fontSpriteIndex, length: MemoryLayout<UInt32>.stride, index: 7)
 
         var fragmentColor = Float3(color)
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        encoder.setFragmentBytes(&fontSpriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 1)
-        encoder.setFragmentBytes(&fontSpriteIndex, length: MemoryLayout<UInt32>.stride, index: 2)
         encoder.setFragmentTexture(colorMapTexture!, index: 0)
         encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
         encoder.setFragmentTexture(hud[.healthIcon]!, index: 2)
