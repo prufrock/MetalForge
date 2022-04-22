@@ -76,17 +76,21 @@ vertex VertexOut vertex_indexed_sprite_sheet(Vertex in [[stage_in]],
     float txY = in.texcoord.y;
     // get it working with the font texture
     if (textureId[iid] == 3) {
+        // TODO move this into a function
+        int spritesPerRow = int(spriteSheet.textureWidth / spriteSheet.spriteWidth);
+        int spriteX = spriteIndex % spritesPerRow;
+        int spriteY = spriteIndex / spritesPerRow;
         float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
         float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
         if (txX == 1.0) {
-            txX = txOffsetX + txOffsetX * spriteIndex;
+            txX = txOffsetX + txOffsetX * spriteX;
         } else if (txX == 0.0) {
-            txX = txOffsetX * spriteIndex;
+            txX = txOffsetX * spriteX;
         }
         if (txY == 1.0) {
-            txY = txOffsetY + txOffsetY * spriteIndex;
+            txY = txOffsetY + txOffsetY * spriteY;
         } else if (txY == 0.0) {
-            txY = txOffsetY * spriteIndex;
+            txY = txOffsetY * spriteY;
         }
     }
 
