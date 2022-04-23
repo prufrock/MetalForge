@@ -952,7 +952,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.MetalRampageContd;
 				PRODUCT_NAME = MetalRampageContd;
 				SDKROOT = iphoneos;
@@ -984,7 +984,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.MetalRampageContd;
 				PRODUCT_NAME = MetalRampageContd;
 				SDKROOT = iphoneos;
@@ -1013,7 +1013,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.MetalRampageContd;
 				PRODUCT_NAME = MetalRampageContd;
 				SDKROOT = appletvos;
@@ -1042,7 +1042,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.MetalRampageContd;
 				PRODUCT_NAME = MetalRampageContd;
 				SDKROOT = appletvos;
@@ -1077,7 +1077,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.MetalRampageContd;
 				PRODUCT_NAME = MetalRampageContd;
 				SDKROOT = macosx;
@@ -1109,7 +1109,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.6;
-				MARKETING_VERSION = 1.5.0;
+				MARKETING_VERSION = 1.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dkanen.MetalRampageContd;
 				PRODUCT_NAME = MetalRampageContd;
 				SDKROOT = macosx;
