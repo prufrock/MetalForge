@@ -68,6 +68,7 @@ vertex VertexOut vertex_indexed_sprite_sheet(Vertex in [[stage_in]],
                              constant uint *textureId [[buffer(5)]],
                              constant SpriteSheet &spriteSheet [[buffer(6)]],
                              constant uint &spriteIndex [[buffer(7)]],
+                             constant uint *indexedFontSpriteIndex [[buffer(8)]],
                              uint vid [[vertex_id]],
                              uint iid [[instance_id]]
                              ) {
@@ -76,10 +77,11 @@ vertex VertexOut vertex_indexed_sprite_sheet(Vertex in [[stage_in]],
     float txY = in.texcoord.y;
     // get it working with the font texture
     if (textureId[iid] == 3) {
+        uint selectedSpriteIndex = indexedFontSpriteIndex[iid];
         // TODO move this into a function
         int spritesPerRow = int(spriteSheet.textureWidth / spriteSheet.spriteWidth);
-        int spriteX = spriteIndex % spritesPerRow;
-        int spriteY = spriteIndex / spritesPerRow;
+        int spriteX = selectedSpriteIndex % spritesPerRow;
+        int spriteY = selectedSpriteIndex / spritesPerRow;
         float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
         float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
         if (txX == 1.0) {

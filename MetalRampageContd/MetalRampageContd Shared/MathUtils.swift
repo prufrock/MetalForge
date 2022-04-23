@@ -14,6 +14,14 @@ public typealias Float2x2 = simd_float2x2
 public typealias Float3x3 = simd_float3x3
 public typealias Float4x4 = simd_float4x4
 
+extension Float {
+    func roundDown() -> Int {
+        var value = self
+        value.round(.down)
+        return Int(value)
+    }
+}
+
 public extension Float4x4 {
     static func identity() -> Self {
         matrix_identity_float4x4
