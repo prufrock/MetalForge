@@ -749,6 +749,41 @@ public class Renderer: NSObject {
         renderables.append(health2)
         renderables.append(health3)
 
+        let chargesStart: Float2 = Float2(aspect * 0.98, 0.95)
+
+        let charges = String(Int(max(0, min(99, world.player.charges)))).leftPadding(toLength: 2, withPad: "0")
+
+        let charges1: (RNDRObject, Texture, UInt32) = (RNDRObject(
+            vertices: vertices,
+            uv: uvCoords,
+            transform: Float4x4.translate(x: chargesStart.x - heartSpace * 1, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+            color: .red,
+            primitiveType: .triangle,
+            position: Int2(0, 0)
+        ), .font, UInt32(charges.charInt(at: 0) ?? 0))
+
+        let charges2: (RNDRObject, Texture, UInt32) = (RNDRObject(
+            vertices: vertices,
+            uv: uvCoords,
+            transform: Float4x4.translate(x: chargesStart.x - heartSpace * 0, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+            color: .red,
+            primitiveType: .triangle,
+            position: Int2(0, 0)
+        ), .font, UInt32(charges.charInt(at: 1) ?? 0))
+
+        let chargesIcon: (RNDRObject, Texture, UInt32) = (RNDRObject(
+            vertices: vertices,
+            uv: uvCoords,
+            transform: Float4x4.translate(x: chargesStart.x - heartSpace * 2, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+            color: .red,
+            primitiveType: .triangle,
+            position: Int2(0, 0)
+        ), world.player.weapon == .fireBlast ? .fireBlastPickup : .wand, 100)
+
+        renderables.append(charges1)
+        renderables.append(charges2)
+        renderables.append(chargesIcon)
+
         let indexedObjTransform = renderables.map { (object, _, _) -> Float4x4 in object.transform }
         let indexedTextureId: [UInt32] = renderables.map { (_, texture, _) -> UInt32 in
             switch texture {
@@ -758,6 +793,10 @@ public class Renderer: NSObject {
                 return 2
             case .font:
                 return 3
+            case .fireBlastPickup:
+                return 4
+            case .wand:
+                return 5
             default:
                 return 0
             }
@@ -798,6 +837,8 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
         encoder.setFragmentTexture(hud[.healthIcon]!, index: 2)
         encoder.setFragmentTexture(hud[.font]!, index: 3)
+        encoder.setFragmentTexture(fireBlast[.fireBlastPickup]!, index: 4)
+        encoder.setFragmentTexture(wand[.wand]!, index: 5)
 
         encoder.drawIndexedPrimitives(
             type: primitiveType,
