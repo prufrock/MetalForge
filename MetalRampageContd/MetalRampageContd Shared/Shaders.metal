@@ -199,6 +199,12 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
         discard_fragment();
     }
 
+
+    // replace white with the color
+    if (colorSample.r == 1.0 && colorSample.g == 1.0 && colorSample.b == 1.0) {
+        return color;
+    }
+
     return float4(colorSample);
 }
 

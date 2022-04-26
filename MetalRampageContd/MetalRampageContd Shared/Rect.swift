@@ -24,7 +24,7 @@ public struct Rect {
         vertices.append(Float3(min.x, min.y, 0.0))
         vertices.append(Float3(max.x, min.y, 0.0))
 
-        return (vertices, [], Float4x4.identity(), .blue, .triangle)
+        return (vertices, [], Float4x4.identity(), .black, .triangle)
     }
 
     func renderableObject() -> RNDRObject {
@@ -38,7 +38,7 @@ public struct Rect {
         vertices.append(Float3(min.x, min.y, 0.0))
         vertices.append(Float3(max.x, min.y, 0.0))
 
-        return RNDRObject(vertices: vertices, uv: [], transform: Float4x4.identity(), color: .blue, primitiveType: .triangle, position: Int2())
+        return RNDRObject(vertices: vertices, uv: [], transform: Float4x4.identity(), color: .black, primitiveType: .triangle, position: Int2())
     }
 }
 
