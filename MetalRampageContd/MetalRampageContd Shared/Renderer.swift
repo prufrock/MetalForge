@@ -197,6 +197,7 @@ public class Renderer: NSObject {
         fireBlast[.fireBlastFire2] = loadTexture(name: "FireBlastFire2")!
         fireBlast[.fireBlastFire3] = loadTexture(name: "FireBlastFire3")!
         fireBlast[.fireBlastFire4] = loadTexture(name: "FireBlastFire4")!
+        fireBlast[.fireBlastIcon] = loadTexture(name: "FireBlastIcon")!
         hud[.crosshair] = loadTexture(name: "Crosshairs")!
         hud[.healthIcon] = loadTexture(name: "HealthIcon")!
         hud[.font] = loadTexture(name: "Font")!
@@ -888,7 +889,7 @@ public class Renderer: NSObject {
             color: .black,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), world.player.weapon == .fireBlast ? .fireBlastPickup : .wand, 100)
+        ), world.player.weapon == .fireBlast ? .fireBlastIcon : .wand, 100)
 
         renderables.append(charges1)
         renderables.append(charges2)
@@ -903,7 +904,7 @@ public class Renderer: NSObject {
                 return 2
             case .font:
                 return 3
-            case .fireBlastPickup:
+            case .fireBlastIcon:
                 return 4
             case .wand:
                 return 5
@@ -947,7 +948,7 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
         encoder.setFragmentTexture(hud[.healthIcon]!, index: 2)
         encoder.setFragmentTexture(hud[.font]!, index: 3)
-        encoder.setFragmentTexture(fireBlast[.fireBlastPickup]!, index: 4)
+        encoder.setFragmentTexture(fireBlast[.fireBlastIcon]!, index: 4)
         encoder.setFragmentTexture(wand[.wand]!, index: 5)
 
         encoder.drawIndexedPrimitives(
