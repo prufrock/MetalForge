@@ -6,6 +6,7 @@ public enum Texture {
     case ceiling
     case wall, crackWall, crackWall2, slimeWall, slimeWall2
     case wand
+    case wandIcon
     case wandFiring1, wandFiring2, wandFiring3, wandFiring4
     case monster
     case monsterWalk1, monsterWalk2

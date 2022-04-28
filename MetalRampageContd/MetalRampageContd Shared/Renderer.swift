@@ -178,6 +178,7 @@ public class Renderer: NSObject {
         monster[.monsterDeath2] = loadTexture(name: "MonsterDeath2")!
         monster[.monsterDead] = loadTexture(name: "MonsterDead")!
         wand[.wand] = loadTexture(name: "Wand")!
+        wand[.wandIcon] = loadTexture(name: "WandIcon")!
         wand[.wandFiring1] = loadTexture(name: "WandFiring1")!
         wand[.wandFiring2] = loadTexture(name: "WandFiring2")!
         wand[.wandFiring3] = loadTexture(name: "WandFiring3")!
@@ -889,7 +890,7 @@ public class Renderer: NSObject {
             color: .black,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), world.player.weapon == .fireBlast ? .fireBlastIcon : .wand, 100)
+        ), world.player.weapon == .fireBlast ? .fireBlastIcon : .wandIcon, 100)
 
         renderables.append(charges1)
         renderables.append(charges2)
@@ -906,7 +907,7 @@ public class Renderer: NSObject {
                 return 3
             case .fireBlastIcon:
                 return 4
-            case .wand:
+            case .wandIcon:
                 return 5
             default:
                 return 0
@@ -949,7 +950,7 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(hud[.healthIcon]!, index: 2)
         encoder.setFragmentTexture(hud[.font]!, index: 3)
         encoder.setFragmentTexture(fireBlast[.fireBlastIcon]!, index: 4)
-        encoder.setFragmentTexture(wand[.wand]!, index: 5)
+        encoder.setFragmentTexture(wand[.wandIcon]!, index: 5)
 
         encoder.drawIndexedPrimitives(
             type: primitiveType,
