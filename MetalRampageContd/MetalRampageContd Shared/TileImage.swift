@@ -20,7 +20,7 @@ struct TileImage {
         Float2(0.2,0.0),
         Float2(0.0,0.0)]
 
-    init(world: World, wallColor: Color = .black) {
+    init(world: World, wallColor: Color = .white) {
         let map = world.map
         tile1 = [
             Float3(0.0, 0.0, 0.0),
