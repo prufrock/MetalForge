@@ -679,7 +679,7 @@ public class Renderer: NSObject {
 
         let heartSpace: Float = 0.11
         // the hudCamera adjusts x by the aspect ratio so the x needs to be adjusted by the aspect here as well.
-        let heartStart: Float2 = Float2(aspect * -0.95, 0.95)
+        let heartStart: Float2 = Float2(aspect * -0.9, 0.85)
 
         let playerHealth = String(Int(world.player.health)).leftPadding(toLength: 3, withPad: "0")
 
@@ -839,7 +839,6 @@ public class Renderer: NSObject {
             Float2(1.0, 1.0),
             Float2(0.0 , 1.0),
         ]
-        //.map { ($0.toFloat3() * Float3x3.translate(x: -0.9, y: 0) * Float3x3.scale(x: 1.0, y: 1.0)).toFloat2() }
 
         // TODO: Add Texture to RNDRObject?
         let crossHairs: (RNDRObject, Texture, UInt32?) = (RNDRObject(
@@ -861,7 +860,7 @@ public class Renderer: NSObject {
         var renderables: [(RNDRObject, Texture, UInt32?)] = []
         renderables.append(crossHairs)
 
-        let chargesStart: Float2 = Float2(aspect * 0.98, 0.95)
+        let chargesStart: Float2 = Float2(aspect * 0.9, 0.85)
 
         let charges = String(Int(max(0, min(99, world.player.charges)))).leftPadding(toLength: 2, withPad: "0")
 
