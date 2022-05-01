@@ -24,4 +24,5 @@ public enum Texture {
     case crosshair
     case healthIcon
     case font
+    case titleLogo
 }

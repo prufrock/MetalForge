@@ -38,6 +38,7 @@ public class Renderer: NSObject {
     var healingPotionTexture: MTLTexture!
     var fireBlast: [Texture:MTLTexture?] = [:]
     var hud: [Texture:MTLTexture?] = [:]
+    var titleScreen: [Texture:MTLTexture?] = [:]
 
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
@@ -202,6 +203,8 @@ public class Renderer: NSObject {
         hud[.crosshair] = loadTexture(name: "Crosshairs")!
         hud[.healthIcon] = loadTexture(name: "HealthIcon")!
         hud[.font] = loadTexture(name: "Font")!
+        // TODO: I think the textures are loading in too dark
+        titleScreen[.titleLogo] = loadTexture(name: "TitleLogo")!
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -212,7 +215,16 @@ public class Renderer: NSObject {
         self.aspect = aspect
     }
 
-    public func render(_ world: World) {
+    func render(_ game: Game) {
+        switch game.state {
+        case .title:
+            render(game.world, onlyTitle: true)
+        case .playing:
+            render(game.world)
+        }
+    }
+
+    public func render(_ world: World, onlyTitle: Bool = false) {
 
         if worldTiles == nil {
             worldTiles = (TileImage(world: world).tiles)
@@ -250,24 +262,28 @@ public class Renderer: NSObject {
         let hudCamera = Float4x4.identity()
                 .scaledX(by: 1/aspect)
 
-        drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
+        if (onlyTitle) {
+            drawTitleScreen(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+        } else {
 
-        if world.drawWorld {
-            drawIndexedGameworld(world: world, encoder: encoder, camera: playerCamera)
-        }
+            drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
 
-        drawIndexedSprites(world: world, encoder: encoder, camera: playerCamera)
+            if world.drawWorld {
+                drawIndexedGameworld(world: world, encoder: encoder, camera: playerCamera)
+            }
 
-        if world.showMap {
-            drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
-        }
+            drawIndexedSprites(world: world, encoder: encoder, camera: playerCamera)
+
+            if world.showMap {
+                drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
+            }
 
         drawHud(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
 
         drawWeapon(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
 
-        drawEffects(world: world, encoder: encoder, camera: playerCamera, worldTransform: worldTransform)
-
+            drawEffects(world: world, encoder: encoder, camera: playerCamera, worldTransform: worldTransform)
+        }
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -950,6 +966,90 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(hud[.font]!, index: 3)
         encoder.setFragmentTexture(fireBlast[.fireBlastIcon]!, index: 4)
         encoder.setFragmentTexture(wand[.wandIcon]!, index: 5)
+
+        encoder.drawIndexedPrimitives(
+            type: primitiveType,
+            indexCount: index.count,
+            indexType: .uint16,
+            indexBuffer: indexBuffer,
+            indexBufferOffset: 0,
+            instanceCount: renderables.count
+        )
+    }
+
+    private func drawTitleScreen(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+        // a centered square
+        let vertices = [
+            Float3(-0.5, -0.5, 0.0),
+            Float3(-0.5, 0.5, 0.0),
+            Float3(0.5, 0.5, 0.0),
+
+            Float3(0.5, 0.5, 0.0),
+            Float3(0.5, -0.5, 0.0),
+            Float3(-0.5, -0.5, 0.0),
+        ]
+
+        let  uvCoords = [
+            Float2(0.0, 1.0),
+            Float2(0.0 ,0.0),
+            Float2(1.0, 0.0),
+            Float2(1.0, 0.0),
+            Float2(1.0, 1.0),
+            Float2(0.0 , 1.0),
+        ]
+
+        // TODO: Add Texture to RNDRObject?
+        let titleLogo: (RNDRObject, Texture, UInt32?) = (RNDRObject(
+            vertices: vertices,
+            uv: uvCoords,
+            transform: Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
+            color: .white,
+            primitiveType: .triangle,
+            position: Int2(0, 0)
+        ), .titleLogo, nil)
+
+        var renderables: [(RNDRObject, Texture, UInt32?)] = []
+        renderables.append(titleLogo)
+
+        let indexedObjTransform = renderables.map { (object, _, _) -> Float4x4 in object.transform }
+        let indexedTextureId: [UInt32] = renderables.map { (_, texture, _) -> UInt32 in
+            switch texture {
+            case .titleLogo:
+                return 1
+            default:
+                return 0
+            }
+        }
+        let index: [UInt16] = [0, 1, 2, 3, 4, 5]
+
+        let color = renderables[0].0.color
+        let primitiveType = renderables[0].0.primitiveType
+
+        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
+        let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])
+
+        var pixelSize = 1
+
+        var finalTransform = camera * Float4x4.scale(x: 8.5 * aspect, y: 8.5, z: 0)
+
+        encoder.setRenderPipelineState(textureIndexedPipeline)
+        encoder.setDepthStencilState(depthStencilState)
+        // Setting this to none for now until I can figure out how to make doors draw on both sides.
+        encoder.setCullMode(.none)
+        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
+        encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
+        encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
+        encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt32>.stride * indexedTextureId.count, index: 5)
+
+        var fragmentColor = Float3(color)
+
+        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+        encoder.setFragmentTexture(colorMapTexture!, index: 0)
+        encoder.setFragmentTexture(titleScreen[.titleLogo]!, index: 1)
 
         encoder.drawIndexedPrimitives(
             type: primitiveType,

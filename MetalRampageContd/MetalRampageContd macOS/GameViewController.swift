@@ -189,7 +189,7 @@ extension GameViewController: MTKViewDelegate {
         }
         lastFrameTime = time
 
-        renderer.render(game.world)
+        renderer.render(game)
     }
 }
 
