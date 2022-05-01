@@ -28,6 +28,13 @@ class AudioEngine {
             }
         }
     }
+
+    /**
+     Removes the queued up sounds.
+     */
+    func clearSounds() {
+        SoundManager.shared.clearAll()
+    }
 }
 
 extension SoundName {
