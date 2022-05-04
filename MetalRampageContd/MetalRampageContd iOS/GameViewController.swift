@@ -17,6 +17,8 @@ class GameViewController: UIViewController {
     private let levels = loadLevels()
     private lazy var world = World(map: levels[0])
 
+    private var game = Game(levels: loadLevels())
+
     private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
     private let worldTimeStep: Float = 1 / 120 // number of steps to take each frame
     private var lastFrameTime = CACurrentMediaTime()
@@ -64,6 +66,9 @@ class GameViewController: UIViewController {
         tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
         tapGesture.addTarget(self, action: #selector(fire))
+
+        // Make it so Game can call on delegate methods
+        game.delegate = self
     }
 
     func setupMetalView() {
@@ -101,38 +106,27 @@ extension GameViewController: MTKViewDelegate {
         let time = CACurrentMediaTime()
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
         let inputVector = self.inputVector
-        let rotation = inputVector.x * world.player.turningSpeed * worldTimeStep
-        let input = Input(
+        let rotation = inputVector.x * game.world.player.turningSpeed * worldTimeStep
+        var input = Input(
             speed: -inputVector.y,
             rotation: Float2x2.rotate(rotation),
-            rotation3d: Float4x4.rotateY(inputVector.x * world.player.turningSpeed * worldTimeStep),
+            rotation3d: Float4x4.rotateY(inputVector.x * game.world.player.turningSpeed * worldTimeStep),
             // pressing fire happens while rendering new frames so the press we care about is the one that happened after
             // the last frame was rendered.
             isFiring: lastFiredTime > lastFrameTime,
             showMap: false,
             drawWorld: true
         )
+
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
-            if let action = world.update(timeStep: Float(timeStep /  worldSteps), input: input) {
-                switch action {
-                case .loadLevel(let index):
-                    let index = index % levels.count
-                    world.setLevel(levels[index])
-                    // quick work around to make sure aspect is passed when a new renderer is created
-                    renderer = Renderer(metalView, width: 8, height: 8).also {
-                        $0.updateAspect(renderer.aspect)
-                    }
-                    // stop playing sounds when new level is loaded
-                    SoundManager.shared.clearAll()
-                case .playSounds(let sounds):
-                    audioEngine.play(sounds)
-                }
-            }
+            game.update(timeStep: timeStep / worldSteps, input: input)
+            // the world advances faster than draw calls are made so to ensure "isFiring is only applied once it gets set to false. Especailly helpful when going from the title screen into the game.
+            input.isFiring = false
         }
         lastFrameTime = time
 
-        renderer.render(world)
+        renderer.render(game)
     }
 }
 
@@ -157,4 +151,14 @@ private func loadLevels() -> [Tilemap] {
     let jsonData = try! Data(contentsOf: jsonUrl)
     let levels = try! JSONDecoder().decode([MapData].self, from: jsonData)
     return levels.enumerated().map { Tilemap($0.element, index: $0.offset) }
+}
+
+extension GameViewController: GameDelegate {
+    func playSound(_ sound: Sound) {
+        audioEngine.play([sound])
+    }
+
+    func clearSounds() {
+        audioEngine.clearSounds()
+    }
 }

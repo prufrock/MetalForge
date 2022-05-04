@@ -183,6 +183,7 @@ extension GameViewController: MTKViewDelegate {
             showMap: showMap,
             drawWorld: drawWorld
         )
+        
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
             game.update(timeStep: timeStep / worldSteps, input: input)
