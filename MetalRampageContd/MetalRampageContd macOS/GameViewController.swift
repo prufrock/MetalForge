@@ -175,7 +175,7 @@ extension GameViewController: MTKViewDelegate {
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
         let inputVector = self.inputVector
         let rotation = inputVector.x * game.world.player.turningSpeed * worldTimeStep
-        let input = Input(
+        var input = Input(
             speed: -inputVector.y,
             rotation: Float2x2.rotate(rotation),
             rotation3d: Float4x4.rotateY(inputVector.x * game.world.player.turningSpeed * worldTimeStep),
@@ -186,6 +186,8 @@ extension GameViewController: MTKViewDelegate {
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
             game.update(timeStep: timeStep / worldSteps, input: input)
+            // the world advances faster than draw calls are made so to ensure "isFiring is only applied once it gets set to false. Especailly helpful when going from the title screen into the game.
+            input.isFiring = false
         }
         lastFrameTime = time
 
