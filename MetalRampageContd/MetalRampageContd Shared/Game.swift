@@ -10,6 +10,10 @@ struct Game {
     let levels: [Tilemap]
     private(set) var world: World
     private(set) var state: GameState = .title
+
+    // Transition effects between game states.
+    private(set) var transition: Effect?
+
     // weak because Game shouldn't prevent the delegate from getting deallocated.
     weak var delegate: GameDelegate?
 
@@ -34,12 +38,24 @@ extension Game {
             return
         }
 
+        // Update transition
+        if var effect = transition {
+            effect.time += timeStep
+            transition = effect
+        }
+
         // Update state
         switch state {
         case .title:
             // if the player presses the fire button switch to playing
             if input.isFiring {
                 print("switch to playing")
+                transition = Effect(type: .fadeOut, color: ColorA(Color.black), duration: 0.5)
+                state = .starting
+            }
+        case .starting:
+            if transition?.isCompleted == true {
+                transition = Effect(type: .fadeIn, color: ColorA(Color.black), duration: 0.5)
                 state = .playing
             }
         case .playing:
@@ -68,6 +84,7 @@ extension Game {
  */
 enum GameState {
     case title
+    case starting
     case playing
 }
 

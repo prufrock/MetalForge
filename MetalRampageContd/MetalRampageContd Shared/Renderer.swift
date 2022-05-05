@@ -216,15 +216,16 @@ public class Renderer: NSObject {
     }
 
     func render(_ game: Game) {
+        let effects: [Effect] = (game.transition != nil) ? [game.transition!] : []
         switch game.state {
-        case .title:
-            render(game.world, onlyTitle: true)
+        case .title, .starting:
+            render(game.world, additionalEffects: effects, onlyTitle: true)
         case .playing:
-            render(game.world)
+            render(game.world, additionalEffects: effects)
         }
     }
 
-    public func render(_ world: World, onlyTitle: Bool = false) {
+    func render(_ world: World, additionalEffects: [Effect] = [],onlyTitle: Bool = false) {
 
         if worldTiles == nil {
             worldTiles = (TileImage(world: world).tiles)
@@ -278,12 +279,12 @@ public class Renderer: NSObject {
                 drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
             }
 
-        drawHud(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+            drawHud(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
 
-        drawWeapon(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
-
-            drawEffects(world: world, encoder: encoder, camera: playerCamera, worldTransform: worldTransform)
+            drawWeapon(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
         }
+        // always draw effects so the title screen can fade out
+        drawEffects(effects: world.effects + additionalEffects, encoder: encoder, camera: playerCamera, worldTransform: worldTransform)
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -943,7 +944,6 @@ public class Renderer: NSObject {
         var finalTransform = camera
 
         encoder.setRenderPipelineState(textureIndexedSpriteSheetPipeline)
-        encoder.setDepthStencilState(depthStencilState)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
@@ -1034,7 +1034,8 @@ public class Renderer: NSObject {
         var finalTransform = camera * Float4x4.scale(x: 8.5 * aspect, y: 8.5, z: 0)
 
         encoder.setRenderPipelineState(textureIndexedPipeline)
-        encoder.setDepthStencilState(depthStencilState)
+        // TODO better understand why removing the depth stencil state allows effects to apply over the title screen
+        // encoder.setDepthStencilState(depthStencilState)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
@@ -1061,8 +1062,8 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawEffects(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
-        world.effects.forEach { effect in
+    private func drawEffects(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+        effects.forEach { effect in
             let vertices = [
                 Float3(0.0, 0.0, 0.0),
                 Float3(1.0, 1.0, 0.0),
@@ -1079,7 +1080,7 @@ public class Renderer: NSObject {
 
             var finalTransform = Float4x4.identity()
                 * Float4x4.translate(x: 1.0, y: -1.0, z: 0.0)
-                * Float4x4.scale(x: 2.0, y: 2.0, z: 1.99)
+                * Float4x4.scale(x: 2.0, y: 2.0, z: 0.0)
                 * Float4x4.rotateY(-.pi)
 
             encoder.setCullMode(.back)
