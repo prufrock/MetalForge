@@ -161,4 +161,10 @@ extension GameViewController: GameDelegate {
     func clearSounds() {
         audioEngine.clearSounds()
     }
+
+    func updateRenderer(_ world: World) {
+        renderer = Renderer(metalView, width: 8, height: 8).also {
+            $0.updateAspect(renderer.aspect)
+        }
+    }
 }

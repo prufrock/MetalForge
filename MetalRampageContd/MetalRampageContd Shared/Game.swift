@@ -49,6 +49,9 @@ extension Game {
                     // keep rotating through the available levels.
                     let index = index % levels.count
                     world.setLevel(levels[index])
+                    //TODO look for a way to create a new renderer when a new World is created
+                    // quick work around to make sure aspect is passed when a new renderer is created
+                    delegate.updateRenderer(world)
                     delegate.clearSounds()
                 case .playSounds(let sounds):
                     // implicitly passes the sound to playSound
@@ -74,4 +77,5 @@ enum GameState {
 protocol GameDelegate: AnyObject {
     func playSound(_ sound: Sound)
     func clearSounds()
+    func updateRenderer(_ world: World)
 }
