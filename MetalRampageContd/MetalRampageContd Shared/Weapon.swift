@@ -20,6 +20,8 @@ extension Weapon {
         let spread: Float
         // the amount of charges the spell starts with
         let defaultCharges: Float
+        // the icon to use on the HUD
+        let hudIcon: Texture
     }
 
     var attributes: Attributes {
@@ -33,7 +35,8 @@ extension Weapon {
                 coolDown: 0.25,
                 projectiles: 1,
                 spread: 0,
-                defaultCharges: .infinity
+                defaultCharges: .infinity,
+                hudIcon: .wandIcon
             )
         case .fireBlast:
             return Attributes(
@@ -44,7 +47,8 @@ extension Weapon {
                 coolDown: 0.5,
                 projectiles: 5,
                 spread: 0.4,
-                defaultCharges: 5
+                defaultCharges: 5,
+                hudIcon: .fireBlastIcon
             )
         }
     }
