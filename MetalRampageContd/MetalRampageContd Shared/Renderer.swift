@@ -219,16 +219,15 @@ public class Renderer: NSObject {
         let effects: [Effect] = (game.transition != nil) ? [game.transition!] : []
         switch game.state {
         case .title, .starting:
-            render(game.world, additionalEffects: effects, onlyTitle: true)
+            render(game, additionalEffects: effects, onlyTitle: true)
         case .playing:
-            render(game.world, additionalEffects: effects)
+            render(game, additionalEffects: effects)
         }
     }
 
-    func render(_ world: World, additionalEffects: [Effect] = [],onlyTitle: Bool = false) {
-
+    private func render(_ game: Game, additionalEffects: [Effect] = [],onlyTitle: Bool = false) {
         if worldTiles == nil {
-            worldTiles = (TileImage(world: world).tiles)
+            worldTiles = (TileImage(world: game.world).tiles)
         }
 
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {
@@ -255,36 +254,36 @@ public class Renderer: NSObject {
             * (Float4x4.identity()
                 .scaledBy(x: 0.2, y: 0.2, z: 0.2)
                 * Float4x4.translate(x: 0.0, y: 0.0, z: 0.5)
-                * world.player.position.toTranslation()
+                * game.world.player.position.toTranslation()
                 * Float4x4.rotateX(-(3 * .pi)/2)
-                * (world.player.direction3d.scaledBy(x: 1.0, y: 1.0, z: 1.0))
+                * (game.world.player.direction3d.scaledBy(x: 1.0, y: 1.0, z: 1.0))
               ).inverse
 
         let hudCamera = Float4x4.identity()
                 .scaledX(by: 1/aspect)
 
         if (onlyTitle) {
-            drawTitleScreen(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+            drawTitleScreen(world: game.world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
         } else {
 
-            drawReferenceMarkers(world: world, encoder: encoder, camera: playerCamera)
+            drawReferenceMarkers(world: game.world, encoder: encoder, camera: playerCamera)
 
-            if world.drawWorld {
-                drawIndexedGameworld(world: world, encoder: encoder, camera: playerCamera)
+            if game.world.drawWorld {
+                drawIndexedGameworld(world: game.world, encoder: encoder, camera: playerCamera)
             }
 
-            drawIndexedSprites(world: world, encoder: encoder, camera: playerCamera)
+            drawIndexedSprites(world: game.world, encoder: encoder, camera: playerCamera)
 
-            if world.showMap {
-                drawMap(world: world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
+            if game.world.showMap {
+                drawMap(world: game.world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
             }
 
-            drawHud(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+            drawHud(world: game.world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
 
-            drawWeapon(world: world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+            drawWeapon(world: game.world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
         }
         // always draw effects so the title screen can fade out
-        drawEffects(effects: world.effects + additionalEffects, encoder: encoder, camera: playerCamera, worldTransform: worldTransform)
+        drawEffects(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera, worldTransform: worldTransform)
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
