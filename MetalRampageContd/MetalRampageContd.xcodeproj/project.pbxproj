@@ -55,6 +55,12 @@
 		632BBB7D280BBBB400E1E4C3 /* fireBlastPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */; };
 		632BBB7E280BBBB400E1E4C3 /* fireBlastPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */; };
 		632BBB7F280BBBB400E1E4C3 /* fireBlastPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */; };
+		6351463628270E0900CA6C32 /* File.json in Resources */ = {isa = PBXBuildFile; fileRef = 6351463528270E0900CA6C32 /* File.json */; };
+		6351463728270E0900CA6C32 /* File.json in Resources */ = {isa = PBXBuildFile; fileRef = 6351463528270E0900CA6C32 /* File.json */; };
+		6351463828270E0900CA6C32 /* File.json in Resources */ = {isa = PBXBuildFile; fileRef = 6351463528270E0900CA6C32 /* File.json */; };
+		6351463A28270E7200CA6C32 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351463928270E7200CA6C32 /* Font.swift */; };
+		6351463B28270E7200CA6C32 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351463928270E7200CA6C32 /* Font.swift */; };
+		6351463C28270E7200CA6C32 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6351463928270E7200CA6C32 /* Font.swift */; };
 		63750CE1281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
 		63750CE2281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
 		63750CE3281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
@@ -221,6 +227,8 @@
 		5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		5AF0EF80473FF89C2F69122A /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireBlastPickup.mp3; sourceTree = "<group>"; };
+		6351463528270E0900CA6C32 /* File.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = File.json; sourceTree = "<group>"; };
+		6351463928270E7200CA6C32 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		63750CE0281398F800DC4937 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		63AE0CC2280C922A00B9A613 /* Pathfinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pathfinder.swift; sourceTree = "<group>"; };
 		63B33F212807C08D00734353 /* spellMiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spellMiss.mp3; sourceTree = "<group>"; };
@@ -375,6 +383,8 @@
 				63750CE0281398F800DC4937 /* StringExt.swift */,
 				5AF0E8D43E36BAC0C4820A3E /* Game.swift */,
 				5AF0E80D020726CE8A3743AD /* Hud.swift */,
+				6351463528270E0900CA6C32 /* File.json */,
+				6351463928270E7200CA6C32 /* Font.swift */,
 			);
 			path = "MetalRampageContd Shared";
 			sourceTree = "<group>";
@@ -554,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D44B5427D427CF00D4BE7D /* ShaderTypes.h in Resources */,
+				6351463628270E0900CA6C32 /* File.json in Resources */,
 				63B33F39280B527000734353 /* fireBlastFire.mp3 in Resources */,
 				63B33F35280AFC9600734353 /* medkit.mp3 in Resources */,
 				63F914AD280675B600A91EBF /* monsterGroan.mp3 in Resources */,
@@ -588,6 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D44B5527D427CF00D4BE7D /* ShaderTypes.h in Resources */,
+				6351463728270E0900CA6C32 /* File.json in Resources */,
 				63B33F3A280B527000734353 /* fireBlastFire.mp3 in Resources */,
 				63B33F36280AFC9600734353 /* medkit.mp3 in Resources */,
 				63F914AE280675B600A91EBF /* monsterGroan.mp3 in Resources */,
@@ -631,6 +643,7 @@
 				63B33F242807C08D00734353 /* spellMiss.mp3 in Resources */,
 				63F914A0280675B600A91EBF /* playerWalk.mp3 in Resources */,
 				63B33F2F2809C25000734353 /* castSpell.mp3 in Resources */,
+				6351463828270E0900CA6C32 /* File.json in Resources */,
 				63D44B5627D427CF00D4BE7D /* ShaderTypes.h in Resources */,
 				63F914AC280675B600A91EBF /* playerDeath.mp3 in Resources */,
 				63F914A9280675B600A91EBF /* squelch.mp3 in Resources */,
@@ -677,6 +690,7 @@
 				63D44BD227D42AD000D4BE7D /* World.swift in Sources */,
 				63D44B2727D427CF00D4BE7D /* AppDelegate.swift in Sources */,
 				63D44BD627D42AE600D4BE7D /* Ray.swift in Sources */,
+				6351463A28270E7200CA6C32 /* Font.swift in Sources */,
 				5AF0E67F757BD6EA5A05A6F5 /* RNDRObject.swift in Sources */,
 				5AF0EF80DF7BCBEFCF2A01CD /* Actor.swift in Sources */,
 				63750CE1281398F800DC4937 /* StringExt.swift in Sources */,
@@ -722,6 +736,7 @@
 				63D44BD327D42AD000D4BE7D /* World.swift in Sources */,
 				63D44B3727D427CF00D4BE7D /* AppDelegate.swift in Sources */,
 				63D44BD727D42AE600D4BE7D /* Ray.swift in Sources */,
+				6351463B28270E7200CA6C32 /* Font.swift in Sources */,
 				5AF0E9F3834695D3D8A90C38 /* RNDRObject.swift in Sources */,
 				5AF0EED887C084AB8A596AEA /* Actor.swift in Sources */,
 				63750CE2281398F800DC4937 /* StringExt.swift in Sources */,
@@ -767,6 +782,7 @@
 				63D44BD427D42AD000D4BE7D /* World.swift in Sources */,
 				63D44B4727D427CF00D4BE7D /* AppDelegate.swift in Sources */,
 				63D44BD827D42AE600D4BE7D /* Ray.swift in Sources */,
+				6351463C28270E7200CA6C32 /* Font.swift in Sources */,
 				5AF0ECE66029C28BC81B68B5 /* RNDRObject.swift in Sources */,
 				5AF0EB3A833228CB9B86F941 /* Actor.swift in Sources */,
 				63750CE3281398F800DC4937 /* StringExt.swift in Sources */,
