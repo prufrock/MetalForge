@@ -737,7 +737,7 @@ public class Renderer: NSObject {
             position: Int2(0, 0)
         ), .font, UInt32(playerHealth.charInt(at: 2) ?? 0))
 
-        var fontSpriteSheet = SpriteSheet(textureWidth: 40, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
+        var fontSpriteSheet = SpriteSheet(textureWidth: 148, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
         var fontSpriteIndex = 0
 
         var renderables: [(RNDRObject, Texture, UInt32?)] = []
@@ -860,7 +860,7 @@ public class Renderer: NSObject {
 
         let fontSpace: Float = 0.10
 
-        var fontSpriteSheet = SpriteSheet(textureWidth: 40, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
+        var fontSpriteSheet = SpriteSheet(textureWidth: 148, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
         //TODO pass a sprite index for instance being rendered
         //TODO find a way to pass whether a texture uses a sprite sheet
         var fontSpriteIndex = 0
