@@ -26,6 +26,15 @@ struct Game {
 }
 
 extension Game {
+
+    /**
+     Using a computed property for the Hud.
+     All of it's values are based on the player's state.
+     */
+    var hud: Hud {
+        Hud(player: world.player)
+    }
+
     /**
      Update the game.
      - Parameters:
