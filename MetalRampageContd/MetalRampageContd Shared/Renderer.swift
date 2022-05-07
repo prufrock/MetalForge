@@ -278,7 +278,7 @@ public class Renderer: NSObject {
                 drawMap(world: game.world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
             }
 
-            drawHud(world: game.world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+            drawHud(world: game.world, hud: game.hud, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
 
             drawWeapon(world: game.world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
         }
@@ -665,12 +665,12 @@ public class Renderer: NSObject {
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
     }
 
-    private func drawHud(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
-        drawHealth(world: world, encoder: encoder, camera: camera, worldTransform: worldTransform)
-        drawHudElements(world: world, encoder: encoder, camera: camera, worldTransform: worldTransform)
+    private func drawHud(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+        drawHealth(world: world, hud: hud, encoder: encoder, camera: camera, worldTransform: worldTransform)
+        drawHudElements(world: world, hud: hud, encoder: encoder, camera: camera, worldTransform: worldTransform)
     }
 
-    private func drawHealth(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+    private func drawHealth(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         // TODO put this somewhere shareable
         // TODO reduce to 4 vertices when indexed
         // a centered square
@@ -699,15 +699,7 @@ public class Renderer: NSObject {
 
         let playerHealth = String(Int(world.player.health)).leftPadding(toLength: 3, withPad: "0")
 
-        let healthTint: Color
-        switch world.player.health {
-        case ...10:
-            healthTint = .red
-        case 10 ... 30:
-            healthTint = .yellow
-        default:
-            healthTint = .green
-        }
+        let healthTint: Color = hud.healthTint
 
         let heart1: (RNDRObject, Texture, UInt32) = (RNDRObject(
             vertices: vertices,
@@ -817,9 +809,9 @@ public class Renderer: NSObject {
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
         encoder.setFragmentTexture(colorMapTexture!, index: 0)
-        encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
-        encoder.setFragmentTexture(hud[.healthIcon]!, index: 2)
-        encoder.setFragmentTexture(hud[.font]!, index: 3)
+        encoder.setFragmentTexture(self.hud[.crosshair]!, index: 1)
+        encoder.setFragmentTexture(self.hud[.healthIcon]!, index: 2)
+        encoder.setFragmentTexture(self.hud[.font]!, index: 3)
         encoder.setFragmentTexture(fireBlast[.fireBlastPickup]!, index: 4)
         encoder.setFragmentTexture(wand[.wand]!, index: 5)
 
@@ -833,7 +825,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawHudElements(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+    private func drawHudElements(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         // TODO put this somewhere shareable
         // TODO reduce to 4 vertices when indexed
         // a centered square
@@ -960,9 +952,9 @@ public class Renderer: NSObject {
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
         encoder.setFragmentTexture(colorMapTexture!, index: 0)
-        encoder.setFragmentTexture(hud[.crosshair]!, index: 1)
-        encoder.setFragmentTexture(hud[.healthIcon]!, index: 2)
-        encoder.setFragmentTexture(hud[.font]!, index: 3)
+        encoder.setFragmentTexture(self.hud[.crosshair]!, index: 1)
+        encoder.setFragmentTexture(self.hud[.healthIcon]!, index: 2)
+        encoder.setFragmentTexture(self.hud[.font]!, index: 3)
         encoder.setFragmentTexture(fireBlast[.fireBlastIcon]!, index: 4)
         encoder.setFragmentTexture(wand[.wandIcon]!, index: 5)
 

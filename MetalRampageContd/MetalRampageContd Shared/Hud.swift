@@ -4,7 +4,7 @@
 
 struct Hud {
     let healthString: String
-    let healthTint: ColorA
+    let healthTint: Color
     let chargesString: String
     let playerWeapon: Texture
     let weaponIcon: Texture
@@ -13,11 +13,11 @@ struct Hud {
         let health = Int(max(0, player.health))
         switch health {
         case ...10:
-            self.healthTint = ColorA(.red)
+            self.healthTint = .red
         case 10 ... 30:
-            self.healthTint = ColorA(.yellow)
+            self.healthTint = .yellow
         default:
-            self.healthTint = ColorA(.green)
+            self.healthTint = .green
         }
         self.healthString = String(health)
         self.chargesString = String(Int(max(0, min(99, player.charges))))
