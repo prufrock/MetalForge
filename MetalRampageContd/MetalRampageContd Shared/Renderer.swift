@@ -870,7 +870,7 @@ public class Renderer: NSObject {
 
         let chargesStart: Float2 = Float2(aspect * 0.9, 0.85)
 
-        let charges = String(Int(max(0, min(99, world.player.charges)))).leftPadding(toLength: 2, withPad: "0")
+        let charges = String(Int(max(0, min(99, Int(hud.chargesString) ?? 0)))).leftPadding(toLength: 2, withPad: "0")
 
         let charges1: (RNDRObject, Texture, UInt32) = (RNDRObject(
             vertices: vertices,
@@ -897,7 +897,7 @@ public class Renderer: NSObject {
             color: .black,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), world.player.weapon == .fireBlast ? .fireBlastIcon : .wandIcon, 100)
+        ), hud.weaponIcon, 100)
 
         renderables.append(charges1)
         renderables.append(charges2)
