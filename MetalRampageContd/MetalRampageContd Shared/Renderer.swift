@@ -263,7 +263,7 @@ public class Renderer: NSObject {
                 .scaledX(by: 1/aspect)
 
         if (onlyTitle) {
-            drawTitleScreen(world: game.world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+            drawTitleScreen(game: game, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
         } else {
 
             drawReferenceMarkers(world: game.world, encoder: encoder, camera: playerCamera)
@@ -968,7 +968,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawTitleScreen(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+    private func drawTitleScreen(game: Game, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
         // a centered square
         let vertices = [
             Float3(-0.5, -0.5, 0.0),
@@ -989,6 +989,11 @@ public class Renderer: NSObject {
             Float2(0.0 , 1.0),
         ]
 
+        var fontSpriteSheet = SpriteSheet(textureWidth: 148, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
+        //TODO pass a sprite index for instance being rendered
+        //TODO find a way to pass whether a texture uses a sprite sheet
+        var fontSpriteIndex = 0
+
         // TODO: Add Texture to RNDRObject?
         let titleLogo: (RNDRObject, Texture, UInt32?) = (RNDRObject(
             vertices: vertices,
@@ -1002,18 +1007,35 @@ public class Renderer: NSObject {
         var renderables: [(RNDRObject, Texture, UInt32?)] = []
         renderables.append(titleLogo)
 
+        for index in 0..<game.titleText.count {
+            let character = game.titleText.char(at: index)!
+            let text: (RNDRObject, Texture, UInt32) = (RNDRObject(
+                vertices: vertices,
+                uv: uvCoords,
+                transform: Float4x4.translate(x: (aspect * 0.0) + (-1 * Float(game.titleText.count - 1) / 2 * 0.01) + (0.01 * Float(index)) , y: -0.1, z: 0.0) * Float4x4.scale(x: 0.008, y: 0.01, z: 0.0),
+                color: .yellow,
+                primitiveType: .triangle,
+                position: Int2(0, 0)
+            ), .font, UInt32(game.hud.font.characters.firstIndex(of: String(character)) ?? 0))
+            renderables.append(text)
+        }
+
         let indexedObjTransform = renderables.map { (object, _, _) -> Float4x4 in object.transform }
         let indexedTextureId: [UInt32] = renderables.map { (_, texture, _) -> UInt32 in
             switch texture {
+            case .font:
+                return 3
             case .titleLogo:
                 return 1
             default:
                 return 0
             }
         }
+
+        let indexedFontSpriteIndex: [UInt32] = renderables.map { (_, _, spriteIndex) -> UInt32 in spriteIndex ?? 100}
         let index: [UInt16] = [0, 1, 2, 3, 4, 5]
 
-        let color = renderables[0].0.color
+        let color = renderables[1].0.color
         let primitiveType = renderables[0].0.primitiveType
 
         let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
@@ -1024,7 +1046,7 @@ public class Renderer: NSObject {
 
         var finalTransform = camera * Float4x4.scale(x: 8.5 * aspect, y: 8.5, z: 0)
 
-        encoder.setRenderPipelineState(textureIndexedPipeline)
+        encoder.setRenderPipelineState(textureIndexedSpriteSheetPipeline)
         // TODO better understand why removing the depth stencil state allows effects to apply over the title screen
         // encoder.setDepthStencilState(depthStencilState)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
@@ -1035,6 +1057,9 @@ public class Renderer: NSObject {
         encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
         encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
         encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt32>.stride * indexedTextureId.count, index: 5)
+        encoder.setVertexBytes(&fontSpriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 6)
+        encoder.setVertexBytes(&fontSpriteIndex, length: MemoryLayout<UInt32>.stride, index: 7)
+        encoder.setVertexBytes(indexedFontSpriteIndex, length: MemoryLayout<UInt32>.stride * indexedFontSpriteIndex.count, index: 8)
 
         var fragmentColor = Float3(color)
 
@@ -1042,6 +1067,7 @@ public class Renderer: NSObject {
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
         encoder.setFragmentTexture(colorMapTexture!, index: 0)
         encoder.setFragmentTexture(titleScreen[.titleLogo]!, index: 1)
+        encoder.setFragmentTexture(hud[.font]!, index: 3)
 
         encoder.drawIndexedPrimitives(
             type: primitiveType,

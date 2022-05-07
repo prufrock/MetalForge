@@ -16,7 +16,11 @@ struct Game {
 
     let font: Font
 
+    #if os(iOS)
     var titleText = "TAP TO START"
+    #else
+    var titleText = "PRESS SPACE TO START"
+    #endif
 
     // weak because Game shouldn't prevent the delegate from getting deallocated.
     weak var delegate: GameDelegate?
