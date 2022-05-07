@@ -717,7 +717,7 @@ public class Renderer: NSObject {
             color: healthTint,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), .font, UInt32(playerHealth.charInt(at: 0) ?? 0))
+        ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 0) ?? 0)) ?? 0))
 
         let health2: (RNDRObject, Texture, UInt32) = (RNDRObject(
             vertices: vertices,
@@ -726,7 +726,7 @@ public class Renderer: NSObject {
             color: healthTint,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), .font, UInt32(playerHealth.charInt(at: 1) ?? 0))
+        ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 1) ?? 0)) ?? 0))
 
         let health3: (RNDRObject, Texture, UInt32) = (RNDRObject(
             vertices: vertices,
@@ -735,9 +735,9 @@ public class Renderer: NSObject {
             color: healthTint,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), .font, UInt32(playerHealth.charInt(at: 2) ?? 0))
+        ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 2) ?? 0)) ?? 0))
 
-        var fontSpriteSheet = SpriteSheet(textureWidth: 148, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
+        var fontSpriteSheet = SpriteSheet(textureWidth: Float(hud.font.characters.count * 4), textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
         var fontSpriteIndex = 0
 
         var renderables: [(RNDRObject, Texture, UInt32?)] = []
@@ -879,7 +879,7 @@ public class Renderer: NSObject {
             color: .white,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), .font, UInt32(charges.charInt(at: 0) ?? 0))
+        ), .font, UInt32(hud.font.characters.firstIndex(of: String(charges.charInt(at: 0) ?? 0)) ?? 0))
 
         let charges2: (RNDRObject, Texture, UInt32) = (RNDRObject(
             vertices: vertices,
@@ -888,7 +888,7 @@ public class Renderer: NSObject {
             color: .white,
             primitiveType: .triangle,
             position: Int2(0, 0)
-        ), .font, UInt32(charges.charInt(at: 1) ?? 0))
+        ), .font, UInt32(hud.font.characters.firstIndex(of: String(charges.charInt(at: 1) ?? 0)) ?? 0))
 
         let chargesIcon: (RNDRObject, Texture, UInt32) = (RNDRObject(
             vertices: vertices,

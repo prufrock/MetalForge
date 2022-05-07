@@ -14,14 +14,20 @@ struct Game {
     // Transition effects between game states.
     private(set) var transition: Effect?
 
+    let font: Font
+
+    var titleText = "TAP TO START"
+
     // weak because Game shouldn't prevent the delegate from getting deallocated.
     weak var delegate: GameDelegate?
 
-    init(levels: [Tilemap]) {
+    init(levels: [Tilemap], font: Font) {
         self.levels = levels
         // Game manages the world
         // Seems like we should start at level 0
         self.world = World(map: levels[0])
+
+        self.font = font
     }
 }
 
@@ -32,7 +38,7 @@ extension Game {
      All of it's values are based on the player's state.
      */
     var hud: Hud {
-        Hud(player: world.player)
+        Hud(player: world.player, font: font)
     }
 
     /**

@@ -23,7 +23,7 @@ class GameViewController: NSViewController {
     private var showMap = false
     private var drawWorld = true
 
-    private var game = Game(levels: loadLevels())
+    private var game = Game(levels: loadLevels(), font: loadFont())
 
     private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
     private let worldTimeStep: Float = 1 / 120 // number of steps to take each frame
@@ -205,6 +205,12 @@ private func loadLevels() -> [Tilemap] {
     let jsonData = try! Data(contentsOf: jsonUrl)
     let levels = try! JSONDecoder().decode([MapData].self, from: jsonData)
     return levels.enumerated().map { Tilemap($0.element, index: $0.offset) }
+}
+
+private func loadFont() -> Font {
+    let jsonUrl = Bundle.main.url(forResource: "Font", withExtension: "json")!
+    let jsonData = try! Data(contentsOf: jsonUrl)
+    return try! JSONDecoder().decode(Font.self, from: jsonData)
 }
 
 extension GameViewController: GameDelegate {

@@ -8,8 +8,9 @@ struct Hud {
     let chargesString: String
     let playerWeapon: Texture
     let weaponIcon: Texture
+    let font: Font
 
-    init(player: Player) {
+    init(player: Player, font: Font) {
         let health = Int(max(0, player.health))
         switch health {
         case ...10:
@@ -23,5 +24,6 @@ struct Hud {
         self.chargesString = String(Int(max(0, min(99, player.charges))))
         self.playerWeapon = player.animation.texture
         self.weaponIcon = player.weapon.attributes.hudIcon
+        self.font = font
     }
 }
