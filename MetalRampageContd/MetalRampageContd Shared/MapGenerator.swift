@@ -14,21 +14,41 @@ struct MapGenerator {
         // Find empty tiles
         // Find them in a systematic way so we don't have to sit around all day waiting
         var emptyTiles = Set<Float2>()
+        // keep track of the players starting position
+        // this makes it so we can adjust the level around them
+        var playerPosition: Float2!
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
-                if map[x, y].isWall == false, map[thing: x, y] == .nothing {
-                    // if it's not a wall and it's "nothing" then put in the bag of empties.
-                    // this allows selecting empty tiles in constant time
-                    emptyTiles.insert(Float2(x: Float(x) + 0.5, y: Float(y) + 0.5))
+                // the 0.5 offsets are so it's in the middle of the tile.
+                let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5)
+                if map[x, y].isWall == false {
+                    // it's not a wall!
+                    switch map[thing: x, y] {
+                    case .nothing:
+                        // it's nothing! put it in the bag!
+                        emptyTiles.insert(position)
+                    case .player:
+                        // it's the player so keep track of that!
+                        playerPosition = position
+                    default:
+                        break
+                    }
                 }
             }
         }
 
         // Add monsters
         for _ in 0 ..< (mapData.monsters ?? 0) {
-            if let position = emptyTiles.randomElement() {
+            if let position = emptyTiles.filter({
+                    // give the player some breathing room
+                    // 2.5 units of breathing room
+                    (playerPosition - $0).length > 2.5
+                }).randomElement() {
+                // The position
                 let x = Int(position.x), y = Int(position.y)
+                // this position is no a monster!
                 map[thing: x, y] = .monster
+                // Don't let the tile be used again
                 emptyTiles.remove(position)
             }
         }
