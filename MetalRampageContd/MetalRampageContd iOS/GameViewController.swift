@@ -150,8 +150,10 @@ private func loadLevels() -> [Tilemap] {
     let jsonUrl = Bundle.main.url(forResource: "Levels", withExtension: "json")!
     let jsonData = try! Data(contentsOf: jsonUrl)
     let levels = try! JSONDecoder().decode([MapData].self, from: jsonData)
-    return levels.enumerated().map { Tilemap($0.element, index: $0.offset) }
-}
+    return levels.enumerated().map { index, mapData in
+        // The MapGenerator is going to generate the maps so it's taking over.
+        MapGenerator(mapData: mapData, index: index).map
+    }}
 
 private func loadFont() -> Font {
     let jsonUrl = Bundle.main.url(forResource: "Font", withExtension: "json")!
