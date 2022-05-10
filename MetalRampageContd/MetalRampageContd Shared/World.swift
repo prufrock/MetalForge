@@ -319,7 +319,7 @@ extension World {
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
                 let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5) // in the center of the tile
-                let thing = map.things[y * map.width + x]
+                let thing = map[thing: x, y]
                 switch thing {
                 case .nothing:
                     break
@@ -457,7 +457,7 @@ a       - y: Int
             return false
         }
         // remember the things are held in a one dimensional array
-        return map.things[y * map.width + x] == .door
+        return map[thing: x, y] == .door
     }
 
     /**
@@ -498,7 +498,7 @@ a       - y: Int
      */
     internal func `switch`(at x: Int, _ y: Int) -> Switch? {
         // make sure the switch is in things
-        guard map.things[y * map.width + x] == .switch else {
+        guard map[thing: x, y] == .switch else {
             return nil
         }
         // if it is grab the object so we can access the texture
