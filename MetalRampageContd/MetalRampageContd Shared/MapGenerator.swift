@@ -52,5 +52,23 @@ struct MapGenerator {
                 emptyTiles.remove(position)
             }
         }
+
+        // Add healing potions
+        for _ in 0 ..< (mapData.healingPotions ?? 0) {
+            if let position = emptyTiles.randomElement() {
+                let x = Int(position.x), y = Int(position.y)
+                map[thing: x, y] = .healingPotion
+                emptyTiles.remove(position)
+            }
+        }
+
+        // Add fire blasts
+        for _ in 0 ..< (mapData.fireBlasts ?? 0) {
+            if let position = emptyTiles.randomElement() {
+                let x = Int(position.x), y = Int(position.y)
+                map[thing: x, y] = .fireBlast
+                emptyTiles.remove(position)
+            }
+        }
     }
 }
