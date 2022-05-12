@@ -23,6 +23,10 @@ struct MapGenerator {
                 // the 0.5 offsets are so it's in the middle of the tile.
                 let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5)
                 if map[x, y].isWall {
+                    // only elevator back walls can be switches
+                    if map[x, y] == .elevatorBackWall {
+                        map[thing: x, y] = .switch
+                    }
                     // keep track of the walls for push walls
                     wallTiles.insert(position)
                 } else {
