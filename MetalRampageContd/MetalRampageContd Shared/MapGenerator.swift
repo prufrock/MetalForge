@@ -21,7 +21,8 @@ struct MapGenerator {
 
     public init(mapData: MapData, index: Int) {
         map = Tilemap(mapData, index: index)
-        rng = Rng(seed: 1)
+        // you can now specify the seed the map data or let it be random each time
+        rng = Rng(seed: mapData.seed ?? .random(in: 0 ... .max))
 
         // Find empty tiles
         // Find them in a systematic way so we don't have to sit around all day waiting

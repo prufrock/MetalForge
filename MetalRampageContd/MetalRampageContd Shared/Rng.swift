@@ -26,3 +26,14 @@ struct Rng: RandomNumberGenerator {
         return seed
     }
 }
+
+extension Collection where Index == Int {
+    // Override random element so that selecting the element randomly
+    // works the same across different versions of swift
+    func randomElement(using generator: inout Rng) -> Element? {
+        if isEmpty {
+            return nil
+        }
+        return self[startIndex + Index(generator.next() % UInt64(count))]
+    }
+}

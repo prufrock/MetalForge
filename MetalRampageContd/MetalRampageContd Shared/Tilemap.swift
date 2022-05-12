@@ -31,6 +31,9 @@ struct MapData: Decodable {
     let healingPotions: Int?
     let fireBlasts: Int?
     let pushWalls: Int?
+
+    // Allow the seed to be configured
+    let seed: UInt64?
 }
 
 public extension Tilemap {
