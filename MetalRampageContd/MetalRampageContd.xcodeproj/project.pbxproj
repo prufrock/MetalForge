@@ -55,6 +55,9 @@
 		5AF0EED887C084AB8A596AEA /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6A9347E4C6047BABDF2 /* Actor.swift */; };
 		5AF0EF80DF7BCBEFCF2A01CD /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E6A9347E4C6047BABDF2 /* Actor.swift */; };
 		5AF0EFBF74416B2C1C6F06B4 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF80473FF89C2F69122A /* AudioEngine.swift */; };
+		63148378282DB8F800547F21 /* Rng.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63148377282DB8F800547F21 /* Rng.swift */; };
+		63148379282DB8F800547F21 /* Rng.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63148377282DB8F800547F21 /* Rng.swift */; };
+		6314837A282DB8F800547F21 /* Rng.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63148377282DB8F800547F21 /* Rng.swift */; };
 		632BBB7D280BBBB400E1E4C3 /* fireBlastPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */; };
 		632BBB7E280BBBB400E1E4C3 /* fireBlastPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */; };
 		632BBB7F280BBBB400E1E4C3 /* fireBlastPickup.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */; };
@@ -230,6 +233,7 @@
 		5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRObject.swift; sourceTree = "<group>"; };
 		5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		5AF0EF80473FF89C2F69122A /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		63148377282DB8F800547F21 /* Rng.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rng.swift; sourceTree = "<group>"; };
 		632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireBlastPickup.mp3; sourceTree = "<group>"; };
 		6351463528270E0900CA6C32 /* Font.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Font.json; sourceTree = "<group>"; };
 		6351463928270E7200CA6C32 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -390,6 +394,7 @@
 				6351463528270E0900CA6C32 /* Font.json */,
 				6351463928270E7200CA6C32 /* Font.swift */,
 				5AF0EB67075B8B0ED9602F1B /* MapGenerator.swift */,
+				63148377282DB8F800547F21 /* Rng.swift */,
 			);
 			path = "MetalRampageContd Shared";
 			sourceTree = "<group>";
@@ -712,6 +717,7 @@
 				5AF0E8EA5D9A04A7D52924CC /* SoundManager.swift in Sources */,
 				5AF0EFBF74416B2C1C6F06B4 /* AudioEngine.swift in Sources */,
 				5AF0E74A141715A65962A6D6 /* Weapon.swift in Sources */,
+				63148378282DB8F800547F21 /* Rng.swift in Sources */,
 				5AF0E45CCDFC8551C9391210 /* Game.swift in Sources */,
 				5AF0E083FCED023E1D208719 /* Hud.swift in Sources */,
 				5AF0EC322E4F35141F19DBBF /* MapGenerator.swift in Sources */,
@@ -759,6 +765,7 @@
 				5AF0ECF4F9D87293DCBD2BC5 /* SoundManager.swift in Sources */,
 				5AF0E5567DF4D604DF433C80 /* AudioEngine.swift in Sources */,
 				5AF0E1E1C49C10CDD9765A10 /* Weapon.swift in Sources */,
+				63148379282DB8F800547F21 /* Rng.swift in Sources */,
 				5AF0EE8CDADC01918B446581 /* Game.swift in Sources */,
 				5AF0E546E6A87AC63510A033 /* Hud.swift in Sources */,
 				5AF0E4FB8DBE9631056AB718 /* MapGenerator.swift in Sources */,
@@ -806,6 +813,7 @@
 				5AF0E0D68DE2A536FBAD4BD4 /* SoundManager.swift in Sources */,
 				5AF0E66FCA8AD982E9AB85B4 /* AudioEngine.swift in Sources */,
 				5AF0E4EE330302681C875D6B /* Weapon.swift in Sources */,
+				6314837A282DB8F800547F21 /* Rng.swift in Sources */,
 				5AF0ECE460899AE30373F1C9 /* Game.swift in Sources */,
 				5AF0E40F03A338C7CA4E3299 /* Hud.swift in Sources */,
 				5AF0E926416842C589CE6127 /* MapGenerator.swift in Sources */,

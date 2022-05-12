@@ -11,13 +11,17 @@ struct MapGenerator {
     // this makes it so we can adjust the level around them
     private var playerPosition: Float2!
     private var emptyTiles: [Float2] = []
-    private var wallTiles: Set<Float2> = []
+    private var wallTiles: [Float2] = []
     // need to know where the elevator is
     // this allows check for a path from the player position to the elevator
     private var elevatorPosition: Float2!
 
+    // generate some controlled random numbers
+    private var rng: Rng
+
     public init(mapData: MapData, index: Int) {
         map = Tilemap(mapData, index: index)
+        rng = Rng(seed: 1)
 
         // Find empty tiles
         // Find them in a systematic way so we don't have to sit around all day waiting
@@ -31,7 +35,7 @@ struct MapGenerator {
                         map[thing: x, y] = .switch
                     }
                     // keep track of the walls for push walls
-                    wallTiles.insert(position)
+                    wallTiles.append(position)
                 } else {
                     // once the elevator is located store it
                     if map[x, y] == .elevatorFloor {
@@ -93,7 +97,7 @@ struct MapGenerator {
                 }
                 // the tile is viable as a push wall
                 return false
-            }.randomElement())
+            }.randomElement(using: &rng))
         }
 
         // Add player
@@ -101,7 +105,7 @@ struct MapGenerator {
             playerPosition = emptyTiles.filter {
                 // remove all of the tiles that don't have a path to the elevator
                 findPath(from: $0, to: elevatorPosition, maxDistance: 1000).isEmpty == false
-            }.randomElement() // then pick a random valid tile as the player start
+            }.randomElement(using: &rng) // then pick a random valid tile as the player start
             add(.player, at: playerPosition)
         }
 
@@ -111,17 +115,17 @@ struct MapGenerator {
                         // give the player some breathing room
                         // 2.5 units of breathing room
                         (playerPosition - $0).length > 2.5
-                    }).randomElement())
+                    }).randomElement(using: &rng))
         }
 
         // Add healing potions
         for _ in 0 ..< (mapData.healingPotions ?? 0) {
-            add(.healingPotion, at: emptyTiles.randomElement())
+            add(.healingPotion, at: emptyTiles.randomElement(using: &rng))
         }
 
         // Add fire blasts
         for _ in 0 ..< (mapData.fireBlasts ?? 0) {
-            add(.fireBlast, at: emptyTiles.randomElement())
+            add(.fireBlast, at: emptyTiles.randomElement(using: &rng))
         }
     }
 }
