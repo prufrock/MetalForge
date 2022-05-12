@@ -11,6 +11,7 @@ struct MapGenerator {
     // this makes it so we can adjust the level around them
     private var playerPosition: Float2!
     private var emptyTiles: [Float2] = []
+    private var wallTiles: Set<Float2> = []
 
     public init(mapData: MapData, index: Int) {
         map = Tilemap(mapData, index: index)
@@ -21,7 +22,10 @@ struct MapGenerator {
             for x in 0 ..< map.width {
                 // the 0.5 offsets are so it's in the middle of the tile.
                 let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5)
-                if map[x, y].isWall == false {
+                if map[x, y].isWall {
+                    // keep track of the walls for push walls
+                    wallTiles.insert(position)
+                } else {
                     // it's not a wall!
                     switch map[thing: x, y] {
                     case .nothing:
@@ -48,6 +52,36 @@ struct MapGenerator {
                 || (!left.isWall && !right.isWall && up.isWall && down.isWall) {
                 add(.door, at: position)
             }
+        }
+
+        // Add push walls
+        for _ in 0 ..< (mapData.pushWalls ?? 0) {
+            add(.pushWall, at: wallTiles.filter { position in
+                let x = Int(position.x), y = Int(position.y)
+                guard x > 0, x < map.width - 1, y > 0, y < map.height - 1 else {
+                    return false // Outer wall
+                }
+                let left = map[x - 1, y], right = map[x + 1, y],
+                    up = map[x, y - 1], down = map[x, y + 1]
+                // if there's a wall to the left and right
+                // not above or below
+                // and there's 2 tiles above and below
+                // the tile can be a push wall
+                if left.isWall, right.isWall, !up.isWall, !down.isWall,
+                   !map[x, y - 2].isWall, !map[x, y + 2].isWall {
+                    return true
+                }
+                // if there's a wall above and below
+                // not to the left or right
+                // and there's 2 tiles to the left or right
+                // the tile can be a push wall
+                if !left.isWall, !right.isWall, up.isWall, down.isWall,
+                   !map[x - 2, y].isWall, !map[x + 2, y].isWall {
+                    return true
+                }
+                // the tile is viable as a push wall
+                return false
+            }.randomElement())
         }
 
         // Add monsters

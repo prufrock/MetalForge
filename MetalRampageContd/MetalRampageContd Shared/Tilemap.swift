@@ -30,6 +30,7 @@ struct MapData: Decodable {
     let monsters: Int?
     let healingPotions: Int?
     let fireBlasts: Int?
+    let pushWalls: Int?
 }
 
 public extension Tilemap {

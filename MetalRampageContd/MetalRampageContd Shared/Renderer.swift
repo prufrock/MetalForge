@@ -430,7 +430,7 @@ public class Renderer: NSObject {
                 return 15
             case .door2:
                  return 16
-            case .wall:
+            case .wall, .crackWall: // .crackWall can share with .wall for now
                 return 17
             case .slimeWall:
                 return 18
