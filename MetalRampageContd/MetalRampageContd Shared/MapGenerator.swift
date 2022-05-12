@@ -12,6 +12,9 @@ struct MapGenerator {
     private var playerPosition: Float2!
     private var emptyTiles: [Float2] = []
     private var wallTiles: Set<Float2> = []
+    // need to know where the elevator is
+    // this allows check for a path from the player position to the elevator
+    private var elevatorPosition: Float2!
 
     public init(mapData: MapData, index: Int) {
         map = Tilemap(mapData, index: index)
@@ -30,6 +33,11 @@ struct MapGenerator {
                     // keep track of the walls for push walls
                     wallTiles.insert(position)
                 } else {
+                    // once the elevator is located store it
+                    if map[x, y] == .elevatorFloor {
+                        elevatorPosition = position
+                    }
+
                     // it's not a wall!
                     switch map[thing: x, y] {
                     case .nothing:
@@ -88,6 +96,15 @@ struct MapGenerator {
             }.randomElement())
         }
 
+        // Add player
+        if playerPosition == nil {
+            playerPosition = emptyTiles.filter {
+                // remove all of the tiles that don't have a path to the elevator
+                findPath(from: $0, to: elevatorPosition, maxDistance: 1000).isEmpty == false
+            }.randomElement() // then pick a random valid tile as the player start
+            add(.player, at: playerPosition)
+        }
+
         // Add monsters
         for _ in 0 ..< (mapData.monsters ?? 0) {
             add(.monster, at: emptyTiles.filter({
@@ -120,5 +137,31 @@ private extension MapGenerator {
                 emptyTiles.remove(at: index)
             }
         }
+    }
+}
+
+extension MapGenerator: Graph {
+    typealias Node = Float2
+
+    func nodesConnectedTo(_ node: Node) -> [Node] {
+        // Gather all of the nodes around this node
+        [
+            Node(x: node.x - 1, y: node.y),
+            Node(x: node.x + 1, y: node.y),
+            Node(x: node.x, y: node.y - 1),
+            Node(x: node.x, y: node.y + 1),
+        ].filter { node in
+            // filter out all of the nodes that aren't walls
+            let x = Int(node.x), y = Int(node.y)
+            return map[x, y].isWall == false
+        }
+    }
+
+    func estimatedDistance(from a: Node, to b: Node) -> Float {
+        abs(b.x - a.x) + abs(b.y - a.y)
+    }
+
+    func stepDistance(from a: Node, to b: Node) -> Float {
+        1
     }
 }

@@ -14,7 +14,7 @@ public struct Tilemap {
 
     init(_ map: MapData, index: Int) {
         tiles = map.tiles
-        things = map.things
+        things = map.things ?? Array(repeating: .nothing, count: map.tiles.count)
         width = map.width
         self.index = index
     }
@@ -22,7 +22,7 @@ public struct Tilemap {
 
 struct MapData: Decodable {
     fileprivate let tiles: [Tile]
-    fileprivate let things: [Thing]
+    fileprivate let things: [Thing]? // If things aren't provided they are generated.
     fileprivate let width: Int
 
     // These are all optionals so the level designer can decide whether they should be generated.
