@@ -37,6 +37,19 @@ struct MapGenerator {
             }
         }
 
+        // Add doors
+        for position in emptyTiles {
+            let x = Int(position.x), y = Int(position.y)
+            let left = map[x - 1, y], right = map[x + 1, y],
+                up = map[x, y - 1], down = map[x, y + 1]
+            // look for matching walls either up and below the tile
+            // or left and right of the tile
+            if (left.isWall && right.isWall && !up.isWall && !down.isWall)
+                || (!left.isWall && !right.isWall && up.isWall && down.isWall) {
+                add(.door, at: position)
+            }
+        }
+
         // Add monsters
         for _ in 0 ..< (mapData.monsters ?? 0) {
             add(.monster, at: emptyTiles.filter({
