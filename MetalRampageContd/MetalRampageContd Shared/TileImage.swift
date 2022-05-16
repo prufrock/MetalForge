@@ -20,6 +20,12 @@ struct TileImage {
         Float2(0.2,0.0),
         Float2(0.0,0.0)]
 
+    /**
+     Initializes a TileImage by calculating the positions of the all of the tiles in World.
+     - Parameters:
+       - world: The world to create tiles from.
+       - wallColor: used when drawing the map or for debugging
+     */
     init(world: World, wallColor: Color = .white) {
         let map = world.map
         tile1 = [
