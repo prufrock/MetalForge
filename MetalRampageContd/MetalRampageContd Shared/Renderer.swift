@@ -245,7 +245,7 @@ public class Renderer: NSObject {
         let worldTransform = Float4x4.scaleY(-1)
 
         let mapCamera = Float4x4.identity()
-            * Float4x4.translate(x: -0.7, y: 0.9, z: 0)
+            * Float4x4.translate(x: -0.7, y: 0.9, z: 0.5)
                 .scaledBy(x: 0.03, y: 0.03, z: 1.0)
                 .scaledY(by: aspect)
 
@@ -1158,10 +1158,12 @@ public class Renderer: NSObject {
     }
 
     private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+        // TODO replace drawMap with an overheard view of the world
         //Draw map
         var renderables: [RNDRObject] = TileImage(world: world).tiles
                 .filter { $0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall || $0.1 == .elevatorSideWall || $0.1 == .elevatorBackWall }
                 .map { $0.0 }
+        let tileAdjust: Float = -0.5 // needed after moving the world tiles -0.5 units on x and y
         //Draw player
         renderables.append(world.player.rect.renderableObject())
 
@@ -1176,7 +1178,7 @@ public class Renderer: NSObject {
             RNDRObject(vertices: [
                 viewStart.toFloat3(),
                 viewEnd.toFloat3()
-            ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .red, primitiveType: .line, position: Int2())
+            ], uv: [], transform: Float4x4.translate(x: tileAdjust, y: tileAdjust, z: 0.0), color: .red, primitiveType: .line, position: Int2())
         )
         // Cast rays
         let columns = 3
@@ -1203,7 +1205,7 @@ public class Renderer: NSObject {
                 RNDRObject(vertices: [
                     ray.origin.toFloat3(),
                     end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
+                ], uv: [], transform: Float4x4.translate(x: tileAdjust, y: tileAdjust, z: 0.0), color: .green, primitiveType: .line, position: Int2())
             )
             columnPosition += step
         }
@@ -1214,10 +1216,11 @@ public class Renderer: NSObject {
                 RNDRObject(vertices: [
                     line.start.toFloat3(),
                     line.end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
+                ], uv: [], transform: Float4x4.translate(x: tileAdjust, y: tileAdjust, z: 0.0), color: .green, primitiveType: .line, position: Int2())
             )
         }
 
+        // TODO Drawing the walls in this way isn't needed anymore so delete this.
         columnPosition = viewStart
         let bitmapHeight = 1
         for x in 0 ..< columns {
