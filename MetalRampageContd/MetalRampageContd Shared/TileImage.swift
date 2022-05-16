@@ -58,7 +58,7 @@ struct TileImage {
     //TODO find a home for these
     private func rotateY(_ angle: Float) -> Float4x4 {
         Float4x4.identity()
-            * Float4x4.translate(x: Float(0.5), y: Float(0.5), z: 0.5)
+            * Float4x4.translate(x: 0.5, y: 0.5, z: 0.5)
             * Float4x4.rotateY(angle)
             * Float4x4.translate(x: -0.5, y: -0.5, z: -0.5)
     }
