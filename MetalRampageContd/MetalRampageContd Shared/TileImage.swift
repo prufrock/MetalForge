@@ -22,6 +22,7 @@ struct TileImage {
      */
     init(world: World, wallColor: Color = .white) {
         let map = world.map
+        // only for the drawMap
         tile1 = [
             Float3(-0.5, -0.5, 0.0),
             Float3(-0.5, 0.5, 0.0),
@@ -37,16 +38,16 @@ struct TileImage {
             for x in 0 ..< map.width {
                 if map[x, y].isWall {
                     let wallTiles = world.wallTiles(at: x, y)
-                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y), z: 0), wallColor, .triangle, map[x, y], Int2(x, y))) // bottom
-//                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y), z: 1.0) * Float4x4.rotateX(.pi), .white, .triangle, map[x, y], Int2(x, y))) //top, off because it overlaps with the ceiling tiles on some tiles
-                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 1.0, y: Float(y), z: 1.0) * Float4x4.rotateY(.pi/2), .black, .triangle, wallTiles.east, Int2(x, y)))
-                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 1.0, y: Float(y) + 1.0, z: 1.0) * Float4x4.rotateZ(.pi/2) * Float4x4.rotateY(.pi/2), .black, .triangle, wallTiles.north, Int2(x, y)))
-                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y), z: 1.0) * Float4x4.rotateZ((3 * .pi)/2) * Float4x4.rotateY(.pi/2), .black, .triangle, wallTiles.south, Int2(x, y)))
-                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y) + 1.0, z: 1.0) * Float4x4.rotateZ((2 * .pi)/2) * Float4x4.rotateY(.pi/2), .black, .triangle, wallTiles.west, Int2(x, y)))
+                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 0.5, y: Float(y) + 0.5, z: 0) * Float4x4.rotateX(.pi), wallColor, .triangle, map[x, y], Int2(x, y))) // bottom
+//                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y), z: 1.0), .white, .triangle, map[x, y], Int2(x, y))) //top, off because it overlaps with the ceiling tiles on some tiles
+                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y) + 0.5, z: 0.5) * Float4x4.rotateY(.pi/2), .black, .triangle, wallTiles.west, Int2(x, y)))
+                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 1.0, y: Float(y) + 0.5, z: 0.5) * Float4x4.rotateZ((2 * .pi)/2) * Float4x4.rotateY(.pi/2), .black, .triangle, wallTiles.east, Int2(x, y)))
+                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 0.5, y: Float(y) + 1.0, z: 0.5) * Float4x4.rotateZ((3 * .pi)/2) * Float4x4.rotateY(.pi/2), .black, .triangle, wallTiles.north, Int2(x, y)))
+                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 0.5, y: Float(y), z: 0.5) * Float4x4.rotateZ(.pi/2) * Float4x4.rotateY(.pi/2), .black, .triangle, wallTiles.south, Int2(x, y)))
                 }
                 if !map[x, y].isWall {
-                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x), y: Float(y), z: 0), wallColor, .triangle, map[x, y], Int2(x, y)))
-                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 1.0, y: Float(y), z: 1.0)  * Float4x4.rotateY(.pi), wallColor, .triangle, .ceiling, Int2(x, y)))
+                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 0.5, y: Float(y) + 0.5, z: 0.0) * Float4x4.rotateY(.pi), wallColor, .triangle, map[x, y], Int2(x, y)))
+                    myTiles.append((tile1, texCoords, Float4x4.translate(x: Float(x) + 0.5, y: Float(y) + 0.5, z: 1.0), wallColor, .triangle, .ceiling, Int2(x, y)))
                 }
             }
         }

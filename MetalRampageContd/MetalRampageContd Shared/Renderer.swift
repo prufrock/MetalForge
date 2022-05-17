@@ -1115,21 +1115,25 @@ public class Renderer: NSObject {
 
     private func initializeWorldTilesBuffer(world: World) {
         worldTilesBuffers = Array()
-        let index: [UInt16] = [0, 1, 2, 0, 3, 1]
-
-        // is something getting flipped somewhere?
-        let  uvCoords = [
-            Float2(0.0,0.0),
-            Float2(1.0,1.0),
-            Float2(1.0,0.0),
-            Float2(0.0,1.0),
-        ]
+        let index: [UInt16] = [0, 1, 2, 3, 4, 5]
 
         let vertices = [
-            Float3(0.0, 0.0, 0.0),
-            Float3(1.0, 1.0, 0.0),
-            Float3(0.0, 1.0, 0.0),
-            Float3(1.0, 0.0, 0.0),
+            Float3(-0.5, -0.5, 0.0),
+            Float3(-0.5, 0.5, 0.0),
+            Float3(0.5, 0.5, 0.0),
+
+            Float3(0.5, 0.5, 0.0),
+            Float3(0.5, -0.5, 0.0),
+            Float3(-0.5, -0.5, 0.0),
+        ]
+
+        let  uvCoords = [
+            Float2(0.0, 1.0),
+            Float2(0.0 ,0.0),
+            Float2(1.0, 0.0),
+            Float2(1.0, 0.0),
+            Float2(1.0, 1.0),
+            Float2(0.0, 1.0),
         ]
 
         Tile.allCases.forEach { tile in
@@ -1166,7 +1170,8 @@ public class Renderer: NSObject {
                 // going to need a way to rip off the ceiling or show only the floor for that
                 .filter { $0.0.color == .white && ($0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall || $0.1 == .elevatorSideWall || $0.1 == .elevatorBackWall) }
                 .map { $0.0 }
-        let tileAdjust: Float = -0.5 // needed after moving the world tiles -0.5 units on x and y
+        // TODO Remove tileAdjust?
+        let tileAdjust: Float = 0.0 // needed after moving the world tiles -0.5 units on x and y
         //Draw player
         renderables.append(world.player.rect.renderableObject())
 
