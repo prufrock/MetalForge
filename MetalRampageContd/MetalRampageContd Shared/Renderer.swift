@@ -1220,40 +1220,6 @@ public class Renderer: NSObject {
             )
         }
 
-        // TODO Drawing the walls in this way isn't needed anymore so delete this.
-        columnPosition = viewStart
-        let bitmapHeight = 1
-        for x in 0 ..< columns {
-            let rayDirection = columnPosition - world.player.position
-            let viewPlaneDistance = rayDirection.length
-            let ray = Ray(
-                origin: world.player.position,
-                direction: rayDirection / viewPlaneDistance
-            )
-            let end = world.map.hitTest(ray)
-            let wallDistance = (end - ray.origin).length
-
-
-            let drawWalls = false
-            if (drawWalls) {
-                let wallHeight:Float = 5.0
-                let height = wallHeight * focalLength / wallDistance * Float(1.0)
-                let wallColor: Color
-                if end.x.rounded(.down) == end.x {
-                    wallColor = .white
-                } else {
-                    wallColor = .grey
-                }
-                renderables.append(
-                    RNDRObject(vertices: [
-                        Float3(x: Float(x), y: Float(bitmapHeight) - height, z: 0.0),
-                        Float3(x: Float(x), y: Float(bitmapHeight) + height, z: 0.0),
-                    ], uv: [], transform: Float4x4.translate(x: -7.0, y: 2.0, z: 0.0).scaledBy(x: 0.1, y: 1.0, z: 1.0), color: wallColor, primitiveType: .line, position: Int2())
-                )
-            }
-            columnPosition += step
-        }
-
         renderables.forEach { rndrObject in
             let buffer = device.makeBuffer(bytes: rndrObject.vertices, length: MemoryLayout<Float3>.stride * rndrObject.vertices.count, options: [])
 
