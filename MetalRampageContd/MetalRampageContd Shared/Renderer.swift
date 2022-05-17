@@ -1161,7 +1161,10 @@ public class Renderer: NSObject {
         // TODO replace drawMap with an overheard view of the world
         //Draw map
         var renderables: [RNDRObject] = TileImage(world: world).tiles
-                .filter { $0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall || $0.1 == .elevatorSideWall || $0.1 == .elevatorBackWall }
+                // filtering white tiles is a goofy shortcut so that only the floor tiles are used for the map
+                // eventually this should be replaced with a proper overhead view of the world
+                // going to need a way to rip off the ceiling or show only the floor for that
+                .filter { $0.0.color == .white && ($0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall || $0.1 == .elevatorSideWall || $0.1 == .elevatorBackWall) }
                 .map { $0.0 }
         let tileAdjust: Float = -0.5 // needed after moving the world tiles -0.5 units on x and y
         //Draw player
