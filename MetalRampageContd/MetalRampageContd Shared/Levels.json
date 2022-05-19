@@ -1,7 +1,7 @@
 [
   {
     "width": 8,
-    "monsters": 0,
+    "monsters": 3,
     "healingPotions": 2,
     "fireBlasts": 1,
     "pushWalls": 1,

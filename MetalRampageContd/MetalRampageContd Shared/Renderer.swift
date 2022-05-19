@@ -210,22 +210,21 @@ public class Renderer: NSObject {
         // TODO: I think the textures are loading in too dark
         titleScreen[.titleLogo] = loadTexture(name: "TitleLogo")!
 
-        model[.unitSquare] = Model(vertices:[
-                                   Float3(-0.5, -0.5, 0.0),
-                                   Float3(-0.5, 0.5, 0.0),
-                                   Float3(0.5, 0.5, 0.0),
-
-                                   Float3(0.5, 0.5, 0.0),
-                                   Float3(0.5, -0.5, 0.0),
-                                   Float3(-0.5, -0.5, 0.0)],
+        model[.unitSquare] = Model(
+                                   vertices: [
+                                       Float3(-0.5, -0.5, 0.0),
+                                       Float3(-0.5, 0.5, 0.0),
+                                       Float3(0.5, 0.5, 0.0),
+                                       Float3(0.5, -0.5, 0.0),
+                                   ],
                                    uv: [
                                        Float2(0.0, 1.0),
                                        Float2(0.0 ,0.0),
                                        Float2(1.0, 0.0),
-                                       Float2(1.0, 0.0),
                                        Float2(1.0, 1.0),
-                                       Float2(0.0, 1.0),
-                                   ])
+                                   ],
+                                   index: [0, 1, 2, 2, 3, 0]
+        )
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -381,19 +380,10 @@ public class Renderer: NSObject {
     func drawIndexedSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         // TODO RNDRObject?
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Texture)] = []
+        let model = model[.unitSquare]!
 
         renderables += world.sprites.map { billboard in
-            ([
-                Float3(-0.5, -0.5, 0.0), // lower left
-                Float3(0.5, 0.5, 0.0), // upper right
-                Float3(-0.5, 0.5, 0.0), // upper left
-                Float3(0.5, -0.5, 0.0), // lower right
-            ], [
-                Float2(1.0,1.0),
-                Float2(0.0,0.0),
-                Float2(1.0,0.0),
-                Float2(0.0,1.0),
-            ],
+            (model.vertices, model.uv,
                 Float4x4.identity()
                     * Float4x4.translate(x: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
                     * (Float4x4.identity()
@@ -464,7 +454,7 @@ public class Renderer: NSObject {
             }
         }
 
-        let index: [UInt16] = [0, 1, 2, 0, 3, 1]
+        let index: [UInt16] = model.index
 
         let vertices = renderables[0].0
         let texCoords = renderables[0].1
@@ -604,28 +594,12 @@ public class Renderer: NSObject {
     }
 
     private func drawWeapon(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
-        let vertices = [
-            Float3(0.0, 0.0, 0.0),
-            Float3(0.0, 1.0, 0.0),
-            Float3(1.0, 1.0, 0.0),
+        let model = model[.unitSquare]!
 
-            Float3(1.0, 1.0, 0.0),
-            Float3(1.0, 0.0, 0.0),
-            Float3(0.0, 0.0, 0.0),
-        ]
+        let buffer = device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
+        let coordsBuffer = device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])!
 
-        let  uvCoords = [
-            Float2(0.0, 1.0),
-            Float2(0.0 ,0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 1.0),
-            Float2(0.0, 1.0),
-        ]
-
-        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-        let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
-
+        // TODO convert to sprite sheets
         // select the texture
         var textureId: UInt32
         switch world.player.animation.texture {
@@ -656,7 +630,7 @@ public class Renderer: NSObject {
         var pixelSize = 1
 
         var finalTransform = camera
-            * Float4x4.translate(x: -1.0, y: -1.0, z: 0.1)
+            * Float4x4.translate(x: 0.0, y: 0.0, z: 0.1)
             * Float4x4.scale(x: 2.0, y: 2.0, z: 0.0)
 
         encoder.setRenderPipelineState(texturePipeline)
@@ -683,7 +657,7 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(fireBlast[.fireBlastFire2]!, index: 7)
         encoder.setFragmentTexture(fireBlast[.fireBlastFire3]!, index: 8)
         encoder.setFragmentTexture(fireBlast[.fireBlastFire4]!, index: 9)
-        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
+        encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: model.allVertices().count)
     }
 
     private func drawHud(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
@@ -692,27 +666,7 @@ public class Renderer: NSObject {
     }
 
     private func drawHealth(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
-        // TODO put this somewhere shareable
-        // TODO reduce to 4 vertices when indexed
-        // a centered square
-        let vertices = [
-            Float3(-0.5, -0.5, 0.0),
-            Float3(-0.5, 0.5, 0.0),
-            Float3(0.5, 0.5, 0.0),
-
-            Float3(0.5, 0.5, 0.0),
-            Float3(0.5, -0.5, 0.0),
-            Float3(-0.5, -0.5, 0.0),
-        ]
-
-        let  uvCoords = [
-            Float2(0.0, 1.0),
-            Float2(0.0 ,0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 1.0),
-            Float2(0.0 , 1.0),
-        ]
+        let model = model[.unitSquare]!
 
         let heartSpace: Float = 0.11
         // the hudCamera adjusts x by the aspect ratio so the x needs to be adjusted by the aspect here as well.
@@ -723,8 +677,8 @@ public class Renderer: NSObject {
         let healthTint: Color = hud.healthTint
 
         let heart1: (RNDRObject, Texture, UInt32) = (RNDRObject(
-            vertices: vertices,
-            uv: uvCoords,
+            vertices: model.allVertices(),
+            uv: model.allUv(),
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 0, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: .black,
             primitiveType: .triangle,
@@ -732,8 +686,8 @@ public class Renderer: NSObject {
         ), .healthIcon, 100)
 
         let health1: (RNDRObject, Texture, UInt32) = (RNDRObject(
-            vertices: vertices,
-            uv: uvCoords,
+            vertices: model.allVertices(),
+            uv: model.allUv(),
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 1, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: healthTint,
             primitiveType: .triangle,
@@ -741,8 +695,8 @@ public class Renderer: NSObject {
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 0) ?? 0)) ?? 0))
 
         let health2: (RNDRObject, Texture, UInt32) = (RNDRObject(
-            vertices: vertices,
-            uv: uvCoords,
+            vertices: model.allVertices(),
+            uv: model.allUv(),
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 2, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: healthTint,
             primitiveType: .triangle,
@@ -750,8 +704,8 @@ public class Renderer: NSObject {
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 1) ?? 0)) ?? 0))
 
         let health3: (RNDRObject, Texture, UInt32) = (RNDRObject(
-            vertices: vertices,
-            uv: uvCoords,
+            vertices: model.allVertices(),
+            uv: model.allUv(),
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 3, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: healthTint,
             primitiveType: .triangle,
@@ -803,9 +757,9 @@ public class Renderer: NSObject {
         let color = healthTint
         let primitiveType = renderables[0].0.primitiveType
 
-        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        let buffer = device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
         let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
-        let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])
+        let coordsBuffer = device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])
 
         var pixelSize = 1
 
@@ -847,32 +801,12 @@ public class Renderer: NSObject {
     }
 
     private func drawHudElements(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
-        // TODO put this somewhere shareable
-        // TODO reduce to 4 vertices when indexed
-        // a centered square
-        let vertices = [
-            Float3(-0.5, -0.5, 0.0),
-            Float3(-0.5, 0.5, 0.0),
-            Float3(0.5, 0.5, 0.0),
-
-            Float3(0.5, 0.5, 0.0),
-            Float3(0.5, -0.5, 0.0),
-            Float3(-0.5, -0.5, 0.0),
-        ]
-
-        let  uvCoords = [
-            Float2(0.0, 1.0),
-            Float2(0.0 ,0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 1.0),
-            Float2(0.0 , 1.0),
-        ]
+        let model = model[.unitSquare]!
 
         // TODO: Add Texture to RNDRObject?
         let crossHairs: (RNDRObject, Texture, UInt32?) = (RNDRObject(
-            vertices: vertices,
-            uv: uvCoords,
+            vertices: model.allVertices(),
+            uv: model.allUv(),
             transform: Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
             color: .white,
             primitiveType: .triangle,
@@ -894,8 +828,8 @@ public class Renderer: NSObject {
         let charges = String(Int(max(0, min(99, Int(hud.chargesString) ?? 0)))).leftPadding(toLength: 2, withPad: "0")
 
         let charges1: (RNDRObject, Texture, UInt32) = (RNDRObject(
-            vertices: vertices,
-            uv: uvCoords,
+            vertices: model.allVertices(),
+            uv: model.allUv(),
             transform: Float4x4.translate(x: chargesStart.x - fontSpace * 1, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: .white,
             primitiveType: .triangle,
@@ -903,8 +837,8 @@ public class Renderer: NSObject {
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(charges.charInt(at: 0) ?? 0)) ?? 0))
 
         let charges2: (RNDRObject, Texture, UInt32) = (RNDRObject(
-            vertices: vertices,
-            uv: uvCoords,
+            vertices: model.allVertices(),
+            uv: model.allUv(),
             transform: Float4x4.translate(x: chargesStart.x - fontSpace * 0, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: .white,
             primitiveType: .triangle,
@@ -912,8 +846,8 @@ public class Renderer: NSObject {
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(charges.charInt(at: 1) ?? 0)) ?? 0))
 
         let chargesIcon: (RNDRObject, Texture, UInt32) = (RNDRObject(
-            vertices: vertices,
-            uv: uvCoords,
+            vertices: model.allVertices(),
+            uv: model.allUv(),
             transform: Float4x4.translate(x: chargesStart.x - fontSpace * 2, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: .black,
             primitiveType: .triangle,
@@ -947,9 +881,9 @@ public class Renderer: NSObject {
         let color = renderables[0].0.color
         let primitiveType = renderables[0].0.primitiveType
 
-        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        let buffer = device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
         let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
-        let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])
+        let coordsBuffer = device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])
 
         var pixelSize = 1
 
@@ -990,25 +924,7 @@ public class Renderer: NSObject {
     }
 
     private func drawTitleScreen(game: Game, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
-        // a centered square
-        let vertices = [
-            Float3(-0.5, -0.5, 0.0),
-            Float3(-0.5, 0.5, 0.0),
-            Float3(0.5, 0.5, 0.0),
-
-            Float3(0.5, 0.5, 0.0),
-            Float3(0.5, -0.5, 0.0),
-            Float3(-0.5, -0.5, 0.0),
-        ]
-
-        let  uvCoords = [
-            Float2(0.0, 1.0),
-            Float2(0.0 ,0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 1.0),
-            Float2(0.0 , 1.0),
-        ]
+        let model = model[.unitSquare]!
 
         var fontSpriteSheet = SpriteSheet(textureWidth: 148, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
         //TODO pass a sprite index for instance being rendered
@@ -1017,8 +933,8 @@ public class Renderer: NSObject {
 
         // TODO: Add Texture to RNDRObject?
         let titleLogo: (RNDRObject, Texture, UInt32?) = (RNDRObject(
-            vertices: vertices,
-            uv: uvCoords,
+            vertices: model.allVertices(),
+            uv: model.allUv(),
             transform: Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
             color: .white,
             primitiveType: .triangle,
@@ -1031,8 +947,8 @@ public class Renderer: NSObject {
         for index in 0..<game.titleText.count {
             let character = game.titleText.char(at: index)!
             let text: (RNDRObject, Texture, UInt32) = (RNDRObject(
-                vertices: vertices,
-                uv: uvCoords,
+                vertices: model.allVertices(),
+                uv: model.allUv(),
                 transform: Float4x4.translate(x: (aspect * 0.0) + (-1 * Float(game.titleText.count - 1) / 2 * 0.01) + (0.01 * Float(index)) , y: -0.1, z: 0.0) * Float4x4.scale(x: 0.008, y: 0.01, z: 0.0),
                 color: .yellow,
                 primitiveType: .triangle,
@@ -1059,18 +975,17 @@ public class Renderer: NSObject {
         let color = renderables[1].0.color
         let primitiveType = renderables[0].0.primitiveType
 
-        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        let buffer = device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
         let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
-        let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])
+        let coordsBuffer = device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])
 
         var pixelSize = 1
 
         var finalTransform = camera * Float4x4.scale(x: 8.5 * aspect, y: 8.5, z: 0)
 
         encoder.setRenderPipelineState(textureIndexedSpriteSheetPipeline)
-        // TODO better understand why removing the depth stencil state allows effects to apply over the title screen
+        // TODO why can't I have the depth stencil and the text on the bottom of the screen?
         // encoder.setDepthStencilState(depthStencilState)
-        // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
         encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
@@ -1142,9 +1057,9 @@ public class Renderer: NSObject {
 
         Tile.allCases.forEach { tile in
             worldTiles!.filter {$0.1 == tile}.chunked(into: 64).forEach { chunk in
-                let buffer = device.makeBuffer(bytes: model.vertices, length: MemoryLayout<Float3>.stride * model.vertices.count, options: [])!
+                let buffer = device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])!
                 let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
-                let coordsBuffer = device.makeBuffer(bytes: model.uv, length: MemoryLayout<Float2>.stride * model.uv.count, options: [])!
+                let coordsBuffer = device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])!
                 let indexedObjTransform = chunk.map { (rndrObject, _)-> Float4x4 in
                     rndrObject.transform
                 }
