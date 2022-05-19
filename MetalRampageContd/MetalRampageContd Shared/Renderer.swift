@@ -40,10 +40,14 @@ public class Renderer: NSObject {
     var hud: [Texture:MTLTexture?] = [:]
     var titleScreen: [Texture:MTLTexture?] = [:]
 
+    // models
+    var model: [ModelLabel:Model] = [:]
+
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
     var worldTilesBuffers: [MetalTileBuffers]?
 
+    // TODO do less stuff in init
     public init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
 
@@ -205,6 +209,23 @@ public class Renderer: NSObject {
         hud[.font] = loadTexture(name: "Font")!
         // TODO: I think the textures are loading in too dark
         titleScreen[.titleLogo] = loadTexture(name: "TitleLogo")!
+
+        model[.unitSquare] = Model(vertices:[
+                                   Float3(-0.5, -0.5, 0.0),
+                                   Float3(-0.5, 0.5, 0.0),
+                                   Float3(0.5, 0.5, 0.0),
+
+                                   Float3(0.5, 0.5, 0.0),
+                                   Float3(0.5, -0.5, 0.0),
+                                   Float3(-0.5, -0.5, 0.0)],
+                                   uv: [
+                                       Float2(0.0, 1.0),
+                                       Float2(0.0 ,0.0),
+                                       Float2(1.0, 0.0),
+                                       Float2(1.0, 0.0),
+                                       Float2(1.0, 1.0),
+                                       Float2(0.0, 1.0),
+                                   ])
     }
 
     public func updateAspect(width: Float, height: Float) {
@@ -1117,30 +1138,13 @@ public class Renderer: NSObject {
         worldTilesBuffers = Array()
         let index: [UInt16] = [0, 1, 2, 3, 4, 5]
 
-        let vertices = [
-            Float3(-0.5, -0.5, 0.0),
-            Float3(-0.5, 0.5, 0.0),
-            Float3(0.5, 0.5, 0.0),
-
-            Float3(0.5, 0.5, 0.0),
-            Float3(0.5, -0.5, 0.0),
-            Float3(-0.5, -0.5, 0.0),
-        ]
-
-        let  uvCoords = [
-            Float2(0.0, 1.0),
-            Float2(0.0 ,0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 0.0),
-            Float2(1.0, 1.0),
-            Float2(0.0, 1.0),
-        ]
+        let model = model[.unitSquare]! // it better be there!
 
         Tile.allCases.forEach { tile in
             worldTiles!.filter {$0.1 == tile}.chunked(into: 64).forEach { chunk in
-                let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])!
+                let buffer = device.makeBuffer(bytes: model.vertices, length: MemoryLayout<Float3>.stride * model.vertices.count, options: [])!
                 let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
-                let coordsBuffer = device.makeBuffer(bytes: uvCoords, length: MemoryLayout<Float2>.stride * uvCoords.count, options: [])!
+                let coordsBuffer = device.makeBuffer(bytes: model.uv, length: MemoryLayout<Float2>.stride * model.uv.count, options: [])!
                 let indexedObjTransform = chunk.map { (rndrObject, _)-> Float4x4 in
                     rndrObject.transform
                 }
