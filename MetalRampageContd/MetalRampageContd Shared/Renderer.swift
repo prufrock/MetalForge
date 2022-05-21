@@ -262,8 +262,6 @@ public class Renderer: NSObject {
                        """)
         }
 
-        let worldTransform = Float4x4.scaleY(-1)
-
         let mapCamera = Float4x4.identity()
             * Float4x4.translate(x: -0.7, y: 0.9, z: 0.5)
                 .scaledBy(x: 0.03, y: 0.03, z: 1.0)
@@ -282,7 +280,7 @@ public class Renderer: NSObject {
                 .scaledX(by: 1/aspect)
 
         if (onlyTitle) {
-            drawTitleScreen(game: game, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+            drawTitleScreen(game: game, encoder: encoder, camera: hudCamera)
         } else {
 
             drawReferenceMarkers(world: game.world, encoder: encoder, camera: playerCamera)
@@ -294,15 +292,15 @@ public class Renderer: NSObject {
             drawIndexedSprites(world: game.world, encoder: encoder, camera: playerCamera)
 
             if game.world.showMap {
-                drawMap(world: game.world, encoder: encoder, camera: mapCamera, worldTransform: worldTransform)
+                drawMap(world: game.world, encoder: encoder, camera: mapCamera)
             }
 
-            drawHud(world: game.world, hud: game.hud, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+            drawHud(world: game.world, hud: game.hud, encoder: encoder, camera: hudCamera)
 
-            drawWeapon(world: game.world, encoder: encoder, camera: hudCamera, worldTransform: worldTransform)
+            drawWeapon(world: game.world, encoder: encoder, camera: hudCamera)
         }
         // always draw effects so the title screen can fade out
-        drawEffects(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera, worldTransform: worldTransform)
+        drawEffects(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera)
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -589,7 +587,7 @@ public class Renderer: NSObject {
         }
     }
 
-    private func drawWeapon(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+    private func drawWeapon(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = model[.unitSquare]!
 
         let buffer = device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
@@ -656,12 +654,12 @@ public class Renderer: NSObject {
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: model.allVertices().count)
     }
 
-    private func drawHud(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
-        drawHealth(world: world, hud: hud, encoder: encoder, camera: camera, worldTransform: worldTransform)
-        drawHudElements(world: world, hud: hud, encoder: encoder, camera: camera, worldTransform: worldTransform)
+    private func drawHud(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+        drawHealth(world: world, hud: hud, encoder: encoder, camera: camera)
+        drawHudElements(world: world, hud: hud, encoder: encoder, camera: camera)
     }
 
-    private func drawHealth(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+    private func drawHealth(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = model[.unitSquare]!
 
         let heartSpace: Float = 0.11
@@ -796,7 +794,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawHudElements(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+    private func drawHudElements(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = model[.unitSquare]!
 
         // TODO: Add Texture to RNDRObject?
@@ -919,7 +917,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawTitleScreen(game: Game, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+    private func drawTitleScreen(game: Game, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = model[.unitSquare]!
 
         var fontSpriteSheet = SpriteSheet(textureWidth: 148, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
@@ -1011,7 +1009,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawEffects(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+    private func drawEffects(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         effects.forEach { effect in
             let vertices = [
                 Float3(0.0, 0.0, 0.0),
@@ -1076,7 +1074,7 @@ public class Renderer: NSObject {
         }
     }
 
-    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, worldTransform: Float4x4) {
+    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         // TODO replace drawMap with an overheard view of the world
         //Draw map
         var renderables: [RNDRObject] = TileImage(world: world).tiles
@@ -1148,7 +1146,10 @@ public class Renderer: NSObject {
 
             var pixelSize = 1
 
-            var finalTransform = camera * worldTransform * rndrObject.transform
+            var finalTransform =
+                camera
+                * Float4x4.scaleY(-1) // flip the map around the y axis
+                * rndrObject.transform
 
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setCullMode(.back)
