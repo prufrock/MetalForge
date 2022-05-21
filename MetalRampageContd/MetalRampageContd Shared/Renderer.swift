@@ -272,11 +272,11 @@ public class Renderer: NSObject {
         let playerCamera = Float4x4.identity()
             * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
             * (Float4x4.identity()
-                * Float4x4.translate(x: 0.0, y: 0.0, z: 0.5)
-                * game.world.player.position.toTranslation()
-                * Float4x4.rotateX(-(3 * .pi)/2)
-                * (game.world.player.direction3d.scaledBy(x: 1.0, y: 1.0, z: 1.0))
-              ).inverse
+                * Float4x4.translate(x: 0.0, y: 0.0, z: 0.5) // move the camera to the middle of vertical tiles.
+                * game.world.player.position.toTranslation() // move the camera
+                * Float4x4.rotateX(.pi/2) // rotate the planes so that +x is right, +y is forward, and +z is down
+                * (game.world.player.direction3d) // make sure the camera points out from the players
+              ).inverse // flip all of these things around because the camera stays put while the world moves
 
         let hudCamera = Float4x4.identity()
                 .scaledX(by: 1/aspect)
