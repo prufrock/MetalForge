@@ -1083,8 +1083,6 @@ public class Renderer: NSObject {
                 // going to need a way to rip off the ceiling or show only the floor for that
                 .filter { $0.0.color == .white && ($0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall || $0.1 == .elevatorSideWall || $0.1 == .elevatorBackWall) }
                 .map { $0.0 }
-        // TODO Remove tileAdjust?
-        let tileAdjust: Float = 0.0 // needed after moving the world tiles -0.5 units on x and y
         //Draw player
         renderables.append(world.player.rect.renderableObject())
 
@@ -1099,7 +1097,7 @@ public class Renderer: NSObject {
             RNDRObject(vertices: [
                 viewStart.toFloat3(),
                 viewEnd.toFloat3()
-            ], uv: [], transform: Float4x4.translate(x: tileAdjust, y: tileAdjust, z: 0.0), color: .red, primitiveType: .line, position: Int2())
+            ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .red, primitiveType: .line, position: Int2())
         )
         // Cast rays
         let columns = 3
@@ -1126,7 +1124,7 @@ public class Renderer: NSObject {
                 RNDRObject(vertices: [
                     ray.origin.toFloat3(),
                     end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: tileAdjust, y: tileAdjust, z: 0.0), color: .green, primitiveType: .line, position: Int2())
+                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
             )
             columnPosition += step
         }
@@ -1137,7 +1135,7 @@ public class Renderer: NSObject {
                 RNDRObject(vertices: [
                     line.start.toFloat3(),
                     line.end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: tileAdjust, y: tileAdjust, z: 0.0), color: .green, primitiveType: .line, position: Int2())
+                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
             )
         }
 
