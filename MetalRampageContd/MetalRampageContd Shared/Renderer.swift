@@ -272,7 +272,6 @@ public class Renderer: NSObject {
         let playerCamera = Float4x4.identity()
             * Float4x4.perspectiveProjection(fov: Float(60.0.toRadians()), aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
             * (Float4x4.identity()
-                .scaledBy(x: 0.2, y: 0.2, z: 0.2)
                 * Float4x4.translate(x: 0.0, y: 0.0, z: 0.5)
                 * game.world.player.position.toTranslation()
                 * Float4x4.rotateX(-(3 * .pi)/2)
@@ -397,8 +396,6 @@ public class Renderer: NSObject {
                 , Color.black, MTLPrimitiveType.triangle, billboard.texture)
         }
 
-        let worldTransform = Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
-
         // if there's nothing to render bail out
         guard renderables.count > 0 else {
             return
@@ -467,7 +464,7 @@ public class Renderer: NSObject {
 
         var pixelSize = 1
 
-        var finalTransform = camera * worldTransform
+        var finalTransform = camera
 
         encoder.setRenderPipelineState(textureIndexedPipeline)
         encoder.setDepthStencilState(depthStencilState)
@@ -516,7 +513,6 @@ public class Renderer: NSObject {
     }
 
     private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        let worldTransform = Float4x4.scale(x: 0.2, y: 0.2, z: 0.2)
 
         let color = Color.black
         let primitiveType = MTLPrimitiveType.triangle
@@ -534,7 +530,7 @@ public class Renderer: NSObject {
 
             var pixelSize = 1
 
-            var finalTransform = camera * worldTransform
+            var finalTransform = camera
 
             var texture: MTLTexture = colorMapTexture
 
