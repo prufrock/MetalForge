@@ -13,6 +13,8 @@
 		5AF0E1E1C49C10CDD9765A10 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E62A45CAB2481AE93A5E /* Weapon.swift */; };
 		5AF0E2795700BE109D38D018 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */; };
 		5AF0E27B2F7E5CD77C636406 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */; };
+		5AF0E2F916AEA7F8F48F1881 /* RNDRPipelineCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalogue.swift */; };
+		5AF0E30F80E0BCF9A78001C1 /* RNDRPipelineCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalogue.swift */; };
 		5AF0E39420DC7EDA8B23E88F /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3AFA423D30605A1C56D /* Switch.swift */; };
 		5AF0E3D1E041257B8F4CFF87 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34EF644B0191228B1AB /* Texture.swift */; };
 		5AF0E40F03A338C7CA4E3299 /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E80D020726CE8A3743AD /* Hud.swift */; };
@@ -39,6 +41,7 @@
 		5AF0E85D4EBEB4E9719368C1 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */; };
 		5AF0E8EA5D9A04A7D52924CC /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7F0E05A621E275B3C0A /* SoundManager.swift */; };
 		5AF0E926416842C589CE6127 /* MapGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB67075B8B0ED9602F1B /* MapGenerator.swift */; };
+		5AF0E95FD461F663BCC9E34E /* RNDRPipelineCatalogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalogue.swift */; };
 		5AF0E9A0138057E81E4D2C0D /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */; };
 		5AF0E9A22BE955F1A765E1AE /* PushWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2567D6CF888EE20D2AC /* PushWall.swift */; };
 		5AF0E9F3834695D3D8A90C38 /* RNDRObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */; };
@@ -233,6 +236,7 @@
 		5AF0E8D43E36BAC0C4820A3E /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		5AF0EB67075B8B0ED9602F1B /* MapGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapGenerator.swift; sourceTree = "<group>"; };
 		5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
+		5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRPipelineCatalogue.swift; sourceTree = "<group>"; };
 		5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRObject.swift; sourceTree = "<group>"; };
 		5AF0ED80CA45035FB149050D /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
@@ -335,6 +339,7 @@
 			isa = PBXGroup;
 			children = (
 				5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */,
+				5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalogue.swift */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -727,6 +732,7 @@
 				5AF0E083FCED023E1D208719 /* Hud.swift in Sources */,
 				5AF0EC322E4F35141F19DBBF /* MapGenerator.swift in Sources */,
 				5AF0E5F3EE95AA4CE39EE69A /* Model.swift in Sources */,
+				5AF0E30F80E0BCF9A78001C1 /* RNDRPipelineCatalogue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,6 +782,7 @@
 				5AF0E546E6A87AC63510A033 /* Hud.swift in Sources */,
 				5AF0E4FB8DBE9631056AB718 /* MapGenerator.swift in Sources */,
 				5AF0EDFF733586D6BDB7D8D5 /* Model.swift in Sources */,
+				5AF0E2F916AEA7F8F48F1881 /* RNDRPipelineCatalogue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,6 +832,7 @@
 				5AF0E40F03A338C7CA4E3299 /* Hud.swift in Sources */,
 				5AF0E926416842C589CE6127 /* MapGenerator.swift in Sources */,
 				5AF0E7A46CA105E64C75C4A4 /* Model.swift in Sources */,
+				5AF0E95FD461F663BCC9E34E /* RNDRPipelineCatalogue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

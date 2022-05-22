@@ -9,11 +9,7 @@ public class Renderer: NSObject {
     let view: MTKView
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
-    let texturePipeline: MTLRenderPipelineState
-    let textureIndexedPipeline: MTLRenderPipelineState
-    let textureIndexedSpriteSheetPipeline: MTLRenderPipelineState
-    let vertexPipeline: MTLRenderPipelineState
-    let effectPipeline: MTLRenderPipelineState
+    let pipelineCatalogue: RNDRPipelineCatalogue
     let depthStencilState: MTLDepthStencilState
     // need to pass the aspect ratio to the new renderer
     private(set) var aspect: Float = 1.0
@@ -71,12 +67,6 @@ public class Renderer: NSObject {
 
         commandQueue = newCommandQueue
 
-        guard let library = device.makeDefaultLibrary() else {
-            fatalError("""
-                       What in the what?! The library couldn't be loaded.
-                       """)
-        }
-
         guard let depthStencilState = device.makeDepthStencilState(descriptor: MTLDepthStencilDescriptor().apply {
             $0.depthCompareFunction = .less
             $0.isDepthWriteEnabled = true
@@ -88,75 +78,7 @@ public class Renderer: NSObject {
 
         self.depthStencilState = depthStencilState
 
-        vertexPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
-            $0.vertexFunction = library.makeFunction(name: "vertex_main")
-            $0.fragmentFunction = library.makeFunction(name: "fragment_main")
-            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
-            $0.depthAttachmentPixelFormat = .depth32Float
-        })
-
-        texturePipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
-            $0.vertexFunction = library.makeFunction(name: "vertex_with_texcoords")
-            $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
-            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
-            $0.depthAttachmentPixelFormat = .depth32Float
-            $0.vertexDescriptor = MTLVertexDescriptor().apply {
-                $0.attributes[0].format = MTLVertexFormat.float3
-                $0.attributes[0].bufferIndex = 0
-                $0.attributes[0].offset = 0
-                $0.attributes[1].format = MTLVertexFormat.float2
-                $0.attributes[1].bufferIndex = 1
-                $0.attributes[1].offset = 0
-                $0.layouts[0].stride = MemoryLayout<Float3>.stride
-                $0.layouts[1].stride = MemoryLayout<Float2>.stride
-            }
-        })
-
-        textureIndexedPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
-            $0.vertexFunction = library.makeFunction(name: "vertex_indexed")
-            $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
-            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
-            $0.depthAttachmentPixelFormat = .depth32Float
-            $0.vertexDescriptor = MTLVertexDescriptor().apply {
-                $0.attributes[0].format = MTLVertexFormat.float3
-                $0.attributes[0].bufferIndex = 0
-                $0.attributes[0].offset = 0
-                $0.attributes[1].format = MTLVertexFormat.float2
-                $0.attributes[1].bufferIndex = 1
-                $0.attributes[1].offset = 0
-                $0.layouts[0].stride = MemoryLayout<Float3>.stride
-                $0.layouts[1].stride = MemoryLayout<Float2>.stride
-            }
-        })
-
-        textureIndexedSpriteSheetPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
-            $0.vertexFunction = library.makeFunction(name: "vertex_indexed_sprite_sheet")
-            $0.fragmentFunction = library.makeFunction(name: "fragment_with_texture")
-            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
-            $0.depthAttachmentPixelFormat = .depth32Float
-            $0.vertexDescriptor = MTLVertexDescriptor().apply {
-                $0.attributes[0].format = MTLVertexFormat.float3
-                $0.attributes[0].bufferIndex = 0
-                $0.attributes[0].offset = 0
-                $0.attributes[1].format = MTLVertexFormat.float2
-                $0.attributes[1].bufferIndex = 1
-                $0.attributes[1].offset = 0
-                $0.layouts[0].stride = MemoryLayout<Float3>.stride
-                $0.layouts[1].stride = MemoryLayout<Float2>.stride
-            }
-        })
-
-        effectPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
-            $0.vertexFunction = library.makeFunction(name: "vertex_main")
-            $0.fragmentFunction = library.makeFunction(name: "fragment_effect")
-            $0.depthAttachmentPixelFormat = .depth32Float
-            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
-            // Enable blending on the effects pipeline
-            $0.colorAttachments[0].isBlendingEnabled = true
-            $0.colorAttachments[0].rgbBlendOperation = .add
-            $0.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
-            $0.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
-        })
+        pipelineCatalogue = RNDRPipelineCatalogue(device: device)
 
         super.init()
 
@@ -280,27 +202,27 @@ public class Renderer: NSObject {
                 .scaledX(by: 1/aspect)
 
         if (onlyTitle) {
-            drawTitleScreen(game: game, encoder: encoder, camera: hudCamera)
+            drawTitleScreen(game: game, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalogue)
         } else {
 
-            drawReferenceMarkers(world: game.world, encoder: encoder, camera: playerCamera)
+            drawReferenceMarkers(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalogue)
 
             if game.world.drawWorld {
-                drawIndexedGameworld(world: game.world, encoder: encoder, camera: playerCamera)
+                drawIndexedGameworld(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalogue)
             }
 
-            drawIndexedSprites(world: game.world, encoder: encoder, camera: playerCamera)
+            drawIndexedSprites(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalogue)
 
             if game.world.showMap {
-                drawMap(world: game.world, encoder: encoder, camera: mapCamera)
+                drawMap(world: game.world, encoder: encoder, camera: mapCamera, pipelineCatalogue: pipelineCatalogue)
             }
 
-            drawHud(hud: game.hud, encoder: encoder, camera: hudCamera)
+            drawHud(hud: game.hud, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalogue)
 
-            drawWeapon(world: game.world, encoder: encoder, camera: hudCamera)
+            drawWeapon(world: game.world, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalogue)
         }
         // always draw effects so the title screen can fade out
-        drawEffects(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera)
+        drawEffects(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalogue)
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -313,7 +235,7 @@ public class Renderer: NSObject {
         commandBuffer.commit()
     }
 
-    func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
         var renderables: [RNDRObject] = []
 
         renderables += LineCube(Float4x4.scale(x: 0.1, y: 0.1, z: 0.1))
@@ -360,7 +282,7 @@ public class Renderer: NSObject {
 
             var finalTransform = camera * worldTransform * rndrObject.transform
 
-            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setRenderPipelineState(pipelineCatalogue.vertexPipeline)
             encoder.setDepthStencilState(depthStencilState)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
@@ -374,7 +296,7 @@ public class Renderer: NSObject {
         }
     }
 
-    func drawIndexedSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func drawIndexedSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
         // TODO RNDRObject?
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Texture)] = []
         let model = model[.unitSquare]!
@@ -459,7 +381,7 @@ public class Renderer: NSObject {
 
         var fragmentColor = Float3(renderables[0].3)
 
-        encoder.setRenderPipelineState(textureIndexedPipeline)
+        encoder.setRenderPipelineState(pipelineCatalogue.textureIndexedPipeline)
         encoder.setDepthStencilState(depthStencilState)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
@@ -504,7 +426,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
 
         let color = Color.black
         let primitiveType = MTLPrimitiveType.triangle
@@ -557,7 +479,7 @@ public class Renderer: NSObject {
 
             var fragmentColor = Float3(color)
 
-            encoder.setRenderPipelineState(textureIndexedPipeline)
+            encoder.setRenderPipelineState(pipelineCatalogue.textureIndexedPipeline)
             encoder.setDepthStencilState(depthStencilState)
             encoder.setCullMode(.back)
 
@@ -582,7 +504,7 @@ public class Renderer: NSObject {
         }
     }
 
-    private func drawWeapon(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    private func drawWeapon(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
         let model = model[.unitSquare]!
 
         let buffer = device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
@@ -622,7 +544,7 @@ public class Renderer: NSObject {
             * Float4x4.translate(x: 0.0, y: 0.0, z: 0.1)
             * Float4x4.scale(x: 2.0, y: 2.0, z: 0.0)
 
-        encoder.setRenderPipelineState(texturePipeline)
+        encoder.setRenderPipelineState(pipelineCatalogue.texturePipeline)
         encoder.setDepthStencilState(depthStencilState)
         encoder.setCullMode(.back)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
@@ -649,7 +571,7 @@ public class Renderer: NSObject {
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: model.allVertices().count)
     }
 
-    private func drawHud(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    private func drawHud(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
         drawHealth(hud: hud, encoder: encoder, camera: camera)
         drawHudElements(hud: hud, encoder: encoder, camera: camera)
     }
@@ -742,7 +664,7 @@ public class Renderer: NSObject {
 
         var finalTransform = camera
 
-        encoder.setRenderPipelineState(textureIndexedSpriteSheetPipeline)
+        encoder.setRenderPipelineState(pipelineCatalogue.textureIndexedSpriteSheetPipeline)
         encoder.setDepthStencilState(depthStencilState)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
@@ -866,7 +788,7 @@ public class Renderer: NSObject {
 
         var finalTransform = camera
 
-        encoder.setRenderPipelineState(textureIndexedSpriteSheetPipeline)
+        encoder.setRenderPipelineState(pipelineCatalogue.textureIndexedSpriteSheetPipeline)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
@@ -900,7 +822,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawTitleScreen(game: Game, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    private func drawTitleScreen(game: Game, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
         let model = model[.unitSquare]!
 
         var fontSpriteSheet = SpriteSheet(textureWidth: 148, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
@@ -960,7 +882,7 @@ public class Renderer: NSObject {
 
         var finalTransform = camera * Float4x4.scale(x: 8.5 * aspect, y: 8.5, z: 0)
 
-        encoder.setRenderPipelineState(textureIndexedSpriteSheetPipeline)
+        encoder.setRenderPipelineState(pipelineCatalogue.textureIndexedSpriteSheetPipeline)
         // TODO why can't I have the depth stencil and the text on the bottom of the screen?
         // encoder.setDepthStencilState(depthStencilState)
         encoder.setCullMode(.none)
@@ -992,7 +914,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawEffects(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    private func drawEffects(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
         effects.forEach { effect in
             let vertices = [
                 Float3(0.0, 0.0, 0.0),
@@ -1014,7 +936,7 @@ public class Renderer: NSObject {
                 * Float4x4.rotateY(-.pi)
 
             encoder.setCullMode(.back)
-            encoder.setRenderPipelineState(effectPipeline)
+            encoder.setRenderPipelineState(pipelineCatalogue.effectPipeline)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
@@ -1057,7 +979,7 @@ public class Renderer: NSObject {
         }
     }
 
-    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
         // TODO replace drawMap with an overheard view of the world
         //Draw map
         var renderables: [RNDRObject] = TileImage(world: world).tiles
@@ -1132,7 +1054,7 @@ public class Renderer: NSObject {
                 * Float4x4.scaleY(-1) // flip the map around the y axis
                 * rndrObject.transform
 
-            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setRenderPipelineState(pipelineCatalogue.vertexPipeline)
             encoder.setCullMode(.back)
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
