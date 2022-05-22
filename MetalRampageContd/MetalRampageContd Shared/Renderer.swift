@@ -449,35 +449,29 @@ public class Renderer: NSObject {
             }
         }
 
-        let index: [UInt16] = model.index
-
-        let vertices = renderables[0].0
-        let texCoords = renderables[0].1
-        let color = renderables[0].3
-        let primitiveType = renderables[0].4
-
-        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-        let indexBuffer = device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
-        let coordsBuffer = device.makeBuffer(bytes: texCoords, length: MemoryLayout<Float2>.stride * texCoords.count, options: [])
+        let vertexBuffer = device.makeBuffer(bytes: model.vertices, length: MemoryLayout<Float3>.stride * model.vertices.count, options: [])
+        let indexBuffer = device.makeBuffer(bytes: model.index, length: MemoryLayout<UInt16>.stride * model.index.count, options: [])!
+        let coordsBuffer = device.makeBuffer(bytes: model.uv, length: MemoryLayout<Float2>.stride * model.uv.count, options: [])
 
         var pixelSize = 1
 
         var finalTransform = camera
 
+        var fragmentColor = Float3(renderables[0].3)
+
         encoder.setRenderPipelineState(textureIndexedPipeline)
         encoder.setDepthStencilState(depthStencilState)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
-        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+
+        encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
         encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
         encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
         encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
         encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt32>.stride * indexedTextureId.count, index: 5)
 
-        var fragmentColor = Float3(color)
-
-        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+        encoder.setFragmentBuffer(vertexBuffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
         encoder.setFragmentTexture(monster[.monster]!, index: 0)
         encoder.setFragmentTexture(monster[.monsterWalk1]!, index: 1)
@@ -501,8 +495,8 @@ public class Renderer: NSObject {
         encoder.setFragmentTexture(healingPotionTexture!, index: 19)
         encoder.setFragmentTexture(fireBlast[.fireBlastPickup]!, index: 20)
         encoder.drawIndexedPrimitives(
-            type: primitiveType,
-            indexCount: index.count,
+            type: renderables[0].4,
+            indexCount: model.index.count,
             indexType: .uint16,
             indexBuffer: indexBuffer,
             indexBufferOffset: 0,
@@ -561,17 +555,18 @@ public class Renderer: NSObject {
                 texture = colorMapTexture
             }
 
+            var fragmentColor = Float3(color)
+
             encoder.setRenderPipelineState(textureIndexedPipeline)
             encoder.setDepthStencilState(depthStencilState)
             encoder.setCullMode(.back)
+
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
             encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
             encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt>.stride * indexedTextureId.count, index: 5)
-
-            var fragmentColor = Float3(color)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
