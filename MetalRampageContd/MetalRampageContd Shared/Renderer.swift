@@ -295,7 +295,7 @@ public class Renderer: NSObject {
                 drawMap(world: game.world, encoder: encoder, camera: mapCamera)
             }
 
-            drawHud(world: game.world, hud: game.hud, encoder: encoder, camera: hudCamera)
+            drawHud(hud: game.hud, encoder: encoder, camera: hudCamera)
 
             drawWeapon(world: game.world, encoder: encoder, camera: hudCamera)
         }
@@ -649,12 +649,12 @@ public class Renderer: NSObject {
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: model.allVertices().count)
     }
 
-    private func drawHud(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        drawHealth(world: world, hud: hud, encoder: encoder, camera: camera)
-        drawHudElements(world: world, hud: hud, encoder: encoder, camera: camera)
+    private func drawHud(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+        drawHealth(hud: hud, encoder: encoder, camera: camera)
+        drawHudElements(hud: hud, encoder: encoder, camera: camera)
     }
 
-    private func drawHealth(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    private func drawHealth(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = model[.unitSquare]!
 
         let heartSpace: Float = 0.11
@@ -777,7 +777,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawHudElements(world: World, hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    private func drawHudElements(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = model[.unitSquare]!
 
         // TODO: Add Texture to RNDRObject?
