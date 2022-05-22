@@ -666,7 +666,7 @@ public class Renderer: NSObject {
         // the hudCamera adjusts x by the aspect ratio so the x needs to be adjusted by the aspect here as well.
         let heartStart: Float2 = Float2(aspect * -0.9, 0.85)
 
-        let playerHealth = String(Int(world.player.health)).leftPadding(toLength: 3, withPad: "0")
+        let playerHealth = String(hud.healthString).leftPadding(toLength: 3, withPad: "0")
 
         let healthTint: Color = hud.healthTint
 
@@ -707,22 +707,10 @@ public class Renderer: NSObject {
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 2) ?? 0)) ?? 0))
 
         var fontSpriteSheet = SpriteSheet(textureWidth: Float(hud.font.characters.count * 4), textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
-        var fontSpriteIndex = 0
+        var fontSpriteIndex = 0 // TODO let the shader select the sprite sheet
 
         var renderables: [(RNDRObject, Texture, UInt32?)] = []
-        let health = world.player.health
-        if health > 0 {
-            fontSpriteIndex = 1
-        }
-        if health > 25 {
-            fontSpriteIndex = 2
-        }
-        if health > 50 {
-            fontSpriteIndex = 3
-        }
-        if health > 75 {
-            fontSpriteIndex = 4
-        }
+
         renderables.append(heart1)
         renderables.append(health1)
         renderables.append(health2)
