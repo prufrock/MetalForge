@@ -10,9 +10,11 @@
 		5AF0E0067D684C95067BA34F /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2B7A360CC6C2CA22602 /* Easing.swift */; };
 		5AF0E083FCED023E1D208719 /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E80D020726CE8A3743AD /* Hud.swift */; };
 		5AF0E0D68DE2A536FBAD4BD4 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7F0E05A621E275B3C0A /* SoundManager.swift */; };
+		5AF0E128B07511205C72A814 /* RNDRDrawIndexedGameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */; };
 		5AF0E1E1C49C10CDD9765A10 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E62A45CAB2481AE93A5E /* Weapon.swift */; };
 		5AF0E2795700BE109D38D018 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */; };
 		5AF0E27B2F7E5CD77C636406 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */; };
+		5AF0E27F5EB24F8055FC7C74 /* RNDRDrawIndexedGameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */; };
 		5AF0E2F916AEA7F8F48F1881 /* RNDRPipelineCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalog.swift */; };
 		5AF0E30F80E0BCF9A78001C1 /* RNDRPipelineCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalog.swift */; };
 		5AF0E39420DC7EDA8B23E88F /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3AFA423D30605A1C56D /* Switch.swift */; };
@@ -37,6 +39,7 @@
 		5AF0E7A46CA105E64C75C4A4 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED80CA45035FB149050D /* Model.swift */; };
 		5AF0E7B82FA1CF32BBD15327 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34EF644B0191228B1AB /* Texture.swift */; };
 		5AF0E7C5E81AEA007FE57924 /* PushWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2567D6CF888EE20D2AC /* PushWall.swift */; };
+		5AF0E81BF60F5DC8912BDDE8 /* RNDRDrawIndexedGameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */; };
 		5AF0E83C2C9C610884DAFB62 /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2B7A360CC6C2CA22602 /* Easing.swift */; };
 		5AF0E85D4EBEB4E9719368C1 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */; };
 		5AF0E8EA5D9A04A7D52924CC /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7F0E05A621E275B3C0A /* SoundManager.swift */; };
@@ -247,6 +250,7 @@
 		5AF0ED80CA45035FB149050D /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
 		5AF0EF80473FF89C2F69122A /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawIndexedGameWorld.swift; sourceTree = "<group>"; };
 		63148377282DB8F800547F21 /* Rng.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rng.swift; sourceTree = "<group>"; };
 		632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireBlastPickup.mp3; sourceTree = "<group>"; };
 		6351463528270E0900CA6C32 /* Font.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Font.json; sourceTree = "<group>"; };
@@ -366,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				636D7AF2283DA3A500E4B044 /* RNDRDrawWeapon.swift */,
+				5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */,
 			);
 			path = DrawWorldPhase;
 			sourceTree = "<group>";
@@ -761,6 +766,7 @@
 				5AF0EC322E4F35141F19DBBF /* MapGenerator.swift in Sources */,
 				5AF0E5F3EE95AA4CE39EE69A /* Model.swift in Sources */,
 				5AF0E30F80E0BCF9A78001C1 /* RNDRPipelineCatalog.swift in Sources */,
+				5AF0E81BF60F5DC8912BDDE8 /* RNDRDrawIndexedGameWorld.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +819,7 @@
 				5AF0E4FB8DBE9631056AB718 /* MapGenerator.swift in Sources */,
 				5AF0EDFF733586D6BDB7D8D5 /* Model.swift in Sources */,
 				5AF0E2F916AEA7F8F48F1881 /* RNDRPipelineCatalog.swift in Sources */,
+				5AF0E128B07511205C72A814 /* RNDRDrawIndexedGameWorld.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,6 +872,7 @@
 				5AF0E926416842C589CE6127 /* MapGenerator.swift in Sources */,
 				5AF0E7A46CA105E64C75C4A4 /* Model.swift in Sources */,
 				5AF0E95FD461F663BCC9E34E /* RNDRPipelineCatalog.swift in Sources */,
+				5AF0E27F5EB24F8055FC7C74 /* RNDRDrawIndexedGameWorld.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
