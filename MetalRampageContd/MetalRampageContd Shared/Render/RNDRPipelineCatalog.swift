@@ -7,7 +7,7 @@ import MetalKit
 /**
  A place to find your favorite MTLRenderPipelineState objects for encoding commands.
  */
-struct RNDRPipelineCatalogue {
+struct RNDRPipelineCatalog {
     let texturePipeline: MTLRenderPipelineState
     let textureIndexedPipeline: MTLRenderPipelineState
     let textureIndexedSpriteSheetPipeline: MTLRenderPipelineState

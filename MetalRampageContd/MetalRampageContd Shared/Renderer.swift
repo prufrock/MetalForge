@@ -9,7 +9,7 @@ public class Renderer: NSObject {
     let view: MTKView
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
-    let pipelineCatalogue: RNDRPipelineCatalogue
+    private let pipelineCatalog: RNDRPipelineCatalog
     let depthStencilState: MTLDepthStencilState
     // need to pass the aspect ratio to the new renderer
     private(set) var aspect: Float = 1.0
@@ -42,6 +42,9 @@ public class Renderer: NSObject {
     // static renderables
     var worldTiles: [(RNDRObject, Tile)]?
     var worldTilesBuffers: [MetalTileBuffers]?
+
+    // draw phases
+    private var drawWeapon: RNDRDrawWorldPhase?
 
     // TODO do less stuff in init
     public init(_ view: MTKView, width: Int, height: Int) {
@@ -78,9 +81,11 @@ public class Renderer: NSObject {
 
         self.depthStencilState = depthStencilState
 
-        pipelineCatalogue = RNDRPipelineCatalogue(device: device)
+        pipelineCatalog = RNDRPipelineCatalog(device: device)
 
         super.init()
+
+        drawWeapon = RNDRDrawWeapon(renderer: self, pipelineCatalog: pipelineCatalog)
 
         ceiling = loadTexture(name: "Ceiling")!
         colorMapTexture = loadTexture(name: "ColorMap")!
@@ -202,27 +207,27 @@ public class Renderer: NSObject {
                 .scaledX(by: 1/aspect)
 
         if (onlyTitle) {
-            drawTitleScreen(game: game, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalogue)
+            drawTitleScreen(game: game, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalog)
         } else {
 
-            drawReferenceMarkers(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalogue)
+            drawReferenceMarkers(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalog)
 
             if game.world.drawWorld {
-                drawIndexedGameworld(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalogue)
+                drawIndexedGameworld(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalog)
             }
 
-            drawIndexedSprites(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalogue)
+            drawIndexedSprites(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalog)
 
             if game.world.showMap {
-                drawMap(world: game.world, encoder: encoder, camera: mapCamera, pipelineCatalogue: pipelineCatalogue)
+                drawMap(world: game.world, encoder: encoder, camera: mapCamera, pipelineCatalogue: pipelineCatalog)
             }
 
-            drawHud(hud: game.hud, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalogue)
+            drawHud(hud: game.hud, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalog)
 
-            drawWeapon(world: game.world, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalogue)
+            drawWeapon!.draw(world: game.world, encoder: encoder, camera: hudCamera)
         }
         // always draw effects so the title screen can fade out
-        drawEffects(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalogue)
+        drawEffects(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalog)
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -235,7 +240,7 @@ public class Renderer: NSObject {
         commandBuffer.commit()
     }
 
-    func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
+    func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
         var renderables: [RNDRObject] = []
 
         renderables += LineCube(Float4x4.scale(x: 0.1, y: 0.1, z: 0.1))
@@ -296,7 +301,7 @@ public class Renderer: NSObject {
         }
     }
 
-    func drawIndexedSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
+    func drawIndexedSprites(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
         // TODO RNDRObject?
         var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Texture)] = []
         let model = model[.unitSquare]!
@@ -426,7 +431,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
+    private func drawIndexedGameworld(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
 
         let color = Color.black
         let primitiveType = MTLPrimitiveType.triangle
@@ -504,7 +509,7 @@ public class Renderer: NSObject {
         }
     }
 
-    private func drawWeapon(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
+    private func drawWeapon(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
         let model = model[.unitSquare]!
 
         let buffer = device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
@@ -571,7 +576,7 @@ public class Renderer: NSObject {
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: model.allVertices().count)
     }
 
-    private func drawHud(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
+    private func drawHud(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
         drawHealth(hud: hud, encoder: encoder, camera: camera)
         drawHudElements(hud: hud, encoder: encoder, camera: camera)
     }
@@ -664,7 +669,7 @@ public class Renderer: NSObject {
 
         var finalTransform = camera
 
-        encoder.setRenderPipelineState(pipelineCatalogue.textureIndexedSpriteSheetPipeline)
+        encoder.setRenderPipelineState(pipelineCatalog.textureIndexedSpriteSheetPipeline)
         encoder.setDepthStencilState(depthStencilState)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
@@ -788,7 +793,7 @@ public class Renderer: NSObject {
 
         var finalTransform = camera
 
-        encoder.setRenderPipelineState(pipelineCatalogue.textureIndexedSpriteSheetPipeline)
+        encoder.setRenderPipelineState(pipelineCatalog.textureIndexedSpriteSheetPipeline)
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
         encoder.setVertexBuffer(buffer, offset: 0, index: 0)
@@ -822,7 +827,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawTitleScreen(game: Game, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
+    private func drawTitleScreen(game: Game, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
         let model = model[.unitSquare]!
 
         var fontSpriteSheet = SpriteSheet(textureWidth: 148, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
@@ -914,7 +919,7 @@ public class Renderer: NSObject {
         )
     }
 
-    private func drawEffects(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
+    private func drawEffects(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
         effects.forEach { effect in
             let vertices = [
                 Float3(0.0, 0.0, 0.0),
@@ -979,7 +984,7 @@ public class Renderer: NSObject {
         }
     }
 
-    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalogue) {
+    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
         // TODO replace drawMap with an overheard view of the world
         //Draw map
         var renderables: [RNDRObject] = TileImage(world: world).tiles
