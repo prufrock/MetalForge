@@ -37,6 +37,7 @@
 		5AF0E647E0B2D1AC5B62E7AC /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */; };
 		5AF0E66FCA8AD982E9AB85B4 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF80473FF89C2F69122A /* AudioEngine.swift */; };
 		5AF0E67F757BD6EA5A05A6F5 /* RNDRObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */; };
+		5AF0E73BCD4475D3523FB8BD /* RNDRDrawMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF536B1416825E7FC9ED /* RNDRDrawMap.swift */; };
 		5AF0E74A141715A65962A6D6 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E62A45CAB2481AE93A5E /* Weapon.swift */; };
 		5AF0E7A46CA105E64C75C4A4 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED80CA45035FB149050D /* Model.swift */; };
 		5AF0E7B82FA1CF32BBD15327 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34EF644B0191228B1AB /* Texture.swift */; };
@@ -45,12 +46,14 @@
 		5AF0E83C2C9C610884DAFB62 /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2B7A360CC6C2CA22602 /* Easing.swift */; };
 		5AF0E85D4EBEB4E9719368C1 /* Door.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E1DA2CFC89F19FB35BC6 /* Door.swift */; };
 		5AF0E8AC980BD5DF0046FDB8 /* RNDRDrawReferenceMarkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */; };
+		5AF0E8E0D744CD9D16481FE3 /* RNDRDrawMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF536B1416825E7FC9ED /* RNDRDrawMap.swift */; };
 		5AF0E8EA5D9A04A7D52924CC /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7F0E05A621E275B3C0A /* SoundManager.swift */; };
 		5AF0E926416842C589CE6127 /* MapGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB67075B8B0ED9602F1B /* MapGenerator.swift */; };
 		5AF0E95FD461F663BCC9E34E /* RNDRPipelineCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalog.swift */; };
 		5AF0E98C1C1E046C6EDD5849 /* RNDRDrawIndexedSprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE160ECBBD8B6D9C4C72 /* RNDRDrawIndexedSprites.swift */; };
 		5AF0E9A0138057E81E4D2C0D /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */; };
 		5AF0E9A22BE955F1A765E1AE /* PushWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2567D6CF888EE20D2AC /* PushWall.swift */; };
+		5AF0E9C5B229219AC9175787 /* RNDRDrawMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF536B1416825E7FC9ED /* RNDRDrawMap.swift */; };
 		5AF0E9F3834695D3D8A90C38 /* RNDRObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */; };
 		5AF0EA45D9300A2C9E25B4B2 /* Switch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3AFA423D30605A1C56D /* Switch.swift */; };
 		5AF0EA9CF6791E4C16328E98 /* RNDRDrawReferenceMarkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */; };
@@ -257,6 +260,7 @@
 		5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawReferenceMarkers.swift; sourceTree = "<group>"; };
 		5AF0EE160ECBBD8B6D9C4C72 /* RNDRDrawIndexedSprites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawIndexedSprites.swift; sourceTree = "<group>"; };
 		5AF0EE34DACCDEB63F7E28A7 /* Effect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
+		5AF0EF536B1416825E7FC9ED /* RNDRDrawMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawMap.swift; sourceTree = "<group>"; };
 		5AF0EF80473FF89C2F69122A /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawIndexedGameWorld.swift; sourceTree = "<group>"; };
 		63148377282DB8F800547F21 /* Rng.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rng.swift; sourceTree = "<group>"; };
@@ -381,6 +385,7 @@
 				5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */,
 				5AF0EE160ECBBD8B6D9C4C72 /* RNDRDrawIndexedSprites.swift */,
 				5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */,
+				5AF0EF536B1416825E7FC9ED /* RNDRDrawMap.swift */,
 			);
 			path = DrawWorldPhase;
 			sourceTree = "<group>";
@@ -779,6 +784,7 @@
 				5AF0E81BF60F5DC8912BDDE8 /* RNDRDrawIndexedGameWorld.swift in Sources */,
 				5AF0E13B01985BA60B5E1C92 /* RNDRDrawIndexedSprites.swift in Sources */,
 				5AF0E07BEF80A7133CF26B51 /* RNDRDrawReferenceMarkers.swift in Sources */,
+				5AF0E8E0D744CD9D16481FE3 /* RNDRDrawMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -834,6 +840,7 @@
 				5AF0E128B07511205C72A814 /* RNDRDrawIndexedGameWorld.swift in Sources */,
 				5AF0E98C1C1E046C6EDD5849 /* RNDRDrawIndexedSprites.swift in Sources */,
 				5AF0E8AC980BD5DF0046FDB8 /* RNDRDrawReferenceMarkers.swift in Sources */,
+				5AF0E9C5B229219AC9175787 /* RNDRDrawMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,6 +896,7 @@
 				5AF0E27F5EB24F8055FC7C74 /* RNDRDrawIndexedGameWorld.swift in Sources */,
 				5AF0EE10C26CDCF222332992 /* RNDRDrawIndexedSprites.swift in Sources */,
 				5AF0EA9CF6791E4C16328E98 /* RNDRDrawReferenceMarkers.swift in Sources */,
+				5AF0E73BCD4475D3523FB8BD /* RNDRDrawMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

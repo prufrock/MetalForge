@@ -48,6 +48,7 @@ public class Renderer: NSObject {
     private var drawIndexedGameWorld: RNDRDrawWorldPhase?
     private var drawIndexedSprites: RNDRDrawWorldPhase?
     private var drawReferenceMarkers: RNDRDrawWorldPhase?
+    private var drawMap: RNDRDrawWorldPhase?
 
     // TODO do less stuff in init
     public init(_ view: MTKView, width: Int, height: Int) {
@@ -92,6 +93,7 @@ public class Renderer: NSObject {
         drawIndexedGameWorld = RNDRDrawIndexedGameWorld(renderer: self, pipelineCatalog: pipelineCatalog)
         drawIndexedSprites = RNDRDrawIndexedSprites(renderer: self, pipelineCatalog: pipelineCatalog)
         drawReferenceMarkers = RNDRDrawReferenceMarkers(renderer: self, pipelineCatalog: pipelineCatalog)
+        drawMap = RNDRDrawMap(renderer: self, pipelineCatalog: pipelineCatalog)
 
         ceiling = loadTexture(name: "Ceiling")!
         colorMapTexture = loadTexture(name: "ColorMap")!
@@ -225,7 +227,7 @@ public class Renderer: NSObject {
             drawIndexedSprites!.draw(world: game.world, encoder: encoder, camera: playerCamera)
 
             if game.world.showMap {
-                drawMap(world: game.world, encoder: encoder, camera: mapCamera, pipelineCatalogue: pipelineCatalog)
+                drawMap!.draw(world: game.world, encoder: encoder, camera: mapCamera)
             }
 
             drawHud(hud: game.hud, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalog)
@@ -620,95 +622,6 @@ public class Renderer: NSObject {
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float4>.stride, index: 0)
             encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
-        }
-    }
-
-    private func drawMap(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
-        // TODO replace drawMap with an overheard view of the world
-        //Draw map
-        var renderables: [RNDRObject] = TileImage(world: world).tiles
-                // filtering white tiles is a goofy shortcut so that only the floor tiles are used for the map
-                // eventually this should be replaced with a proper overhead view of the world
-                // going to need a way to rip off the ceiling or show only the floor for that
-                .filter { $0.0.color == .white && ($0.1 == .crackWall || $0.1 == .wall || $0.1 == .slimeWall || $0.1 == .elevatorSideWall || $0.1 == .elevatorBackWall) }
-                .map { $0.0 }
-        //Draw player
-        renderables.append(world.player.rect.renderableObject())
-
-        //Draw view plane
-        let focalLength: Float = 1.0
-        let viewWidth: Float = 1.0
-        let viewPlane = world.player.direction.orthogonal * viewWidth
-        let viewCenter = world.player.position + world.player.direction * focalLength
-        let viewStart = viewCenter - viewPlane / 2
-        let viewEnd = viewStart + viewPlane
-        renderables.append(
-            RNDRObject(vertices: [
-                viewStart.toFloat3(),
-                viewEnd.toFloat3()
-            ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .red, primitiveType: .line, position: Int2())
-        )
-        // Cast rays
-        let columns = 3
-        let step = viewPlane / Float(columns)
-        var columnPosition = viewStart
-        for _ in 0 ..< columns {
-            let rayDirection = columnPosition - world.player.position
-            let viewPlaneDistance = rayDirection.length
-            let ray = Ray(origin: world.player.position, direction: rayDirection / viewPlaneDistance)
-
-            var end = world.map.hitTest(ray)
-            for sprite in world.sprites {
-                guard let hit = sprite.hitTest(ray) else {
-                    continue
-                }
-                let spriteDistance = (hit - ray.origin).length
-                if spriteDistance > (end - ray.origin).length {
-                    continue
-                }
-                end = hit
-            }
-
-            renderables.append(
-                RNDRObject(vertices: [
-                    ray.origin.toFloat3(),
-                    end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
-            )
-            columnPosition += step
-        }
-
-        // Draw sprites
-        for line in world.sprites {
-            renderables.append(
-                RNDRObject(vertices: [
-                    line.start.toFloat3(),
-                    line.end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
-            )
-        }
-
-        renderables.forEach { rndrObject in
-            let buffer = device.makeBuffer(bytes: rndrObject.vertices, length: MemoryLayout<Float3>.stride * rndrObject.vertices.count, options: [])
-
-            var pixelSize = 1
-
-            var finalTransform =
-                camera
-                * Float4x4.scaleY(-1) // flip the map around the y axis
-                * rndrObject.transform
-
-            encoder.setRenderPipelineState(pipelineCatalogue.vertexPipeline)
-            encoder.setCullMode(.back)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
-
-            var fragmentColor = Float3(rndrObject.color)
-
-            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.drawPrimitives(type: rndrObject.primitiveType, vertexStart: 0, vertexCount: rndrObject.vertices.count)
         }
     }
 
