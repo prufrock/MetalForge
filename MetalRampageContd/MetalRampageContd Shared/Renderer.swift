@@ -45,8 +45,9 @@ public class Renderer: NSObject {
 
     // draw phases
     private var drawWeapon: RNDRDrawWorldPhase?
-    private var drawIndexedGameWorld: RNDRDrawIndexedGameWorld?
+    private var drawIndexedGameWorld: RNDRDrawWorldPhase?
     private var drawIndexedSprites: RNDRDrawWorldPhase?
+    private var drawReferenceMarkers: RNDRDrawWorldPhase?
 
     // TODO do less stuff in init
     public init(_ view: MTKView, width: Int, height: Int) {
@@ -90,6 +91,7 @@ public class Renderer: NSObject {
         drawWeapon = RNDRDrawWeapon(renderer: self, pipelineCatalog: pipelineCatalog)
         drawIndexedGameWorld = RNDRDrawIndexedGameWorld(renderer: self, pipelineCatalog: pipelineCatalog)
         drawIndexedSprites = RNDRDrawIndexedSprites(renderer: self, pipelineCatalog: pipelineCatalog)
+        drawReferenceMarkers = RNDRDrawReferenceMarkers(renderer: self, pipelineCatalog: pipelineCatalog)
 
         ceiling = loadTexture(name: "Ceiling")!
         colorMapTexture = loadTexture(name: "ColorMap")!
@@ -214,7 +216,7 @@ public class Renderer: NSObject {
             drawTitleScreen(game: game, encoder: encoder, camera: hudCamera, pipelineCatalogue: pipelineCatalog)
         } else {
 
-            drawReferenceMarkers(world: game.world, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalog)
+            drawReferenceMarkers!.draw(world: game.world, encoder: encoder, camera: playerCamera)
 
             if game.world.drawWorld {
                 drawIndexedGameWorld!.draw(world: game.world, encoder: encoder, camera: playerCamera)
@@ -242,67 +244,6 @@ public class Renderer: NSObject {
 
         commandBuffer.present(drawable)
         commandBuffer.commit()
-    }
-
-    func drawReferenceMarkers(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
-        var renderables: [RNDRObject] = []
-
-        renderables += LineCube(Float4x4.scale(x: 0.1, y: 0.1, z: 0.1))
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4.translate(x: 1.0, y: 0.0, z: 0.0)
-                    .scaledBy(x: 0.1, y: 0.1, z: 0.1)
-        )
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4.translate(x: -1.0, y: 0.0, z: 0.0)
-                    .scaledBy(x: 0.1, y: 0.1, z: 0.1)
-        )
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4.translate(x: 0.0, y: 1.0, z: 0.0)
-                    .scaledBy(x: 0.1, y: 0.1, z: 0.1)
-        )
-
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4.translate(x: 0.0, y: -1.0, z: 0.0)
-                    .scaledBy(x: 0.1, y: 0.1, z: 0.1)
-        )
-
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4.translate(x: 0.0, y: 0.0, z: 1.0)
-                    .scaledBy(x: 0.1, y: 0.1, z: 0.1)
-        )
-
-        renderables += LineCube(
-            Float4x4.identity()
-                * Float4x4.translate(x: 0.0, y: 0.0, z: -1.0)
-                .scaledBy(x: 0.1, y: 0.1, z: 0.1)
-        )
-
-        let worldTransform = Float4x4.identity()
-
-        renderables.forEach { rndrObject in
-            let buffer = device.makeBuffer(bytes: rndrObject.vertices, length: MemoryLayout<Float3>.stride * rndrObject.vertices.count, options: [])
-
-            var pixelSize = 1
-
-            var finalTransform = camera * worldTransform * rndrObject.transform
-
-            encoder.setRenderPipelineState(pipelineCatalogue.vertexPipeline)
-            encoder.setDepthStencilState(depthStencilState)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
-
-            var fragmentColor = Float3(rndrObject.color)
-
-            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.drawPrimitives(type: rndrObject.primitiveType, vertexStart: 0, vertexCount: rndrObject.vertices.count)
-        }
     }
 
     private func drawHud(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
