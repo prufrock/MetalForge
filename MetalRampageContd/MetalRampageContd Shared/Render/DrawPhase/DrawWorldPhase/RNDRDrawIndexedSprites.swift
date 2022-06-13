@@ -6,8 +6,13 @@ import MetalKit
 
 struct RNDRDrawIndexedSprites: RNDRDrawWorldPhase {
 
-    let renderer: Renderer
-    let pipelineCatalog: RNDRPipelineCatalog
+    private let renderer: Renderer
+    private let pipelineCatalog: RNDRPipelineCatalog
+
+    init(renderer: Renderer, pipelineCatalog: RNDRPipelineCatalog) {
+        self.renderer = renderer
+        self.pipelineCatalog = pipelineCatalog
+    }
 
     func draw(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         // TODO RNDRObject?
