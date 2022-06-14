@@ -51,6 +51,7 @@ public class Renderer: NSObject {
     private var drawMap: RNDRDrawWorldPhase?
     private var drawHealth: RNDRDrawHudPhase?
     private var drawHudElements: RNDRDrawHudPhase?
+    private var drawEffects: RNDRDrawEffects?
 
     // TODO do less stuff in init
     public init(_ view: MTKView, width: Int, height: Int) {
@@ -98,6 +99,7 @@ public class Renderer: NSObject {
         drawMap = RNDRDrawMap(renderer: self, pipelineCatalog: pipelineCatalog)
         drawHealth = RNDRDrawHealth(renderer: self, pipelineCatalog: pipelineCatalog)
         drawHudElements = RNDRDrawHudElements(renderer: self, pipelineCatalog: pipelineCatalog)
+        drawEffects = RNDRDrawEffects(renderer: self, pipelineCatalog: pipelineCatalog)
 
         ceiling = loadTexture(name: "Ceiling")!
         colorMapTexture = loadTexture(name: "ColorMap")!
@@ -241,7 +243,8 @@ public class Renderer: NSObject {
             drawWeapon!.draw(world: game.world, encoder: encoder, camera: hudCamera)
         }
         // always draw effects so the title screen can fade out
-        drawEffects(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera, pipelineCatalogue: pipelineCatalog)
+        drawEffects!.draw(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera)
+
         encoder.endEncoding()
 
         guard let drawable = view.currentDrawable else {
@@ -344,40 +347,6 @@ public class Renderer: NSObject {
             indexBufferOffset: 0,
             instanceCount: renderables.count
         )
-    }
-
-    private func drawEffects(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4, pipelineCatalogue: RNDRPipelineCatalog) {
-        effects.forEach { effect in
-            let vertices = [
-                Float3(0.0, 0.0, 0.0),
-                Float3(1.0, 1.0, 0.0),
-                Float3(0.0, 1.0, 0.0),
-
-                Float3(0.0, 0.0, 0.0),
-                Float3(1.0, 0.0, 0.0),
-                Float3(1.0, 1.0, 0.0),
-            ]
-
-            let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
-
-            var pixelSize = 1
-
-            var finalTransform = Float4x4.identity()
-                * Float4x4.translate(x: 1.0, y: -1.0, z: 0.0)
-                * Float4x4.scale(x: 2.0, y: 2.0, z: 0.0)
-                * Float4x4.rotateY(-.pi)
-
-            encoder.setCullMode(.back)
-            encoder.setRenderPipelineState(pipelineCatalogue.effectPipeline)
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
-            encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
-
-            var fragmentColor = effect.asFloat4()
-            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float4>.stride, index: 0)
-            encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices.count)
-        }
     }
 
     func loadTexture(name: String) -> MTLTexture? {
