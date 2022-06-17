@@ -6,41 +6,41 @@ import Foundation
 import MetalKit
 
 public class Renderer: NSObject {
-    let view: MTKView
+    private let view: MTKView
     let device: MTLDevice
-    let commandQueue: MTLCommandQueue
+    private let commandQueue: MTLCommandQueue
     private let pipelineCatalog: RNDRPipelineCatalog
     let depthStencilState: MTLDepthStencilState
     // need to pass the aspect ratio to the new renderer
     private(set) var aspect: Float = 1.0
 
     // textures
-    var ceiling: MTLTexture!
-    var colorMapTexture: MTLTexture!
-    var crackedFloor: MTLTexture!
-    var crackedWallTexture: MTLTexture!
-    var floor: MTLTexture!
-    var slimeWallTexture: MTLTexture!
-    var wallTexture: MTLTexture!
-    var monster: [Texture:MTLTexture?] = [:]
-    var wand: [Texture:MTLTexture?] = [:]
-    var wandFiring1: [Texture:MTLTexture?] = [:]
-    var wandFiring2: [Texture:MTLTexture?] = [:]
-    var wandFiring3: [Texture:MTLTexture?] = [:]
-    var wandFiring4: [Texture:MTLTexture?] = [:]
-    var door: [Texture:MTLTexture?] = [:]
-    var doorJamb: [Texture:MTLTexture?] = [:]
-    var wallSwitch: [Texture:MTLTexture?] = [:]
-    var healingPotionTexture: MTLTexture!
-    var fireBlast: [Texture:MTLTexture?] = [:]
-    var hud: [Texture:MTLTexture?] = [:]
-    var titleScreen: [Texture:MTLTexture?] = [:]
+    private(set) var ceiling: MTLTexture!
+    private(set) var colorMapTexture: MTLTexture!
+    private(set) var crackedFloor: MTLTexture!
+    private(set) var crackedWallTexture: MTLTexture!
+    private(set) var floor: MTLTexture!
+    private(set) var slimeWallTexture: MTLTexture!
+    private(set) var wallTexture: MTLTexture!
+    private(set) var monster: [Texture:MTLTexture?] = [:]
+    private(set) var wand: [Texture:MTLTexture?] = [:]
+    private(set) var wandFiring1: [Texture:MTLTexture?] = [:]
+    private(set) var wandFiring2: [Texture:MTLTexture?] = [:]
+    private(set) var wandFiring3: [Texture:MTLTexture?] = [:]
+    private(set) var wandFiring4: [Texture:MTLTexture?] = [:]
+    private(set) var door: [Texture:MTLTexture?] = [:]
+    private(set) var doorJamb: [Texture:MTLTexture?] = [:]
+    private(set) var wallSwitch: [Texture:MTLTexture?] = [:]
+    private(set) var healingPotionTexture: MTLTexture!
+    private(set) var fireBlast: [Texture:MTLTexture?] = [:]
+    private(set) var hud: [Texture:MTLTexture?] = [:]
+    private(set) var titleScreen: [Texture:MTLTexture?] = [:]
 
     // models
-    var model: [ModelLabel:Model] = [:]
+    private(set) var model: [ModelLabel:Model] = [:]
 
     // static renderables
-    var worldTiles: [(RNDRObject, Tile)]?
+    private(set) var worldTiles: [(RNDRObject, Tile)]?
     var worldTilesBuffers: [MetalTileBuffers]?
 
     // draw phases
