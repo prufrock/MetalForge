@@ -5,7 +5,7 @@
 import Foundation
 import MetalKit
 
-public class Renderer: NSObject {
+public class RNDRRenderer: NSObject {
     private let view: MTKView
     let device: MTLDevice
     private let commandQueue: MTLCommandQueue

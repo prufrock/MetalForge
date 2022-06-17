@@ -6,10 +6,10 @@ import Metal
 
 class RNDRDrawEffects: RNDRDrawEffectsPhase {
 
-    private let renderer: Renderer
+    private let renderer: RNDRRenderer
     private let pipelineCatalog: RNDRPipelineCatalog
 
-    init(renderer: Renderer, pipelineCatalog: RNDRPipelineCatalog) {
+    init(renderer: RNDRRenderer, pipelineCatalog: RNDRPipelineCatalog) {
         self.renderer = renderer
         self.pipelineCatalog = pipelineCatalog
     }

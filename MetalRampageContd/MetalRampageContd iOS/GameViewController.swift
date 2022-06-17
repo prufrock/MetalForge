@@ -11,7 +11,7 @@ import MetalKit
 // Our iOS specific view controller
 class GameViewController: UIViewController {
     private let metalView = MTKView()
-    private var renderer: Renderer!
+    private var renderer: RNDRRenderer!
     private var audioEngine = AudioEngine()
 
     private let levels = loadLevels()
@@ -56,7 +56,7 @@ class GameViewController: UIViewController {
         audioEngine.setUpAudio()
         setupMetalView()
 
-        renderer = Renderer(metalView, width: 8, height: 8)
+        renderer = RNDRRenderer(metalView, width: 8, height: 8)
 
         // attach the pan gesture recognizer so there's an on screen joystick
         panGesture.delegate = self
@@ -171,7 +171,7 @@ extension GameViewController: GameDelegate {
     }
 
     func updateRenderer(_ world: World) {
-        renderer = Renderer(metalView, width: 8, height: 8).also {
+        renderer = RNDRRenderer(metalView, width: 8, height: 8).also {
             $0.updateAspect(renderer.aspect)
         }
     }
