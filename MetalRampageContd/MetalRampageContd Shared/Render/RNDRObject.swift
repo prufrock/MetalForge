@@ -2,7 +2,7 @@
 // Created by David Kanenwisher on 3/15/22.
 //
 
-import MetalKit
+import Metal
 
 /**
  A simple struct that has what's needed to render an object.

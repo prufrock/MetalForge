@@ -2,7 +2,7 @@
 // Created by David Kanenwisher on 5/22/22.
 //
 
-import MetalKit
+import Metal
 
 /**
  A place to find your favorite MTLRenderPipelineState objects for encoding commands.
