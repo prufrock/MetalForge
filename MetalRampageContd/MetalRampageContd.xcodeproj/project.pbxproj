@@ -106,6 +106,9 @@
 		63750CE1281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
 		63750CE2281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
 		63750CE3281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
+		63A9270E285D7311005CF172 /* RNDRModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9270D285D7311005CF172 /* RNDRModels.swift */; };
+		63A9270F285D7311005CF172 /* RNDRModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9270D285D7311005CF172 /* RNDRModels.swift */; };
+		63A92710285D7311005CF172 /* RNDRModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A9270D285D7311005CF172 /* RNDRModels.swift */; };
 		63AE0CC3280C922A00B9A613 /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AE0CC2280C922A00B9A613 /* Pathfinder.swift */; };
 		63AE0CC4280C922A00B9A613 /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AE0CC2280C922A00B9A613 /* Pathfinder.swift */; };
 		63AE0CC5280C922A00B9A613 /* Pathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AE0CC2280C922A00B9A613 /* Pathfinder.swift */; };
@@ -286,6 +289,7 @@
 		636D7AED283DA29100E4B044 /* RNDRDrawPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRDrawPhase.swift; sourceTree = "<group>"; };
 		636D7AF2283DA3A500E4B044 /* RNDRDrawWeapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRDrawWeapon.swift; sourceTree = "<group>"; };
 		63750CE0281398F800DC4937 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
+		63A9270D285D7311005CF172 /* RNDRModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRModels.swift; sourceTree = "<group>"; };
 		63AE0CC2280C922A00B9A613 /* Pathfinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pathfinder.swift; sourceTree = "<group>"; };
 		63B33F212807C08D00734353 /* spellMiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spellMiss.mp3; sourceTree = "<group>"; };
 		63B33F292809AC4600734353 /* MetalRampageContd-macOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "MetalRampageContd-macOS-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -382,6 +386,7 @@
 				63D44B1C27D427CD00D4BE7D /* RNDRRenderer.swift */,
 				5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */,
 				5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalog.swift */,
+				63A9270D285D7311005CF172 /* RNDRModels.swift */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -783,6 +788,7 @@
 				63D44BB227D429FA00D4BE7D /* Input.swift in Sources */,
 				63D44BCA27D42AA600D4BE7D /* TileImage.swift in Sources */,
 				63D44B5127D427CF00D4BE7D /* RNDRRenderer.swift in Sources */,
+				63A9270E285D7311005CF172 /* RNDRModels.swift in Sources */,
 				63D44B4E27D427CF00D4BE7D /* Shaders.metal in Sources */,
 				63D44BBA27D42A3200D4BE7D /* Player.swift in Sources */,
 				63D44B2927D427CF00D4BE7D /* GameViewController.swift in Sources */,
@@ -843,6 +849,7 @@
 				63D44BB327D429FA00D4BE7D /* Input.swift in Sources */,
 				63D44BCB27D42AA600D4BE7D /* TileImage.swift in Sources */,
 				63D44B5227D427CF00D4BE7D /* RNDRRenderer.swift in Sources */,
+				63A9270F285D7311005CF172 /* RNDRModels.swift in Sources */,
 				63D44B4F27D427CF00D4BE7D /* Shaders.metal in Sources */,
 				63D44BBB27D42A3200D4BE7D /* Player.swift in Sources */,
 				63D44B3927D427CF00D4BE7D /* GameViewController.swift in Sources */,
@@ -903,6 +910,7 @@
 				63D44BB427D429FA00D4BE7D /* Input.swift in Sources */,
 				63D44BCC27D42AA600D4BE7D /* TileImage.swift in Sources */,
 				63D44B5327D427CF00D4BE7D /* RNDRRenderer.swift in Sources */,
+				63A92710285D7311005CF172 /* RNDRModels.swift in Sources */,
 				63D44B5027D427CF00D4BE7D /* Shaders.metal in Sources */,
 				63D44BBC27D42A3200D4BE7D /* Player.swift in Sources */,
 				63D44B4927D427CF00D4BE7D /* GameViewController.swift in Sources */,
