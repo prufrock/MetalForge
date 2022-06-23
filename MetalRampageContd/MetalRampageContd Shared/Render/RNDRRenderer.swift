@@ -150,7 +150,6 @@ public class RNDRRenderer: NSObject {
         hud[.crosshair] = loadTexture(name: "Crosshairs")!
         hud[.healthIcon] = loadTexture(name: "HealthIcon")!
         hud[.font] = loadTexture(name: "Font")!
-        // TODO: I think the textures are loading in too dark
         titleScreen[.titleLogo] = loadTexture(name: "TitleLogo")!
 
         model[.unitSquare] = unitSquare()
@@ -250,7 +249,10 @@ public class RNDRRenderer: NSObject {
 
         let textureLoaderOptions = [
             MTKTextureLoader.Option.textureUsage: NSNumber(value: MTLTextureUsage.shaderRead.rawValue),
-            MTKTextureLoader.Option.textureStorageMode: NSNumber(value: MTLStorageMode.`private`.rawValue)
+            MTKTextureLoader.Option.textureStorageMode: NSNumber(value: MTLStorageMode.`private`.rawValue),
+            // use the linear color pixel format bgra8Unorm instead of SRGB
+            // for now it's easier to work with and maybe just better?
+            .SRGB: false
         ]
 
         return try! textureLoader.newTexture(name: name,
