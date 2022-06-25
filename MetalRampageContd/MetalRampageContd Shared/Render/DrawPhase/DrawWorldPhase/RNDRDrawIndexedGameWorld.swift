@@ -106,7 +106,7 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
                     rndrObject.transform
                 }
                 renderer.worldTilesBuffers?.append(
-                    MetalTileBuffers(
+                    RNDRMetalTileBuffers(
                         vertexBuffer: buffer,
                         indexBuffer: indexBuffer,
                         uvBuffer: coordsBuffer,

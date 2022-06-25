@@ -9,7 +9,7 @@ import Foundation
  I like calling it Model because it's a 3D model but it may need a name change...
  I also suspect once I have models loaded in from this will need to change. Possibly even for models defined in more than one plane.
  */
-struct Model {
+struct RNDRModel {
     let vertices: [Float3]
     let uv: [Float2]
     let index: [UInt16]

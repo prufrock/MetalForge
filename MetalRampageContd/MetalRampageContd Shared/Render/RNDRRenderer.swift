@@ -37,11 +37,11 @@ public class RNDRRenderer: NSObject {
     private(set) var titleScreen: [Texture:MTLTexture?] = [:]
 
     // models
-    private(set) var model: [ModelLabel:Model] = [:]
+    private(set) var model: [ModelLabel:RNDRModel] = [:]
 
     // static renderables
     private(set) var worldTiles: [(RNDRObject, Tile)]?
-    var worldTilesBuffers: [MetalTileBuffers]?
+    var worldTilesBuffers: [RNDRMetalTileBuffers]?
 
     // draw phases
     private var drawWeapon: RNDRDrawWorldPhase?
@@ -175,7 +175,7 @@ public class RNDRRenderer: NSObject {
 
     private func render(_ game: Game, additionalEffects: [Effect] = [],onlyTitle: Bool = false) {
         if worldTiles == nil {
-            worldTiles = (TileImage(world: game.world).tiles)
+            worldTiles = (RNDRTileImage(world: game.world).tiles)
         }
 
         guard let commandBuffer = self.commandQueue.makeCommandBuffer() else {

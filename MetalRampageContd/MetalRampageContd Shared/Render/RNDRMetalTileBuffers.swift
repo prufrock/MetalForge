@@ -4,7 +4,7 @@
 
 import MetalKit
 
-struct MetalTileBuffers {
+struct RNDRMetalTileBuffers {
     let vertexBuffer: MTLBuffer
     let indexBuffer: MTLBuffer
     let uvBuffer: MTLBuffer

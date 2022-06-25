@@ -5,7 +5,7 @@
 import simd
 import MetalKit
 
-struct TileImage {
+struct RNDRTileImage {
     var tiles: [(RNDRObject, Tile)] = []
     private let size = Float(1.0)
     private let start = Float(0.0)

@@ -6,8 +6,8 @@
 //
 
 
-func unitSquare() -> Model {
-    Model(
+func unitSquare() -> RNDRModel {
+    RNDRModel(
         vertices: [
             Float3(-0.5, -0.5, 0.0),
             Float3(-0.5, 0.5, 0.0),

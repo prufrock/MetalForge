@@ -17,7 +17,7 @@ struct RNDRDrawMap: RNDRDrawWorldPhase  {
     func draw(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         // TODO replace drawMap with an overheard view of the world
         //Draw map
-        var renderables: [RNDRObject] = TileImage(world: world).tiles
+        var renderables: [RNDRObject] = RNDRTileImage(world: world).tiles
                 // filtering white tiles is a goofy shortcut so that only the floor tiles are used for the map
                 // eventually this should be replaced with a proper overhead view of the world
                 // going to need a way to rip off the ceiling or show only the floor for that
