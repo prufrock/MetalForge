@@ -6,15 +6,15 @@
  Manages all of the things that happen outside of the World but are still a part of the game.
  You know, things like menus and the title screen.
  */
-struct Game {
-    let levels: [Tilemap]
-    private(set) var world: World
-    private(set) var state: GameState = .title
+struct GMGame {
+    let levels: [GMTilemap]
+    private(set) var world: GMWorld
+    private(set) var state: GMGameState = .title
 
     // Transition effects between game states.
-    private(set) var transition: Effect?
+    private(set) var transition: GMEffect?
 
-    let font: Font
+    let font: GMFont
 
     #if os(iOS)
     var titleText = "TAP TO START"
@@ -23,26 +23,26 @@ struct Game {
     #endif
 
     // weak because Game shouldn't prevent the delegate from getting deallocated.
-    weak var delegate: GameDelegate?
+    weak var delegate: GMGameDelegate?
 
-    init(levels: [Tilemap], font: Font) {
+    init(levels: [GMTilemap], font: GMFont) {
         self.levels = levels
         // Game manages the world
         // Seems like we should start at level 0
-        self.world = World(map: levels[0])
+        self.world = GMWorld(map: levels[0])
 
         self.font = font
     }
 }
 
-extension Game {
+extension GMGame {
 
     /**
      Using a computed property for the Hud.
      All of it's values are based on the player's state.
      */
-    var hud: Hud {
-        Hud(player: world.player, font: font)
+    var hud: GMHud {
+        GMHud(player: world.player, font: font)
     }
 
     /**
@@ -51,7 +51,7 @@ extension Game {
        - timeStep: The amount of time to move it forward.
        - input: The input to apply to the world.
      */
-    mutating func update(timeStep: Float, input: Input) {
+    mutating func update(timeStep: Float, input: GMInput) {
         // if there isn't a delegate there's no reason to work
         guard let delegate = delegate else {
             return
@@ -69,12 +69,12 @@ extension Game {
             // if the player presses the fire button switch to playing
             if input.isFiring {
                 print("switch to playing")
-                transition = Effect(type: .fadeOut, color: ColorA(Color.black), duration: 0.5)
+                transition = GMEffect(type: .fadeOut, color: ColorA(GMColor.black), duration: 0.5)
                 state = .starting
             }
         case .starting:
             if transition?.isCompleted == true {
-                transition = Effect(type: .fadeIn, color: ColorA(Color.black), duration: 0.5)
+                transition = GMEffect(type: .fadeIn, color: ColorA(GMColor.black), duration: 0.5)
                 state = .playing
             }
         case .playing:
@@ -101,7 +101,7 @@ extension Game {
  Like so many things in MetalRampage even the Game has a state.
  It's especially useful to know if the game is being played or something else is happening.
  */
-enum GameState {
+enum GMGameState {
     case title
     case starting
     case playing
@@ -110,8 +110,8 @@ enum GameState {
 /**
  A delegate so Game can make the controllers do things.
  */
-protocol GameDelegate: AnyObject {
+protocol GMGameDelegate: AnyObject {
     func playSound(_ sound: Sound)
     func clearSounds()
-    func updateRenderer(_ world: World)
+    func updateRenderer(_ world: GMWorld)
 }

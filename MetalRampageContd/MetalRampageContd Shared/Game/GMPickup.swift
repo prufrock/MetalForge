@@ -5,22 +5,22 @@
 //  Created by David Kanenwisher on 4/15/22.
 //
 
-struct Pickup: Actor {
+struct GMPickup: GMActor {
     var position: Float2
-    let type: PickupType
+    let type: GMPickupType
     let radius: Float = 0.4
 
-    init(type: PickupType, position: Float2) {
+    init(type: GMPickupType, position: Float2) {
         self.type = type
         self.position = position
     }
 }
 
-extension Pickup {
+extension GMPickup {
     // You can't kill a pickup
     var isDead: Bool { return false }
 
-    var texture: Texture {
+    var texture: GMTexture {
         switch type {
         case .healingPotion:
             return .healingPotion
@@ -29,12 +29,12 @@ extension Pickup {
         }
     }
 
-    func billboard(for ray: Ray) -> Billboard {
+    func billboard(for ray: GMRay) -> GMBillboard {
         // the billboard should be orthogonal to the ray
         // the ray comes from the player in the case
         // so the billboard is orthogonal to the player
         let plane = ray.direction.orthogonal
-        return Billboard(
+        return GMBillboard(
             start: position - plane / 2,
             direction: plane,
             length: 1,
@@ -44,7 +44,7 @@ extension Pickup {
     }
 }
 
-enum PickupType {
+enum GMPickupType {
     case healingPotion
     case fireBlast
 }

@@ -4,9 +4,9 @@
 
 import Foundation
 
-enum Easing {}
+enum GMEasing {}
 
-extension Easing {
+extension GMEasing {
     static func linear(_ t: Float, a: Float = 1.0) -> Float {
         min(a, t)
     }

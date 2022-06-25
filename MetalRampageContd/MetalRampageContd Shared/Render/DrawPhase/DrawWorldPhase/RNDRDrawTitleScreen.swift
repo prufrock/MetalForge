@@ -14,7 +14,7 @@ class RNDRDrawTitleScreen {
         self.pipelineCatalog = pipelineCatalog
     }
 
-    func draw(game: Game, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func draw(game: GMGame, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = renderer.model[.unitSquare]!
 
         var fontSpriteSheet = SpriteSheet(textureWidth: 148, textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
@@ -23,7 +23,7 @@ class RNDRDrawTitleScreen {
         var fontSpriteIndex = 0
 
         // TODO: Add Texture to RNDRObject?
-        let titleLogo: (RNDRObject, Texture, UInt32?) = (RNDRObject(
+        let titleLogo: (RNDRObject, GMTexture, UInt32?) = (RNDRObject(
             vertices: model.allVertices(),
             uv: model.allUv(),
             transform: Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
@@ -32,12 +32,12 @@ class RNDRDrawTitleScreen {
             position: Int2(0, 0)
         ), .titleLogo, nil)
 
-        var renderables: [(RNDRObject, Texture, UInt32?)] = []
+        var renderables: [(RNDRObject, GMTexture, UInt32?)] = []
         renderables.append(titleLogo)
 
         for index in 0..<game.titleText.count {
             let character = game.titleText.char(at: index)!
-            let text: (RNDRObject, Texture, UInt32) = (RNDRObject(
+            let text: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
                 vertices: model.allVertices(),
                 uv: model.allUv(),
                 transform: Float4x4.translate(x: (renderer.aspect * 0.0) + (-1 * Float(game.titleText.count - 1) / 2 * 0.01) + (0.01 * Float(index)) , y: -0.1, z: 0.0) * Float4x4.scale(x: 0.008, y: 0.01, z: 0.0),

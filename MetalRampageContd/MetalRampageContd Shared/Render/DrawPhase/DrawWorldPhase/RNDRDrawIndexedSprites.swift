@@ -14,9 +14,9 @@ struct RNDRDrawIndexedSprites: RNDRDrawWorldPhase {
         self.pipelineCatalog = pipelineCatalog
     }
 
-    func draw(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         // TODO RNDRObject?
-        var renderables: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Texture)] = []
+        var renderables: [([Float3], [Float2], Float4x4, GMColor, MTLPrimitiveType, GMTexture)] = []
         let model = renderer.model[.unitSquare]!
 
         renderables += world.sprites.map { billboard in
@@ -31,7 +31,7 @@ struct RNDRDrawIndexedSprites: RNDRDrawWorldPhase {
                     * Float4x4.rotateY(atan2(billboard.direction.y, billboard.direction.x))
                     * Float4x4.rotateY(.pi/2)
                 )
-                , Color.black, MTLPrimitiveType.triangle, billboard.texture)
+                , GMColor.black, MTLPrimitiveType.triangle, billboard.texture)
         }
 
         // if there's nothing to render bail out

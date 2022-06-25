@@ -2,14 +2,14 @@
 // Created by David Kanenwisher on 4/1/22.
 //
 
-struct Door {
+struct GMDoor {
     let position: Float2
     let direction: Float2
-    let texture: Texture
+    let texture: GMTexture
     let isVertical: Bool
 
     // Handles opening and closing the door
-    var state: DoorState = .closed
+    var state: GMDoorState = .closed
     var time: Float = 0
     let duration: Float = 0.5
     let closeDelay: Float = 3
@@ -28,20 +28,20 @@ struct Door {
     }
 }
 
-enum DoorState {
+enum GMDoorState {
     case closed
     case opening
     case open
     case closing
 }
 
-extension Door {
-    var rect: Rect {
+extension GMDoor {
+    var rect: GMRect {
         // open the door along the axis by the offset for collision handling
         let position = self.position + direction * (offset - 0.5)
         // make the collision rectangle a little thicker(0.2 units thick)
         let depth = direction.orthogonal * 0.1
-        return Rect(min: position + depth, max: position + direction - depth)
+        return GMRect(min: position + depth, max: position + direction - depth)
     }
 
     // The amount the door should be open, also animates opening and closing depending on state
@@ -51,16 +51,16 @@ extension Door {
         case .closed:
              return 0
         case .opening:
-            return Easing.easeInEaseOut(t)
+            return GMEasing.easeInEaseOut(t)
         case .open:
             return 1
         case .closing:
-            return 1 - Easing.easeInEaseOut(t)
+            return 1 - GMEasing.easeInEaseOut(t)
         }
     }
 
-    var billboard: Billboard {
-        Billboard(
+    var billboard: GMBillboard {
+        GMBillboard(
             // the billboard moves along its axis by the offset to open and close
             start: position + direction * (offset - 0.5),
             direction: direction,
@@ -73,11 +73,11 @@ extension Door {
     /*
      Determines if a ray hit the door. If it does returns the displacement vector.
      */
-    func hitTest(_ ray: Ray) -> Float2? {
+    func hitTest(_ ray: GMRay) -> Float2? {
         billboard.hitTest(ray)
     }
 
-    mutating func update(in world: inout World) {
+    mutating func update(in world: inout GMWorld) {
         switch state {
         case .closed:
             // open the door if the player touches it

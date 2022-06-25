@@ -6,7 +6,7 @@ import simd
 import MetalKit
 
 struct RNDRTileImage {
-    var tiles: [(RNDRObject, Tile)] = []
+    var tiles: [(RNDRObject, GMTile)] = []
     private let size = Float(1.0)
     private let start = Float(0.0)
     private let tile1: [Float3]
@@ -20,7 +20,7 @@ struct RNDRTileImage {
        - world: The world to create tiles from.
        - wallColor: used when drawing the map or for debugging
      */
-    init(world: World, wallColor: Color = .white) {
+    init(world: GMWorld, wallColor: GMColor = .white) {
         let map = world.map
         // only for the drawMap
         tile1 = [
@@ -35,7 +35,7 @@ struct RNDRTileImage {
 
 
         let rotateTopUp = Float4x4.rotateZ(.pi/2) // rotate the object so the top is up so the texture looks correct
-        var myTiles: [([Float3], [Float2], Float4x4, Color, MTLPrimitiveType, Tile, Int2)] = []
+        var myTiles: [([Float3], [Float2], Float4x4, GMColor, MTLPrimitiveType, GMTile, Int2)] = []
         for y in 0 ..< map.height {
             for x in 0 ..< map.width {
                 if map[x, y].isWall {

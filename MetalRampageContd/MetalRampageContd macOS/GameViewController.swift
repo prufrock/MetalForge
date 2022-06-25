@@ -23,7 +23,7 @@ class GameViewController: NSViewController {
     private var showMap = false
     private var drawWorld = true
 
-    private var game = Game(levels: loadLevels(), font: loadFont())
+    private var game = GMGame(levels: loadLevels(), font: loadFont())
 
     private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
     private let worldTimeStep: Float = 1 / 120 // number of steps to take each frame
@@ -175,7 +175,7 @@ extension GameViewController: MTKViewDelegate {
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
         let inputVector = self.inputVector
         let rotation = inputVector.x * game.world.player.turningSpeed * worldTimeStep
-        var input = Input(
+        var input = GMInput(
             speed: -inputVector.y,
             rotation: Float2x2.rotate(rotation),
             rotation3d: Float4x4.rotateY(inputVector.x * game.world.player.turningSpeed * worldTimeStep),
@@ -200,23 +200,23 @@ extension GameViewController: MTKViewDelegate {
  Loads levels from Levels.json and creating a Tilemap for each level and returning the array of Tilemaps.
  - Returns: [Tilemap]
  */
-private func loadLevels() -> [Tilemap] {
+private func loadLevels() -> [GMTilemap] {
     let jsonUrl = Bundle.main.url(forResource: "Levels", withExtension: "json")!
     let jsonData = try! Data(contentsOf: jsonUrl)
-    let levels = try! JSONDecoder().decode([MapData].self, from: jsonData)
+    let levels = try! JSONDecoder().decode([GMMapData].self, from: jsonData)
     return levels.enumerated().map { index, mapData in
         // The MapGenerator is going to generate the maps so it's taking over.
-        MapGenerator(mapData: mapData, index: index).map
+        GMMapGenerator(mapData: mapData, index: index).map
     }
 }
 
-private func loadFont() -> Font {
+private func loadFont() -> GMFont {
     let jsonUrl = Bundle.main.url(forResource: "Font", withExtension: "json")!
     let jsonData = try! Data(contentsOf: jsonUrl)
-    return try! JSONDecoder().decode(Font.self, from: jsonData)
+    return try! JSONDecoder().decode(GMFont.self, from: jsonData)
 }
 
-extension GameViewController: GameDelegate {
+extension GameViewController: GMGameDelegate {
     func playSound(_ sound: Sound) {
         audioEngine.play([sound])
     }
@@ -225,7 +225,7 @@ extension GameViewController: GameDelegate {
         audioEngine.clearSounds()
     }
 
-    func updateRenderer(_ world: World) {
+    func updateRenderer(_ world: GMWorld) {
         renderer = RNDRRenderer(metalView, width: 8, height: 8).also {
             $0.updateAspect(renderer.aspect)
         }

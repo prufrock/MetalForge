@@ -2,14 +2,14 @@
 // Created by David Kanenwisher on 2/19/22.
 //
 
-public struct Billboard {
+public struct GMBillboard {
     public var start: Float2
     public var direction: Float2
     public var length: Float
     public var position: Float2
-    public var texture: Texture
+    public var texture: GMTexture
 
-    public init(start: Float2, direction: Float2, length: Float, position: Float2, texture: Texture) {
+    public init(start: Float2, direction: Float2, length: Float, position: Float2, texture: GMTexture) {
         self.start = start
         self.direction = direction
         self.length = length
@@ -18,13 +18,13 @@ public struct Billboard {
     }
 }
 
-public extension Billboard {
+public extension GMBillboard {
     var end: Float2 {
         start + direction * length
     }
 
-    func hitTest(_ ray: Ray) -> Float2? {
-        var lhs = ray, rhs = Ray(origin: start, direction: direction)
+    func hitTest(_ ray: GMRay) -> Float2? {
+        var lhs = ray, rhs = GMRay(origin: start, direction: direction)
 
         // ensure rays are never exactly vertical
         let epsilon: Float = 0.00001

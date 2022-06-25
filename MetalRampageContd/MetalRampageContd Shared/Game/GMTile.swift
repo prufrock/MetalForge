@@ -2,7 +2,7 @@
 // Created by David Kanenwisher on 12/26/21.
 //
 
-public enum Tile: Int, Decodable, CaseIterable {
+public enum GMTile: Int, Decodable, CaseIterable {
     // Ceiling
     case ceiling = 5
 
@@ -28,7 +28,7 @@ public enum Tile: Int, Decodable, CaseIterable {
     case elevatorBackWall = 11
 }
 
-public extension Tile {
+public extension GMTile {
     var isWall: Bool {
         switch self {
         case .wall, .crackWall, .slimeWall, .doorJamb1, .doorJamb2, .wallSwitch, .elevatorSideWall, .elevatorBackWall:
@@ -38,7 +38,7 @@ public extension Tile {
         }
     }
 
-    var textures: [Texture] {
+    var textures: [GMTexture] {
         switch self {
         case .floor, .elevatorFloor:
             return [.floor, .ceiling]

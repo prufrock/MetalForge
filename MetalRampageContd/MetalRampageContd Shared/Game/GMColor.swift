@@ -4,7 +4,7 @@
 
 import MetalKit
 
-public enum Color: Int {
+public enum GMColor: Int {
     case black = 0x000000
     case red = 0xFF0000
     case green = 0x00FF00
@@ -42,17 +42,17 @@ public enum Color: Int {
 }
 
 extension Float3 {
-    init(_ color: Color) {
+    init(_ color: GMColor) {
         self.init(color.rFloat(), color.gFloat(), color.bFloat())
     }
 }
 
 extension Float4 {
-    init(_ color: Color) {
+    init(_ color: GMColor) {
         self.init(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
     }
 
-    init(_ color: Color, alpha: Float) {
+    init(_ color: GMColor, alpha: Float) {
         self.init(color.rFloat(), color.gFloat(), color.bFloat(), alpha)
     }
 
@@ -62,7 +62,7 @@ extension Float4 {
 }
 
 extension MTLClearColor {
-    init(_ color: Color) {
+    init(_ color: GMColor) {
         self.init(red: Double(color.rFloat()), green: Double(color.gFloat()), blue: Double(color.bFloat()), alpha: 1.0)
     }
 }
@@ -83,7 +83,7 @@ class ColorA {
         self.a = a
     }
 
-    init(_ color: Color, a: Float = 1.0) {
+    init(_ color: GMColor, a: Float = 1.0) {
         r = color.rFloat()
         g = color.gFloat()
         b = color.bFloat()

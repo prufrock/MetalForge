@@ -5,7 +5,7 @@
 import simd
 import MetalKit
 
-public struct Rect {
+public struct GMRect {
     var min, max: Float2
 
     public init(min: Float2, max: Float2) {
@@ -13,7 +13,7 @@ public struct Rect {
         self.max = max
     }
 
-    func renderable() -> ([Float3], [Float2], Float4x4, Color, MTLPrimitiveType) {
+    func renderable() -> ([Float3], [Float2], Float4x4, GMColor, MTLPrimitiveType) {
         var vertices:[Float3] = []
 
         vertices.append(Float3(min.x, max.y, 0.0))
@@ -42,8 +42,8 @@ public struct Rect {
     }
 }
 
-public extension Rect {
-    func intersection(with rect: Rect) -> Float2? {
+public extension GMRect {
+    func intersection(with rect: GMRect) -> Float2? {
         let left = Float2(x: max.x - rect.min.x, y: 0)
         if left.x <= 0 {
             return nil

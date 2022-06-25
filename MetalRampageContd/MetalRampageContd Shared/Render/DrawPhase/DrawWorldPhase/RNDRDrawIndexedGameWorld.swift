@@ -14,8 +14,8 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
         self.pipelineCatalog = pipelineCatalog
     }
 
-    func draw(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
-        let color = Color.black
+    func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+        let color = GMColor.black
         let primitiveType = MTLPrimitiveType.triangle
 
         if renderer.worldTilesBuffers == nil {
@@ -91,13 +91,13 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
         }
     }
 
-    private func initializeWorldTilesBuffer(world: World) {
+    private func initializeWorldTilesBuffer(world: GMWorld) {
         renderer.worldTilesBuffers = Array()
         let index: [UInt16] = [0, 1, 2, 3, 4, 5]
 
         let model = renderer.model[.unitSquare]! // it better be there!
 
-        Tile.allCases.forEach { tile in
+        GMTile.allCases.forEach { tile in
             renderer.worldTiles!.filter {$0.1 == tile}.chunked(into: 64).forEach { chunk in
                 let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])!
                 let indexBuffer = renderer.device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!

@@ -17,7 +17,7 @@ struct RNDRDrawWeapon: RNDRDrawWorldPhase {
         self.pipelineCatalog = pipelineCatalog
     }
 
-    func draw(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = renderer.model[.unitSquare]!
 
         let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
@@ -66,7 +66,7 @@ struct RNDRDrawWeapon: RNDRDrawWorldPhase {
         encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 4)
         encoder.setVertexBytes(&textureId, length: MemoryLayout<Float>.stride, index: 5)
 
-        let color = Color.black
+        let color = GMColor.black
         var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)

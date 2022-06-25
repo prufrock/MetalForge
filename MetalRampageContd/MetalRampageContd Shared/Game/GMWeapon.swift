@@ -2,15 +2,15 @@
 // Created by David Kanenwisher on 4/16/22.
 //
 
-enum Weapon {
+enum GMWeapon {
     case wand
     case fireBlast
 }
 
-extension Weapon {
+extension GMWeapon {
     struct Attributes {
-        let idleAnimation: Animation
-        let fireAnimation: Animation
+        let idleAnimation: GMAnimation
+        let fireAnimation: GMAnimation
         let fireSound: SoundName
         let damage: Float
         let coolDown: Float
@@ -21,7 +21,7 @@ extension Weapon {
         // the amount of charges the spell starts with
         let defaultCharges: Float
         // the icon to use on the HUD
-        let hudIcon: Texture
+        let hudIcon: GMTexture
     }
 
     var attributes: Attributes {
@@ -55,21 +55,21 @@ extension Weapon {
 }
 
 // Manage the weapon animations
-extension Animation {
-    static let wandIdle = Animation(frames: [
+extension GMAnimation {
+    static let wandIdle = GMAnimation(frames: [
         .wand
     ], duration: 0)
-    static let wandFire = Animation(frames: [
+    static let wandFire = GMAnimation(frames: [
         .wandFiring1,
         .wandFiring2,
         .wandFiring3,
         .wandFiring4,
         .wand
     ], duration: 0.5)
-    static let fireBlastIdle = Animation(frames: [
+    static let fireBlastIdle = GMAnimation(frames: [
         .fireBlastIdle
     ], duration: 0)
-    static let fireBlastFire = Animation(frames: [
+    static let fireBlastFire = GMAnimation(frames: [
         .fireBlastFire1,
         .fireBlastFire2,
         .fireBlastFire3,

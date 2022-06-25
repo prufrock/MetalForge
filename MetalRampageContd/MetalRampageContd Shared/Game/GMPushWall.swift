@@ -2,12 +2,12 @@
 // Created by David Kanenwisher on 4/6/22.
 //
 
-struct PushWall: Actor {
+struct GMPushWall: GMActor {
     // don't store an unneeded property
     var isDead: Bool { false }
     let radius: Float = 0.5
     var position: Float2
-    let tile: Tile
+    let tile: GMTile
 
     // make it movable
     let speed: Float = 0.25
@@ -16,7 +16,7 @@ struct PushWall: Actor {
     // allow it to loop it's sound
     let soundChannel: Int
 
-    init(position: Float2, tile: Tile, soundChannel: Int) {
+    init(position: Float2, tile: GMTile, soundChannel: Int) {
         self.position = position
         self.tile = tile
         self.velocity = Float2(x: 0, y: 0)
@@ -24,10 +24,10 @@ struct PushWall: Actor {
     }
 }
 
-extension PushWall {
+extension GMPushWall {
     // The collision rectangle
-    var rect: Rect {
-        Rect(
+    var rect: GMRect {
+        GMRect(
             min: position - Float2(x: 0.5, y: 0.5),
             max: position + Float2(x: 0.5, y: 0.5)
         )
@@ -37,7 +37,7 @@ extension PushWall {
         velocity.x != 0 || velocity.y != 0
     }
 
-    mutating func update(in world: inout World) {
+    mutating func update(in world: inout GMWorld) {
         // allows `update` to know the exact moment the wall starts moving or comes to a rest
         // if it started moving `wasMoving` is false and if it stopped moving `wasMoving` is true.
         let wasMoving = isMoving
@@ -78,17 +78,17 @@ extension PushWall {
     }
 
     // The billboards are used for hitTest what things can see and for rendering
-    var billboards: [Billboard] {
+    var billboards: [GMBillboard] {
         let topLeft = rect.min, bottomRight = rect.max
         let topRight = Float2(x: bottomRight.x, y: topLeft.y)
         let bottomLeft = Float2(x: topLeft.x, y: bottomRight.y)
         let textures = tile.textures
         // The push wall has 4 walls so it had 4 billboards placed into position
         return [
-            Billboard(start: topLeft, direction: Float2(x: 0, y: 1), length: 1, position: Float2(position.x + 0.5, position.y), texture: textures[0]),
-            Billboard(start: topRight, direction: Float2(x: -1, y: 0), length: 1, position: Float2(position.x, position.y - 0.5), texture: textures[1]),
-            Billboard(start: bottomRight, direction: Float2(x: 0, y: -1), length: 1, position: Float2(position.x - 0.5, position.y), texture: textures[0]),
-            Billboard(start: bottomLeft, direction: Float2(x: 1, y: 0), length: 1, position: Float2(position.x, position.y + 0.5), texture: textures[1]),
+            GMBillboard(start: topLeft, direction: Float2(x: 0, y: 1), length: 1, position: Float2(position.x + 0.5, position.y), texture: textures[0]),
+            GMBillboard(start: topRight, direction: Float2(x: -1, y: 0), length: 1, position: Float2(position.x, position.y - 0.5), texture: textures[1]),
+            GMBillboard(start: bottomRight, direction: Float2(x: 0, y: -1), length: 1, position: Float2(position.x - 0.5, position.y), texture: textures[0]),
+            GMBillboard(start: bottomLeft, direction: Float2(x: 1, y: 0), length: 1, position: Float2(position.x, position.y + 0.5), texture: textures[1]),
         ]
     }
 }

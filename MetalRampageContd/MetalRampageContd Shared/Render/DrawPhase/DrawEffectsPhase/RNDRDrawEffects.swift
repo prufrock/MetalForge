@@ -14,7 +14,7 @@ class RNDRDrawEffects: RNDRDrawEffectsPhase {
         self.pipelineCatalog = pipelineCatalog
     }
 
-    func draw(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func draw(effects: [GMEffect], encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         effects.forEach { effect in
             let vertices = [
                 Float3(0.0, 0.0, 0.0),

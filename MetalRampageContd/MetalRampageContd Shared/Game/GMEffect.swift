@@ -2,18 +2,18 @@
 // Created by David Kanenwisher on 3/21/22.
 //
 
-enum EffectType {
+enum GMEffectType {
     case fadeIn
     case fadeOut
 }
 
-class Effect {
-    let type: EffectType
+class GMEffect {
+    let type: GMEffectType
     let color: ColorA
     let duration: Float
     var time: Float = 0
 
-    init(type: EffectType, color: ColorA, duration: Float) {
+    init(type: GMEffectType, color: ColorA, duration: Float) {
         self.type = type
         self.color = color
         self.duration = duration
@@ -24,7 +24,7 @@ class Effect {
     }
 }
 
-extension Effect {
+extension GMEffect {
     var isCompleted: Bool {
         time >= duration
     }
@@ -33,9 +33,9 @@ extension Effect {
         let t = min(1, time / duration)
         switch type {
         case .fadeIn:
-            return color.a - Easing.easeIn(t)
+            return color.a - GMEasing.easeIn(t)
         case .fadeOut:
-            return Easing.easeOut(t)
+            return GMEasing.easeOut(t)
         }
     }
 }

@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct Input {
+public struct GMInput {
     public var speed: Float
     public var rotation: Float2x2
     public var rotation3d: Float4x4

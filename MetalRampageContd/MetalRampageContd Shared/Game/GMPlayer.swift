@@ -2,7 +2,7 @@
 // Created by David Kanenwisher on 12/16/21.
 //
 
-public struct Player: Actor {
+public struct GMPlayer: GMActor {
     public var position: Float2
     public var velocity: Float2
     public let radius: Float = 0.25
@@ -16,11 +16,11 @@ public struct Player: Actor {
     public let soundChannel: Int
 
     // player animation
-    public var state: PlayerState = .idle
-    var animation: Animation
+    public var state: GMPlayerState = .idle
+    var animation: GMAnimation
 
     // weapon/spell related
-    private(set) var weapon: Weapon = .wand
+    private(set) var weapon: GMWeapon = .wand
     private(set) var charges: Float
 
     public init(position: Float2, soundChannel: Int) {
@@ -35,12 +35,12 @@ public struct Player: Actor {
     }
 }
 
-public enum PlayerState {
+public enum GMPlayerState {
     case idle
     case firing
 }
 
-public extension Player {
+public extension GMPlayer {
     var isDead: Bool {
         health <= 0
     }
@@ -68,14 +68,14 @@ public extension Player {
         }
     }
 
-    internal mutating func setWeapon(_ weapon: Weapon) {
+    internal mutating func setWeapon(_ weapon: GMWeapon) {
         self.weapon = weapon
         self.animation = weapon.attributes.idleAnimation
         self.charges = weapon.attributes.defaultCharges
     }
 
     // Used to pass properties to new player instances between levels
-    internal mutating func inherit(from player: Player) {
+    internal mutating func inherit(from player: GMPlayer) {
         health = player.health
         setWeapon(player.weapon)
         charges = player.charges
@@ -87,7 +87,7 @@ public extension Player {
        - input: Input
        - world: World
      */
-    mutating func update(with input: Input, in world: inout World) {
+    mutating func update(with input: GMInput, in world: inout GMWorld) {
         // like in push wall allows `update` to determine the moment when the player starts or stops moving.
         let wasMoving = isMoving
 
@@ -117,7 +117,7 @@ public extension Player {
                 let cosine = (1 - sine * sine).squareRoot()
                 let direction = self.direction.rotated(by: Float2x2.rotate(sine: sine, cosine: cosine))
 
-                let ray = Ray(origin: position, direction: direction)
+                let ray = GMRay(origin: position, direction: direction)
                 if let index = world.pickMonster(ray) {
                     // Divide the amount of damage by the number of projectiles
                     world.hurtMonster(at: index, damage: weapon.attributes.damage / Float(projectiles))

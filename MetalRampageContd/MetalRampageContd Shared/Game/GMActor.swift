@@ -4,26 +4,26 @@
 
 import Foundation
 
-protocol Actor {
+protocol GMActor {
     var radius: Float {get}
     var position: Float2 {get set}
     var isDead: Bool { get }
 }
 
-extension Actor {
-    var rect: Rect {
+extension GMActor {
+    var rect: GMRect {
         let halfSize = Float2(radius, radius)
         // the player is centered on the position
-        return Rect(min: position - halfSize, max: position + halfSize)
+        return GMRect(min: position - halfSize, max: position + halfSize)
     }
 
-    func intersection(with map: Tilemap) -> Float2? {
+    func intersection(with map: GMTilemap) -> Float2? {
         let minX = Int(rect.min.x), maxX = Int(rect.max.x)
         let minY = Int(rect.min.y), maxY = Int(rect.max.y)
         var largestIntersection: Float2?
         for y in minY ... maxY {
             for x in minX ... maxX where map[x, y].isWall {
-                let wallRect = Rect(
+                let wallRect = GMRect(
                     min: Float2(x: Float(x), y: Float(y)),
                     max: Float2(x: Float(x + 1), y: Float(y + 1))
                 )
@@ -41,11 +41,11 @@ extension Actor {
      - Parameter door: Door
      - Returns: Float2
      */
-    func intersection(with door: Door) -> Float2? {
+    func intersection(with door: GMDoor) -> Float2? {
         rect.intersection(with: door.rect)
     }
 
-    func intersection(with pushWall: PushWall) -> Float2? {
+    func intersection(with pushWall: GMPushWall) -> Float2? {
         rect.intersection(with: pushWall.rect)
     }
 
@@ -54,7 +54,7 @@ extension Actor {
      - Parameter world: Door
      - Returns: Float2
      */
-    func intersection(with world: World) -> Float2? {
+    func intersection(with world: GMWorld) -> Float2? {
         if let intersection = intersection(with: world.map) {
             return intersection
         }
@@ -75,7 +75,7 @@ extension Actor {
         return nil
     }
 
-    func intersection(with actor: Actor) -> Float2? {
+    func intersection(with actor: GMActor) -> Float2? {
         // if either are dead don't consider it an intersection
         // basically this makes it so you can move through dead monsters
         if isDead || actor.isDead {
@@ -85,7 +85,7 @@ extension Actor {
         return rect.intersection(with: actor.rect)
     }
 
-    func isStuck(in world: World) -> Bool {
+    func isStuck(in world: GMWorld) -> Bool {
         // If outside map
         if position.x < 1 || position.x > world.map.size.x - 1 || position.y < 1 || position.y > world.map.size.y - 1 {
             return true
@@ -106,7 +106,7 @@ extension Actor {
      A collision check where collisions are checked only so many times before simply allowing it so the game doesn't
      lock up.
      */
-    mutating func avoidWalls(in world: World) {
+    mutating func avoidWalls(in world: GMWorld) {
         var attempts = 10
         while attempts > 0, let intersection = intersection(with: world) {
             position -= intersection

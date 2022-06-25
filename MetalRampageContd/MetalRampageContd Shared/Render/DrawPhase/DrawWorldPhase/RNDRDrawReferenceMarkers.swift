@@ -14,7 +14,7 @@ struct RNDRDrawReferenceMarkers: RNDRDrawWorldPhase  {
         self.pipelineCatalog = pipelineCatalog
     }
 
-    func draw(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         var renderables: [RNDRObject] = []
 
         renderables += lineCube(Float4x4.scale(x: 0.1, y: 0.1, z: 0.1))

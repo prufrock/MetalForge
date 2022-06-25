@@ -14,11 +14,11 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
         self.pipelineCatalog = pipelineCatalog
     }
 
-    func draw(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func draw(hud: GMHud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = renderer.model[.unitSquare]!
 
         // TODO: Add Texture to RNDRObject?
-        let crossHairs: (RNDRObject, Texture, UInt32?) = (RNDRObject(
+        let crossHairs: (RNDRObject, GMTexture, UInt32?) = (RNDRObject(
             vertices: model.allVertices(),
             uv: model.allUv(),
             transform: Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
@@ -34,14 +34,14 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
         //TODO find a way to pass whether a texture uses a sprite sheet
         var fontSpriteIndex = 0
 
-        var renderables: [(RNDRObject, Texture, UInt32?)] = []
+        var renderables: [(RNDRObject, GMTexture, UInt32?)] = []
         renderables.append(crossHairs)
 
         let chargesStart: Float2 = Float2(renderer.aspect * 0.9, 0.85)
 
         let charges = String(Int(max(0, min(99, Int(hud.chargesString) ?? 0)))).leftPadding(toLength: 2, withPad: "0")
 
-        let charges1: (RNDRObject, Texture, UInt32) = (RNDRObject(
+        let charges1: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
             vertices: model.allVertices(),
             uv: model.allUv(),
             transform: Float4x4.translate(x: chargesStart.x - fontSpace * 1, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
@@ -50,7 +50,7 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
             position: Int2(0, 0)
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(charges.charInt(at: 0) ?? 0)) ?? 0))
 
-        let charges2: (RNDRObject, Texture, UInt32) = (RNDRObject(
+        let charges2: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
             vertices: model.allVertices(),
             uv: model.allUv(),
             transform: Float4x4.translate(x: chargesStart.x - fontSpace * 0, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
@@ -59,7 +59,7 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
             position: Int2(0, 0)
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(charges.charInt(at: 1) ?? 0)) ?? 0))
 
-        let chargesIcon: (RNDRObject, Texture, UInt32) = (RNDRObject(
+        let chargesIcon: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
             vertices: model.allVertices(),
             uv: model.allUv(),
             transform: Float4x4.translate(x: chargesStart.x - fontSpace * 2, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),

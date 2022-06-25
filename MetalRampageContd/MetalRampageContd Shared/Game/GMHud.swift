@@ -2,15 +2,15 @@
 // Created by David Kanenwisher on 5/5/22.
 //
 
-struct Hud {
+struct GMHud {
     let healthString: String
-    let healthTint: Color
+    let healthTint: GMColor
     let chargesString: String
-    let playerWeapon: Texture
-    let weaponIcon: Texture
-    let font: Font
+    let playerWeapon: GMTexture
+    let weaponIcon: GMTexture
+    let font: GMFont
 
-    init(player: Player, font: Font) {
+    init(player: GMPlayer, font: GMFont) {
         let health = Int(max(0, player.health))
         switch health {
         case ...10:

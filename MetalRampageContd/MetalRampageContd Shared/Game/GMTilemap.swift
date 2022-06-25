@@ -2,17 +2,17 @@
 // Created by David Kanenwisher on 12/26/21.
 //
 
-public struct Tilemap {
-    private(set) var tiles: [Tile]
+public struct GMTilemap {
+    private(set) var tiles: [GMTile]
     // Things needs to able to change because they can be generated
     // It can't be public because then the size of the array could change unexpectedly.
-    private var things: [Thing]
+    private var things: [GMThing]
     public let width: Int
 
     // for switching between levels
     public let index: Int
 
-    init(_ map: MapData, index: Int) {
+    init(_ map: GMMapData, index: Int) {
         tiles = map.tiles
         things = map.things ?? Array(repeating: .nothing, count: map.tiles.count)
         width = map.width
@@ -20,9 +20,9 @@ public struct Tilemap {
     }
 }
 
-struct MapData: Decodable {
-    fileprivate let tiles: [Tile]
-    fileprivate let things: [Thing]? // If things aren't provided they are generated.
+struct GMMapData: Decodable {
+    fileprivate let tiles: [GMTile]
+    fileprivate let things: [GMThing]? // If things aren't provided they are generated.
     fileprivate let width: Int
 
     // These are all optionals so the level designer can decide whether they should be generated.
@@ -36,7 +36,7 @@ struct MapData: Decodable {
     let seed: UInt64?
 }
 
-public extension Tilemap {
+public extension GMTilemap {
     var height: Int {
         return tiles.count / width
     }
@@ -45,7 +45,7 @@ public extension Tilemap {
         return Float2(x: Float(width), y: Float(height))
     }
 
-    subscript(x: Int, y: Int) -> Tile {
+    subscript(x: Int, y: Int) -> GMTile {
         get { tiles[y * width + x] }
         set { tiles[y * width + x] = newValue}
     }
@@ -54,12 +54,12 @@ public extension Tilemap {
      Access things via subscript so it's a little more natural to get at them.
      Also, it's 1D array posing as a 2D array so hide that.
      */
-    subscript(thing x: Int, y: Int) -> Thing {
+    subscript(thing x: Int, y: Int) -> GMThing {
         get { things[y * width + x]}
         set { things[y * width + x] = newValue}
     }
 
-    func tile(at position: Float2, from direction: Float2) -> Tile {
+    func tile(at position: Float2, from direction: Float2) -> GMTile {
         var offsetX = 0, offsetY = 0
         // If either component is a whole number, use the direction
         // to determine which side should be checked.
@@ -72,7 +72,7 @@ public extension Tilemap {
         return self[Int(position.x) + offsetX, Int(position.y) + offsetY]
     }
 
-    func closestFloorTile(to x: Int, _ y: Int) -> Tile? {
+    func closestFloorTile(to x: Int, _ y: Int) -> GMTile? {
         // search for a floor tile(not wall) by searching in the immediate vicinity for a
         // floor tile to use otherwise give up.
         for y in max(0, y - 1) ... min(height - 1, y + 1) {
@@ -86,7 +86,7 @@ public extension Tilemap {
         return nil
     }
 
-    func hitTest(_ ray: Ray) -> Float2 {
+    func hitTest(_ ray: GMRay) -> Float2 {
         var position = ray.origin
         let slope = ray.direction.x / ray.direction.y
         repeat {

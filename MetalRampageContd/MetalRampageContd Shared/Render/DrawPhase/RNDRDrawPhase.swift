@@ -8,13 +8,13 @@
 import MetalKit
 
 protocol RNDRDrawWorldPhase {
-    func draw(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4)
+    func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4)
 }
 
 protocol RNDRDrawHudPhase {
-    func draw(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4)
+    func draw(hud: GMHud, encoder: MTLRenderCommandEncoder, camera: Float4x4)
 }
 
 protocol RNDRDrawEffectsPhase {
-    func draw(effects: [Effect], encoder: MTLRenderCommandEncoder, camera: Float4x4)
+    func draw(effects: [GMEffect], encoder: MTLRenderCommandEncoder, camera: Float4x4)
 }

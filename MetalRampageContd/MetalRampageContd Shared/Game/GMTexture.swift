@@ -1,7 +1,7 @@
 //
 // Created by David Kanenwisher on 3/18/22.
 //
-public enum Texture: String, CaseIterable, Decodable {
+public enum GMTexture: String, CaseIterable, Decodable {
     case floor, crackFloor
     case ceiling
     case wall, crackWall, crackWall2, slimeWall, slimeWall2

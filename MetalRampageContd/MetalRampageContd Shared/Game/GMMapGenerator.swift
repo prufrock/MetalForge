@@ -5,8 +5,8 @@
 /**
  Knows how to create random levels.
  */
-struct MapGenerator {
-    private(set) var map: Tilemap
+struct GMMapGenerator {
+    private(set) var map: GMTilemap
     // keep track of the players starting position
     // this makes it so we can adjust the level around them
     private var playerPosition: Float2!
@@ -17,12 +17,12 @@ struct MapGenerator {
     private var elevatorPosition: Float2!
 
     // generate some controlled random numbers
-    private var rng: Rng
+    private var rng: GMRng
 
-    public init(mapData: MapData, index: Int) {
-        map = Tilemap(mapData, index: index)
+    public init(mapData: GMMapData, index: Int) {
+        map = GMTilemap(mapData, index: index)
         // you can now specify the seed the map data or let it be random each time
-        rng = Rng(seed: mapData.seed ?? .random(in: 0 ... .max))
+        rng = GMRng(seed: mapData.seed ?? .random(in: 0 ... .max))
 
         // Find empty tiles
         // Find them in a systematic way so we don't have to sit around all day waiting
@@ -131,8 +131,8 @@ struct MapGenerator {
     }
 }
 
-private extension MapGenerator {
-    mutating func add(_ thing: Thing, at position: Float2?) {
+private extension GMMapGenerator {
+    mutating func add(_ thing: GMThing, at position: Float2?) {
         if let position = position {
             // put the thing there
             map[thing: Int(position.x), Int(position.y)] = thing
@@ -145,7 +145,7 @@ private extension MapGenerator {
     }
 }
 
-extension MapGenerator: Graph {
+extension GMMapGenerator: GMGraph {
     typealias Node = Float2
 
     func nodesConnectedTo(_ node: Node) -> [Node] {

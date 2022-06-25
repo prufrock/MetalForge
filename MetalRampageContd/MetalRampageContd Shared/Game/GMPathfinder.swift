@@ -1,11 +1,11 @@
 //
-//  Pathfinder.swift
+//  GMPathfinder.swift
 //  MetalRampageContd
 //
 //  Created by David Kanenwisher on 4/17/22.
 //
 
-protocol Graph {
+protocol GMGraph {
     /**
      A Node is a vertex on a path.
      */
@@ -38,15 +38,15 @@ protocol Graph {
 /**
  A path to somewhere.
  */
-private class Path<Node> {
+private class GMPath<Node> {
     let head: Node
-    let tail: Path?
+    let tail: GMPath?
     // the total steps taken to from the start to the head
     let distanceTraveled: Float
     // the total steps travel and the estimated distanced remaining
     let totalDistance: Float
 
-    init(head: Node, tail: Path?, stepDistance: Float, remaining: Float) {
+    init(head: Node, tail: GMPath?, stepDistance: Float, remaining: Float) {
         self.head = head
         self.tail = tail
         self.distanceTraveled = (tail?.distanceTraveled ?? 0) + stepDistance
@@ -67,10 +67,10 @@ private class Path<Node> {
     }
 }
 
-extension Graph {
+extension GMGraph {
     func findPath(from start: Node, to end: Node, maxDistance: Float) -> [Node] {
         var visited = Set([start])
-        var paths = [Path(
+        var paths = [GMPath(
             head: start,
             tail: nil,
             stepDistance: 0,
@@ -86,7 +86,7 @@ extension Graph {
             for node in nodesConnectedTo(path.head) where !visited.contains(node) {
                 // don't explore the visited nodes
                 visited.insert(node)
-                let next = Path(
+                let next = GMPath(
                     head: node,
                     tail: path,
                     stepDistance: stepDistance(from: path.head, to: node),

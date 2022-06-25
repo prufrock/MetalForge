@@ -4,7 +4,7 @@
 
 import Foundation
 
-public enum Thing: Int, Decodable {
+public enum GMThing: Int, Decodable {
     case nothing          // 0
     case player           // 1
     case monster          // 2

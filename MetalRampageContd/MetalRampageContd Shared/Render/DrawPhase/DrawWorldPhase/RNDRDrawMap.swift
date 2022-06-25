@@ -14,7 +14,7 @@ struct RNDRDrawMap: RNDRDrawWorldPhase  {
         self.pipelineCatalog = pipelineCatalog
     }
 
-    func draw(world: World, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         // TODO replace drawMap with an overheard view of the world
         //Draw map
         var renderables: [RNDRObject] = RNDRTileImage(world: world).tiles
@@ -46,7 +46,7 @@ struct RNDRDrawMap: RNDRDrawWorldPhase  {
         for _ in 0 ..< columns {
             let rayDirection = columnPosition - world.player.position
             let viewPlaneDistance = rayDirection.length
-            let ray = Ray(origin: world.player.position, direction: rayDirection / viewPlaneDistance)
+            let ray = GMRay(origin: world.player.position, direction: rayDirection / viewPlaneDistance)
 
             var end = world.map.hitTest(ray)
             for sprite in world.sprites {

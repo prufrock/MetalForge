@@ -22,25 +22,25 @@ public class RNDRRenderer: NSObject {
     private(set) var floor: MTLTexture!
     private(set) var slimeWallTexture: MTLTexture!
     private(set) var wallTexture: MTLTexture!
-    private(set) var monster: [Texture:MTLTexture?] = [:]
-    private(set) var wand: [Texture:MTLTexture?] = [:]
-    private(set) var wandFiring1: [Texture:MTLTexture?] = [:]
-    private(set) var wandFiring2: [Texture:MTLTexture?] = [:]
-    private(set) var wandFiring3: [Texture:MTLTexture?] = [:]
-    private(set) var wandFiring4: [Texture:MTLTexture?] = [:]
-    private(set) var door: [Texture:MTLTexture?] = [:]
-    private(set) var doorJamb: [Texture:MTLTexture?] = [:]
-    private(set) var wallSwitch: [Texture:MTLTexture?] = [:]
+    private(set) var monster: [GMTexture:MTLTexture?] = [:]
+    private(set) var wand: [GMTexture:MTLTexture?] = [:]
+    private(set) var wandFiring1: [GMTexture:MTLTexture?] = [:]
+    private(set) var wandFiring2: [GMTexture:MTLTexture?] = [:]
+    private(set) var wandFiring3: [GMTexture:MTLTexture?] = [:]
+    private(set) var wandFiring4: [GMTexture:MTLTexture?] = [:]
+    private(set) var door: [GMTexture:MTLTexture?] = [:]
+    private(set) var doorJamb: [GMTexture:MTLTexture?] = [:]
+    private(set) var wallSwitch: [GMTexture:MTLTexture?] = [:]
     private(set) var healingPotionTexture: MTLTexture!
-    private(set) var fireBlast: [Texture:MTLTexture?] = [:]
-    private(set) var hud: [Texture:MTLTexture?] = [:]
-    private(set) var titleScreen: [Texture:MTLTexture?] = [:]
+    private(set) var fireBlast: [GMTexture:MTLTexture?] = [:]
+    private(set) var hud: [GMTexture:MTLTexture?] = [:]
+    private(set) var titleScreen: [GMTexture:MTLTexture?] = [:]
 
     // models
     private(set) var model: [ModelLabel:RNDRModel] = [:]
 
     // static renderables
-    private(set) var worldTiles: [(RNDRObject, Tile)]?
+    private(set) var worldTiles: [(RNDRObject, GMTile)]?
     var worldTilesBuffers: [RNDRMetalTileBuffers]?
 
     // draw phases
@@ -163,8 +163,8 @@ public class RNDRRenderer: NSObject {
         self.aspect = aspect
     }
 
-    func render(_ game: Game) {
-        let effects: [Effect] = (game.transition != nil) ? [game.transition!] : []
+    func render(_ game: GMGame) {
+        let effects: [GMEffect] = (game.transition != nil) ? [game.transition!] : []
         switch game.state {
         case .title, .starting:
             render(game, additionalEffects: effects, onlyTitle: true)
@@ -173,7 +173,7 @@ public class RNDRRenderer: NSObject {
         }
     }
 
-    private func render(_ game: Game, additionalEffects: [Effect] = [],onlyTitle: Bool = false) {
+    private func render(_ game: GMGame, additionalEffects: [GMEffect] = [],onlyTitle: Bool = false) {
         if worldTiles == nil {
             worldTiles = (RNDRTileImage(world: game.world).tiles)
         }

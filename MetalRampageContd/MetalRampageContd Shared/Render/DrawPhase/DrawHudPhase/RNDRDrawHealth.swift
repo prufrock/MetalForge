@@ -14,7 +14,7 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
         self.pipelineCatalog = pipelineCatalog
     }
 
-    func draw(hud: Hud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
+    func draw(hud: GMHud, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = renderer.model[.unitSquare]!
 
         let heartSpace: Float = 0.11
@@ -23,9 +23,9 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
 
         let playerHealth = String(hud.healthString).leftPadding(toLength: 3, withPad: "0")
 
-        let healthTint: Color = hud.healthTint
+        let healthTint: GMColor = hud.healthTint
 
-        let heart1: (RNDRObject, Texture, UInt32) = (RNDRObject(
+        let heart1: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
             vertices: model.allVertices(),
             uv: model.allUv(),
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 0, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
@@ -34,7 +34,7 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
             position: Int2(0, 0)
         ), .healthIcon, 100)
 
-        let health1: (RNDRObject, Texture, UInt32) = (RNDRObject(
+        let health1: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
             vertices: model.allVertices(),
             uv: model.allUv(),
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 1, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
@@ -43,7 +43,7 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
             position: Int2(0, 0)
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 0) ?? 0)) ?? 0))
 
-        let health2: (RNDRObject, Texture, UInt32) = (RNDRObject(
+        let health2: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
             vertices: model.allVertices(),
             uv: model.allUv(),
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 2, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
@@ -52,7 +52,7 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
             position: Int2(0, 0)
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 1) ?? 0)) ?? 0))
 
-        let health3: (RNDRObject, Texture, UInt32) = (RNDRObject(
+        let health3: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
             vertices: model.allVertices(),
             uv: model.allUv(),
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 3, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
@@ -64,7 +64,7 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
         var fontSpriteSheet = SpriteSheet(textureWidth: Float(hud.font.characters.count * 4), textureHeight: 6, spriteWidth: 4, spriteHeight: 6)
         var fontSpriteIndex = 0 // TODO let the shader select the sprite sheet
 
-        var renderables: [(RNDRObject, Texture, UInt32?)] = []
+        var renderables: [(RNDRObject, GMTexture, UInt32?)] = []
 
         renderables.append(heart1)
         renderables.append(health1)

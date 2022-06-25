@@ -4,22 +4,22 @@
 
 import simd
 
-public struct World {
-    public private(set) var map: Tilemap
-    private(set) var doors: [Door]
-    public private(set) var player: Player!
-    public private(set) var monsters: [Monster]
-    private(set) var pushWalls: [PushWall]
-    private(set) var switches: [Switch]
-    private(set) var pickups: [Pickup]
-    private(set) var effects: [Effect]
+public struct GMWorld {
+    public private(set) var map: GMTilemap
+    private(set) var doors: [GMDoor]
+    public private(set) var player: GMPlayer!
+    public private(set) var monsters: [GMMonster]
+    private(set) var pushWalls: [GMPushWall]
+    private(set) var switches: [GMSwitch]
+    private(set) var pickups: [GMPickup]
+    private(set) var effects: [GMEffect]
     // The list of sounds that should be used for a frame.
     private var sounds: [Sound] = []
     private(set) var isLevelEnded: Bool
     var showMap: Bool = false
     var drawWorld: Bool = true
 
-    public init(map: Tilemap) {
+    public init(map: GMTilemap) {
         self.map = map
         self.doors = []
         self.monsters = []
@@ -32,7 +32,7 @@ public struct World {
     }
 }
 
-extension World {
+extension GMWorld {
     var size: Float2 { map.size }
 
     /**
@@ -42,7 +42,7 @@ extension World {
        - input: Any thing from the application layer that should change the world.
      - Returns: An action the caller can execute if needed.
      */
-    mutating func update(timeStep: Float, input: Input) -> WorldAction? {
+    mutating func update(timeStep: Float, input: GMInput) -> GMWorldAction? {
         //update effects
         effects = effects.compactMap { effect  in
             if effect.isCompleted {
@@ -59,7 +59,7 @@ extension World {
         if isLevelEnded {
             if effects.isEmpty {
                 //fade to black when the level ends
-                effects.append(Effect(type: .fadeIn, color: ColorA(.black), duration: 0.5))
+                effects.append(GMEffect(type: .fadeIn, color: ColorA(.black), duration: 0.5))
                 // tell the application to load the next level
                 return .loadLevel(map.index + 1)
             }
@@ -69,7 +69,7 @@ extension World {
         //update player
         if player.isDead, effects.isEmpty {
             reset()
-            effects.append(Effect(type: .fadeIn, color: ColorA(.red, a: 1.0), duration: 0.5))
+            effects.append(GMEffect(type: .fadeIn, color: ColorA(.red, a: 1.0), duration: 0.5))
             return nil
         }
 
@@ -169,11 +169,11 @@ extension World {
                 case .healingPotion:
                     player.health += 25
                     playSound(.medkit, at: pickup.position)
-                    effects.append(Effect(type: .fadeIn, color: ColorA(.green), duration: 0.5))
+                    effects.append(GMEffect(type: .fadeIn, color: ColorA(.green), duration: 0.5))
                 case .fireBlast:
                     player.setWeapon(.fireBlast)
                     playSound(.fireBlastPickup, at: pickup.position)
-                    effects.append(Effect(type: .fadeIn, color: ColorA(.white), duration: 0.5))
+                    effects.append(GMEffect(type: .fadeIn, color: ColorA(.white), duration: 0.5))
                 }
             }
         }
@@ -192,7 +192,7 @@ extension World {
             return
         }
 
-        effects.append(Effect(type: .fadeIn, color: ColorA(.red), duration: 0.2))
+        effects.append(GMEffect(type: .fadeIn, color: ColorA(.red), duration: 0.2))
         player.health -= damage
         // putting this here to make sure the player doesn't keep moving if they die
         // Should there be a state change when they die?
@@ -203,7 +203,7 @@ extension World {
             if player.isStuck(in: self) {
                 playSound(.squelch, at: player.position)
             }
-            effects.append(Effect(type: .fadeOut, color: ColorA(.red), duration: 2))
+            effects.append(GMEffect(type: .fadeOut, color: ColorA(.red), duration: 2))
         }
     }
 
@@ -245,7 +245,7 @@ extension World {
 
     mutating func endLevel() {
         isLevelEnded = true
-        effects.append(Effect(type: .fadeOut, color: ColorA(.black), duration: 2))
+        effects.append(GMEffect(type: .fadeOut, color: ColorA(.black), duration: 2))
     }
 
     /**
@@ -269,7 +269,7 @@ extension World {
         // sound travels at about 343 meters per second
         // the tiles are about 2 meters square
         // thus the delay
-        let delay = distance * Tile.lengthMeters / PhysicalConstants.speedOfSoundMetersPerSecond
+        let delay = distance * GMTile.lengthMeters / PhysicalConstants.speedOfSoundMetersPerSecond
 
         let direction = distance > 0 ? delta / distance : player.direction
         // pan is between -1 and 1
@@ -292,13 +292,13 @@ extension World {
      Create a new world for the level preserving the in flight effects from the last world.
      - Parameter map: The Tilemap to load representing the next level.
      */
-    mutating func setLevel(_ map: Tilemap) {
+    mutating func setLevel(_ map: GMTilemap) {
         // still in the old world
         let effects = self.effects
         let player = self.player!
 
         // replace with the new world
-        self = World(map: map)
+        self = GMWorld(map: map)
         // use the local scope properties from the old world
         self.effects = effects
         self.player.inherit(from: player)
@@ -324,16 +324,16 @@ extension World {
                 case .nothing:
                     break
                 case .player:
-                    player = Player(position: position, soundChannel: soundChannel)
+                    player = GMPlayer(position: position, soundChannel: soundChannel)
                     soundChannel += 1
                 case .monster:
-                    monsters.append(Monster(position: position))
+                    monsters.append(GMMonster(position: position))
                 case .door:
                     // crash early if the door is on the map edge
                     precondition(y > 0 && y < map.height, "Door cannot be placed on map edge")
                     // if there is a wall above and below the door then it's vertical
                     let isVertical = map[x, y - 1].isWall && map[x, y + 1].isWall
-                    doors.append(Door(
+                    doors.append(GMDoor(
                         position: position,
                         isVertical: isVertical
                     ))
@@ -343,7 +343,7 @@ extension World {
                     pushWallCount += 1
                     if pushWalls.count >= pushWallCount {
                         let tile = pushWalls[pushWallCount - 1].tile
-                        pushWalls[pushWallCount - 1] = PushWall(
+                        pushWalls[pushWallCount - 1] = GMPushWall(
                             position: position,
                             tile: tile,
                             soundChannel: soundChannel
@@ -362,7 +362,7 @@ extension World {
                         tile = .wall
                     }
                     // now add a PushWall at the current position with the tile we agreed on
-                    pushWalls.append(PushWall(
+                    pushWalls.append(GMPushWall(
                         position: position,
                         tile: tile,
                         soundChannel: soundChannel
@@ -371,19 +371,19 @@ extension World {
                     soundChannel += 1
                 case .switch:
                     precondition(map[x, y].isWall, "Switch must be placed on a wall tile")
-                    switches.append(Switch(position: position))
+                    switches.append(GMSwitch(position: position))
                 case .healingPotion:
-                    pickups.append(Pickup(type: .healingPotion, position: position))
+                    pickups.append(GMPickup(type: .healingPotion, position: position))
                 case .fireBlast:
-                    pickups.append(Pickup(type: .fireBlast, position: position))
+                    pickups.append(GMPickup(type: .fireBlast, position: position))
                 }
             }
         }
     }
 
-    var sprites: [Billboard] {
+    var sprites: [GMBillboard] {
         // The ray is used to make the billboard orthogonal to the player(or any ray)
-        let ray = Ray(origin: player.position, direction: player.direction)
+        let ray = GMRay(origin: player.position, direction: player.direction)
         // append billboards here to draw more sprites
         return monsters.map { $0.billboard(for: ray)}
             + doors.map { $0.billboard }
@@ -391,7 +391,7 @@ extension World {
             + pickups.map { $0.billboard(for: ray) }
     }
 
-    func hitTest(_ ray: Ray) -> Float2 {
+    func hitTest(_ ray: GMRay) -> Float2 {
         // Figure out how far away the wall is from the origin of the ray.
         var wallHit = map.hitTest(ray)
         var distance = (wallHit - ray.origin).length
@@ -420,7 +420,7 @@ extension World {
      - Parameter ray: Ray
      - Returns: Int?
      */
-    func pickMonster(_ ray: Ray) -> Int? {
+    func pickMonster(_ ray: GMRay) -> Int? {
         // hit test to see if we hit a wall instead of a monster
         let wallHit = hitTest(ray)
         var distance = (wallHit - ray.origin).length
@@ -467,7 +467,7 @@ a       - y: Int
        - y: the y coordinate
      - Returns: Returns the door if it exists at the x, y.
      */
-    func door(at x: Int, _ y: Int) -> Door? {
+    func door(at x: Int, _ y: Int) -> GMDoor? {
         guard isDoor(at: x, y) else {
             return nil
         }
@@ -483,7 +483,7 @@ a       - y: Int
        - y: the y coordinate
      - Returns: whether or not it's a PushWall
      */
-    func pushWall(at x: Int, _ y: Int) -> PushWall? {
+    func pushWall(at x: Int, _ y: Int) -> GMPushWall? {
         pushWalls.first(where: {
             Int($0.position.x) == x && Int($0.position.y) == y
         })
@@ -496,7 +496,7 @@ a       - y: Int
        - y: Int
      - Returns: Bool
      */
-    internal func `switch`(at x: Int, _ y: Int) -> Switch? {
+    internal func `switch`(at x: Int, _ y: Int) -> GMSwitch? {
         // make sure the switch is in things
         guard map[thing: x, y] == .switch else {
             return nil
@@ -507,9 +507,9 @@ a       - y: Int
         }
     }
 
-    internal func wallTiles(at x: Int, _ y: Int) -> WallTiles {
+    internal func wallTiles(at x: Int, _ y: Int) -> GMWallTiles {
         if let _ = `switch`(at: x, y) {
-            return WallTiles(
+            return GMWallTiles(
                 north: .wallSwitch,
                 south: .wallSwitch,
                 east: .wallSwitch,
@@ -518,7 +518,7 @@ a       - y: Int
         }
 
         //TODO make it so map[x, y] refers maps Tile to Texture
-        return WallTiles(
+        return GMWallTiles(
             north: isDoor(at: x, y + 1) ? .doorJamb2 : map[x, y],
             south: isDoor(at: x, y - 1) ? .doorJamb2 : map[x, y],
             east: isDoor(at: x + 1, y) ? .doorJamb1 : map[x, y],
@@ -530,20 +530,20 @@ a       - y: Int
 /**
  Actions World can pass to the application layer to run.
  */
-enum WorldAction {
+enum GMWorldAction {
     case loadLevel(Int)
     // the command to pass up with the list of sounds to play
     case playSounds([Sound])
 }
 
-struct WallTiles {
-    let north: Tile
-    let south: Tile
-    let east: Tile
-    let west: Tile
+struct GMWallTiles {
+    let north: GMTile
+    let south: GMTile
+    let east: GMTile
+    let west: GMTile
 }
 
-extension World: Graph {
+extension GMWorld: GMGraph {
     struct Node: Hashable {
         let x, y: Float
 

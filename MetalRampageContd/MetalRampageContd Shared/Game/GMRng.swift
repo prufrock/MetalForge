@@ -9,7 +9,7 @@
 private let multiplier: UInt64 = 6364136223846793005
 private let increment: UInt64 = 1442695040888963407
 
-struct Rng: RandomNumberGenerator {
+struct GMRng: RandomNumberGenerator {
     private var seed: UInt64 = 0
 
     init(seed: UInt64) {
@@ -30,7 +30,7 @@ struct Rng: RandomNumberGenerator {
 extension Collection where Index == Int {
     // Override random element so that selecting the element randomly
     // works the same across different versions of swift
-    func randomElement(using generator: inout Rng) -> Element? {
+    func randomElement(using generator: inout GMRng) -> Element? {
         if isEmpty {
             return nil
         }

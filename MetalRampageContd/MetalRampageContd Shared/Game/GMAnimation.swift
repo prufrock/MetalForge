@@ -1,19 +1,19 @@
 //
 // Created by David Kanenwisher on 3/18/22.
 //
-struct Animation {
-    let frames: [Texture]
+struct GMAnimation {
+    let frames: [GMTexture]
     let duration: Float
     var time: Float = 0
 
-    init(frames: [Texture], duration: Float) {
+    init(frames: [GMTexture], duration: Float) {
         self.frames = frames
         self.duration = duration
     }
 }
 
-extension Animation {
-    var texture: Texture {
+extension GMAnimation {
+    var texture: GMTexture {
         guard duration > 0 else {
             return frames[0]
         }

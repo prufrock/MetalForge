@@ -4,22 +4,22 @@
 
 import Foundation
 
-struct Switch {
+struct GMSwitch {
     let position: Float2
-    var state: SwitchState = .off
-    var animation: Animation = .switchOff
+    var state: GMSwitchState = .off
+    var animation: GMAnimation = .switchOff
 }
 
-extension Switch {
+extension GMSwitch {
     // For collision, only as big as the tile it's in.
-    var rect: Rect {
-        Rect(
+    var rect: GMRect {
+        GMRect(
             min: position - Float2(x: 0.5, y: 0.5),
             max: position + Float2(x: 0.5, y: 0.5)
         )
     }
 
-    mutating func update(in world: inout World) {
+    mutating func update(in world: inout GMWorld) {
         switch state {
         // Is that the player?! Change to the "on" state
         case .off:
@@ -44,25 +44,25 @@ extension Switch {
     }
 }
 
-enum SwitchState {
+enum GMSwitchState {
     case off
     case on
 }
 
-extension Animation {
+extension GMAnimation {
     // it sits in the off state so 1 frame
-    static let switchOff = Animation(frames: [
+    static let switchOff = GMAnimation(frames: [
         .switch1
     ], duration: 0)
     // it moves through all 4 frames when it is flipped
-    static let switchFlip = Animation(frames: [
+    static let switchFlip = GMAnimation(frames: [
         .switch1,
         .switch2,
         .switch3,
         .switch4
     ], duration: 0.4)
     // it sits in the on state so 1 frame
-    static let switchOn = Animation(frames: [
+    static let switchOn = GMAnimation(frames: [
         .switch4
     ], duration: 0)
 }

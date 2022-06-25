@@ -9,7 +9,7 @@ struct RNDRMetalTileBuffers {
     let indexBuffer: MTLBuffer
     let uvBuffer: MTLBuffer
     let indexedTransformations: [Float4x4]
-    let tile: Tile
+    let tile: GMTile
     let tileCount: Int
     let index: [UInt16]
     let indexCount: Int

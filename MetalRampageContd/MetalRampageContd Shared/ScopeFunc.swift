@@ -28,4 +28,4 @@ extension ScopeFunc {
 }
 extension NSObject: ScopeFunc {}
 
-extension Player: ScopeFunc {}
+extension GMPlayer: ScopeFunc {}
