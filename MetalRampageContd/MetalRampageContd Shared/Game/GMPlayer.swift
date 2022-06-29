@@ -2,28 +2,28 @@
 // Created by David Kanenwisher on 12/16/21.
 //
 
-public struct GMPlayer: GMActor {
-    public var position: Float2
-    public var velocity: Float2
-    public let radius: Float = 0.25
-    public let speed: Float = 2
-    public var direction: Float2
-    public var direction3d: Float4x4
-    public let turningSpeed: Float = .pi/2
-    public var health: Float
+struct GMPlayer: GMActor {
+    var position: Float2
+    var velocity: Float2
+    let radius: Float = 0.25
+    let speed: Float = 2
+    var direction: Float2
+    var direction3d: Float4x4
+    let turningSpeed: Float = .pi/2
+    var health: Float
 
     // allow it to loop it's sound
-    public let soundChannel: Int
+    let soundChannel: Int
 
     // player animation
-    public var state: GMPlayerState = .idle
+    var state: GMPlayerState = .idle
     var animation: GMAnimation
 
     // weapon/spell related
     private(set) var weapon: GMWeapon = .wand
     private(set) var charges: Float
 
-    public init(position: Float2, soundChannel: Int) {
+    init(position: Float2, soundChannel: Int) {
         self.position = position
         self.velocity = Float2(0, 0)
         self.direction = Float2(1, 0)
@@ -35,12 +35,12 @@ public struct GMPlayer: GMActor {
     }
 }
 
-public enum GMPlayerState {
+enum GMPlayerState {
     case idle
     case firing
 }
 
-public extension GMPlayer {
+extension GMPlayer {
     var isDead: Bool {
         health <= 0
     }

@@ -38,6 +38,6 @@ struct RNDRModel {
 /**
  Well known Models get a label to make finding them easier.
  */
-public enum ModelLabel: String {
+enum ModelLabel: String {
     case unitSquare //centered on origin
 }

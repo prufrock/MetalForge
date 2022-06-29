@@ -2,7 +2,7 @@
 // Created by David Kanenwisher on 2/19/22.
 //
 
-public struct GMMonster: GMActor {
+struct GMMonster: GMActor {
     var position: Float2
     let radius: Float = 0.4375
     let speed: Float = 0.5
@@ -16,7 +16,7 @@ public struct GMMonster: GMActor {
 
     var health: Float = 50
 
-    public init(position: Float2) {
+    init(position: Float2) {
         self.position = position
     }
 

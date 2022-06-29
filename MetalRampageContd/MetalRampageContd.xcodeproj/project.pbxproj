@@ -485,6 +485,8 @@
 			isa = PBXGroup;
 			children = (
 				63A927112866A342005CF172 /* Game */,
+				5AF0E0798E8831278C37A79A /* Render */,
+				63F914762806706F00A91EBF /* Sounds */,
 				63D44B1D27D427CD00D4BE7D /* ShaderTypes.h */,
 				6351463528270E0900CA6C32 /* Font.json */,
 				63D44BED27D42CE800D4BE7D /* Levels.json */,
@@ -498,8 +500,6 @@
 				5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */,
 				63750CE0281398F800DC4937 /* StringExt.swift */,
 				63D44B1E27D427CF00D4BE7D /* Assets.xcassets */,
-				5AF0E0798E8831278C37A79A /* Render */,
-				63F914762806706F00A91EBF /* Sounds */,
 			);
 			path = "MetalRampageContd Shared";
 			sourceTree = "<group>";

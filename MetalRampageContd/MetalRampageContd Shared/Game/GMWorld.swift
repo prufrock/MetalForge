@@ -4,11 +4,11 @@
 
 import simd
 
-public struct GMWorld {
-    public private(set) var map: GMTilemap
+struct GMWorld {
+    private(set) var map: GMTilemap
     private(set) var doors: [GMDoor]
-    public private(set) var player: GMPlayer!
-    public private(set) var monsters: [GMMonster]
+    private(set) var player: GMPlayer!
+    private(set) var monsters: [GMMonster]
     private(set) var pushWalls: [GMPushWall]
     private(set) var switches: [GMSwitch]
     private(set) var pickups: [GMPickup]
@@ -19,7 +19,7 @@ public struct GMWorld {
     var showMap: Bool = false
     var drawWorld: Bool = true
 
-    public init(map: GMTilemap) {
+    init(map: GMTilemap) {
         self.map = map
         self.doors = []
         self.monsters = []

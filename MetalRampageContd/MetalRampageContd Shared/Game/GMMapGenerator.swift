@@ -19,7 +19,7 @@ struct GMMapGenerator {
     // generate some controlled random numbers
     private var rng: GMRng
 
-    public init(mapData: GMMapData, index: Int) {
+    init(mapData: GMMapData, index: Int) {
         map = GMTilemap(mapData, index: index)
         // you can now specify the seed the map data or let it be random each time
         rng = GMRng(seed: mapData.seed ?? .random(in: 0 ... .max))

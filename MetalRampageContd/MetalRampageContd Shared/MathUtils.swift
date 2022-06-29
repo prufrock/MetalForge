@@ -6,13 +6,13 @@ import simd
 
 typealias Int2 = SIMD2<Int>
 
-public typealias Float2 = SIMD2<Float>
-public typealias Float3 = SIMD3<Float>
+typealias Float2 = SIMD2<Float>
+typealias Float3 = SIMD3<Float>
 typealias Float4 = SIMD4<Float>
 
-public typealias Float2x2 = simd_float2x2
-public typealias Float3x3 = simd_float3x3
-public typealias Float4x4 = simd_float4x4
+typealias Float2x2 = simd_float2x2
+typealias Float3x3 = simd_float3x3
+typealias Float4x4 = simd_float4x4
 
 extension Float {
     func roundDown() -> Int {
@@ -22,7 +22,7 @@ extension Float {
     }
 }
 
-public extension Float4x4 {
+extension Float4x4 {
     static func identity() -> Self {
         matrix_identity_float4x4
     }
@@ -131,13 +131,13 @@ public extension Float4x4 {
     }
 }
 
-public extension Float3 {
+extension Float3 {
     func toFloat2() -> Float2 {
         Float2(x: x, y: y)
     }
 }
 
-public extension Float3x3 {
+extension Float3x3 {
     static func scale(x: Float, y: Float, z: Float = 1.0) -> Self {
         Self(
             [x, 0, 0],
@@ -159,7 +159,7 @@ public extension Float3x3 {
     }
 }
 
-public extension Float2x2 {
+extension Float2x2 {
     static func rotate(_ angle: Float) -> Self {
         Self(
             [ cos(angle), sin(angle)],
@@ -186,7 +186,7 @@ public extension Float2x2 {
     }
 }
 
-public extension Float2 {
+extension Float2 {
     var length : Float {
         (x * x + y * y).squareRoot()
     }

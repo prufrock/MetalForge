@@ -5,7 +5,7 @@
 import Foundation
 import MetalKit
 
-public class RNDRRenderer: NSObject {
+class RNDRRenderer: NSObject {
     private let view: MTKView
     let device: MTLDevice
     private let commandQueue: MTLCommandQueue
@@ -55,7 +55,7 @@ public class RNDRRenderer: NSObject {
     private var drawTitleScreen: RNDRDrawTitleScreen?
 
     // TODO do less stuff in init
-    public init(_ view: MTKView, width: Int, height: Int) {
+    init(_ view: MTKView, width: Int, height: Int) {
         self.view = view
 
         guard let newDevice = MTLCreateSystemDefaultDevice() else {
@@ -155,11 +155,11 @@ public class RNDRRenderer: NSObject {
         model[.unitSquare] = unitSquare()
     }
 
-    public func updateAspect(width: Float, height: Float) {
+    func updateAspect(width: Float, height: Float) {
         aspect = (width / height)
     }
 
-    public func updateAspect(_ aspect: Float) {
+    func updateAspect(_ aspect: Float) {
         self.aspect = aspect
     }
 

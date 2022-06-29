@@ -5,10 +5,10 @@
 import simd
 import MetalKit
 
-public struct GMRect {
+struct GMRect {
     var min, max: Float2
 
-    public init(min: Float2, max: Float2) {
+    init(min: Float2, max: Float2) {
         self.min = min
         self.max = max
     }
@@ -42,7 +42,7 @@ public struct GMRect {
     }
 }
 
-public extension GMRect {
+extension GMRect {
     func intersection(with rect: GMRect) -> Float2? {
         let left = Float2(x: max.x - rect.min.x, y: 0)
         if left.x <= 0 {

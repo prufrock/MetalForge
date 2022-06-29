@@ -2,14 +2,14 @@
 // Created by David Kanenwisher on 2/19/22.
 //
 
-public struct GMBillboard {
-    public var start: Float2
-    public var direction: Float2
-    public var length: Float
-    public var position: Float2
-    public var texture: GMTexture
+struct GMBillboard {
+    var start: Float2
+    var direction: Float2
+    var length: Float
+    var position: Float2
+    var texture: GMTexture
 
-    public init(start: Float2, direction: Float2, length: Float, position: Float2, texture: GMTexture) {
+    init(start: Float2, direction: Float2, length: Float, position: Float2, texture: GMTexture) {
         self.start = start
         self.direction = direction
         self.length = length
@@ -18,7 +18,7 @@ public struct GMBillboard {
     }
 }
 
-public extension GMBillboard {
+ extension GMBillboard {
     var end: Float2 {
         start + direction * length
     }

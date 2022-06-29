@@ -2,15 +2,15 @@
 // Created by David Kanenwisher on 12/26/21.
 //
 
-public struct GMTilemap {
+struct GMTilemap {
     private(set) var tiles: [GMTile]
     // Things needs to able to change because they can be generated
-    // It can't be public because then the size of the array could change unexpectedly.
+    // It can't be  because then the size of the array could change unexpectedly.
     private var things: [GMThing]
-    public let width: Int
+    let width: Int
 
     // for switching between levels
-    public let index: Int
+    let index: Int
 
     init(_ map: GMMapData, index: Int) {
         tiles = map.tiles
@@ -36,7 +36,7 @@ struct GMMapData: Decodable {
     let seed: UInt64?
 }
 
-public extension GMTilemap {
+extension GMTilemap {
     var height: Int {
         return tiles.count / width
     }

@@ -4,15 +4,15 @@
 
 import Foundation
 
-public struct GMInput {
-    public var speed: Float
-    public var rotation: Float2x2
-    public var rotation3d: Float4x4
-    public var showMap: Bool
-    public var drawWorld: Bool
-    public var isFiring: Bool
+struct GMInput {
+    var speed: Float
+    var rotation: Float2x2
+    var rotation3d: Float4x4
+    var showMap: Bool
+    var drawWorld: Bool
+    var isFiring: Bool
 
-    public init(
+    init(
         speed: Float,
         rotation: Float2x2,
         rotation3d: Float4x4,

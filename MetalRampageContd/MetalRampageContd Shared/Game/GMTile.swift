@@ -2,7 +2,7 @@
 // Created by David Kanenwisher on 12/26/21.
 //
 
-public enum GMTile: Int, Decodable, CaseIterable {
+enum GMTile: Int, Decodable, CaseIterable {
     // Ceiling
     case ceiling = 5
 
@@ -28,7 +28,7 @@ public enum GMTile: Int, Decodable, CaseIterable {
     case elevatorBackWall = 11
 }
 
-public extension GMTile {
+ extension GMTile {
     var isWall: Bool {
         switch self {
         case .wall, .crackWall, .slimeWall, .doorJamb1, .doorJamb2, .wallSwitch, .elevatorSideWall, .elevatorBackWall:
