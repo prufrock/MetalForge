@@ -70,8 +70,8 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
             encoder.setDepthStencilState(renderer.depthStencilState)
             encoder.setCullMode(.back)
 
-            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+            encoder.setVertexBuffer(buffer, offset: 0, index: VertexAttribute.position.rawValue)
+            encoder.setVertexBuffer(coordsBuffer, offset: 0, index: VertexAttribute.uvcoord.rawValue)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
             encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)

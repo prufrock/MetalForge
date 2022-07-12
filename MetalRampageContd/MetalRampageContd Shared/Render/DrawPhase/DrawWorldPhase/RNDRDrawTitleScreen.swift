@@ -78,8 +78,8 @@ class RNDRDrawTitleScreen {
         // TODO why can't I have the depth stencil and the text on the bottom of the screen?
         // encoder.setDepthStencilState(depthStencilState)
         encoder.setCullMode(.none)
-        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+        encoder.setVertexBuffer(buffer, offset: 0, index: VertexAttribute.position.rawValue)
+        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: VertexAttribute.uvcoord.rawValue)
         encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
         encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
         encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)

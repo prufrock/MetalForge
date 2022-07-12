@@ -104,8 +104,8 @@ struct RNDRDrawIndexedSprites: RNDRDrawWorldPhase {
         // Setting this to none for now until I can figure out how to make doors draw on both sides.
         encoder.setCullMode(.none)
 
-        encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: 1)
+        encoder.setVertexBuffer(vertexBuffer, offset: 0, index: VertexAttribute.position.rawValue)
+        encoder.setVertexBuffer(coordsBuffer, offset: 0, index: VertexAttribute.uvcoord.rawValue)
         encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
         encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
         encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
