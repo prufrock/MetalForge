@@ -12,17 +12,27 @@
 
 using namespace metal;
 
-typedef struct
+struct Vertex
 {
     float3 position [[attribute(VertexAttributePosition)]];
     float2 texcoord [[attribute(VertexAttributeUvcoord)]];
-} Vertex;
+};
 
 struct VertexOut {
     float4 position [[position]];
     float2 texcoord;
     float point_size [[point_size]];
     uint textureId;
+};
+
+/*
+A simple struct for simple times.
+I both understand things better and don't understand things enough so using
+ something simpler to avoid confusion about uneeded parameters.
+ */
+struct VertexOutOnlyPositionAndUv {
+    float4 position [[position]]; // the x,y,z,w coordinates of the vertex
+    float2 uv; // texture coordinates
 };
 
 vertex VertexOut vertex_main(constant float3 *vertices [[buffer(0)]],
@@ -106,14 +116,22 @@ vertex VertexOut vertex_indexed_sprite_sheet(Vertex in [[stage_in]],
     return vertex_out;
 }
 
+/*
+ A simple vertex shader that uses a single transformation matrix to transform the input.
+ Also passes texture information to fragment shader.
+ - Vertex in: Data about the vertex to be transformed
+ - finalTransform: A single matrix that transforms the data in **in**.
+ - point_size: The size of the points to be rendered. Useful when only drawing points.
+ - id: the index of the current vertex being processed. Do I need this?
+ */
 vertex VertexOut vertex_with_texcoords(Vertex in [[stage_in]],
-                             constant matrix_float4x4 &matrix [[buffer(3)]],
+                             constant matrix_float4x4 &finalTransform [[buffer(3)]],
                              constant float &point_size [[buffer(4)]],
                              constant uint &textureId [[buffer(5)]],
                              uint id [[vertex_id]]
                              ) {
     VertexOut vertex_out {
-        .position = matrix * float4(in.position, 1),
+        .position = finalTransform * float4(in.position, 1),
         .texcoord = float2(in.texcoord.x, in.texcoord.y),
         .point_size = point_size,
         .textureId = textureId
@@ -206,6 +224,24 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
     }
 
     return float4(colorSample);
+}
+
+/*
+ A simpler version of **vertex_with_texcoords**.
+ Can the additional texture information be passed to the fragment texture when marshalling
+ data for the pipeline?
+ - Vertex in: Data about the vertex to be transformed
+ - finalTransform: A single matrix that transforms the data in **in**.
+ */
+vertex VertexOutOnlyPositionAndUv vertex_only_transform(Vertex in [[stage_in]],
+                             constant matrix_float4x4 &finalTransform [[buffer(3)]]
+                             ) {
+    VertexOutOnlyPositionAndUv vertex_out {
+        .position = finalTransform * float4(in.position, 1),
+        .uv = float2(in.texcoord.x, in.texcoord.y)
+    };
+
+    return vertex_out;
 }
 
 fragment float4 fragment_effect(constant float4 &color [[buffer(0)]]) {
