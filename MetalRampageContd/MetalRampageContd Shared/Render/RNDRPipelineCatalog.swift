@@ -8,11 +8,12 @@ import Metal
  A place to find your favorite MTLRenderPipelineState objects for encoding commands.
  */
 struct RNDRPipelineCatalog {
+    let effectPipeline: MTLRenderPipelineState
+    let spriteSheetPipeline: MTLRenderPipelineState
     let texturePipeline: MTLRenderPipelineState
     let textureIndexedPipeline: MTLRenderPipelineState
     let textureIndexedSpriteSheetPipeline: MTLRenderPipelineState
     let vertexPipeline: MTLRenderPipelineState
-    let effectPipeline: MTLRenderPipelineState
 
     init(device: MTLDevice) {
 
@@ -90,6 +91,23 @@ struct RNDRPipelineCatalog {
             $0.colorAttachments[0].rgbBlendOperation = .add
             $0.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
             $0.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
+        })
+
+        spriteSheetPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+            $0.vertexFunction = library.makeFunction(name: "vertex_only_transform")
+            $0.fragmentFunction = library.makeFunction(name: "fragment_sprite_sheet")
+            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
+            $0.depthAttachmentPixelFormat = .depth32Float
+            $0.vertexDescriptor = MTLVertexDescriptor().apply {
+                $0.attributes[0].format = MTLVertexFormat.float3
+                $0.attributes[0].bufferIndex = 0
+                $0.attributes[0].offset = 0
+                $0.attributes[1].format = MTLVertexFormat.float2
+                $0.attributes[1].bufferIndex = 1
+                $0.attributes[1].offset = 0
+                $0.layouts[0].stride = MemoryLayout<Float3>.stride
+                $0.layouts[1].stride = MemoryLayout<Float2>.stride
+            }
         })
     }
 }
