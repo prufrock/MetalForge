@@ -249,12 +249,14 @@ vertex VertexOutOnlyPositionAndUv vertex_only_transform(Vertex in [[stage_in]],
  A fragment shader will eventually be able to sample from a spritesheet.
  - VertexOutOnlyPositionAndUv in: The vertex data needed to determine the colors.
  - texture2d<half> texture: The texture to sample from, eventall a sprite sheet.
- - float4 color: replaces white with this color, useful for troubleshooting.
+ - float4 color: Replaces white with this color, useful for troubleshooting.
+ - uint textureId: The id of the texture to use in the spritesheet.
  */
 fragment float4 fragment_sprite_sheet(
                                       VertexOutOnlyPositionAndUv in [[stage_in]],
                                       texture2d<half> texture [[ texture(0) ]],
-                                      constant float4 &color [[buffer(0)]]
+                                      constant float4 &color [[buffer(0)]],
+                                      constant uint &textureId [[buffer(1)]]
                                       ) {
 
     // need a color sample to extract color from the texture
