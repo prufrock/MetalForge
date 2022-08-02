@@ -162,7 +162,8 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
                               texture2d<half> texture18 [[ texture(18) ]],
                               texture2d<half> texture19 [[ texture(19) ]],
                               texture2d<half> texture20 [[ texture(20) ]],
-                              constant float4 &color [[buffer(0)]]                              ) {
+                              constant float4 &color [[buffer(0)]]
+                                      ) {
     constexpr sampler colorSampler(coord::normalized, address::repeat, filter::nearest);
 
     half4 colorSample;
@@ -234,14 +235,47 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
  - finalTransform: A single matrix that transforms the data in **in**.
  */
 vertex VertexOutOnlyPositionAndUv vertex_only_transform(Vertex in [[stage_in]],
-                             constant matrix_float4x4 &finalTransform [[buffer(3)]]
-                             ) {
+                                                        constant matrix_float4x4 &finalTransform [[buffer(3)]]
+                                                        ) {
     VertexOutOnlyPositionAndUv vertex_out {
         .position = finalTransform * float4(in.position, 1),
         .uv = float2(in.texcoord.x, in.texcoord.y)
     };
 
     return vertex_out;
+}
+
+/*
+ A fragment shader will eventually be able to sample from a spritesheet.
+ - VertexOutOnlyPositionAndUv in: The vertex data needed to determine the colors.
+ - texture2d<half> texture: The texture to sample from, eventall a sprite sheet.
+ - float4 color: replaces white with this color, useful for troubleshooting.
+ */
+fragment float4 fragment_sprite_sheet(
+                                      VertexOutOnlyPositionAndUv in [[stage_in]],
+                                      texture2d<half> texture [[ texture(0) ]],
+                                      constant float4 &color [[buffer(0)]]
+                                      ) {
+
+    // need a color sample to extract color from the texture
+    constexpr sampler colorSampler(coord::normalized, address::repeat, filter::nearest);
+
+    half4 colorSample;
+
+    // get the color for the current position
+    colorSample = texture.sample(colorSampler, in.uv);
+
+    // if alpha is below the threshold don't render this fragment
+    if (colorSample.a < 0.1) {
+        discard_fragment();
+    }
+
+    // replace white with the provided color
+    if (colorSample.r == 1.0 && colorSample.g == 1.0 && colorSample.b == 1.0) {
+        return color;
+    }
+
+    return float4(colorSample);
 }
 
 fragment float4 fragment_effect(constant float4 &color [[buffer(0)]]) {
