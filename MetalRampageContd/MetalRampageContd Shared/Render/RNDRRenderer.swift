@@ -45,6 +45,7 @@ class RNDRRenderer: NSObject {
 
     // draw phases
     private var drawWeapon: RNDRDrawWorldPhase?
+    private var drawWeaponSpriteSheet: RNDRDrawWorldPhase?
     private var drawIndexedGameWorld: RNDRDrawWorldPhase?
     private var drawIndexedSprites: RNDRDrawWorldPhase?
     private var drawReferenceMarkers: RNDRDrawWorldPhase?
@@ -94,6 +95,7 @@ class RNDRRenderer: NSObject {
         super.init()
 
         drawWeapon = RNDRDrawWeapon(renderer: self, pipelineCatalog: pipelineCatalog)
+        drawWeaponSpriteSheet = RNDRDrawWeaponSpriteSheet(renderer: self, pipelineCatalog: pipelineCatalog)
         drawIndexedGameWorld = RNDRDrawIndexedGameWorld(renderer: self, pipelineCatalog: pipelineCatalog)
         drawIndexedSprites = RNDRDrawIndexedSprites(renderer: self, pipelineCatalog: pipelineCatalog)
         drawReferenceMarkers = RNDRDrawReferenceMarkers(renderer: self, pipelineCatalog: pipelineCatalog)
@@ -125,6 +127,7 @@ class RNDRRenderer: NSObject {
         monster[.monsterDeath1] = loadTexture(name: "MonsterDeath1")!
         monster[.monsterDeath2] = loadTexture(name: "MonsterDeath2")!
         monster[.monsterDead] = loadTexture(name: "MonsterDead")!
+        wand[.wandSpriteSheet] = loadTexture(name: "WandSpriteSheet")!
         wand[.wand] = loadTexture(name: "Wand")!
         wand[.wandIcon] = loadTexture(name: "WandIcon")!
         wand[.wandFiring1] = loadTexture(name: "WandFiring1")!
@@ -227,7 +230,8 @@ class RNDRRenderer: NSObject {
             drawHealth!.draw(hud: game.hud, encoder: encoder, camera: hudCamera)
             drawHudElements!.draw(hud: game.hud, encoder: encoder, camera: hudCamera)
 
-            drawWeapon!.draw(world: game.world, encoder: encoder, camera: hudCamera)
+//            drawWeapon!.draw(world: game.world, encoder: encoder, camera: hudCamera)
+            drawWeaponSpriteSheet!.draw(world: game.world, encoder: encoder, camera: hudCamera)
         }
         // always draw effects so the title screen can fade out
         drawEffects!.draw(effects: game.world.effects + additionalEffects, encoder: encoder, camera: playerCamera)

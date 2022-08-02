@@ -5,6 +5,7 @@ enum GMTexture: String, CaseIterable, Decodable {
     case floor, crackFloor
     case ceiling
     case wall, crackWall, crackWall2, slimeWall, slimeWall2
+    case wandSpriteSheet
     case wand
     case wandIcon
     case wandFiring1, wandFiring2, wandFiring3, wandFiring4

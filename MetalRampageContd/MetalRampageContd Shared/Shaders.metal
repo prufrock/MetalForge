@@ -233,13 +233,36 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
  data for the pipeline?
  - Vertex in: Data about the vertex to be transformed
  - finalTransform: A single matrix that transforms the data in **in**.
+ - uint textureId: The id of the texture to use in the spritesheet.
+ - SpriteSheet spriteSheet: Describes the spritesheet.
  */
 vertex VertexOutOnlyPositionAndUv vertex_only_transform(Vertex in [[stage_in]],
-                                                        constant matrix_float4x4 &finalTransform [[buffer(3)]]
+                                                        constant matrix_float4x4 &finalTransform [[buffer(3)]],
+                                                        constant uint &textureId [[buffer(4)]],
+                                                        constant SpriteSheet &spriteSheet [[buffer(5)]]
                                                         ) {
+    float txX = in.texcoord.x;
+    float txY = in.texcoord.y;
+    // TODO move this into a function
+    int spritesPerRow = int(spriteSheet.textureWidth / spriteSheet.spriteWidth);
+    int spriteX = textureId % spritesPerRow;
+    int spriteY = textureId / spritesPerRow;
+    float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
+    float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
+    if (txX == 1.0) {
+        txX = txOffsetX + txOffsetX * spriteX;
+    } else if (txX == 0.0) {
+        txX = txOffsetX * spriteX;
+    }
+    if (txY == 1.0) {
+        txY = txOffsetY + txOffsetY * spriteY;
+    } else if (txY == 0.0) {
+        txY = txOffsetY * spriteY;
+    }
+
     VertexOutOnlyPositionAndUv vertex_out {
         .position = finalTransform * float4(in.position, 1),
-        .uv = float2(in.texcoord.x, in.texcoord.y)
+        .uv = float2(txX, txY)
     };
 
     return vertex_out;
@@ -250,13 +273,11 @@ vertex VertexOutOnlyPositionAndUv vertex_only_transform(Vertex in [[stage_in]],
  - VertexOutOnlyPositionAndUv in: The vertex data needed to determine the colors.
  - texture2d<half> texture: The texture to sample from, eventall a sprite sheet.
  - float4 color: Replaces white with this color, useful for troubleshooting.
- - uint textureId: The id of the texture to use in the spritesheet.
  */
 fragment float4 fragment_sprite_sheet(
                                       VertexOutOnlyPositionAndUv in [[stage_in]],
                                       texture2d<half> texture [[ texture(0) ]],
-                                      constant float4 &color [[buffer(0)]],
-                                      constant uint &textureId [[buffer(1)]]
+                                      constant float4 &color [[buffer(0)]]
                                       ) {
 
     // need a color sample to extract color from the texture

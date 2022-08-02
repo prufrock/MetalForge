@@ -23,6 +23,8 @@ struct RNDRDrawWeaponSpriteSheet: RNDRDrawWorldPhase {
         let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
         let coordsBuffer = renderer.device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])!
 
+        var wandSpriteSheet = SpriteSheet(textureWidth: 80, textureHeight: 16, spriteWidth: 16, spriteHeight: 16)
+
         // TODO convert to sprite sheets
         // select the texture
         var textureId: UInt32
@@ -63,25 +65,18 @@ struct RNDRDrawWeaponSpriteSheet: RNDRDrawWorldPhase {
         encoder.setVertexBuffer(buffer, offset: 0, index: VertexAttribute.position.rawValue)
         encoder.setVertexBuffer(coordsBuffer, offset: 0, index: VertexAttribute.uvcoord.rawValue)
         encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
+        encoder.setVertexBytes(&textureId, length: MemoryLayout<UInt32>.stride, index: 4)
+        encoder.setVertexBytes(&wandSpriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 5)
 
         let color = GMColor.black
         var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        encoder.setFragmentBytes(&textureId, length: MemoryLayout<UInt32>.stride, index: 1)
         // select the texture
         switch world.player.animation.texture {
-        case .wand:
-            encoder.setFragmentTexture(renderer.wand[.wand]!, index: 0)
-        case .wandFiring1:
-            encoder.setFragmentTexture(renderer.wand[.wandFiring1]!, index: 0)
-        case .wandFiring2:
-            encoder.setFragmentTexture(renderer.wand[.wandFiring2]!, index: 0)
-        case .wandFiring3:
-            encoder.setFragmentTexture(renderer.wand[.wandFiring3]!, index: 0)
-        case .wandFiring4:
-            encoder.setFragmentTexture(renderer.wand[.wandFiring4]!, index: 0)
+        case .wand, .wandFiring1, .wandFiring2, .wandFiring3, .wandFiring4:
+            encoder.setFragmentTexture(renderer.wand[.wandSpriteSheet]!, index: 0)
         case .fireBlastIdle:
             encoder.setFragmentTexture(renderer.fireBlast[.fireBlastIdle]!, index: 0)
         case .fireBlastFire1:
