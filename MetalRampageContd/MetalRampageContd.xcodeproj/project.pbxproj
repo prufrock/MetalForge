@@ -73,7 +73,7 @@
 		5AF0E87BDDA3CB4199573148 /* GMFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EDC85952FF4F4F77290C /* GMFont.swift */; };
 		5AF0E88865C866E2CA54C99B /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF782213E40C976BFBE4 /* GMWorld.swift */; };
 		5AF0E8A2157496C3DA0A5D17 /* GMTilemap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E53225B32820F67A440E /* GMTilemap.swift */; };
-		5AF0E8AB28714D7F34741948 /* RNDRDrawWeaponSpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB93E742F2F393DB034F /* RNDRDrawWeaponSpriteSheet.swift */; };
+		5AF0E8AB28714D7F34741948 /* RNDRDrawWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */; };
 		5AF0E8AC980BD5DF0046FDB8 /* RNDRDrawReferenceMarkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */; };
 		5AF0E8CE3B6ECC9DC864323A /* GMEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E072621C5D60F19E0958 /* GMEasing.swift */; };
 		5AF0E8E0D744CD9D16481FE3 /* RNDRDrawMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF536B1416825E7FC9ED /* RNDRDrawMap.swift */; };
@@ -92,7 +92,7 @@
 		5AF0E9E4C16ABEC46671D6A2 /* GMEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7C3521094CB09ABE88A /* GMEffect.swift */; };
 		5AF0E9F3834695D3D8A90C38 /* RNDRObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED5281E7B6B91036F2A4 /* RNDRObject.swift */; };
 		5AF0E9F5203FECCF380F937F /* RNDRTileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E8AB9FB523D701CD129B /* RNDRTileImage.swift */; };
-		5AF0EA23822977128E03DA16 /* RNDRDrawWeaponSpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB93E742F2F393DB034F /* RNDRDrawWeaponSpriteSheet.swift */; };
+		5AF0EA23822977128E03DA16 /* RNDRDrawWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */; };
 		5AF0EA2468603A324F0AEF92 /* GMPushWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E73A9365E80E6320A300 /* GMPushWall.swift */; };
 		5AF0EA3B5818AFFE0A4BFD8B /* GMEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7C3521094CB09ABE88A /* GMEffect.swift */; };
 		5AF0EA77A0C99A659EC67DD3 /* GMPushWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E73A9365E80E6320A300 /* GMPushWall.swift */; };
@@ -104,7 +104,7 @@
 		5AF0EB2220A7BF36353D9E18 /* GMMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3B7F2459B2F17762B8B /* GMMonster.swift */; };
 		5AF0EB433DBD04DB60771D9A /* GMWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E5C5BDF49498F95C3988 /* GMWeapon.swift */; };
 		5AF0EB608074A31F545E7C13 /* RNDRDrawHudElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EC50F89195529257812E /* RNDRDrawHudElements.swift */; };
-		5AF0EB9F660D08A0A325FB61 /* RNDRDrawWeaponSpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB93E742F2F393DB034F /* RNDRDrawWeaponSpriteSheet.swift */; };
+		5AF0EB9F660D08A0A325FB61 /* RNDRDrawWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */; };
 		5AF0EBAEFF9F4BCF082678CB /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF782213E40C976BFBE4 /* GMWorld.swift */; };
 		5AF0EC06DD5D1ECB51F352E9 /* GMPickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7353A28D077F741C2EA /* GMPickup.swift */; };
 		5AF0EC0DB85EF6F8AF906E93 /* GMEasing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E072621C5D60F19E0958 /* GMEasing.swift */; };
@@ -148,9 +148,6 @@
 		636D7AEE283DA29100E4B044 /* RNDRDrawPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636D7AED283DA29100E4B044 /* RNDRDrawPhase.swift */; };
 		636D7AEF283DA29100E4B044 /* RNDRDrawPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636D7AED283DA29100E4B044 /* RNDRDrawPhase.swift */; };
 		636D7AF0283DA29100E4B044 /* RNDRDrawPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636D7AED283DA29100E4B044 /* RNDRDrawPhase.swift */; };
-		636D7AF3283DA3A500E4B044 /* RNDRDrawWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636D7AF2283DA3A500E4B044 /* RNDRDrawWeapon.swift */; };
-		636D7AF4283DA3A500E4B044 /* RNDRDrawWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636D7AF2283DA3A500E4B044 /* RNDRDrawWeapon.swift */; };
-		636D7AF5283DA3A500E4B044 /* RNDRDrawWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636D7AF2283DA3A500E4B044 /* RNDRDrawWeapon.swift */; };
 		63750CE1281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
 		63750CE2281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
 		63750CE3281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
@@ -286,7 +283,7 @@
 		5AF0EA22781FFE45270CE7AC /* RNDRMetalTileBuffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRMetalTileBuffers.swift; sourceTree = "<group>"; };
 		5AF0EB443BB9812F5F6ACEEB /* GMAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMAnimation.swift; sourceTree = "<group>"; };
 		5AF0EB48D3A205C366FD8B47 /* GMPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMPlayer.swift; sourceTree = "<group>"; };
-		5AF0EB93E742F2F393DB034F /* RNDRDrawWeaponSpriteSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawWeaponSpriteSheet.swift; sourceTree = "<group>"; };
+		5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawWeapon.swift; sourceTree = "<group>"; };
 		5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		5AF0EC5019731F5A282F75EE /* GMGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMGame.swift; sourceTree = "<group>"; };
 		5AF0EC50F89195529257812E /* RNDRDrawHudElements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawHudElements.swift; sourceTree = "<group>"; };
@@ -306,7 +303,6 @@
 		632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireBlastPickup.mp3; sourceTree = "<group>"; };
 		6351463528270E0900CA6C32 /* Font.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Font.json; sourceTree = "<group>"; };
 		636D7AED283DA29100E4B044 /* RNDRDrawPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRDrawPhase.swift; sourceTree = "<group>"; };
-		636D7AF2283DA3A500E4B044 /* RNDRDrawWeapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRDrawWeapon.swift; sourceTree = "<group>"; };
 		63750CE0281398F800DC4937 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		63A9270D285D7311005CF172 /* RNDRModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRModels.swift; sourceTree = "<group>"; };
 		63B33F212807C08D00734353 /* spellMiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spellMiss.mp3; sourceTree = "<group>"; };
@@ -429,13 +425,12 @@
 		636D7AF1283DA38C00E4B044 /* DrawWorldPhase */ = {
 			isa = PBXGroup;
 			children = (
-				636D7AF2283DA3A500E4B044 /* RNDRDrawWeapon.swift */,
 				5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */,
 				5AF0EE160ECBBD8B6D9C4C72 /* RNDRDrawIndexedSprites.swift */,
 				5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */,
 				5AF0EF536B1416825E7FC9ED /* RNDRDrawMap.swift */,
 				5AF0E628B9AD3DF2990D5D83 /* RNDRDrawTitleScreen.swift */,
-				5AF0EB93E742F2F393DB034F /* RNDRDrawWeaponSpriteSheet.swift */,
+				5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */,
 			);
 			path = DrawWorldPhase;
 			sourceTree = "<group>";
@@ -793,7 +788,6 @@
 				63D44BDA27D42B0C00D4BE7D /* ScopeFunc.swift in Sources */,
 				63D44BB627D42A1B00D4BE7D /* MathUtils.swift in Sources */,
 				63D44BE627D42B6500D4BE7D /* ArrayExt.swift in Sources */,
-				636D7AF3283DA3A500E4B044 /* RNDRDrawWeapon.swift in Sources */,
 				63D44B5127D427CF00D4BE7D /* RNDRRenderer.swift in Sources */,
 				63A9270E285D7311005CF172 /* RNDRModels.swift in Sources */,
 				63D44B4E27D427CF00D4BE7D /* Shaders.metal in Sources */,
@@ -844,7 +838,7 @@
 				5AF0E9E4C16ABEC46671D6A2 /* GMEffect.swift in Sources */,
 				5AF0E18FCF76DE01286C230B /* GMInput.swift in Sources */,
 				5AF0E8545299E98985007FE9 /* GMColor.swift in Sources */,
-				5AF0EB9F660D08A0A325FB61 /* RNDRDrawWeaponSpriteSheet.swift in Sources */,
+				5AF0EB9F660D08A0A325FB61 /* RNDRDrawWeapon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,7 +849,6 @@
 				63D44BDB27D42B0C00D4BE7D /* ScopeFunc.swift in Sources */,
 				63D44BB727D42A1B00D4BE7D /* MathUtils.swift in Sources */,
 				63D44BE727D42B6500D4BE7D /* ArrayExt.swift in Sources */,
-				636D7AF4283DA3A500E4B044 /* RNDRDrawWeapon.swift in Sources */,
 				63D44B5227D427CF00D4BE7D /* RNDRRenderer.swift in Sources */,
 				63A9270F285D7311005CF172 /* RNDRModels.swift in Sources */,
 				63D44B4F27D427CF00D4BE7D /* Shaders.metal in Sources */,
@@ -906,7 +899,7 @@
 				5AF0EC2CDB919F6D366D9561 /* GMEffect.swift in Sources */,
 				5AF0ED5572E3766C2948BC8E /* GMInput.swift in Sources */,
 				5AF0E414A7C1EF18168CC778 /* GMColor.swift in Sources */,
-				5AF0EA23822977128E03DA16 /* RNDRDrawWeaponSpriteSheet.swift in Sources */,
+				5AF0EA23822977128E03DA16 /* RNDRDrawWeapon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,7 +910,6 @@
 				63D44BDC27D42B0C00D4BE7D /* ScopeFunc.swift in Sources */,
 				63D44BB827D42A1B00D4BE7D /* MathUtils.swift in Sources */,
 				63D44BE827D42B6500D4BE7D /* ArrayExt.swift in Sources */,
-				636D7AF5283DA3A500E4B044 /* RNDRDrawWeapon.swift in Sources */,
 				63D44B5327D427CF00D4BE7D /* RNDRRenderer.swift in Sources */,
 				63A92710285D7311005CF172 /* RNDRModels.swift in Sources */,
 				63D44B5027D427CF00D4BE7D /* Shaders.metal in Sources */,
@@ -968,7 +960,7 @@
 				5AF0EA3B5818AFFE0A4BFD8B /* GMEffect.swift in Sources */,
 				5AF0E2D3C9B673801C7837F6 /* GMInput.swift in Sources */,
 				5AF0ECD0F07B30C13F1A6F17 /* GMColor.swift in Sources */,
-				5AF0E8AB28714D7F34741948 /* RNDRDrawWeaponSpriteSheet.swift in Sources */,
+				5AF0E8AB28714D7F34741948 /* RNDRDrawWeapon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
