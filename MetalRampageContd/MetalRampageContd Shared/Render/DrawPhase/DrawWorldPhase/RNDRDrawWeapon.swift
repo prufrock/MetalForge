@@ -25,7 +25,6 @@ struct RNDRDrawWeapon: RNDRDrawWorldPhase {
 
         var wandSpriteSheet = SpriteSheet(textureWidth: 80, textureHeight: 16, spriteWidth: 16, spriteHeight: 16)
 
-        // TODO convert fire blast to sprite sheets
         // select the texture
         var textureId: UInt32
         switch world.player.animation.texture {
@@ -40,15 +39,15 @@ struct RNDRDrawWeapon: RNDRDrawWorldPhase {
         case .wandFiring4:
             textureId = 4
         case .fireBlastIdle:
-            textureId = 5
+            textureId = 0
         case .fireBlastFire1:
-            textureId = 6
+            textureId = 1
         case .fireBlastFire2:
-            textureId = 7
+            textureId = 2
         case .fireBlastFire3:
-            textureId = 8
+            textureId = 3
         case .fireBlastFire4:
-            textureId = 9
+            textureId = 4
         default:
             textureId = 0
         }
@@ -77,16 +76,8 @@ struct RNDRDrawWeapon: RNDRDrawWorldPhase {
         switch world.player.animation.texture {
         case .wand, .wandFiring1, .wandFiring2, .wandFiring3, .wandFiring4:
             encoder.setFragmentTexture(renderer.wand[.wandSpriteSheet]!, index: 0)
-        case .fireBlastIdle:
-            encoder.setFragmentTexture(renderer.fireBlast[.fireBlastIdle]!, index: 0)
-        case .fireBlastFire1:
-            encoder.setFragmentTexture(renderer.fireBlast[.fireBlastFire1]!, index: 0)
-        case .fireBlastFire2:
-            encoder.setFragmentTexture(renderer.fireBlast[.fireBlastFire2]!, index: 0)
-        case .fireBlastFire3:
-            encoder.setFragmentTexture(renderer.fireBlast[.fireBlastFire3]!, index: 0)
-        case .fireBlastFire4:
-            encoder.setFragmentTexture(renderer.fireBlast[.fireBlastFire4]!, index: 0)
+        case .fireBlastIdle, .fireBlastFire1, .fireBlastFire2, .fireBlastFire3, .fireBlastFire4:
+            encoder.setFragmentTexture(renderer.fireBlast[.fireBlastSpriteSheet]!, index: 0)
         default:
             encoder.setFragmentTexture(renderer.wand[.wandSpriteSheet]!, index: 0)
         }

@@ -24,10 +24,6 @@ class RNDRRenderer: NSObject {
     private(set) var wallTexture: MTLTexture!
     private(set) var monster: [GMTexture:MTLTexture?] = [:]
     private(set) var wand: [GMTexture:MTLTexture?] = [:]
-    private(set) var wandFiring1: [GMTexture:MTLTexture?] = [:]
-    private(set) var wandFiring2: [GMTexture:MTLTexture?] = [:]
-    private(set) var wandFiring3: [GMTexture:MTLTexture?] = [:]
-    private(set) var wandFiring4: [GMTexture:MTLTexture?] = [:]
     private(set) var door: [GMTexture:MTLTexture?] = [:]
     private(set) var doorJamb: [GMTexture:MTLTexture?] = [:]
     private(set) var wallSwitch: [GMTexture:MTLTexture?] = [:]
@@ -126,12 +122,7 @@ class RNDRRenderer: NSObject {
         monster[.monsterDeath2] = loadTexture(name: "MonsterDeath2")!
         monster[.monsterDead] = loadTexture(name: "MonsterDead")!
         wand[.wandSpriteSheet] = loadTexture(name: "WandSpriteSheet")!
-        wand[.wand] = loadTexture(name: "Wand")!
         wand[.wandIcon] = loadTexture(name: "WandIcon")!
-        wand[.wandFiring1] = loadTexture(name: "WandFiring1")!
-        wand[.wandFiring2] = loadTexture(name: "WandFiring2")!
-        wand[.wandFiring3] = loadTexture(name: "WandFiring3")!
-        wand[.wandFiring4] = loadTexture(name: "WandFiring4")!
         door[.door1] = loadTexture(name: "Door1")!
         door[.door2] = loadTexture(name: "Door2")!
         doorJamb[.doorJamb1] = loadTexture(name: "DoorJamb1")!
@@ -142,11 +133,7 @@ class RNDRRenderer: NSObject {
         wallSwitch[.switch4] = loadTexture(name: "Switch4")!
         healingPotionTexture = loadTexture(name: "HealingPotion")!
         fireBlast[.fireBlastPickup] = loadTexture(name: "FireBlastPickup")!
-        fireBlast[.fireBlastIdle] = loadTexture(name: "FireBlastIdle")!
-        fireBlast[.fireBlastFire1] = loadTexture(name: "FireBlastFire1")!
-        fireBlast[.fireBlastFire2] = loadTexture(name: "FireBlastFire2")!
-        fireBlast[.fireBlastFire3] = loadTexture(name: "FireBlastFire3")!
-        fireBlast[.fireBlastFire4] = loadTexture(name: "FireBlastFire4")!
+        fireBlast[.fireBlastSpriteSheet] = loadTexture(name: "FireBlastSpriteSheet")!
         fireBlast[.fireBlastIcon] = loadTexture(name: "FireBlastIcon")!
         hud[.crosshair] = loadTexture(name: "Crosshairs")!
         hud[.healthIcon] = loadTexture(name: "HealthIcon")!

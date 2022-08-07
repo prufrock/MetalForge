@@ -124,8 +124,6 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
         encoder.setFragmentTexture(renderer.hud[.crosshair]!, index: 1)
         encoder.setFragmentTexture(renderer.hud[.healthIcon]!, index: 2)
         encoder.setFragmentTexture(renderer.hud[.font]!, index: 3)
-        encoder.setFragmentTexture(renderer.fireBlast[.fireBlastPickup]!, index: 4)
-        encoder.setFragmentTexture(renderer.wand[.wand]!, index: 5)
 
         encoder.drawIndexedPrimitives(
             type: primitiveType,

@@ -20,6 +20,7 @@ enum GMTexture: String, CaseIterable, Decodable {
     case healingPotion
     case fireBlastIdle
     case fireBlastFire1, fireBlastFire2,  fireBlastFire3, fireBlastFire4
+    case fireBlastSpriteSheet
     case fireBlastPickup
     case fireBlastIcon
     case crosshair
