@@ -25,11 +25,9 @@ struct RNDRDrawIndexedSprites: RNDRDrawWorldPhase {
                     * Float4x4.translate(x: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
                     * (Float4x4.identity()
                     * Float4x4.rotateX(-(3 * .pi)/2)
-                    * Float4x4.rotateY(.pi / 2)
                     // use atan2 to convert the direction vector to an angle
                     // this works because these sprites only rotate about the y axis.
                     * Float4x4.rotateY(atan2(billboard.direction.y, billboard.direction.x))
-                    * Float4x4.rotateY(.pi/2)
                 )
                 , GMColor.black, MTLPrimitiveType.triangle, billboard.texture)
         }
