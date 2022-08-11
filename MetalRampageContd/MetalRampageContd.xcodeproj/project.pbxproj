@@ -402,6 +402,18 @@
 			path = DrawEffectsPhase;
 			sourceTree = "<group>";
 		};
+		6306F5BE28A493CF008A44C3 /* Actor */ = {
+			isa = PBXGroup;
+			children = (
+				5AF0EE8E21E9035472348B24 /* GMActor.swift */,
+				5AF0EB48D3A205C366FD8B47 /* GMPlayer.swift */,
+				5AF0E3B7F2459B2F17762B8B /* GMMonster.swift */,
+				5AF0E73A9365E80E6320A300 /* GMPushWall.swift */,
+				5AF0E7353A28D077F741C2EA /* GMPickup.swift */,
+			);
+			path = Actor;
+			sourceTree = "<group>";
+		};
 		635286D12856DE5D00FCCCCD /* DrawHudPhase */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,15 +450,11 @@
 		63A927112866A342005CF172 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				6306F5BE28A493CF008A44C3 /* Actor */,
 				5AF0EC5019731F5A282F75EE /* GMGame.swift */,
 				5AF0E53225B32820F67A440E /* GMTilemap.swift */,
-				5AF0EE8E21E9035472348B24 /* GMActor.swift */,
 				5AF0EF782213E40C976BFBE4 /* GMWorld.swift */,
-				5AF0EB48D3A205C366FD8B47 /* GMPlayer.swift */,
-				5AF0E3B7F2459B2F17762B8B /* GMMonster.swift */,
 				5AF0E14547EB80AC92D43521 /* GMMapGenerator.swift */,
-				5AF0E73A9365E80E6320A300 /* GMPushWall.swift */,
-				5AF0E7353A28D077F741C2EA /* GMPickup.swift */,
 				5AF0E83588F2A687F9A131EE /* GMSwitch.swift */,
 				5AF0E8C41455BE58892DB714 /* GMDoor.swift */,
 				5AF0EB443BB9812F5F6ACEEB /* GMAnimation.swift */,
