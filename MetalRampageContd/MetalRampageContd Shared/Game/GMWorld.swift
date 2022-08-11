@@ -381,6 +381,11 @@ extension GMWorld {
         }
     }
 
+    // useful for billboards that need to face the player
+    var directionParallelToPlayer: Float2 {
+        player.direction.orthogonal
+    }
+
     var sprites: [GMBillboard] {
         // The ray is used to make the billboard orthogonal to the player(or any ray)
         let ray = GMRay(origin: player.position, direction: player.direction)

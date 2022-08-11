@@ -9,6 +9,7 @@ enum GMTexture: String, CaseIterable, Decodable {
     case wand
     case wandIcon
     case wandFiring1, wandFiring2, wandFiring3, wandFiring4
+    case monsterSpriteSheet
     case monster
     case monsterWalk1, monsterWalk2
     case monsterScratch1, monsterScratch2, monsterScratch3, monsterScratch4
