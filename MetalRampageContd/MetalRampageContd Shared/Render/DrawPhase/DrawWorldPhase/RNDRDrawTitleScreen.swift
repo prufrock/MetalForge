@@ -29,7 +29,8 @@ class RNDRDrawTitleScreen {
             transform: Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
             color: .white,
             primitiveType: .triangle,
-            position: Int2(0, 0)
+            position: Int2(0, 0),
+            texture: nil
         ), .titleLogo, nil)
 
         var renderables: [(RNDRObject, GMTexture, UInt32?)] = []
@@ -43,7 +44,8 @@ class RNDRDrawTitleScreen {
                 transform: Float4x4.translate(x: (renderer.aspect * 0.0) + (-1 * Float(game.titleText.count - 1) / 2 * 0.01) + (0.01 * Float(index)) , y: -0.1, z: 0.0) * Float4x4.scale(x: 0.008, y: 0.01, z: 0.0),
                 color: .yellow,
                 primitiveType: .triangle,
-                position: Int2(0, 0)
+                position: Int2(0, 0),
+                texture: nil
             ), .font, UInt32(game.hud.font.characters.firstIndex(of: String(character)) ?? 0))
             renderables.append(text)
         }

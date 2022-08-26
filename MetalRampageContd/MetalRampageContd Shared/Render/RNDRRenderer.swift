@@ -43,6 +43,7 @@ class RNDRRenderer: NSObject {
     private var drawWeapon: RNDRDrawWorldPhase?
     private var drawIndexedGameWorld: RNDRDrawWorldPhase?
     private var drawIndexedSprites: RNDRDrawWorldPhase?
+    private var drawAnimatedSpriteSheet: RNDRDrawWorldPhase?
     private var drawReferenceMarkers: RNDRDrawWorldPhase?
     private var drawMap: RNDRDrawWorldPhase?
     private var drawHealth: RNDRDrawHudPhase?
@@ -92,6 +93,7 @@ class RNDRRenderer: NSObject {
         drawWeapon = RNDRDrawWeapon(renderer: self, pipelineCatalog: pipelineCatalog)
         drawIndexedGameWorld = RNDRDrawIndexedGameWorld(renderer: self, pipelineCatalog: pipelineCatalog)
         drawIndexedSprites = RNDRDrawIndexedSprites(renderer: self, pipelineCatalog: pipelineCatalog)
+        drawAnimatedSpriteSheet = RNDRDrawAnimatedSpriteSheet(renderer: self, pipelineCatalog: pipelineCatalog)
         drawReferenceMarkers = RNDRDrawReferenceMarkers(renderer: self, pipelineCatalog: pipelineCatalog)
         drawMap = RNDRDrawMap(renderer: self, pipelineCatalog: pipelineCatalog)
         drawHealth = RNDRDrawHealth(renderer: self, pipelineCatalog: pipelineCatalog)
@@ -121,6 +123,7 @@ class RNDRRenderer: NSObject {
         monster[.monsterDeath1] = loadTexture(name: "MonsterDeath1")!
         monster[.monsterDeath2] = loadTexture(name: "MonsterDeath2")!
         monster[.monsterDead] = loadTexture(name: "MonsterDead")!
+        monster[.monsterSpriteSheet] = loadTexture(name: "MonsterSpriteSheet")!
         wand[.wandSpriteSheet] = loadTexture(name: "WandSpriteSheet")!
         wand[.wandIcon] = loadTexture(name: "WandIcon")!
         door[.door1] = loadTexture(name: "Door1")!
@@ -206,6 +209,7 @@ class RNDRRenderer: NSObject {
             }
 
             drawIndexedSprites!.draw(world: game.world, encoder: encoder, camera: playerCamera)
+            drawAnimatedSpriteSheet!.draw(world: game.world, encoder: encoder, camera: playerCamera)
 
             if game.world.showMap {
                 drawMap!.draw(world: game.world, encoder: encoder, camera: mapCamera)

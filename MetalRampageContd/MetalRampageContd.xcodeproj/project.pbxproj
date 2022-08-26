@@ -14,7 +14,9 @@
 		5AF0E06DA5C8D75643B941E4 /* GMSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E83588F2A687F9A131EE /* GMSwitch.swift */; };
 		5AF0E07BEF80A7133CF26B51 /* RNDRDrawReferenceMarkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */; };
 		5AF0E07E51E09092A2773672 /* GMPathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E316162F8D10876C0F20 /* GMPathfinder.swift */; };
+		5AF0E0BD5B24C813B2E363CF /* RNDRDrawAnimatedSpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E338427EF0BE0A9F7392 /* RNDRDrawAnimatedSpriteSheet.swift */; };
 		5AF0E0D68DE2A536FBAD4BD4 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7F0E05A621E275B3C0A /* SoundManager.swift */; };
+		5AF0E0DB244E389CE3133AD7 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E338427EF0BE0A9F7392 /* RNDRDrawAnimatedSpriteSheet.swift */; };
 		5AF0E0E50FA21204A149651F /* RNDRDrawHealth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E458CC8D95F2E86A6B0E /* RNDRDrawHealth.swift */; };
 		5AF0E0F1F494B5C7C60BCB60 /* GMAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB443BB9812F5F6ACEEB /* GMAnimation.swift */; };
 		5AF0E0F54CA581D1F315CA55 /* RNDRModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E539E9ED688809C99920 /* RNDRModel.swift */; };
@@ -103,6 +105,7 @@
 		5AF0EA993D2DE4FA50262DD7 /* GMThing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2D9A9A5B2BE7DEC7F1F /* GMThing.swift */; };
 		5AF0EA9CF6791E4C16328E98 /* RNDRDrawReferenceMarkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */; };
 		5AF0EADBE9E927BD69A63EFF /* GMAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB443BB9812F5F6ACEEB /* GMAnimation.swift */; };
+		5AF0EAE5256C26F733A2F5A4 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E338427EF0BE0A9F7392 /* RNDRDrawAnimatedSpriteSheet.swift */; };
 		5AF0EAF7B30963A7CC0EB59C /* GMRay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E5856971F3C07126F5E5 /* GMRay.swift */; };
 		5AF0EB2220A7BF36353D9E18 /* GMMonster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3B7F2459B2F17762B8B /* GMMonster.swift */; };
 		5AF0EB433DBD04DB60771D9A /* GMWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E5C5BDF49498F95C3988 /* GMWeapon.swift */; };
@@ -266,6 +269,7 @@
 		5AF0E14547EB80AC92D43521 /* GMMapGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMMapGenerator.swift; sourceTree = "<group>"; };
 		5AF0E2D9A9A5B2BE7DEC7F1F /* GMThing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMThing.swift; sourceTree = "<group>"; };
 		5AF0E316162F8D10876C0F20 /* GMPathfinder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMPathfinder.swift; sourceTree = "<group>"; };
+		5AF0E338427EF0BE0A9F7392 /* RNDRDrawAnimatedSpriteSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawAnimatedSpriteSheet.swift; sourceTree = "<group>"; };
 		5AF0E3B7F2459B2F17762B8B /* GMMonster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMMonster.swift; sourceTree = "<group>"; };
 		5AF0E3FAA85F4D55EB5E6F23 /* GMColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMColor.swift; sourceTree = "<group>"; };
 		5AF0E458CC8D95F2E86A6B0E /* RNDRDrawHealth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawHealth.swift; sourceTree = "<group>"; };
@@ -453,6 +457,7 @@
 				5AF0E628B9AD3DF2990D5D83 /* RNDRDrawTitleScreen.swift */,
 				5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */,
 				5AF0E9791B8FE22246224AB9 /* RNDRDrawAnimatedSprites.swift */,
+				5AF0E338427EF0BE0A9F7392 /* RNDRDrawAnimatedSpriteSheet.swift */,
 			);
 			path = DrawWorldPhase;
 			sourceTree = "<group>";
@@ -859,6 +864,7 @@
 				5AF0E8545299E98985007FE9 /* GMColor.swift in Sources */,
 				5AF0EB9F660D08A0A325FB61 /* RNDRDrawWeapon.swift in Sources */,
 				5AF0E45895253AF4687D7667 /* RNDRDrawAnimatedSprites.swift in Sources */,
+				5AF0E0BD5B24C813B2E363CF /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -922,6 +928,7 @@
 				5AF0E414A7C1EF18168CC778 /* GMColor.swift in Sources */,
 				5AF0EA23822977128E03DA16 /* RNDRDrawWeapon.swift in Sources */,
 				5AF0E1545E21042DBE8EEB8C /* RNDRDrawAnimatedSprites.swift in Sources */,
+				5AF0E0DB244E389CE3133AD7 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,6 +992,7 @@
 				5AF0ECD0F07B30C13F1A6F17 /* GMColor.swift in Sources */,
 				5AF0E8AB28714D7F34741948 /* RNDRDrawWeapon.swift in Sources */,
 				5AF0E0318F611A2475188D43 /* RNDRDrawAnimatedSprites.swift in Sources */,
+				5AF0EAE5256C26F733A2F5A4 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

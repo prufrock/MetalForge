@@ -45,7 +45,8 @@ func lineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] 
             transform: transformation,
             color: .green,
             primitiveType: .line,
-            position: Int2()
+            position: Int2(),
+            texture: nil
         ),
         RNDRObject(
             // xy z1
@@ -65,7 +66,8 @@ func lineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] 
             transform: transformation,
             color: .green,
             primitiveType: .line,
-            position: Int2()
+            position: Int2(),
+            texture: nil
         ),
         RNDRObject(
             //xz y0
@@ -85,7 +87,8 @@ func lineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] 
             transform: transformation,
             color: .green,
             primitiveType: .line,
-            position: Int2()
+            position: Int2(),
+            texture: nil
         ),
         RNDRObject(
             //xz y1
@@ -105,7 +108,8 @@ func lineCube(_ transformation: Float4x4 = Float4x4.identity()) -> [RNDRObject] 
             transform: transformation,
             color: .green,
             primitiveType: .line,
-            position: Int2 ()
+            position: Int2 (),
+            texture: nil
         )
     ]
 }

@@ -37,7 +37,7 @@ struct RNDRDrawMap: RNDRDrawWorldPhase  {
             RNDRObject(vertices: [
                 viewStart.toFloat3(),
                 viewEnd.toFloat3()
-            ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .red, primitiveType: .line, position: Int2())
+            ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .red, primitiveType: .line, position: Int2(), texture: nil)
         )
         // Cast rays
         let columns = 3
@@ -64,7 +64,7 @@ struct RNDRDrawMap: RNDRDrawWorldPhase  {
                 RNDRObject(vertices: [
                     ray.origin.toFloat3(),
                     end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
+                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2(), texture: nil)
             )
             columnPosition += step
         }
@@ -75,7 +75,7 @@ struct RNDRDrawMap: RNDRDrawWorldPhase  {
                 RNDRObject(vertices: [
                     line.start.toFloat3(),
                     line.end.toFloat3()
-                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2())
+                ], uv: [], transform: Float4x4.translate(x: 0.0, y: 0.0, z: 0.0), color: .green, primitiveType: .line, position: Int2(), texture: nil)
             )
         }
 

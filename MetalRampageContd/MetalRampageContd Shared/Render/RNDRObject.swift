@@ -13,11 +13,12 @@ struct RNDRObject {
     let transform: Float4x4
     let color: GMColor
     let primitiveType: MTLPrimitiveType
-    let position: Int2
+    let position: Int2 // I seem to have forgotten what this is for
+    let texture: GMTexture? // not everything has a texture
 }
 
 extension RNDRObject {
-    func toTuple() -> ([Float3], [Float2], Float4x4, GMColor, MTLPrimitiveType) {
-        (vertices, uv, transform, color, primitiveType)
+    func toTuple() -> ([Float3], [Float2], Float4x4, GMColor, MTLPrimitiveType, GMTexture?) {
+        (vertices, uv, transform, color, primitiveType, texture)
     }
 }

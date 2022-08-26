@@ -31,7 +31,8 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 0, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: .black,
             primitiveType: .triangle,
-            position: Int2(0, 0)
+            position: Int2(0, 0),
+            texture: nil
         ), .healthIcon, 100)
 
         let health1: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
@@ -40,7 +41,8 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 1, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: healthTint,
             primitiveType: .triangle,
-            position: Int2(0, 0)
+            position: Int2(0, 0),
+            texture: nil
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 0) ?? 0)) ?? 0))
 
         let health2: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
@@ -49,7 +51,8 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 2, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: healthTint,
             primitiveType: .triangle,
-            position: Int2(0, 0)
+            position: Int2(0, 0),
+            texture: nil
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 1) ?? 0)) ?? 0))
 
         let health3: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
@@ -58,7 +61,8 @@ struct RNDRDrawHealth: RNDRDrawHudPhase {
             transform: Float4x4.translate(x: heartStart.x + heartSpace * 3, y: heartStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: healthTint,
             primitiveType: .triangle,
-            position: Int2(0, 0)
+            position: Int2(0, 0),
+            texture: nil
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(playerHealth.charInt(at: 2) ?? 0)) ?? 0))
 
         var fontSpriteSheet = SpriteSheet(textureWidth: Float(hud.font.characters.count * 4), textureHeight: 6, spriteWidth: 4, spriteHeight: 6)

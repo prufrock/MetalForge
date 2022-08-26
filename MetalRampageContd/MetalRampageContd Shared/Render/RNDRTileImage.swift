@@ -55,7 +55,7 @@ struct RNDRTileImage {
         }
 
         tiles = myTiles.map { vertices, uv, transform, color, primitiveType, tile, position in
-            (RNDRObject(vertices: vertices, uv: uv, transform: transform, color: color, primitiveType: primitiveType, position: position), tile)
+            (RNDRObject(vertices: vertices, uv: uv, transform: transform, color: color, primitiveType: primitiveType, position: position, texture: nil), tile)
         }
     }
 }

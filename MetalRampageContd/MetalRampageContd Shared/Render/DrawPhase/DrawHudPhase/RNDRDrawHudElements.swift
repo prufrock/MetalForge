@@ -24,7 +24,8 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
             transform: Float4x4.scale(x: 0.25, y: 0.25, z: 0.0),
             color: .white,
             primitiveType: .triangle,
-            position: Int2(0, 0)
+            position: Int2(0, 0),
+            texture: nil
         ), .crosshair, nil)
 
         let fontSpace: Float = 0.10
@@ -47,7 +48,8 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
             transform: Float4x4.translate(x: chargesStart.x - fontSpace * 1, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: .white,
             primitiveType: .triangle,
-            position: Int2(0, 0)
+            position: Int2(0, 0),
+            texture: nil
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(charges.charInt(at: 0) ?? 0)) ?? 0))
 
         let charges2: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
@@ -56,7 +58,8 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
             transform: Float4x4.translate(x: chargesStart.x - fontSpace * 0, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: .white,
             primitiveType: .triangle,
-            position: Int2(0, 0)
+            position: Int2(0, 0),
+            texture: nil
         ), .font, UInt32(hud.font.characters.firstIndex(of: String(charges.charInt(at: 1) ?? 0)) ?? 0))
 
         let chargesIcon: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
@@ -65,7 +68,8 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
             transform: Float4x4.translate(x: chargesStart.x - fontSpace * 2, y: chargesStart.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
             color: .black,
             primitiveType: .triangle,
-            position: Int2(0, 0)
+            position: Int2(0, 0),
+            texture: nil
         ), hud.weaponIcon, 100)
 
         renderables.append(charges1)

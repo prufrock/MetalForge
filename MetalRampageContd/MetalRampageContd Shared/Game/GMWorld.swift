@@ -387,13 +387,22 @@ extension GMWorld {
     }
 
     var sprites: [GMBillboard] {
-        // The ray is used to make the billboard orthogonal to the player(or any ray)
-        let ray = GMRay(origin: player.position, direction: player.direction)
         // append billboards here to draw more sprites
-        return monsters.map { $0.billboard(for: ray)}
-            + doors.map { $0.billboard }
+//        monsters.map { $0.billboard(for: playerRay)} +
+             doors.map { $0.billboard }
             + pushWalls.flatMap { $0.billboards }
-            + pickups.map { $0.billboard(for: ray) }
+            + pickups.map { $0.billboard(for: playerRay) }
+    }
+
+    // TODO: make an attribute of GMBillboard that makes it possible to determine the texture to use
+    var monsterSprites: [GMBillboard] {
+        // append billboards here to draw more sprites
+        monsters.map { $0.billboard(for: playerRay)}
+    }
+
+    // The ray is used to make the billboard orthogonal to the player(or any ray)
+    var playerRay: GMRay {
+        GMRay(origin: player.position, direction: player.direction)
     }
 
     func hitTest(_ ray: GMRay) -> Float2 {
