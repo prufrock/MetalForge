@@ -16,8 +16,8 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
     func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = renderer.model[.unitSquare]!
 
-        let renderables = world.monsterSprites.map { billboard in
-            RNDRObject(
+        world.monsterSprites.map { billboard in
+            render(RNDRObject(
                 vertices: model.vertices,
                 uv: model.uv,
                 transform: Float4x4.identity()
@@ -31,10 +31,8 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
                 primitiveType: MTLPrimitiveType.triangle,
                 position: Int2(),
                 texture: billboard.texture
-            )
+            ), to: model, from: world, with: camera, using: encoder)
         }
-
-        renderables.forEach { render($0, to: model, from: world, with: camera, using: encoder) }
     }
 
     private func render(_ renderable: RNDRObject, to model: RNDRModel, from world: GMWorld, with camera: Float4x4, using encoder: MTLRenderCommandEncoder) {
