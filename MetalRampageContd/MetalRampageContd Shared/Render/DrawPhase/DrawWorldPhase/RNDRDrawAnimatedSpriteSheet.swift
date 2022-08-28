@@ -16,22 +16,9 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
     func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = renderer.model[.unitSquare]!
 
-        world.monsterSprites.map { billboard in
-            render(RNDRObject(
-                vertices: model.vertices,
-                uv: model.uv,
-                transform: Float4x4.identity()
-                    * Float4x4.translate(x: Float(billboard.position.x), y: Float(billboard.position.y), z: 0.5)
-                    * (Float4x4.identity()
-                    * Float4x4.rotateX(-(3 * .pi)/2)
-                    // use atan2 to convert the direction vector to an angle
-                    // this works because these sprites only rotate about the y axis.
-                    * Float4x4.rotateY(atan2(billboard.direction.y, billboard.direction.x))),
-                color: GMColor.black,
-                primitiveType: MTLPrimitiveType.triangle,
-                position: Int2(),
-                texture: billboard.texture
-            ), to: model, from: world, with: camera, using: encoder)
+        world.monsterSprites.forEach { billboard in
+            // TODO Find a way to not have to pass the model twice.
+            render(billboard.toRNDRObject(with: model), to: model, from: world, with: camera, using: encoder)
         }
     }
 
@@ -79,8 +66,6 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
         default:
             textureId = 0
         }
-
-        var pixelSize = 1
 
         var finalTransform = camera * renderable.transform
 

@@ -22,3 +22,33 @@ extension RNDRObject {
         (vertices, uv, transform, color, primitiveType, texture)
     }
 }
+
+/**
+This extension is in here because it necessary for rendering not for any aspect of game
+It also has a dependency on Metal.
+ */
+extension GMBillboard {
+
+    /**
+    Converts a GMBillboard to RNDRObject with the provided model as the target.
+     - Parameter model: RNDRModel the model to render
+     - Returns: RNDRObject a representation of the billboard for drawing
+     */
+    func toRNDRObject(with model: RNDRModel) -> RNDRObject {
+        RNDRObject(
+            vertices: model.vertices,
+            uv: model.uv,
+            transform: Float4x4.identity()
+                * Float4x4.translate(x: Float(position.x), y: Float(position.y), z: 0.5)
+                * (Float4x4.identity()
+                * Float4x4.rotateX(-(3 * .pi)/2)
+                // use atan2 to convert the direction vector to an angle
+                // this works because these sprites only rotate about the y axis.
+                * Float4x4.rotateY(atan2(direction.y, direction.x))),
+            color: GMColor.black,
+            primitiveType: MTLPrimitiveType.triangle,
+            position: Int2(),
+            texture: texture
+        )
+    }
+}

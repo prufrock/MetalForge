@@ -99,6 +99,7 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
 
         GMTile.allCases.forEach { tile in
             renderer.worldTiles!.filter {$0.1 == tile}.chunked(into: 64).forEach { chunk in
+                // TODO should model.allVertices be model.vertices?
                 let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])!
                 let indexBuffer = renderer.device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
                 let coordsBuffer = renderer.device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])!
