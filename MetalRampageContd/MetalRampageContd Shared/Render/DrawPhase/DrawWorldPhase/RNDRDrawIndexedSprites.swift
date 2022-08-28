@@ -40,48 +40,18 @@ struct RNDRDrawIndexedSprites: RNDRDrawWorldPhase {
         let indexedObjTransform = renderables.map { _, _, transform, _, _, _ -> Float4x4 in transform }
         let indexedTextureId: [UInt32] = world.sprites.map { (billboard) -> UInt32 in
             switch billboard.texture {
-            case .monster:
-                return 0
-            case .monsterWalk1:
-                return 1
-            case .monsterWalk2:
-                return 2
-            case .monsterScratch1:
-                return 3
-            case .monsterScratch2:
-                return 4
-            case .monsterScratch3:
-                return 5
-            case .monsterScratch4:
-                return 6
-            case .monsterScratch5:
-                return 7
-            case .monsterScratch6:
-                return 8
-            case .monsterScratch7:
-                return 9
-            case .monsterScratch8:
-                return 10
-            case .monsterHurt:
-                return 11
-            case .monsterDeath1:
-                return 12
-            case .monsterDeath2:
-                return 13
-            case .monsterDead:
-                return 14
             case .door1:
-                return 15
+                return 0
             case .door2:
-                return 16
+                return 1
             case .wall, .crackWall: // .crackWall can share with .wall for now
-                return 17
+                return 2
             case .slimeWall:
-                return 18
+                return 3
             case .healingPotion:
-                return 19
+                return 4
             case .fireBlastPickup:
-                return 20
+                return 5
             default:
                 return 0
             }
@@ -111,27 +81,12 @@ struct RNDRDrawIndexedSprites: RNDRDrawWorldPhase {
 
         encoder.setFragmentBuffer(vertexBuffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        encoder.setFragmentTexture(renderer.monster[.monster]!, index: 0)
-        encoder.setFragmentTexture(renderer.monster[.monsterWalk1]!, index: 1)
-        encoder.setFragmentTexture(renderer.monster[.monsterWalk2]!, index: 2)
-        encoder.setFragmentTexture(renderer.monster[.monsterScratch1]!, index: 3)
-        encoder.setFragmentTexture(renderer.monster[.monsterScratch2]!, index: 4)
-        encoder.setFragmentTexture(renderer.monster[.monsterScratch3]!, index: 5)
-        encoder.setFragmentTexture(renderer.monster[.monsterScratch4]!, index: 6)
-        encoder.setFragmentTexture(renderer.monster[.monsterScratch5]!, index: 7)
-        encoder.setFragmentTexture(renderer.monster[.monsterScratch6]!, index: 8)
-        encoder.setFragmentTexture(renderer.monster[.monsterScratch7]!, index: 9)
-        encoder.setFragmentTexture(renderer.monster[.monsterScratch8]!, index: 10)
-        encoder.setFragmentTexture(renderer.monster[.monsterHurt]!, index: 11)
-        encoder.setFragmentTexture(renderer.monster[.monsterDeath1]!, index: 12)
-        encoder.setFragmentTexture(renderer.monster[.monsterDeath2]!, index: 13)
-        encoder.setFragmentTexture(renderer.monster[.monsterDead]!, index: 14)
-        encoder.setFragmentTexture(renderer.door[.door1]!, index: 15)
-        encoder.setFragmentTexture(renderer.door[.door2]!, index: 16)
-        encoder.setFragmentTexture(renderer.wallTexture!, index: 17)
-        encoder.setFragmentTexture(renderer.slimeWallTexture!, index: 18)
-        encoder.setFragmentTexture(renderer.healingPotionTexture!, index: 19)
-        encoder.setFragmentTexture(renderer.fireBlast[.fireBlastPickup]!, index: 20)
+        encoder.setFragmentTexture(renderer.door[.door1]!, index: 0)
+        encoder.setFragmentTexture(renderer.door[.door2]!, index: 1)
+        encoder.setFragmentTexture(renderer.wallTexture!, index: 2)
+        encoder.setFragmentTexture(renderer.slimeWallTexture!, index: 3)
+        encoder.setFragmentTexture(renderer.healingPotionTexture!, index: 4)
+        encoder.setFragmentTexture(renderer.fireBlast[.fireBlastPickup]!, index: 5)
         encoder.drawIndexedPrimitives(
             type: renderables[0].4,
             indexCount: model.index.count,
