@@ -22,7 +22,7 @@ class RNDRRenderer: NSObject {
     private(set) var floor: MTLTexture!
     private(set) var slimeWallTexture: MTLTexture!
     private(set) var wallTexture: MTLTexture!
-    private(set) var monster: [GMTexture:MTLTexture?] = [:]
+    private(set) var spriteSheets: [GMTexture:MTLTexture?] = [:]
     private(set) var wand: [GMTexture:MTLTexture?] = [:]
     private(set) var door: [GMTexture:MTLTexture?] = [:]
     private(set) var doorJamb: [GMTexture:MTLTexture?] = [:]
@@ -96,7 +96,7 @@ class RNDRRenderer: NSObject {
         drawAnimatedSpriteSheet = RNDRDrawAnimatedSpriteSheet(
             renderer: self,
             pipelineCatalog: pipelineCatalog,
-            textureController: RNDRTextureController(textures: ["monster": RNDRMonsterComposer])
+            textureController: RNDRTextureController(textures: [.monster: RNDRMonsterComposer()])
         )
         drawReferenceMarkers = RNDRDrawReferenceMarkers(renderer: self, pipelineCatalog: pipelineCatalog)
         drawMap = RNDRDrawMap(renderer: self, pipelineCatalog: pipelineCatalog)
@@ -112,7 +112,7 @@ class RNDRRenderer: NSObject {
         floor = loadTexture(name: "Floor")!
         slimeWallTexture = loadTexture(name: "SlimeWall")!
         wallTexture = loadTexture(name: "Wall")!
-        monster[.monsterSpriteSheet] = loadTexture(name: "MonsterSpriteSheet")!
+        spriteSheets[.monsterSpriteSheet] = loadTexture(name: "MonsterSpriteSheet")!
         wand[.wandSpriteSheet] = loadTexture(name: "WandSpriteSheet")!
         wand[.wandIcon] = loadTexture(name: "WandIcon")!
         door[.door1] = loadTexture(name: "Door1")!

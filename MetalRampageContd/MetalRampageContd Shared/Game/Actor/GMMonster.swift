@@ -114,6 +114,45 @@ struct GMMonster: GMActor {
 extension GMMonster {
     var isDead: Bool { health <= 0 }
 
+    private var textureId: UInt32 {
+        var textureId: UInt32
+        switch animation.texture {
+        case .monster:
+            textureId = 0
+        case .monsterWalk1:
+            textureId = 1
+        case .monsterWalk2:
+            textureId = 2
+        case .monsterScratch1:
+            textureId = 3
+        case .monsterScratch2:
+            textureId = 4
+        case .monsterScratch3:
+            textureId = 5
+        case .monsterScratch4:
+            textureId = 6
+        case .monsterScratch5:
+            textureId = 7
+        case .monsterScratch6:
+            textureId = 8
+        case .monsterScratch7:
+            textureId = 9
+        case .monsterScratch8:
+            textureId = 10
+        case .monsterHurt:
+            textureId = 11
+        case .monsterDeath1:
+            textureId = 12
+        case .monsterDeath2:
+            textureId = 13
+        case .monsterDead:
+            textureId = 14
+        default:
+            textureId = 0
+        }
+        return textureId
+    }
+
     func canSeePlayer(in world: GMWorld) -> Bool {
         // figure out the normalized direction to the player
         var direction = world.player.position - position
@@ -164,7 +203,8 @@ extension GMMonster {
             direction: plane,
             length: 1,
             position: position,
-            texture: animation.texture
+            textureType: .monster,
+            textureId: textureId
         )
     }
 

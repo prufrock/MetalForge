@@ -15,6 +15,29 @@ struct RNDRObject {
     let primitiveType: MTLPrimitiveType
     let position: Int2 // I seem to have forgotten what this is for
     let texture: GMTexture? // not everything has a texture
+    let textureType: GMTextureType? // not everything has a textureType
+    let textureId: UInt32? // nor does everything have a textureId
+
+    init(vertices: [Float3],
+         uv: [Float2],
+         transform: Float4x4,
+         color: GMColor,
+         primitiveType: MTLPrimitiveType,
+         position: Int2,
+         texture: GMTexture? = .none,
+         textureType: GMTextureType? = .none,
+         textureId: UInt32? = 0
+    ) {
+        self.vertices = vertices
+        self.uv = uv
+        self.transform = transform
+        self.color = color
+        self.primitiveType = primitiveType
+        self.position = position
+        self.texture = texture
+        self.textureType = textureType
+        self.textureId = textureId
+    }
 }
 
 extension RNDRObject {
@@ -48,7 +71,9 @@ extension GMBillboard {
             color: GMColor.black,
             primitiveType: MTLPrimitiveType.triangle,
             position: Int2(),
-            texture: texture
+            texture: texture,
+            textureType: textureType,
+            textureId: textureId
         )
     }
 }

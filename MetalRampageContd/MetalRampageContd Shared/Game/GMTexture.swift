@@ -28,4 +28,14 @@ enum GMTexture: String, CaseIterable, Decodable {
     case healthIcon
     case font
     case titleLogo
+    case none
+}
+
+/**
+ Eventually determines the dimensions of the sprite sheet to use.
+ */
+enum GMTextureType {
+    case none
+    case monster
+    case potion
 }

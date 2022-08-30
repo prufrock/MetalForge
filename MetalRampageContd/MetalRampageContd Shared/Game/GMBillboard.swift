@@ -8,6 +8,10 @@ struct GMBillboard {
     var length: Float
     var position: Float2
     var texture: GMTexture
+    var textureType: GMTextureType
+    // the id of the texture to display used to select a texture with in a variant either because it's included from
+    // a sprite sheet or it has to be selected from the arguments passed to a shader.
+    var textureId: UInt32
 
     init(start: Float2, direction: Float2, length: Float, position: Float2, texture: GMTexture) {
         self.start = start
@@ -15,6 +19,18 @@ struct GMBillboard {
         self.length = length
         self.position = position
         self.texture = texture
+        self.textureType = .none
+        self.textureId = 0
+    }
+
+    init(start: Float2, direction: Float2, length: Float, position: Float2, textureType: GMTextureType, textureId: UInt32) {
+        self.start = start
+        self.direction = direction
+        self.length = length
+        self.position = position
+        self.texture = .none
+        self.textureType = textureType
+        self.textureId = textureId
     }
 }
 
