@@ -394,7 +394,7 @@ extension GMWorld {
             + pickups.map { $0.billboard(for: playerRay) }
     }
 
-    // TODO: make an attribute of GMBillboard that makes it possible to determine the texture to use
+    // TODO make an attribute of GMBillboard that makes it possible to determine the texture to use
     var monsterSprites: [GMBillboard] {
         // append billboards here to draw more sprites
         monsters.map { $0.billboard(for: playerRay)}

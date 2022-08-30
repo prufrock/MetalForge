@@ -7,10 +7,19 @@ import Metal
 struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
     private let renderer: RNDRRenderer
     private let pipelineCatalog: RNDRPipelineCatalog
+    private let textureController: RNDRTextureController
 
-    init(renderer: RNDRRenderer, pipelineCatalog: RNDRPipelineCatalog) {
+    /**
+     Create Draw Phase that can draw animated sprite sheets.
+     - Parameters:
+       - renderer: the source of rendering information for the draw phase.
+       - pipelineCatalog: the pipeline catalog to grab pipeline state objects from.
+       - textureController: matches things being rendered with their textures.
+     */
+    init(renderer: RNDRRenderer, pipelineCatalog: RNDRPipelineCatalog, textureController: RNDRTextureController) {
         self.renderer = renderer
         self.pipelineCatalog = pipelineCatalog
+        self.textureController = textureController
     }
 
     func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
