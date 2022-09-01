@@ -17,6 +17,7 @@ struct RNDRObject {
     let texture: GMTexture? // not everything has a texture
     let textureType: GMTextureType? // not everything has a textureType
     let textureId: UInt32? // nor does everything have a textureId
+    let textureVariant: GMTextureVariant? // still not even all things have a textureVariant
 
     init(vertices: [Float3],
          uv: [Float2],
@@ -26,7 +27,8 @@ struct RNDRObject {
          position: Int2,
          texture: GMTexture? = .none,
          textureType: GMTextureType? = .none,
-         textureId: UInt32? = 0
+         textureId: UInt32? = 0,
+         textureVariant: GMTextureVariant? = .none
     ) {
         self.vertices = vertices
         self.uv = uv
@@ -37,6 +39,7 @@ struct RNDRObject {
         self.texture = texture
         self.textureType = textureType
         self.textureId = textureId
+        self.textureVariant = textureVariant
     }
 }
 
@@ -73,7 +76,8 @@ extension GMBillboard {
             position: Int2(),
             texture: texture,
             textureType: textureType,
-            textureId: textureId
+            textureId: textureId,
+            textureVariant: textureVariant
         )
     }
 }

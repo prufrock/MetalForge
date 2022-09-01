@@ -113,6 +113,7 @@ class RNDRRenderer: NSObject {
         slimeWallTexture = loadTexture(name: "SlimeWall")!
         wallTexture = loadTexture(name: "Wall")!
         spriteSheets[.monsterSpriteSheet] = loadTexture(name: "MonsterSpriteSheet")!
+        spriteSheets[.monsterBlobSpriteSheet] = loadTexture(name: "MonsterBlobSpriteSheet")!
         wand[.wandSpriteSheet] = loadTexture(name: "WandSpriteSheet")!
         wand[.wandIcon] = loadTexture(name: "WandIcon")!
         door[.door1] = loadTexture(name: "Door1")!

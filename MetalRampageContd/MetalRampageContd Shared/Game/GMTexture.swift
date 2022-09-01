@@ -10,6 +10,7 @@ enum GMTexture: String, CaseIterable, Decodable {
     case wandIcon
     case wandFiring1, wandFiring2, wandFiring3, wandFiring4
     case monsterSpriteSheet
+    case monsterBlobSpriteSheet
     case monster
     case monsterWalk1, monsterWalk2
     case monsterScratch1, monsterScratch2, monsterScratch3, monsterScratch4
@@ -38,4 +39,14 @@ enum GMTextureType {
     case none
     case monster
     case potion
+}
+
+/**
+ Determines the specific file to load.
+ */
+enum GMTextureVariant {
+    // use none when there either are no variants or it's the base case
+    // like for monster "none" means to use the "monsterSpriteSheet"
+    case none
+    case monsterBlob
 }

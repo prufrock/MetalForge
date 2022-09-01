@@ -8,8 +8,8 @@
 struct RNDRTextureController {
     let textures: [GMTextureType:RNDRComposedTexture]
 
-    func textureFor(textureType: GMTextureType) -> RNDRTextureDescriptor {
-        textures[textureType]!.compose()
+    func textureFor(textureType: GMTextureType, variant: GMTextureVariant) -> RNDRTextureDescriptor {
+        textures[textureType]!.compose(variant: variant)
     }
 }
 
@@ -17,17 +17,22 @@ struct RNDRTextureController {
  Knows all the properties of a texture so it can be rendered for a GMActor.
  */
 protocol RNDRComposedTexture {
-    func compose() -> RNDRTextureDescriptor
+    func compose(variant: GMTextureVariant) -> RNDRTextureDescriptor
 }
 
 /**
  Knows the properties of a GMMonster
  */
 struct RNDRMonsterComposer: RNDRComposedTexture {
-    func compose() -> RNDRTextureDescriptor {
+    func compose(variant: GMTextureVariant) -> RNDRTextureDescriptor {
         let spriteSheet = SpriteSheet(textureWidth: 128, textureHeight: 32, spriteWidth: 16, spriteHeight: 16)
 
-        return RNDRTextureDescriptor(file: .monsterSpriteSheet, dimensions: spriteSheet)
+        switch variant {
+        case .monsterBlob:
+            return RNDRTextureDescriptor(file: .monsterBlobSpriteSheet, dimensions: spriteSheet)
+        default:
+            return RNDRTextureDescriptor(file: .monsterSpriteSheet, dimensions: spriteSheet)
+        }
     }
 }
 

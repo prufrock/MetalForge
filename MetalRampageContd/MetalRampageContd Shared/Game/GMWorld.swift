@@ -328,6 +328,8 @@ extension GMWorld {
                     soundChannel += 1
                 case .monster:
                     monsters.append(GMMonster(position: position))
+                case .monsterBlob:
+                    monsters.append(GMMonster(position: position, variant: .monsterBlob))
                 case .door:
                     // crash early if the door is on the map edge
                     precondition(y > 0 && y < map.height, "Door cannot be placed on map edge")

@@ -111,8 +111,10 @@ struct GMMapGenerator {
         }
 
         // Add monsters
-        for _ in 0 ..< (mapData.monsters ?? 0) {
-            add(.monster, at: emptyTiles.filter({
+        for i in 0 ..< (mapData.monsters ?? 0) {
+            let things: [GMThing] = [.monster, .monsterBlob]
+            let thing: GMThing = things[i % 2] // the rng is failing me..
+            add(thing, at: emptyTiles.filter({
                         // give the player some breathing room
                         // 2.5 units of breathing room
                         (playerPosition - $0).length > 2.5

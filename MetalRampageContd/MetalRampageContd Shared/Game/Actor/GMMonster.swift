@@ -9,6 +9,7 @@ struct GMMonster: GMActor {
     var velocity: Float2 = Float2(x: 0, y: 0)
     var state: GMMonsterState = .idle
     var animation: GMAnimation = .monsterIdle
+    let textureVariant: GMTextureVariant
     let attackCooldown: Float = 0.4
     private(set) var lastAttackTime: Float = 0
 
@@ -16,8 +17,9 @@ struct GMMonster: GMActor {
 
     var health: Float = 50
 
-    init(position: Float2) {
+    init(position: Float2, variant: GMTextureVariant = .none) {
         self.position = position
+        self.textureVariant = variant
     }
 
     mutating func update(in world: inout GMWorld) {
@@ -204,7 +206,8 @@ extension GMMonster {
             length: 1,
             position: position,
             textureType: .monster,
-            textureId: textureId
+            textureId: textureId,
+            textureVariant: textureVariant
         )
     }
 

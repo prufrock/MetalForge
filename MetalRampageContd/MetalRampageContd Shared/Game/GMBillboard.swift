@@ -7,8 +7,13 @@ struct GMBillboard {
     var direction: Float2
     var length: Float
     var position: Float2
+    // The texture tells exactly which texture to use for the current animation
+    // it blends the file to load and the texture to show.
     var texture: GMTexture
+    // The type determines the dimensions of the sprite sheet.
     var textureType: GMTextureType
+    // The variant determines which file to load for the texture.
+    var textureVariant: GMTextureVariant
     // the id of the texture to display used to select a texture with in a variant either because it's included from
     // a sprite sheet or it has to be selected from the arguments passed to a shader.
     var textureId: UInt32
@@ -21,9 +26,10 @@ struct GMBillboard {
         self.texture = texture
         self.textureType = .none
         self.textureId = 0
+        self.textureVariant = .none
     }
 
-    init(start: Float2, direction: Float2, length: Float, position: Float2, textureType: GMTextureType, textureId: UInt32) {
+    init(start: Float2, direction: Float2, length: Float, position: Float2, textureType: GMTextureType, textureId: UInt32, textureVariant: GMTextureVariant) {
         self.start = start
         self.direction = direction
         self.length = length
@@ -31,6 +37,7 @@ struct GMBillboard {
         self.texture = .none
         self.textureType = textureType
         self.textureId = textureId
+        self.textureVariant = textureVariant
     }
 }
 

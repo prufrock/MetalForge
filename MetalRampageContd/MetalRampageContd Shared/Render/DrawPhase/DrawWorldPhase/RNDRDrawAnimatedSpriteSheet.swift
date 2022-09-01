@@ -35,33 +35,32 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
         let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
         let coordsBuffer = renderer.device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])!
 
-        // TODO: determine sprite sheet dimensions for renderable
-        var spriteSheet = textureController.textureFor(textureType: renderable.textureType!).dimensions
-
-        // select the texture
+        let textureComposition = textureController.textureFor(textureType: renderable.textureType!, variant: renderable.textureVariant!)
+        var spriteSheet = textureComposition.dimensions
         var textureId: UInt32 = renderable.textureId ?? 0
 
         var finalTransform = camera * renderable.transform
 
+        let color = GMColor.black
+        var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
+
         encoder.setRenderPipelineState(pipelineCatalog.spriteSheetPipeline)
         encoder.setDepthStencilState(renderer.depthStencilState)
         encoder.setCullMode(.back)
+
         encoder.setVertexBuffer(buffer, offset: 0, index: VertexAttribute.position.rawValue)
         encoder.setVertexBuffer(coordsBuffer, offset: 0, index: VertexAttribute.uvcoord.rawValue)
         encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
         encoder.setVertexBytes(&textureId, length: MemoryLayout<UInt32>.stride, index: 4)
         encoder.setVertexBytes(&spriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 5)
 
-        let color = GMColor.black
-        var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
-
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        // select the texture
 
+        // select the texture
         switch renderable.textureType {
         case .monster:
-            encoder.setFragmentTexture(renderer.spriteSheets[textureController.textureFor(textureType: renderable.textureType!).file]!, index: 0)
+            encoder.setFragmentTexture(renderer.spriteSheets[textureComposition.file]!, index: 0)
         default:
             encoder.setFragmentTexture(renderer.spriteSheets[.healingPotion]!, index: 0)
         }
