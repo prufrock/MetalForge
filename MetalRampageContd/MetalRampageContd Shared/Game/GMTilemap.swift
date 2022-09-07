@@ -28,6 +28,7 @@ struct GMMapData: Decodable {
     // These are all optionals so the level designer can decide whether they should be generated.
     // These specify how many to place.
     let monsters: Int?
+    let monsterBlobs: Int?
     let healingPotions: Int?
     let fireBlasts: Int?
     let pushWalls: Int?
