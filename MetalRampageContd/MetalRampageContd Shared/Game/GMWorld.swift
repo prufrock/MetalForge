@@ -391,8 +391,8 @@ extension GMWorld {
     var sprites: [GMBillboard] {
         // append billboards here to draw more sprites
 //        monsters.map { $0.billboard(for: playerRay)} +
-             doors.map { $0.billboard }
-            + pushWalls.flatMap { $0.billboards }
+//             doors.map { $0.billboard } +
+             pushWalls.flatMap { $0.billboards }
             + pickups.map { $0.billboard(for: playerRay) }
     }
 
@@ -400,6 +400,7 @@ extension GMWorld {
     var monsterSprites: [GMBillboard] {
         // append billboards here to draw more sprites
         monsters.map { $0.billboard(for: playerRay)}
+            + doors.map { $0.billboard }
     }
 
     // The ray is used to make the billboard orthogonal to the player(or any ray)

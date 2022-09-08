@@ -81,8 +81,6 @@ struct RNDRDrawIndexedSprites: RNDRDrawWorldPhase {
 
         encoder.setFragmentBuffer(vertexBuffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        encoder.setFragmentTexture(renderer.door[.door1]!, index: 0)
-        encoder.setFragmentTexture(renderer.door[.door2]!, index: 1)
         encoder.setFragmentTexture(renderer.wallTexture!, index: 2)
         encoder.setFragmentTexture(renderer.slimeWallTexture!, index: 3)
         encoder.setFragmentTexture(renderer.healingPotionTexture!, index: 4)

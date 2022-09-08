@@ -36,6 +36,20 @@ enum GMDoorState {
 }
 
 extension GMDoor {
+    private var textureId: UInt32 {
+        var textureId: UInt32
+        switch texture {
+        case .door1:
+            textureId = 0
+        case .door2:
+            textureId = 1
+        default:
+            textureId = 0
+        }
+        return textureId
+    }
+
+
     var rect: GMRect {
         // open the door along the axis by the offset for collision handling
         let position = self.position + direction * (offset - 0.5)
@@ -66,7 +80,9 @@ extension GMDoor {
             direction: direction,
             length: 1,
             position: isVertical ? Float2(position.x, position.y + offset) : Float2(position.x + offset, position.y),
-            texture: texture
+            textureType: .door,
+            textureId: textureId,
+            textureVariant: .none
         )
     }
 

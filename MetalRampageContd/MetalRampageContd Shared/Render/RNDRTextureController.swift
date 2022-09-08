@@ -36,6 +36,17 @@ struct RNDRMonsterComposer: RNDRComposedTexture {
     }
 }
 
+struct RNDRDoorComposer: RNDRComposedTexture {
+    func compose(variant: GMTextureVariant) -> RNDRTextureDescriptor {
+        let spriteSheet = SpriteSheet(textureWidth: 32, textureHeight: 16, spriteWidth: 16, spriteHeight: 16)
+
+        switch variant {
+        default:
+            return RNDRTextureDescriptor(file: .doorSpriteSheet, dimensions: spriteSheet)
+        }
+    }
+}
+
 /**
  Describes a texture.
  */

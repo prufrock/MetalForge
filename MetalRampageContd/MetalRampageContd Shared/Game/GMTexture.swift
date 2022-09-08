@@ -17,6 +17,7 @@ enum GMTexture: String, CaseIterable, Decodable {
     case monsterScratch5, monsterScratch6, monsterScratch7, monsterScratch8
     case monsterHurt, monsterDeath1, monsterDeath2, monsterDead
     case door1, door2
+    case doorSpriteSheet
     case doorJamb1, doorJamb2
     case switch1, switch2, switch3, switch4
     case healingPotion
@@ -39,6 +40,7 @@ enum GMTextureType {
     case none
     case monster
     case potion
+    case door
 }
 
 /**

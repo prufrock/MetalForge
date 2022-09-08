@@ -46,7 +46,8 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
 
         encoder.setRenderPipelineState(pipelineCatalog.spriteSheetPipeline)
         encoder.setDepthStencilState(renderer.depthStencilState)
-        encoder.setCullMode(.back)
+        // need to see the back and the front of a door and other objects that aren't always facing the player.
+        encoder.setCullMode(.none)
 
         encoder.setVertexBuffer(buffer, offset: 0, index: VertexAttribute.position.rawValue)
         encoder.setVertexBuffer(coordsBuffer, offset: 0, index: VertexAttribute.uvcoord.rawValue)
@@ -58,12 +59,7 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
 
         // select the texture
-        switch renderable.textureType {
-        case .monster:
-            encoder.setFragmentTexture(renderer.spriteSheets[textureComposition.file]!, index: 0)
-        default:
-            encoder.setFragmentTexture(renderer.spriteSheets[.healingPotion]!, index: 0)
-        }
+     	encoder.setFragmentTexture(renderer.spriteSheets[textureComposition.file]!, index: 0)
 
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: model.allVertices().count)
     }

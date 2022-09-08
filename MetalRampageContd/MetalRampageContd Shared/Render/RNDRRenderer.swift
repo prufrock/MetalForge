@@ -96,7 +96,7 @@ class RNDRRenderer: NSObject {
         drawAnimatedSpriteSheet = RNDRDrawAnimatedSpriteSheet(
             renderer: self,
             pipelineCatalog: pipelineCatalog,
-            textureController: RNDRTextureController(textures: [.monster: RNDRMonsterComposer()])
+            textureController: RNDRTextureController(textures: [.monster: RNDRMonsterComposer(), .door: RNDRDoorComposer()])
         )
         drawReferenceMarkers = RNDRDrawReferenceMarkers(renderer: self, pipelineCatalog: pipelineCatalog)
         drawMap = RNDRDrawMap(renderer: self, pipelineCatalog: pipelineCatalog)
@@ -114,10 +114,9 @@ class RNDRRenderer: NSObject {
         wallTexture = loadTexture(name: "Wall")!
         spriteSheets[.monsterSpriteSheet] = loadTexture(name: "MonsterSpriteSheet")!
         spriteSheets[.monsterBlobSpriteSheet] = loadTexture(name: "MonsterBlobSpriteSheet")!
+        spriteSheets[.doorSpriteSheet] = loadTexture(name: "DoorSpriteSheet")!
         wand[.wandSpriteSheet] = loadTexture(name: "WandSpriteSheet")!
         wand[.wandIcon] = loadTexture(name: "WandIcon")!
-        door[.door1] = loadTexture(name: "Door1")!
-        door[.door2] = loadTexture(name: "Door2")!
         doorJamb[.doorJamb1] = loadTexture(name: "DoorJamb1")!
         doorJamb[.doorJamb2] = loadTexture(name: "DoorJamb2")!
         wallSwitch[.switch1] = loadTexture(name: "Switch1")!

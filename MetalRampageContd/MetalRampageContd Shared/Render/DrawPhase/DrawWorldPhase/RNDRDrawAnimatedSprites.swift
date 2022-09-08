@@ -125,8 +125,6 @@ struct RNDRDrawAnimatedSprites: RNDRDrawWorldPhase {
         encoder.setFragmentTexture(renderer.spriteSheets[.monsterDeath1]!, index: 12)
         encoder.setFragmentTexture(renderer.spriteSheets[.monsterDeath2]!, index: 13)
         encoder.setFragmentTexture(renderer.spriteSheets[.monsterDead]!, index: 14)
-        encoder.setFragmentTexture(renderer.door[.door1]!, index: 15)
-        encoder.setFragmentTexture(renderer.door[.door2]!, index: 16)
         encoder.setFragmentTexture(renderer.wallTexture!, index: 17)
         encoder.setFragmentTexture(renderer.slimeWallTexture!, index: 18)
         encoder.setFragmentTexture(renderer.healingPotionTexture!, index: 19)
