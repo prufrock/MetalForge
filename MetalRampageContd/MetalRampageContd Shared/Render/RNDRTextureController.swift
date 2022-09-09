@@ -21,7 +21,8 @@ protocol RNDRComposedTexture {
 }
 
 /**
- Knows the properties of a GMMonster
+ It seems like there should be a way to do this with a more generic Composer. I just need a better way to match the
+ variant to the name of the texture.
  */
 struct RNDRMonsterComposer: RNDRComposedTexture {
     func compose(variant: GMTextureVariant) -> RNDRTextureDescriptor {
@@ -43,6 +44,17 @@ struct RNDRDoorComposer: RNDRComposedTexture {
         switch variant {
         default:
             return RNDRTextureDescriptor(file: .doorSpriteSheet, dimensions: spriteSheet)
+        }
+    }
+}
+
+struct RNDRWallComposer: RNDRComposedTexture {
+    func compose(variant: GMTextureVariant) -> RNDRTextureDescriptor {
+        let spriteSheet = SpriteSheet(textureWidth: 48, textureHeight: 16, spriteWidth: 16, spriteHeight: 16)
+
+        switch variant {
+        default:
+            return RNDRTextureDescriptor(file: .wallSpriteSheet, dimensions: spriteSheet)
         }
     }
 }

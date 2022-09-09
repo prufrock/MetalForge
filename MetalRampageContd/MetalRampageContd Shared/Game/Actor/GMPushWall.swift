@@ -85,10 +85,23 @@ extension GMPushWall {
         let textures = tile.textures
         // The push wall has 4 walls so it had 4 billboards placed into position
         return [
-            GMBillboard(start: topLeft, direction: Float2(x: 0, y: 1), length: 1, position: Float2(position.x + 0.5, position.y), texture: textures[0]),
-            GMBillboard(start: topRight, direction: Float2(x: -1, y: 0), length: 1, position: Float2(position.x, position.y - 0.5), texture: textures[1]),
-            GMBillboard(start: bottomRight, direction: Float2(x: 0, y: -1), length: 1, position: Float2(position.x - 0.5, position.y), texture: textures[0]),
-            GMBillboard(start: bottomLeft, direction: Float2(x: 1, y: 0), length: 1, position: Float2(position.x, position.y + 0.5), texture: textures[1]),
+            GMBillboard(start: topLeft, direction: Float2(x: 0, y: 1), length: 1, position: Float2(position.x + 0.5, position.y), textureType: .wall, textureId: textureId(for: textures[0]), textureVariant: .none),
+            GMBillboard(start: topRight, direction: Float2(x: -1, y: 0), length: 1, position: Float2(position.x, position.y - 0.5), textureType: .wall, textureId: textureId(for: textures[1]), textureVariant: .none),
+            GMBillboard(start: bottomRight, direction: Float2(x: 0, y: -1), length: 1, position: Float2(position.x - 0.5, position.y), textureType: .wall, textureId: textureId(for: textures[0]), textureVariant: .none),
+            GMBillboard(start: bottomLeft, direction: Float2(x: 1, y: 0), length: 1, position: Float2(position.x, position.y + 0.5), textureType: .wall, textureId: textureId(for: textures[1]), textureVariant: .none),
         ]
+    }
+
+    private func textureId(for texture: GMTexture) -> UInt32 {
+        switch texture {
+        case .wall:
+            return 0
+        case .crackWall, .crackWall2:
+            return 1
+        case .slimeWall, .slimeWall2:
+            return 2
+        default:
+            return 0
+        }
     }
 }
