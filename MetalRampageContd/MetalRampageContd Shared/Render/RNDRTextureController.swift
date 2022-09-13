@@ -59,6 +59,17 @@ struct RNDRWallComposer: RNDRComposedTexture {
     }
 }
 
+struct RNDRPickupComposer: RNDRComposedTexture {
+    func compose(variant: GMTextureVariant) -> RNDRTextureDescriptor {
+        let spriteSheet = SpriteSheet(textureWidth: 32, textureHeight: 16, spriteWidth: 16, spriteHeight: 16)
+
+        switch variant {
+        default:
+            return RNDRTextureDescriptor(file: .pickUpSpriteSheet, dimensions: spriteSheet)
+        }
+    }
+}
+
 /**
  Describes a texture.
  */

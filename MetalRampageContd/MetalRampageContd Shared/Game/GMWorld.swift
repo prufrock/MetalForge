@@ -388,17 +388,13 @@ extension GMWorld {
         player.direction.orthogonal
     }
 
+    // all of the game elements that need to be drawn on billboards
     var sprites: [GMBillboard] {
-        // append billboards here to draw more sprites
-            pickups.map { $0.billboard(for: playerRay) }
-    }
-
-    // TODO make an attribute of GMBillboard that makes it possible to determine the texture to use
-    var monsterSprites: [GMBillboard] {
         // append billboards here to draw more sprites
         monsters.map { $0.billboard(for: playerRay)} +
         pushWalls.flatMap { $0.billboards } +
-        doors.map { $0.billboard }
+        doors.map { $0.billboard } +
+        pickups.map { $0.billboard(for: playerRay) }
     }
 
     // The ray is used to make the billboard orthogonal to the player(or any ray)

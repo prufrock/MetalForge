@@ -99,7 +99,8 @@ class RNDRRenderer: NSObject {
             textureController: RNDRTextureController(textures: [
                 .monster: RNDRMonsterComposer(),
                 .door: RNDRDoorComposer(),
-                .wall: RNDRWallComposer()
+                .wall: RNDRWallComposer(),
+                .pickup: RNDRPickupComposer()
             ])
         )
         drawReferenceMarkers = RNDRDrawReferenceMarkers(renderer: self, pipelineCatalog: pipelineCatalog)
@@ -120,6 +121,7 @@ class RNDRRenderer: NSObject {
         spriteSheets[.monsterBlobSpriteSheet] = loadTexture(name: "MonsterBlobSpriteSheet")!
         spriteSheets[.doorSpriteSheet] = loadTexture(name: "DoorSpriteSheet")!
         spriteSheets[.wallSpriteSheet] = loadTexture(name: "WallSpriteSheet")!
+        spriteSheets[.pickUpSpriteSheet] = loadTexture(name: "PickupSpriteSheet")!
         wand[.wandSpriteSheet] = loadTexture(name: "WandSpriteSheet")!
         wand[.wandIcon] = loadTexture(name: "WandIcon")!
         doorJamb[.doorJamb1] = loadTexture(name: "DoorJamb1")!
@@ -202,7 +204,6 @@ class RNDRRenderer: NSObject {
                 drawIndexedGameWorld!.draw(world: game.world, encoder: encoder, camera: playerCamera)
             }
 
-            drawIndexedSprites!.draw(world: game.world, encoder: encoder, camera: playerCamera)
             drawAnimatedSpriteSheet!.draw(world: game.world, encoder: encoder, camera: playerCamera)
 
             if game.world.showMap {

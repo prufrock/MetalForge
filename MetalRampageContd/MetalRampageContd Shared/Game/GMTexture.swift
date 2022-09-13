@@ -31,6 +31,7 @@ enum GMTexture: String, CaseIterable, Decodable {
     case font
     case titleLogo
     case wallSpriteSheet
+    case pickUpSpriteSheet
     case none
 }
 
@@ -40,7 +41,7 @@ enum GMTexture: String, CaseIterable, Decodable {
 enum GMTextureType {
     case none
     case monster
-    case potion
+    case pickup
     case door
     case wall
 }

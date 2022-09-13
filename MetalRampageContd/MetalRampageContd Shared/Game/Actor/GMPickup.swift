@@ -29,6 +29,16 @@ extension GMPickup {
         }
     }
 
+    private var textureId: UInt32 {
+        var textureId: UInt32
+        switch type {
+        case .healingPotion:
+            return 0
+        case .fireBlast:
+            return 1
+        }
+    }
+
     func billboard(for ray: GMRay) -> GMBillboard {
         // the billboard should be orthogonal to the ray
         // the ray comes from the player in the case
@@ -39,7 +49,9 @@ extension GMPickup {
             direction: plane,
             length: 1,
             position: position,
-            texture: texture
+            textureType: .pickup,
+            textureId: textureId,
+            textureVariant: .none
         )
     }
 }

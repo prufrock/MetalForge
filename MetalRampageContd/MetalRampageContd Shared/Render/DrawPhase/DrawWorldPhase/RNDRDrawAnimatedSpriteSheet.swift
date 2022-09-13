@@ -25,7 +25,7 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
     func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         let model = renderer.model[.unitSquare]!
 
-        world.monsterSprites.forEach { billboard in
+        world.sprites.forEach { billboard in
             // TODO Find a way to not have to pass the model twice.
             render(billboard.toRNDRObject(with: model), to: model, from: world, with: camera, using: encoder)
         }
