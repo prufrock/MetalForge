@@ -92,7 +92,6 @@ class RNDRRenderer: NSObject {
 
         drawWeapon = RNDRDrawWeapon(renderer: self, pipelineCatalog: pipelineCatalog)
         drawIndexedGameWorld = RNDRDrawIndexedGameWorld(renderer: self, pipelineCatalog: pipelineCatalog)
-        drawIndexedSprites = RNDRDrawIndexedSprites(renderer: self, pipelineCatalog: pipelineCatalog)
         drawAnimatedSpriteSheet = RNDRDrawAnimatedSpriteSheet(
             renderer: self,
             pipelineCatalog: pipelineCatalog,
