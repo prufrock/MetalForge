@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5AF0E0217779E3A086889A02 /* GMBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E49438A9DC97C76BDBE8 /* GMBillboard.swift */; };
 		5AF0E02CE88AD0F5E60959B6 /* GMThing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2D9A9A5B2BE7DEC7F1F /* GMThing.swift */; };
-		5AF0E0318F611A2475188D43 /* RNDRDrawAnimatedSprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E9791B8FE22246224AB9 /* RNDRDrawAnimatedSprites.swift */; };
 		5AF0E0353BD9E44A4BE02F60 /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF782213E40C976BFBE4 /* GMWorld.swift */; };
 		5AF0E06DA5C8D75643B941E4 /* GMSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E83588F2A687F9A131EE /* GMSwitch.swift */; };
 		5AF0E07BEF80A7133CF26B51 /* RNDRDrawReferenceMarkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */; };
@@ -23,7 +22,6 @@
 		5AF0E128B07511205C72A814 /* RNDRDrawIndexedGameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */; };
 		5AF0E13B01985BA60B5E1C92 /* RNDRDrawIndexedSprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EE160ECBBD8B6D9C4C72 /* RNDRDrawIndexedSprites.swift */; };
 		5AF0E1447AC1CE698AC466FD /* RNDRDrawHudElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EC50F89195529257812E /* RNDRDrawHudElements.swift */; };
-		5AF0E1545E21042DBE8EEB8C /* RNDRDrawAnimatedSprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E9791B8FE22246224AB9 /* RNDRDrawAnimatedSprites.swift */; };
 		5AF0E168EB1767CFC3B8B6A7 /* GMFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EDC85952FF4F4F77290C /* GMFont.swift */; };
 		5AF0E18FCF76DE01286C230B /* GMInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EC7AF7CB0C9A773D8477 /* GMInput.swift */; };
 		5AF0E1B254ACF1BD1A63D86F /* RNDRTileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E8AB9FB523D701CD129B /* RNDRTileImage.swift */; };
@@ -49,7 +47,6 @@
 		5AF0E40B80C0A2592DFF14AB /* GMHud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E52C6326A8E14BD02CA8 /* GMHud.swift */; };
 		5AF0E414A7C1EF18168CC778 /* GMColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E3FAA85F4D55EB5E6F23 /* GMColor.swift */; };
 		5AF0E44E49536522A67BD021 /* GMDoor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E8C41455BE58892DB714 /* GMDoor.swift */; };
-		5AF0E45895253AF4687D7667 /* RNDRDrawAnimatedSprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E9791B8FE22246224AB9 /* RNDRDrawAnimatedSprites.swift */; };
 		5AF0E4C4D54FB9DE54484CB0 /* RNDRMetalTileBuffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EA22781FFE45270CE7AC /* RNDRMetalTileBuffers.swift */; };
 		5AF0E4EC0CF19CC00DBBE1D9 /* GMMapGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E14547EB80AC92D43521 /* GMMapGenerator.swift */; };
 		5AF0E4F511DCECFFC79C4C62 /* RNDRDrawTitleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E628B9AD3DF2990D5D83 /* RNDRDrawTitleScreen.swift */; };
@@ -293,7 +290,6 @@
 		5AF0E8C41455BE58892DB714 /* GMDoor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMDoor.swift; sourceTree = "<group>"; };
 		5AF0E90ED039A619E07698D9 /* GMRng.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMRng.swift; sourceTree = "<group>"; };
 		5AF0E91EE8B37B30DECC3DE6 /* GMTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMTile.swift; sourceTree = "<group>"; };
-		5AF0E9791B8FE22246224AB9 /* RNDRDrawAnimatedSprites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawAnimatedSprites.swift; sourceTree = "<group>"; };
 		5AF0EA22781FFE45270CE7AC /* RNDRMetalTileBuffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRMetalTileBuffers.swift; sourceTree = "<group>"; };
 		5AF0EA6767DC3EEE01EDD00B /* RNDRTextureController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRTextureController.swift; sourceTree = "<group>"; };
 		5AF0EB443BB9812F5F6ACEEB /* GMAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMAnimation.swift; sourceTree = "<group>"; };
@@ -461,7 +457,6 @@
 				5AF0EF536B1416825E7FC9ED /* RNDRDrawMap.swift */,
 				5AF0E628B9AD3DF2990D5D83 /* RNDRDrawTitleScreen.swift */,
 				5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */,
-				5AF0E9791B8FE22246224AB9 /* RNDRDrawAnimatedSprites.swift */,
 				5AF0E56C49934BCD3C731DDF /* RNDRDrawAnimatedSpriteSheet.swift */,
 			);
 			path = DrawWorldPhase;
@@ -868,7 +863,6 @@
 				5AF0E18FCF76DE01286C230B /* GMInput.swift in Sources */,
 				5AF0E8545299E98985007FE9 /* GMColor.swift in Sources */,
 				5AF0EB9F660D08A0A325FB61 /* RNDRDrawWeapon.swift in Sources */,
-				5AF0E45895253AF4687D7667 /* RNDRDrawAnimatedSprites.swift in Sources */,
 				5AF0E5DF22C3B0C7B0EE00B8 /* RNDRTextureController.swift in Sources */,
 				5AF0E095036FCE7A27FBA40F /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
 			);
@@ -933,7 +927,6 @@
 				5AF0ED5572E3766C2948BC8E /* GMInput.swift in Sources */,
 				5AF0E414A7C1EF18168CC778 /* GMColor.swift in Sources */,
 				5AF0EA23822977128E03DA16 /* RNDRDrawWeapon.swift in Sources */,
-				5AF0E1545E21042DBE8EEB8C /* RNDRDrawAnimatedSprites.swift in Sources */,
 				5AF0E8073AD0B305CC3ABFDA /* RNDRTextureController.swift in Sources */,
 				5AF0E65D370F59CC9226A188 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
 			);
@@ -998,7 +991,6 @@
 				5AF0E2D3C9B673801C7837F6 /* GMInput.swift in Sources */,
 				5AF0ECD0F07B30C13F1A6F17 /* GMColor.swift in Sources */,
 				5AF0E8AB28714D7F34741948 /* RNDRDrawWeapon.swift in Sources */,
-				5AF0E0318F611A2475188D43 /* RNDRDrawAnimatedSprites.swift in Sources */,
 				5AF0E34AE203BC5F97C1B3B1 /* RNDRTextureController.swift in Sources */,
 				5AF0E2551CEDB91625FB6399 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
 			);
