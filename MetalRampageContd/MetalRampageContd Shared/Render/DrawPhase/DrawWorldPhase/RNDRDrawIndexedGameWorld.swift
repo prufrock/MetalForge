@@ -27,7 +27,54 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
             let indexBuffer = buffers.indexBuffer
             let coordsBuffer = buffers.uvBuffer
             let indexedObjTransform = buffers.indexedTransformations
-            let indexedTextureId: [UInt] = buffers.indexedTransformations.map { _ in 0 }
+            // With the way I am rendering only 1 type of tile at a time it's a little silly to pass duplicate
+            // texture ids. I am going to keep for now though because:
+            // 1. It sets things up to later support rendering a smaller set of tiles all with different textures.
+            // 2. It makes the path a little clearer for how to get to animated wall textures.
+            // 3. It's a good example of how to use indexed rendering with sprite sheets.
+            let indexedTextureId: [UInt32] = buffers.indexedTransformations.map { _ in
+                switch(buffers.tile) {
+                case .wall, .elevatorBackWall, .elevatorSideWall:
+                    return 0
+                case .crackWall:
+                    return 1
+                case .slimeWall:
+                    return 2
+                case .floor, .elevatorFloor:
+                    return 3
+                case .crackFloor:
+                    return 4
+                case .ceiling:
+                    return 5
+                case .doorJamb1:
+                    return 6
+                case .doorJamb2:
+                    return 7
+                case .wallSwitch:
+                    // wall switch can animate so check to see if the texture has changed
+                    //TODO this is a little bit ugly
+                    var switchTextureId: UInt32 = 0
+                    buffers.positions.forEach { position in
+                        if let s = world.switch(at: Int(position.x), Int(position.y)) {
+                            switch(s.animation.texture) {
+                            case .switch1:
+                                switchTextureId = 8
+                            case .switch2:
+                                switchTextureId = 9
+                            case .switch3:
+                                switchTextureId = 10
+                            case .switch4:
+                                switchTextureId = 11
+                            default:
+                                switchTextureId = 8
+                            }
+                        }
+                    }
+                    return switchTextureId
+                default:
+                    return 0
+                }
+            }
 
             var pixelSize = 1
 
@@ -35,34 +82,7 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
 
             var texture: MTLTexture = renderer.colorMapTexture
 
-            switch(buffers.tile) {
-            case .wall, .elevatorBackWall, .elevatorSideWall:
-                texture = renderer.wallTexture
-            case .crackWall:
-                texture = renderer.crackedWallTexture
-            case .slimeWall:
-                texture = renderer.slimeWallTexture
-            case .floor, .elevatorFloor:
-                texture = renderer.floor
-            case .crackFloor:
-                texture = renderer.crackedFloor
-            case .ceiling:
-                texture = renderer.ceiling
-            case .doorJamb1:
-                texture = renderer.doorJamb[.doorJamb1]!!
-            case .doorJamb2:
-                texture = renderer.doorJamb[.doorJamb2]!!
-            case .wallSwitch:
-                // wall switch can animate so check to see if the texture has changed
-                //TODO this is a little bit ugly
-                buffers.positions.forEach { position in
-                    if let s = world.switch(at: Int(position.x), Int(position.y)) {
-                        texture = renderer.wallSwitch[s.animation.texture]!!
-                    }
-                }
-            default:
-                texture = renderer.colorMapTexture
-            }
+            texture = renderer.spriteSheets[.wallSpriteSheet]!!
 
             var fragmentColor = Float3(color)
 
@@ -75,7 +95,7 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 2)
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
             encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
-            encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt>.stride * indexedTextureId.count, index: 5)
+            encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt32>.stride * indexedTextureId.count, index: 5)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)

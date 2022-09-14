@@ -50,7 +50,7 @@ struct RNDRDoorComposer: RNDRComposedTexture {
 
 struct RNDRWallComposer: RNDRComposedTexture {
     func compose(variant: GMTextureVariant) -> RNDRTextureDescriptor {
-        let spriteSheet = SpriteSheet(textureWidth: 48, textureHeight: 16, spriteWidth: 16, spriteHeight: 16)
+        let spriteSheet = SpriteSheet(textureWidth: 128, textureHeight: 32, spriteWidth: 16, spriteHeight: 16)
 
         switch variant {
         default:

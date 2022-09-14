@@ -61,11 +61,31 @@ vertex VertexOut vertex_indexed(Vertex in [[stage_in]],
                              uint vid [[vertex_id]],
                              uint iid [[instance_id]]
                              ) {
+
+    float txX = in.texcoord.x;
+    float txY = in.texcoord.y;
+    //TODO move to a function
+    int spritesPerRow = int(128 / 16); // textureWidth / spriteWidth
+    int spriteX = textureId[iid] % spritesPerRow;
+    int spriteY = textureId[iid] / spritesPerRow;
+    float txOffsetX = 16.0 / 128.0; // spriteWidth / textureWidth
+    float txOffsetY = 16.0 / 32.0; //spriteHeight / textureHeight
+    if (txX == 1.0) {
+        txX = txOffsetX + txOffsetX * spriteX;
+    } else if (txX == 0.0) {
+        txX = txOffsetX * spriteX;
+    }
+    if (txY == 1.0) {
+        txY = txOffsetY + txOffsetY * spriteY;
+    } else if (txY == 0.0) {
+        txY = txOffsetY * spriteY;
+    }
+
     VertexOut vertex_out {
         .position = matrix * indexedModelMatrix[iid] * float4(in.position, 1),
-        .texcoord = float2(in.texcoord.x, in.texcoord.y),
+        .texcoord = float2(txX, txY),
         .point_size = point_size,
-        .textureId = textureId[iid]
+        .textureId = 0
     };
 
     return vertex_out;
@@ -224,6 +244,7 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
         return color;
     }
 
+    //return float4(in.texcoord.x, in.texcoord.y, 0, 1);
     return float4(colorSample);
 }
 
