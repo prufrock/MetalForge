@@ -35,6 +35,8 @@ struct VertexOutOnlyPositionAndUv {
     float2 uv; // texture coordinates
 };
 
+float2 select_sprite(float2 uv, SpriteSheet spriteSheet, uint spriteIndex);
+
 vertex VertexOut vertex_main(constant float3 *vertices [[buffer(0)]],
                              constant matrix_float4x4 &matrix [[buffer(1)]],
                              constant float &point_size [[buffer(2)]],
@@ -58,32 +60,13 @@ vertex VertexOut vertex_indexed(Vertex in [[stage_in]],
                              constant float &point_size [[buffer(3)]],
                              constant matrix_float4x4 *indexedModelMatrix [[buffer(4)]],
                              constant uint *textureId [[buffer(5)]],
+                             constant SpriteSheet &spriteSheet [[buffer(6)]],
                              uint vid [[vertex_id]],
                              uint iid [[instance_id]]
                              ) {
-
-    float txX = in.texcoord.x;
-    float txY = in.texcoord.y;
-    //TODO move to a function
-    int spritesPerRow = int(128 / 16); // textureWidth / spriteWidth
-    int spriteX = textureId[iid] % spritesPerRow;
-    int spriteY = textureId[iid] / spritesPerRow;
-    float txOffsetX = 16.0 / 128.0; // spriteWidth / textureWidth
-    float txOffsetY = 16.0 / 32.0; //spriteHeight / textureHeight
-    if (txX == 1.0) {
-        txX = txOffsetX + txOffsetX * spriteX;
-    } else if (txX == 0.0) {
-        txX = txOffsetX * spriteX;
-    }
-    if (txY == 1.0) {
-        txY = txOffsetY + txOffsetY * spriteY;
-    } else if (txY == 0.0) {
-        txY = txOffsetY * spriteY;
-    }
-
     VertexOut vertex_out {
         .position = matrix * indexedModelMatrix[iid] * float4(in.position, 1),
-        .texcoord = float2(txX, txY),
+        .texcoord = select_sprite(in.texcoord, spriteSheet, textureId[iid]),
         .point_size = point_size,
         .textureId = 0
     };
@@ -103,32 +86,16 @@ vertex VertexOut vertex_indexed_sprite_sheet(Vertex in [[stage_in]],
                              uint iid [[instance_id]]
                              ) {
 
-    float txX = in.texcoord.x;
-    float txY = in.texcoord.y;
+    float2 uv = in.texcoord;
     // get it working with the font texture
     if (textureId[iid] == 3) {
         uint selectedSpriteIndex = indexedFontSpriteIndex[iid];
-        // TODO move this into a function
-        int spritesPerRow = int(spriteSheet.textureWidth / spriteSheet.spriteWidth);
-        int spriteX = selectedSpriteIndex % spritesPerRow;
-        int spriteY = selectedSpriteIndex / spritesPerRow;
-        float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
-        float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
-        if (txX == 1.0) {
-            txX = txOffsetX + txOffsetX * spriteX;
-        } else if (txX == 0.0) {
-            txX = txOffsetX * spriteX;
-        }
-        if (txY == 1.0) {
-            txY = txOffsetY + txOffsetY * spriteY;
-        } else if (txY == 0.0) {
-            txY = txOffsetY * spriteY;
-        }
+        uv = select_sprite(in.texcoord, spriteSheet, selectedSpriteIndex);
     }
 
     VertexOut vertex_out {
         .position = matrix * indexedModelMatrix[iid] * float4(in.position, 1),
-        .texcoord = float2(txX, txY),
+        .texcoord = uv,
         .point_size = point_size,
         .textureId = textureId[iid]
     };
@@ -262,28 +229,9 @@ vertex VertexOutOnlyPositionAndUv vertex_only_transform(Vertex in [[stage_in]],
                                                         constant uint &textureId [[buffer(4)]],
                                                         constant SpriteSheet &spriteSheet [[buffer(5)]]
                                                         ) {
-    float txX = in.texcoord.x;
-    float txY = in.texcoord.y;
-    // TODO move this into a function
-    int spritesPerRow = int(spriteSheet.textureWidth / spriteSheet.spriteWidth);
-    int spriteX = textureId % spritesPerRow;
-    int spriteY = textureId / spritesPerRow;
-    float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
-    float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
-    if (txX == 1.0) {
-        txX = txOffsetX + txOffsetX * spriteX;
-    } else if (txX == 0.0) {
-        txX = txOffsetX * spriteX;
-    }
-    if (txY == 1.0) {
-        txY = txOffsetY + txOffsetY * spriteY;
-    } else if (txY == 0.0) {
-        txY = txOffsetY * spriteY;
-    }
-
     VertexOutOnlyPositionAndUv vertex_out {
         .position = finalTransform * float4(in.position, 1),
-        .uv = float2(txX, txY)
+        .uv = select_sprite(in.texcoord, spriteSheet, textureId)
     };
 
     return vertex_out;
@@ -324,4 +272,29 @@ fragment float4 fragment_sprite_sheet(
 
 fragment float4 fragment_effect(constant float4 &color [[buffer(0)]]) {
     return float4(color.x, color.y, color.z, color.w);
+}
+
+/*
+ Adjusts the uv coordinates to show a region of a sprite sheet based on its dimensions and the index.
+ */
+float2 select_sprite(float2 uv, SpriteSheet spriteSheet, uint spriteIndex) {
+    float txX = uv.x;
+    float txY = uv.y;
+    int spritesPerRow = int(spriteSheet.textureWidth / spriteSheet.spriteWidth);
+    int spriteX = spriteIndex % spritesPerRow;
+    int spriteY = spriteIndex / spritesPerRow;
+    float txOffsetX = spriteSheet.spriteWidth / spriteSheet.textureWidth;
+    float txOffsetY = spriteSheet.spriteHeight / spriteSheet.textureHeight;
+    if (txX == 1.0) {
+        txX = txOffsetX + txOffsetX * spriteX;
+    } else if (txX == 0.0) {
+        txX = txOffsetX * spriteX;
+    }
+    if (txY == 1.0) {
+        txY = txOffsetY + txOffsetY * spriteY;
+    } else if (txY == 0.0) {
+        txY = txOffsetY * spriteY;
+    }
+
+    return float2(txX, txY);
 }

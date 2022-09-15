@@ -52,8 +52,6 @@ struct RNDRDrawWeapon: RNDRDrawWorldPhase {
             textureId = 0
         }
 
-        var pixelSize = 1
-
         var finalTransform = camera
             * Float4x4.translate(x: 0.0, y: 0.0, z: 0.1)
             * Float4x4.scale(x: 2.0, y: 2.0, z: 0.0)

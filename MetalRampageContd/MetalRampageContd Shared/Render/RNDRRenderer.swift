@@ -91,7 +91,12 @@ class RNDRRenderer: NSObject {
         super.init()
 
         drawWeapon = RNDRDrawWeapon(renderer: self, pipelineCatalog: pipelineCatalog)
-        drawIndexedGameWorld = RNDRDrawIndexedGameWorld(renderer: self, pipelineCatalog: pipelineCatalog)
+        drawIndexedGameWorld = RNDRDrawIndexedGameWorld(
+            renderer: self, pipelineCatalog: pipelineCatalog,
+            textureController: RNDRTextureController(textures: [
+                .wall: RNDRWallComposer(),
+            ])
+        )
         drawAnimatedSpriteSheet = RNDRDrawAnimatedSpriteSheet(
             renderer: self,
             pipelineCatalog: pipelineCatalog,

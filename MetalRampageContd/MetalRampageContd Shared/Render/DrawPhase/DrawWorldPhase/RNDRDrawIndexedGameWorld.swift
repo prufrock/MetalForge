@@ -4,14 +4,19 @@
 
 import Metal
 
+/**
+ Draws the walls and floors and ceilings of the game world.
+ */
 struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
 
     private let renderer: RNDRRenderer
     private let pipelineCatalog: RNDRPipelineCatalog
+    private let textureController: RNDRTextureController
 
-    init(renderer: RNDRRenderer, pipelineCatalog: RNDRPipelineCatalog) {
+    init(renderer: RNDRRenderer, pipelineCatalog: RNDRPipelineCatalog, textureController: RNDRTextureController) {
         self.renderer = renderer
         self.pipelineCatalog = pipelineCatalog
+        self.textureController = textureController
     }
 
     func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
@@ -22,7 +27,10 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
             initializeWorldTilesBuffer(world: world)
         }
 
-        renderer.worldTilesBuffers?.forEach { buffers in
+        guard let worldTilesBuffers = renderer.worldTilesBuffers else{ return }
+
+        // I had to change from forEach to for in after updating xcode. Don't quite understand why.
+        for buffers in worldTilesBuffers {
             let buffer = buffers.vertexBuffer
             let indexBuffer = buffers.indexBuffer
             let coordsBuffer = buffers.uvBuffer
@@ -80,9 +88,9 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
 
             var finalTransform = camera
 
-            var texture: MTLTexture = renderer.colorMapTexture
-
-            texture = renderer.spriteSheets[.wallSpriteSheet]!!
+            let textureComposition = textureController.textureFor(textureType: .wall, variant: .none)
+            let texture = renderer.spriteSheets[textureComposition.file] ?? renderer.colorMapTexture
+            var spriteSheet = textureComposition.dimensions
 
             var fragmentColor = Float3(color)
 
@@ -96,6 +104,7 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
             encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 3)
             encoder.setVertexBytes(indexedObjTransform, length: MemoryLayout<Float4x4>.stride * indexedObjTransform.count, index: 4)
             encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt32>.stride * indexedTextureId.count, index: 5)
+            encoder.setVertexBytes(&spriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 6)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)

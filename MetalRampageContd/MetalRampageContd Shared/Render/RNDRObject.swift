@@ -25,10 +25,10 @@ struct RNDRObject {
          color: GMColor,
          primitiveType: MTLPrimitiveType,
          position: Int2,
-         texture: GMTexture? = .none,
-         textureType: GMTextureType? = .none,
+         texture: GMTexture? = GMTexture.none,
+         textureType: GMTextureType? = GMTextureType.none,
          textureId: UInt32? = 0,
-         textureVariant: GMTextureVariant? = .none
+         textureVariant: GMTextureVariant? = GMTextureVariant.none
     ) {
         self.vertices = vertices
         self.uv = uv
