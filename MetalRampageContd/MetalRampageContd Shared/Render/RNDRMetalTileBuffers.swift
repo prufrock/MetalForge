@@ -14,4 +14,5 @@ struct RNDRMetalTileBuffers {
     let index: [UInt16]
     let indexCount: Int
     let positions: [Int2]
+    let normals: [Float3]
 }

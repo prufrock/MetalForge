@@ -30,14 +30,14 @@ struct RNDRDrawWireFrames: RNDRDrawWorldPhase {
         let color = GMColor.black
         let primitiveType = MTLPrimitiveType.triangle
 
-        if renderer.worldTilesBuffers == nil {
+        if renderer.worldTilesWireFrameBuffers == nil {
             initializeWorldTilesBuffer(world: world)
         }
 
-        guard let worldTilesBuffers = renderer.worldTilesBuffers else{ return }
+        guard let worldTilesWireFrameBuffers = renderer.worldTilesWireFrameBuffers else{ return }
 
         // I had to change from forEach to for in after updating xcode. Don't quite understand why.
-        for buffers in worldTilesBuffers {
+        for buffers in worldTilesWireFrameBuffers {
             let buffer = buffers.vertexBuffer
             let indexBuffer = buffers.indexBuffer
             let coordsBuffer = buffers.uvBuffer
@@ -123,17 +123,38 @@ struct RNDRDrawWireFrames: RNDRDrawWorldPhase {
                 indexBufferOffset: 0,
                 instanceCount: buffers.tileCount
             )
+
+            indexedObjTransform.forEach { transform in
+                let buffer = renderer.device.makeBuffer(bytes: buffers.normals, length: MemoryLayout<Float3>.stride * buffers.normals.count, options: [])
+
+                var pixelSize = 1
+
+                var finalTransform = camera * transform
+
+                encoder.setRenderPipelineState(pipelineCatalog.vertexPipeline)
+                encoder.setDepthStencilState(renderer.depthStencilState)
+                encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+                encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
+                encoder.setVertexBytes(&pixelSize, length: MemoryLayout<Float>.stride, index: 2)
+
+                var fragmentColor = Float3(.red)
+
+                encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+                encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+                encoder.drawPrimitives(type: .line, vertexStart: 0, vertexCount: buffers.normals.count)
+            }
         }
     }
 
     private func initializeWorldTilesBuffer(world: GMWorld) {
-        renderer.worldTilesBuffers = Array()
+        renderer.worldTilesWireFrameBuffers = Array()
+        //TODO this could be indexed to reduce the number of vertices.
         let index: [UInt16] = [0, 1, 2, 3, 4, 5]
 
         let model = renderer.model[.unitSquare]! // it better be there!
 
         GMTile.allCases.forEach { tile in
-            renderer.worldTiles!.filter {$0.1 == tile}.chunked(into: 64).forEach { chunk in
+            renderer.worldTiles!.filter {$0.1 == .crackWall}.chunked(into: 64).forEach { chunk in
                 // TODO should model.allVertices be model.vertices?
                 let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])!
                 let indexBuffer = renderer.device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
@@ -141,7 +162,7 @@ struct RNDRDrawWireFrames: RNDRDrawWorldPhase {
                 let indexedObjTransform = chunk.map { (rndrObject, _)-> Float4x4 in
                     rndrObject.transform
                 }
-                renderer.worldTilesBuffers?.append(
+                renderer.worldTilesWireFrameBuffers?.append(
                     RNDRMetalTileBuffers(
                         vertexBuffer: buffer,
                         indexBuffer: indexBuffer,
@@ -151,7 +172,8 @@ struct RNDRDrawWireFrames: RNDRDrawWorldPhase {
                         tileCount: chunk.count,
                         index: index,
                         indexCount: index.count,
-                        positions:  chunk.map { (rndrObject, _) -> Int2 in rndrObject.position }
+                        positions:  chunk.map { (rndrObject, _) -> Int2 in rndrObject.position },
+                        normals: model.normals
                     )
                 )
             }

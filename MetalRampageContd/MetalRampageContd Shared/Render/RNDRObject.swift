@@ -18,6 +18,7 @@ struct RNDRObject {
     let textureType: GMTextureType? // not everything has a textureType
     let textureId: UInt32? // nor does everything have a textureId
     let textureVariant: GMTextureVariant? // still not even all things have a textureVariant
+    let normals: [Float3]
 
     init(vertices: [Float3],
          uv: [Float2],
@@ -28,7 +29,8 @@ struct RNDRObject {
          texture: GMTexture? = GMTexture.none,
          textureType: GMTextureType? = GMTextureType.none,
          textureId: UInt32? = 0,
-         textureVariant: GMTextureVariant? = GMTextureVariant.none
+         textureVariant: GMTextureVariant? = GMTextureVariant.none,
+         normals: [Float3] = []
     ) {
         self.vertices = vertices
         self.uv = uv
@@ -40,6 +42,7 @@ struct RNDRObject {
         self.textureType = textureType
         self.textureId = textureId
         self.textureVariant = textureVariant
+        self.normals = normals
     }
 }
 

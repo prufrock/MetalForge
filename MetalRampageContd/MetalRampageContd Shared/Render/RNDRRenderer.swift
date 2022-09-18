@@ -38,6 +38,7 @@ class RNDRRenderer: NSObject {
     // static renderables
     private(set) var worldTiles: [(RNDRObject, GMTile)]?
     var worldTilesBuffers: [RNDRMetalTileBuffers]?
+    var worldTilesWireFrameBuffers: [RNDRMetalTileBuffers]?
 
     // draw phases
     private var drawWeapon: RNDRDrawWorldPhase?

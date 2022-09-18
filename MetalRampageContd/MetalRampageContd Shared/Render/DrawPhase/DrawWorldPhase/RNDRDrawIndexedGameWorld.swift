@@ -145,7 +145,8 @@ struct RNDRDrawIndexedGameWorld: RNDRDrawWorldPhase {
                         tileCount: chunk.count,
                         index: index,
                         indexCount: index.count,
-                        positions:  chunk.map { (rndrObject, _) -> Int2 in rndrObject.position }
+                        positions:  chunk.map { (rndrObject, _) -> Int2 in rndrObject.position },
+                        normals: model.normals
                     )
                 )
             }

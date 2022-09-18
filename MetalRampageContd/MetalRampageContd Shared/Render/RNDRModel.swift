@@ -13,6 +13,7 @@ struct RNDRModel {
     let vertices: [Float3]
     let uv: [Float2]
     let index: [UInt16]
+    let normals: [Float3]
 
     /**
      Uses the index to construct the complete list of vertices.
