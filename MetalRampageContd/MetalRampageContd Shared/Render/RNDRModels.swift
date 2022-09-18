@@ -21,18 +21,33 @@ func unitSquare() -> RNDRModel {
             Float2(1.0, 1.0),
         ],
         index: [0, 1, 2, 2, 3, 0],
+        // The z-normals are causing an internal normal due to rotation...not sure how to remove this yet.
+        // I'm going to skip them for now but I think I need to come back to them to light the ceiling and floor.
+        // I suspect I'm just going to need to make a primitive cube.
         normals: [
             Float3(-0.5, -0.5, 0.0),
-            Float3(-1.5, -1.5, 0.0),
+            Float3(-1.5, -0.5, 0.0),
+
+//            Float3(-0.5, -0.5, 0.0),
+//            Float3(-0.5, -0.5, 1.0),
+
+            Float3(-0.5, 0.5, 0.0),
+            Float3(-1.5, 0.5, 0.0),
 
 //            Float3(-0.5, 0.5, 0.0),
-//            Float3(-1.5, 1.5, 0.0),
-//
+//            Float3(-0.5, 0.5, 1.0),
+
+            Float3(0.5, 0.5, 0.0),
+            Float3(1.5, 0.5, 0.0),
+
 //            Float3(0.5, 0.5, 0.0),
-//            Float3(1.5, 1.5, 0.0),
-//
+//            Float3(0.5, 0.5, 1.0),
+
+            Float3(0.5, -0.5, 0.0),
+            Float3(1.5, -0.5, 0.0),
+
 //            Float3(0.5, -0.5, 0.0),
-//            Float3(1.5, -1.5, 0.0),
+//            Float3(0.5, -0.5, 1.0),
         ]
     )
 }
