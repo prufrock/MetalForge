@@ -31,14 +31,17 @@
 		5AF0E27F5EB24F8055FC7C74 /* RNDRDrawIndexedGameWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */; };
 		5AF0E2A37A8E51FADAD98320 /* GMAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB443BB9812F5F6ACEEB /* GMAnimation.swift */; };
 		5AF0E2D3C9B673801C7837F6 /* GMInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EC7AF7CB0C9A773D8477 /* GMInput.swift */; };
+		5AF0E2F10527EA885FA5E53B /* RNDRDrawWireFrames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E08CE40C90F449C21A96 /* RNDRDrawWireFrames.swift */; };
 		5AF0E2F916AEA7F8F48F1881 /* RNDRPipelineCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalog.swift */; };
 		5AF0E2F93C81763FD344644B /* GMTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EEE1AF0426B631D2498C /* GMTexture.swift */; };
 		5AF0E300525E24FF648E4E14 /* RNDRMetalTileBuffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EA22781FFE45270CE7AC /* RNDRMetalTileBuffers.swift */; };
 		5AF0E30F80E0BCF9A78001C1 /* RNDRPipelineCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED39BC22163ECFA6BB7F /* RNDRPipelineCatalog.swift */; };
+		5AF0E3192DAC31D31A6D990B /* RNDRDrawWireFrames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E08CE40C90F449C21A96 /* RNDRDrawWireFrames.swift */; };
 		5AF0E31E3632B70E2F34D73C /* GMDoor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E8C41455BE58892DB714 /* GMDoor.swift */; };
 		5AF0E339C3F794C0D3FC9DB6 /* GMTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E91EE8B37B30DECC3DE6 /* GMTile.swift */; };
 		5AF0E33BEB1A293321471EE6 /* GMBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E49438A9DC97C76BDBE8 /* GMBillboard.swift */; };
 		5AF0E34AE203BC5F97C1B3B1 /* RNDRTextureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EA6767DC3EEE01EDD00B /* RNDRTextureController.swift */; };
+		5AF0E34F24BA0770A513E162 /* RNDRDrawWireFrames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E08CE40C90F449C21A96 /* RNDRDrawWireFrames.swift */; };
 		5AF0E36CAFE1AFCA3AF132E8 /* RNDRDrawEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EEF4CB6F5AD0FE967D7F /* RNDRDrawEffects.swift */; };
 		5AF0E3762EFBC60BBB7D7EFF /* GMTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E91EE8B37B30DECC3DE6 /* GMTile.swift */; };
 		5AF0E39A911E2A40232622C3 /* RNDRDrawTitleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E628B9AD3DF2990D5D83 /* RNDRDrawTitleScreen.swift */; };
@@ -262,6 +265,7 @@
 
 /* Begin PBXFileReference section */
 		5AF0E072621C5D60F19E0958 /* GMEasing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMEasing.swift; sourceTree = "<group>"; };
+		5AF0E08CE40C90F449C21A96 /* RNDRDrawWireFrames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawWireFrames.swift; sourceTree = "<group>"; };
 		5AF0E094A33A46BB24A589EB /* GMRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMRect.swift; sourceTree = "<group>"; };
 		5AF0E14547EB80AC92D43521 /* GMMapGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMMapGenerator.swift; sourceTree = "<group>"; };
 		5AF0E2D9A9A5B2BE7DEC7F1F /* GMThing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMThing.swift; sourceTree = "<group>"; };
@@ -453,6 +457,7 @@
 				5AF0E628B9AD3DF2990D5D83 /* RNDRDrawTitleScreen.swift */,
 				5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */,
 				5AF0E56C49934BCD3C731DDF /* RNDRDrawAnimatedSpriteSheet.swift */,
+				5AF0E08CE40C90F449C21A96 /* RNDRDrawWireFrames.swift */,
 			);
 			path = DrawWorldPhase;
 			sourceTree = "<group>";
@@ -859,6 +864,7 @@
 				5AF0EB9F660D08A0A325FB61 /* RNDRDrawWeapon.swift in Sources */,
 				5AF0E5DF22C3B0C7B0EE00B8 /* RNDRTextureController.swift in Sources */,
 				5AF0E095036FCE7A27FBA40F /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
+				5AF0E3192DAC31D31A6D990B /* RNDRDrawWireFrames.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -922,6 +928,7 @@
 				5AF0EA23822977128E03DA16 /* RNDRDrawWeapon.swift in Sources */,
 				5AF0E8073AD0B305CC3ABFDA /* RNDRTextureController.swift in Sources */,
 				5AF0E65D370F59CC9226A188 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
+				5AF0E34F24BA0770A513E162 /* RNDRDrawWireFrames.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -985,6 +992,7 @@
 				5AF0E8AB28714D7F34741948 /* RNDRDrawWeapon.swift in Sources */,
 				5AF0E34AE203BC5F97C1B3B1 /* RNDRTextureController.swift in Sources */,
 				5AF0E2551CEDB91625FB6399 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
+				5AF0E2F10527EA885FA5E53B /* RNDRDrawWireFrames.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

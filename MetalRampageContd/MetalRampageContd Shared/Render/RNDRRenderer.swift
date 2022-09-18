@@ -50,6 +50,7 @@ class RNDRRenderer: NSObject {
     private var drawHudElements: RNDRDrawHudPhase?
     private var drawEffects: RNDRDrawEffects?
     private var drawTitleScreen: RNDRDrawTitleScreen?
+    private var drawWireFrame: RNDRDrawWireFrames?
 
     // TODO do less stuff in init
     init(_ view: MTKView, width: Int, height: Int) {
@@ -113,6 +114,12 @@ class RNDRRenderer: NSObject {
         drawHudElements = RNDRDrawHudElements(renderer: self, pipelineCatalog: pipelineCatalog)
         drawEffects = RNDRDrawEffects(renderer: self, pipelineCatalog: pipelineCatalog)
         drawTitleScreen = RNDRDrawTitleScreen(renderer: self, pipelineCatalog: pipelineCatalog)
+        drawWireFrame = RNDRDrawWireFrames(
+            renderer: self, pipelineCatalog: pipelineCatalog,
+            textureController: RNDRTextureController(textures: [
+                .wall: RNDRWallComposer(),
+            ])
+        )
 
         ceiling = loadTexture(name: "Ceiling")!
         colorMapTexture = loadTexture(name: "ColorMap")!
@@ -206,6 +213,8 @@ class RNDRRenderer: NSObject {
 
             if game.world.drawWorld {
                 drawIndexedGameWorld!.draw(world: game.world, encoder: encoder, camera: playerCamera)
+            } else {
+                drawWireFrame!.draw(world: game.world, encoder: encoder, camera: playerCamera)
             }
 
             drawAnimatedSpriteSheet!.draw(world: game.world, encoder: encoder, camera: playerCamera)
