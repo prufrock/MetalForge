@@ -35,6 +35,15 @@ struct VertexOutOnlyPositionAndUv {
     float2 uv; // texture coordinates
 };
 
+/*
+ A struct to get starting figuring out lighting.
+ */
+struct VertexOutSimpleLighting {
+    float4 position [[position]];
+    float2 uv;
+    float3 normal;
+};
+
 float2 select_sprite(float2 uv, SpriteSheet spriteSheet, uint spriteIndex);
 
 vertex VertexOut vertex_main(constant float3 *vertices [[buffer(0)]],
@@ -235,6 +244,60 @@ vertex VertexOutOnlyPositionAndUv vertex_only_transform(Vertex in [[stage_in]],
     };
 
     return vertex_out;
+}
+
+/*
+ Renders indexed vertices with lighting.
+ - Vertex in: Position of the vertex in model space.
+ - uint textureId: Used to select the texture in the sprite sheet.
+ - SpriteSheet spriteSheet: The dimensions of the sprite sheet, used to adjust the uv coordinates to select the sprite.
+ - uint vid: The id of the vertex currenly being processed, used to select the correct normal to use.
+ - uint instance_id: The id of the instance currently being processed, used to select the texureId.
+ */
+vertex VertexOutSimpleLighting vertex_indexed_lighting(Vertex in [[stage_in]],
+                                                  constant matrix_float4x4 &modelTransform [[buffer(3)]],
+                                                  constant uint *textureId [[buffer(4)]],
+                                                  constant SpriteSheet &spriteSheet [[buffer(5)]],
+                                                  constant uint *normals [[buffer(6)]],
+                                                  uint vid [[vertex_id]],
+                                                  uint iid [[instance_id]]
+                                                  ) {
+    VertexOutSimpleLighting vertex_out {
+        .position = modelTransform * float4(in.position, 1),
+        .uv = select_sprite(in.texcoord, spriteSheet, textureId[iid]),
+        .normal = normals[vid]
+    };
+
+    return vertex_out;
+}
+
+/*
+ Mixes textures with a light for basic lighting.
+ */
+fragment float4 fragment_simple_light(VertexOutSimpleLighting in [[stage_in]],
+                                      texture2d<half> texture [[ texture(0) ]],
+                                      constant float4 &color [[buffer(0)]]
+                                      ) {
+
+    // need a color sample to extract color from the texture
+    constexpr sampler colorSampler(coord::normalized, address::repeat, filter::nearest);
+
+    half4 colorSample;
+
+    // get the color for the current position
+    colorSample = texture.sample(colorSampler, in.uv);
+
+    // if alpha is below the threshold don't render this fragment
+    if (colorSample.a < 0.1) {
+        discard_fragment();
+    }
+
+    // replace white with the provided color
+    if (colorSample.r == 1.0 && colorSample.g == 1.0 && colorSample.b == 1.0) {
+        return color;
+    }
+
+    return float4(colorSample);
 }
 
 /*
