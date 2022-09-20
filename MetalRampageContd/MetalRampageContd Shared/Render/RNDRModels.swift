@@ -25,29 +25,33 @@ func unitSquare() -> RNDRModel {
         // I'm going to skip them for now but I think I need to come back to them to light the ceiling and floor.
         // I suspect I'm just going to need to make a primitive cube.
         normals: [
-            Float3(-0.5, -0.5, 0.0),
-            Float3(-1.5, -0.5, 0.0),
+//            Float3(-0.5, -0.5, 0.0),
+            Float3(-1.5, -0.5, 0.0), // 0
 
 //            Float3(-0.5, -0.5, 0.0),
 //            Float3(-0.5, -0.5, 1.0),
 
-            Float3(-0.5, 0.5, 0.0),
-            Float3(-1.5, 0.5, 0.0),
+//            Float3(-0.5, 0.5, 0.0),
+            Float3(-1.5, 0.5, 0.0), // 1
 
 //            Float3(-0.5, 0.5, 0.0),
 //            Float3(-0.5, 0.5, 1.0),
 
-            Float3(0.5, 0.5, 0.0),
-            Float3(1.5, 0.5, 0.0),
+//            Float3(0.5, 0.5, 0.0),
+            Float3(1.5, 0.5, 0.0), // 2
+
+            Float3(1.5, 0.5, 0.0), // 2
 
 //            Float3(0.5, 0.5, 0.0),
 //            Float3(0.5, 0.5, 1.0),
 
-            Float3(0.5, -0.5, 0.0),
-            Float3(1.5, -0.5, 0.0),
+//            Float3(0.5, -0.5, 0.0),
+            Float3(1.5, -0.5, 0.0), // 3
 
 //            Float3(0.5, -0.5, 0.0),
 //            Float3(0.5, -0.5, 1.0),
+
+            Float3(-1.5, -0.5, 0.0), // 0
         ]
     )
 }

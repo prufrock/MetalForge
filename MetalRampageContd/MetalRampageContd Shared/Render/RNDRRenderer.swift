@@ -52,6 +52,7 @@ class RNDRRenderer: NSObject {
     private var drawEffects: RNDRDrawEffects?
     private var drawTitleScreen: RNDRDrawTitleScreen?
     private var drawWireFrame: RNDRDrawWireFrames?
+    private var drawIndexedGameWorldLights: RNDRDrawWorldPhase?
 
     // TODO do less stuff in init
     init(_ view: MTKView, width: Int, height: Int) {
@@ -116,6 +117,12 @@ class RNDRRenderer: NSObject {
         drawEffects = RNDRDrawEffects(renderer: self, pipelineCatalog: pipelineCatalog)
         drawTitleScreen = RNDRDrawTitleScreen(renderer: self, pipelineCatalog: pipelineCatalog)
         drawWireFrame = RNDRDrawWireFrames(
+            renderer: self, pipelineCatalog: pipelineCatalog,
+            textureController: RNDRTextureController(textures: [
+                .wall: RNDRWallComposer(),
+            ])
+        )
+        drawIndexedGameWorldLights = RNDRDrawIndexedGameWorldLighting(
             renderer: self, pipelineCatalog: pipelineCatalog,
             textureController: RNDRTextureController(textures: [
                 .wall: RNDRWallComposer(),
@@ -213,7 +220,8 @@ class RNDRRenderer: NSObject {
             drawReferenceMarkers!.draw(world: game.world, encoder: encoder, camera: playerCamera)
 
             if game.world.drawWorld {
-                drawIndexedGameWorld!.draw(world: game.world, encoder: encoder, camera: playerCamera)
+//                drawIndexedGameWorld!.draw(world: game.world, encoder: encoder, camera: playerCamera)
+                drawIndexedGameWorldLights!.draw(world: game.world, encoder: encoder, camera: playerCamera)
             } else {
                 drawWireFrame!.draw(world: game.world, encoder: encoder, camera: playerCamera)
             }

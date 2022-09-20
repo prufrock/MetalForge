@@ -10,6 +10,7 @@
 		5AF0E0217779E3A086889A02 /* GMBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E49438A9DC97C76BDBE8 /* GMBillboard.swift */; };
 		5AF0E02CE88AD0F5E60959B6 /* GMThing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E2D9A9A5B2BE7DEC7F1F /* GMThing.swift */; };
 		5AF0E0353BD9E44A4BE02F60 /* GMWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF782213E40C976BFBE4 /* GMWorld.swift */; };
+		5AF0E06B9A086DA9DA6E530E /* RNDRDrawIndexedGameWorldLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB4CF376FAF712AD5E93 /* RNDRDrawIndexedGameWorldLighting.swift */; };
 		5AF0E06DA5C8D75643B941E4 /* GMSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E83588F2A687F9A131EE /* GMSwitch.swift */; };
 		5AF0E07BEF80A7133CF26B51 /* RNDRDrawReferenceMarkers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0ED8A3E7E891C22CE3D99 /* RNDRDrawReferenceMarkers.swift */; };
 		5AF0E07E51E09092A2773672 /* GMPathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E316162F8D10876C0F20 /* GMPathfinder.swift */; };
@@ -60,6 +61,7 @@
 		5AF0E58749384560CB565F29 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */; };
 		5AF0E58BC96BFADC4AB36786 /* GMPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB48D3A205C366FD8B47 /* GMPlayer.swift */; };
 		5AF0E5D6196908F4D4058B32 /* GMPickup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E7353A28D077F741C2EA /* GMPickup.swift */; };
+		5AF0E5D70FBF51CDC0E6AE91 /* RNDRDrawIndexedGameWorldLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB4CF376FAF712AD5E93 /* RNDRDrawIndexedGameWorldLighting.swift */; };
 		5AF0E5D916A6057E1DB4D978 /* GMTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E91EE8B37B30DECC3DE6 /* GMTile.swift */; };
 		5AF0E5DF22C3B0C7B0EE00B8 /* RNDRTextureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EA6767DC3EEE01EDD00B /* RNDRTextureController.swift */; };
 		5AF0E647E0B2D1AC5B62E7AC /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */; };
@@ -71,6 +73,7 @@
 		5AF0E6E744AB89DE86B00D11 /* GMPathfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E316162F8D10876C0F20 /* GMPathfinder.swift */; };
 		5AF0E70F011357BF6FF8E0A0 /* GMFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EDC85952FF4F4F77290C /* GMFont.swift */; };
 		5AF0E73BCD4475D3523FB8BD /* RNDRDrawMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF536B1416825E7FC9ED /* RNDRDrawMap.swift */; };
+		5AF0E7412B1F8B33D86D01DA /* RNDRDrawIndexedGameWorldLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB4CF376FAF712AD5E93 /* RNDRDrawIndexedGameWorldLighting.swift */; };
 		5AF0E754E21DF5D2EC46A800 /* RNDRDrawTitleScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E628B9AD3DF2990D5D83 /* RNDRDrawTitleScreen.swift */; };
 		5AF0E7709610198E91D9EA10 /* GMPushWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E73A9365E80E6320A300 /* GMPushWall.swift */; };
 		5AF0E7A774CF78F9D11FDAA6 /* GMPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EB48D3A205C366FD8B47 /* GMPlayer.swift */; };
@@ -295,6 +298,7 @@
 		5AF0EA6767DC3EEE01EDD00B /* RNDRTextureController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRTextureController.swift; sourceTree = "<group>"; };
 		5AF0EB443BB9812F5F6ACEEB /* GMAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMAnimation.swift; sourceTree = "<group>"; };
 		5AF0EB48D3A205C366FD8B47 /* GMPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMPlayer.swift; sourceTree = "<group>"; };
+		5AF0EB4CF376FAF712AD5E93 /* RNDRDrawIndexedGameWorldLighting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawIndexedGameWorldLighting.swift; sourceTree = "<group>"; };
 		5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawWeapon.swift; sourceTree = "<group>"; };
 		5AF0EBAFE4969BB80F8AEF08 /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		5AF0EC5019731F5A282F75EE /* GMGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMGame.swift; sourceTree = "<group>"; };
@@ -458,6 +462,7 @@
 				5AF0EB93E742F2F393DB034F /* RNDRDrawWeapon.swift */,
 				5AF0E56C49934BCD3C731DDF /* RNDRDrawAnimatedSpriteSheet.swift */,
 				5AF0E08CE40C90F449C21A96 /* RNDRDrawWireFrames.swift */,
+				5AF0EB4CF376FAF712AD5E93 /* RNDRDrawIndexedGameWorldLighting.swift */,
 			);
 			path = DrawWorldPhase;
 			sourceTree = "<group>";
@@ -865,6 +870,7 @@
 				5AF0E5DF22C3B0C7B0EE00B8 /* RNDRTextureController.swift in Sources */,
 				5AF0E095036FCE7A27FBA40F /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
 				5AF0E3192DAC31D31A6D990B /* RNDRDrawWireFrames.swift in Sources */,
+				5AF0E06B9A086DA9DA6E530E /* RNDRDrawIndexedGameWorldLighting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -929,6 +935,7 @@
 				5AF0E8073AD0B305CC3ABFDA /* RNDRTextureController.swift in Sources */,
 				5AF0E65D370F59CC9226A188 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
 				5AF0E34F24BA0770A513E162 /* RNDRDrawWireFrames.swift in Sources */,
+				5AF0E7412B1F8B33D86D01DA /* RNDRDrawIndexedGameWorldLighting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -993,6 +1000,7 @@
 				5AF0E34AE203BC5F97C1B3B1 /* RNDRTextureController.swift in Sources */,
 				5AF0E2551CEDB91625FB6399 /* RNDRDrawAnimatedSpriteSheet.swift in Sources */,
 				5AF0E2F10527EA885FA5E53B /* RNDRDrawWireFrames.swift in Sources */,
+				5AF0E5D70FBF51CDC0E6AE91 /* RNDRDrawIndexedGameWorldLighting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
