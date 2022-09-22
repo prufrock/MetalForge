@@ -21,6 +21,10 @@ float3 phongLighting(
     constant Light *lights,
     float3 baseColor
 ) {
+    // until we can get the values from the material
+    float materialShininess = 32;
+    float3 materialSpecularColor = float3(1, 1, 1);
+
     float3 diffuseColor = 0;
     float3 ambientColor = 0;
     float3 specularColor = 0;
@@ -34,6 +38,14 @@ float3 phongLighting(
                 float diffuseIntensity = saturate(-dot(lightDirection, normal));
                 // mix the colors together with intensity
                 diffuseColor += light.color * baseColor * diffuseIntensity;
+
+                if (diffuseIntensity > 0) {
+                    // Need to understand this better
+                    float3 reflection = reflect(lightDirection, normal);
+                    float3 viewDirection = normalize(fragmentUniforms.cameraPosition);
+                    float specularIntensity = pow(saturate(dot(reflection, viewDirection)), materialShininess);
+                    specularColor += light.specularColor * materialSpecularColor * specularIntensity;
+                }
                 break;
             }
             case PointLight: {
