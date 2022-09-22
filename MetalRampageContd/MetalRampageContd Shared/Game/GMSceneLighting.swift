@@ -18,8 +18,16 @@ struct GMLighting {
         return light
     }()
 
+    let ambientLight: Light = {
+        var light = Self.buildDefaultLighting()
+        light.color = [0.1, 0, 0]
+        light.type = Ambient
+        return light
+    }()
+
     init() {
         lights.append(sunlight)
+        lights.append(ambientLight)
     }
 
     static func buildDefaultLighting() -> Light {
