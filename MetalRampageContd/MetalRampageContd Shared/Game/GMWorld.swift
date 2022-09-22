@@ -13,6 +13,8 @@ struct GMWorld {
     private(set) var switches: [GMSwitch]
     private(set) var pickups: [GMPickup]
     private(set) var effects: [GMEffect]
+    // lights - the renderer needs access
+    private(set) var lighting: GMLighting = GMLighting()
     // The list of sounds that should be used for a frame.
     private var sounds: [Sound] = []
     private(set) var isLevelEnded: Bool

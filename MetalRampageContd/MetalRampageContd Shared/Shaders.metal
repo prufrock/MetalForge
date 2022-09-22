@@ -9,6 +9,7 @@
 #include <simd/simd.h>
 // Including header shared between this Metal shader code and Swift/C code executing Metal API commands
 #import "ShaderTypes.h"
+#import "Lighting.h"
 
 using namespace metal;
 
@@ -269,7 +270,8 @@ vertex VertexOutSimpleLighting vertex_indexed_lighting(Vertex in [[stage_in]],
     VertexOutSimpleLighting vertex_out {
         .position = camera * worldTransform[iid] * float4(in.position, 1),
         .uv = select_sprite(in.texcoord, spriteSheet, textureId[iid]),
-        .normal = float4(in.normal, 1)
+        // At some it seems like this should be transformed into world space...
+        .normal = worldTransform[iid] * float4(in.normal, 1)
     };
 
     return vertex_out;
@@ -280,7 +282,9 @@ vertex VertexOutSimpleLighting vertex_indexed_lighting(Vertex in [[stage_in]],
  */
 fragment float4 fragment_simple_light(VertexOutSimpleLighting in [[stage_in]],
                                       texture2d<half> texture [[ texture(0) ]],
-                                      constant float4 &color [[buffer(0)]]
+                                      constant float4 &color [[buffer(0)]],
+                                      constant FragmentUniforms &fragmentUniforms [[buffer(1)]],
+                                      constant Light *lights [[buffer(BufferIndexLights)]]
                                       ) {
 
     // need a color sample to extract color from the texture
@@ -306,10 +310,17 @@ fragment float4 fragment_simple_light(VertexOutSimpleLighting in [[stage_in]],
     float4 black = float4(0.0, 0.0, 0.0, 1.0);
 
     float intensity = in.normal.y * 0.5 + 0.5;
-    return mix(mix(sky, earth, intensity), float4(colorSample), in.normal.y * 0.5 + 0.5);
+//    return mix(mix(sky, earth, intensity), float4(colorSample), in.normal.y * 0.5 + 0.5);
 
     // Lets take a look at the values to understand if the right normal is coming in.
-    // return float4(in.normal.x, in.normal.y, in.normal.z, 1);
+//     return float4(in.normal.x, in.normal.y, in.normal.z, 1);
+
+    float3 normalDirection = normalize(float3(in.normal.x, in.normal.y, in.normal.z));
+    float3 position = float3(in.position.x, in.position.y, in.position.z);
+    float3 baseColor = float3(1.0, 1.0, 1.0);
+
+    float3 lightColor = phongLighting(normalDirection, position, fragmentUniforms, lights, float3(colorSample.r, colorSample.g, colorSample.b));
+    return float4(lightColor, 1);
 }
 
 /*

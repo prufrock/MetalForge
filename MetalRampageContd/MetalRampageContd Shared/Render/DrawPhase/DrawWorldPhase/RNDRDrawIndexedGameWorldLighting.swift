@@ -31,6 +31,13 @@ struct RNDRDrawIndexedGameWorldLighting: RNDRDrawWorldPhase {
 
         // I had to change from forEach to for in after updating xcode. Don't quite understand why.
         for buffers in worldTilesBuffers {
+            // There might be a better place for this...
+            var fragmentUniforms = FragmentUniforms()
+            fragmentUniforms.lightCount = UInt32(world.lighting.lights.count)
+            // The camera is at the players position, but it might be worth generalizing this in case I want to move it around.
+            fragmentUniforms.cameraPosition = Float3(world.player.position)
+            var lights = world.lighting.lights
+
             let buffer = buffers.vertexBuffer
             let indexBuffer = buffers.indexBuffer
             let coordsBuffer = buffers.uvBuffer
@@ -107,6 +114,8 @@ struct RNDRDrawIndexedGameWorldLighting: RNDRDrawWorldPhase {
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride, index: 1)
+            encoder.setFragmentBytes(&lights, length: MemoryLayout<Light>.stride * lights.count, index: BufferIndex.lights.rawValue)
             encoder.setFragmentTexture(texture, index: 0)
             encoder.drawIndexedPrimitives(
                 type: primitiveType,
