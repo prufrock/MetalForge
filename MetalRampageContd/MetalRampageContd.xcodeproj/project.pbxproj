@@ -148,9 +148,9 @@
 		5AF0EF0AC9D59CD771A2D839 /* GMWeapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E5C5BDF49498F95C3988 /* GMWeapon.swift */; };
 		5AF0EF74623CA0716E747DC2 /* RNDRTileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E8AB9FB523D701CD129B /* RNDRTileImage.swift */; };
 		5AF0EFBF74416B2C1C6F06B4 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EF80473FF89C2F69122A /* AudioEngine.swift */; };
-		632A076F28DA86BC0041747E /* GMSceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A076E28DA86BC0041747E /* GMSceneLighting.swift */; };
-		632A077028DA86BC0041747E /* GMSceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A076E28DA86BC0041747E /* GMSceneLighting.swift */; };
-		632A077128DA86BC0041747E /* GMSceneLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A076E28DA86BC0041747E /* GMSceneLighting.swift */; };
+		632A076F28DA86BC0041747E /* GMLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A076E28DA86BC0041747E /* GMLighting.swift */; };
+		632A077028DA86BC0041747E /* GMLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A076E28DA86BC0041747E /* GMLighting.swift */; };
+		632A077128DA86BC0041747E /* GMLighting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632A076E28DA86BC0041747E /* GMLighting.swift */; };
 		632A077428DAB2560041747E /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 632A077328DAB2560041747E /* Lighting.metal */; };
 		632A077528DAB2560041747E /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 632A077328DAB2560041747E /* Lighting.metal */; };
 		632A077628DAB2560041747E /* Lighting.metal in Sources */ = {isa = PBXBuildFile; fileRef = 632A077328DAB2560041747E /* Lighting.metal */; };
@@ -321,7 +321,7 @@
 		5AF0EF782213E40C976BFBE4 /* GMWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMWorld.swift; sourceTree = "<group>"; };
 		5AF0EF80473FF89C2F69122A /* AudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
 		5AF0EFBF0A47AA605B5CD3C9 /* RNDRDrawIndexedGameWorld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNDRDrawIndexedGameWorld.swift; sourceTree = "<group>"; };
-		632A076E28DA86BC0041747E /* GMSceneLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMSceneLighting.swift; sourceTree = "<group>"; };
+		632A076E28DA86BC0041747E /* GMLighting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMLighting.swift; sourceTree = "<group>"; };
 		632A077228DAB1AD0041747E /* Lighting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lighting.h; sourceTree = "<group>"; };
 		632A077328DAB2560041747E /* Lighting.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Lighting.metal; sourceTree = "<group>"; };
 		632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireBlastPickup.mp3; sourceTree = "<group>"; };
@@ -502,7 +502,7 @@
 				5AF0E7C3521094CB09ABE88A /* GMEffect.swift */,
 				5AF0EC7AF7CB0C9A773D8477 /* GMInput.swift */,
 				5AF0E3FAA85F4D55EB5E6F23 /* GMColor.swift */,
-				632A076E28DA86BC0041747E /* GMSceneLighting.swift */,
+				632A076E28DA86BC0041747E /* GMLighting.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -860,7 +860,7 @@
 				5AF0E4EC0CF19CC00DBBE1D9 /* GMMapGenerator.swift in Sources */,
 				5AF0EA2468603A324F0AEF92 /* GMPushWall.swift in Sources */,
 				5AF0EC06DD5D1ECB51F352E9 /* GMPickup.swift in Sources */,
-				632A076F28DA86BC0041747E /* GMSceneLighting.swift in Sources */,
+				632A076F28DA86BC0041747E /* GMLighting.swift in Sources */,
 				5AF0E06DA5C8D75643B941E4 /* GMSwitch.swift in Sources */,
 				5AF0E44E49536522A67BD021 /* GMDoor.swift in Sources */,
 				5AF0E2A37A8E51FADAD98320 /* GMAnimation.swift in Sources */,
@@ -927,7 +927,7 @@
 				5AF0EC4E3119D7D04AA6A36C /* GMMapGenerator.swift in Sources */,
 				5AF0EA77A0C99A659EC67DD3 /* GMPushWall.swift in Sources */,
 				5AF0E52D61CA861FB96DE1FE /* GMPickup.swift in Sources */,
-				632A077028DA86BC0041747E /* GMSceneLighting.swift in Sources */,
+				632A077028DA86BC0041747E /* GMLighting.swift in Sources */,
 				5AF0EEBFBE18CE3E02422C31 /* GMSwitch.swift in Sources */,
 				5AF0E52B12A0B2B53E182E1E /* GMDoor.swift in Sources */,
 				5AF0EADBE9E927BD69A63EFF /* GMAnimation.swift in Sources */,
@@ -994,7 +994,7 @@
 				5AF0E1C22F9C24632D3279CE /* GMMapGenerator.swift in Sources */,
 				5AF0E7709610198E91D9EA10 /* GMPushWall.swift in Sources */,
 				5AF0E5D6196908F4D4058B32 /* GMPickup.swift in Sources */,
-				632A077128DA86BC0041747E /* GMSceneLighting.swift in Sources */,
+				632A077128DA86BC0041747E /* GMLighting.swift in Sources */,
 				5AF0ED162DCB942DC2534263 /* GMSwitch.swift in Sources */,
 				5AF0E31E3632B70E2F34D73C /* GMDoor.swift in Sources */,
 				5AF0E0F1F494B5C7C60BCB60 /* GMAnimation.swift in Sources */,

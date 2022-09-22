@@ -42,6 +42,7 @@ struct VertexOutOnlyPositionAndUv {
  */
 struct VertexOutSimpleLighting {
     float4 position [[position]];
+    float4 worldPosition;
     float2 uv;
     //TODO make this a float3 - need to convert the model matrix to a 3x3
     float4 normal;
@@ -269,6 +270,7 @@ vertex VertexOutSimpleLighting vertex_indexed_lighting(Vertex in [[stage_in]],
                                                   ) {
     VertexOutSimpleLighting vertex_out {
         .position = camera * worldTransform[iid] * float4(in.position, 1),
+        .worldPosition = worldTransform[iid] * float4(in.position, 1),
         .uv = select_sprite(in.texcoord, spriteSheet, textureId[iid]),
         // At some it seems like this should be transformed into world space...
         .normal = worldTransform[iid] * float4(in.normal, 1)
@@ -316,7 +318,7 @@ fragment float4 fragment_simple_light(VertexOutSimpleLighting in [[stage_in]],
 //     return float4(in.normal.x, in.normal.y, in.normal.z, 1);
 
     float3 normalDirection = normalize(float3(in.normal.x, in.normal.y, in.normal.z));
-    float3 position = float3(in.position.x, in.position.y, in.position.z);
+    float3 position = float3(in.worldPosition.x, in.worldPosition.y, in.worldPosition.z);
     float3 baseColor = float3(1.0, 1.0, 1.0);
 
     float3 lightColor = phongLighting(normalDirection, position, fragmentUniforms, lights, float3(colorSample.r, colorSample.g, colorSample.b));
