@@ -37,6 +37,8 @@ struct RNDRDrawIndexedGameWorldLighting: RNDRDrawWorldPhase {
             // The camera is at the players position, but it might be worth generalizing this in case I want to move it around.
             fragmentUniforms.cameraPosition = Float3(world.player.position)
             var lights = world.lighting.lights
+            lights[0].position = Float3(world.player.position)
+            lights[0].coneDirection = Float3(world.player.direction) + Float3(0,0, -0.3)
 
             let buffer = buffers.vertexBuffer
             let indexBuffer = buffers.indexBuffer

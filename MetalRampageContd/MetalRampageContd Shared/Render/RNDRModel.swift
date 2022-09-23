@@ -34,6 +34,18 @@ struct RNDRModel {
             uv[Int(i)]
         }
     }
+
+    func normalLines() -> [Float3] {
+        var normalLines: [Float3] = []
+        let vertices: [Float3] = allVertices()
+        let normals: [Float3] = normals
+        for i in (0 ..< vertices.count) {
+            normalLines.append(vertices[i])
+            normalLines.append(GMRay3d(origin: vertices[i], direction: normals[i]).pointOnRay(t: 1.0))
+        }
+
+        return normalLines
+    }
 }
 
 /**

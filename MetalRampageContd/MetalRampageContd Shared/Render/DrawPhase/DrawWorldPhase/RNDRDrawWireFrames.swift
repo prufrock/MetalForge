@@ -101,7 +101,7 @@ struct RNDRDrawWireFrames: RNDRDrawWorldPhase {
 
             encoder.setRenderPipelineState(pipelineCatalog.wireFramePipeline)
             encoder.setDepthStencilState(renderer.depthStencilState)
-            encoder.setCullMode(.none)
+            encoder.setCullMode(.back)
 
             encoder.setVertexBuffer(buffer, offset: 0, index: VertexAttribute.position.rawValue)
             encoder.setVertexBuffer(coordsBuffer, offset: 0, index: VertexAttribute.uvcoord.rawValue)
@@ -154,7 +154,7 @@ struct RNDRDrawWireFrames: RNDRDrawWorldPhase {
         let model = renderer.model[.unitSquare]! // it better be there!
 
         GMTile.allCases.forEach { tile in
-            renderer.worldTiles!.filter {$0.1 == tile}.chunked(into: 64).forEach { chunk in
+            renderer.worldTiles!.filter {$0.1 == .crackWall}.chunked(into: 64).forEach { chunk in
                 // TODO should model.allVertices be model.vertices?
                 let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])!
                 let indexBuffer = renderer.device.makeBuffer(bytes: index, length: MemoryLayout<UInt16>.stride * index.count, options: [])!
@@ -173,7 +173,7 @@ struct RNDRDrawWireFrames: RNDRDrawWorldPhase {
                         index: index,
                         indexCount: index.count,
                         positions:  chunk.map { (rndrObject, _) -> Int2 in rndrObject.position },
-                        normals: model.normals
+                        normals: model.normalLines()
                     )
                 )
             }

@@ -59,6 +59,28 @@ float3 phongLighting(
                 break;
             }
             case Spot: {
+                // Need to understand this better
+                float d = distance(light.position, position);
+                float3 lightDirection = normalize(light.position - position);
+                float3 coneDirection = normalize(light.coneDirection);
+                float spotResult = dot(lightDirection, -coneDirection);
+                if (spotResult > cos(light.coneAngle)) {
+                  float attenuation = 1.0 / (light.attenuation.x +
+                      light.attenuation.y * d + light.attenuation.z * d * d);
+                  attenuation *= pow(spotResult, light.coneAttenuation);
+                  // I shouldn't need to abs this!
+                  float lightNormal = abs(dot(lightDirection, normal));
+//                  float lightNormal = dot(lightDirection, normal);
+                  float diffuseIntensity = saturate(lightNormal);
+                  float3 color = light.color * baseColor * diffuseIntensity;
+                  color *= attenuation;
+                  diffuseColor += color;
+//                    if (lightNormal < 0) {
+//                        diffuseColor = float3(1, 0, 0);
+//                    } else {
+//                        diffuseColor = float3(0, 1, 0);
+//                    }
+                }
                 break;
             }
             case Ambient: {

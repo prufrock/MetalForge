@@ -34,7 +34,20 @@ struct GMLighting {
         return light
     }()
 
+    let spotlight: Light = {
+        var light = Self.buildDefaultLighting()
+        light.type = Spot
+        light.position = [4.5, 1.5, 0.5]
+        light.color = [1, 0, 1]
+        light.attenuation = [1, 0.1, 0]
+        light.coneAngle = Float(40).degreesToRadians
+        light.coneDirection = [1.0, 0.0, 0.0]
+        light.coneAttenuation = 8
+        return light
+    }()
+
     init() {
+        lights.append(spotlight)
         lights.append(sunlight)
         lights.append(ambientLight)
         lights.append(redLight)
@@ -51,4 +64,13 @@ struct GMLighting {
         light.type = Sun
         return light
     }
+}
+
+extension Float {
+  var radiansToDegrees: Float {
+      (self / .pi) * 180
+  }
+  var degreesToRadians: Float {
+      (self / 180) * .pi
+  }
 }

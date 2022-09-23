@@ -72,7 +72,7 @@ typedef struct {
     vector_float3 attenuation;
     float coneAngle;
     vector_float3 coneDirection;
-    float coneAttentuation;
+    float coneAttenuation;
     LightType type;
 } Light;
 
