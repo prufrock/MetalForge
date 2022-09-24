@@ -233,18 +233,22 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
  Can the additional texture information be passed to the fragment texture when marshalling
  data for the pipeline?
  - Vertex in: Data about the vertex to be transformed
- - finalTransform: A single matrix that transforms the data in **in**.
+ - camera: Brings the vertex into camera space.
+ - worldTransform: Brings the vertex into world space.
  - uint textureId: The id of the texture to use in the spritesheet.
  - SpriteSheet spriteSheet: Describes the spritesheet.
  */
-vertex VertexOutOnlyPositionAndUv vertex_only_transform(Vertex in [[stage_in]],
-                                                        constant matrix_float4x4 &finalTransform [[buffer(3)]],
-                                                        constant uint &textureId [[buffer(4)]],
-                                                        constant SpriteSheet &spriteSheet [[buffer(5)]]
+vertex VertexOutSimpleLighting vertex_only_transform(Vertex in [[stage_in]],
+                                                        constant matrix_float4x4 &camera [[buffer(3)]],
+                                                        constant matrix_float4x4 &worldTransform [[buffer(4)]],
+                                                        constant uint &textureId [[buffer(5)]],
+                                                        constant SpriteSheet &spriteSheet [[buffer(6)]]
                                                         ) {
-    VertexOutOnlyPositionAndUv vertex_out {
-        .position = finalTransform * float4(in.position, 1),
-        .uv = select_sprite(in.texcoord, spriteSheet, textureId)
+    VertexOutSimpleLighting vertex_out {
+        .position = camera * worldTransform * float4(in.position, 1),
+        .worldPosition = worldTransform * float4(in.position, 1),
+        .uv = select_sprite(in.texcoord, spriteSheet, textureId),
+        .normal = worldTransform * float4(in.normal, 1)
     };
 
     return vertex_out;
@@ -272,7 +276,6 @@ vertex VertexOutSimpleLighting vertex_indexed_lighting(Vertex in [[stage_in]],
         .position = camera * worldTransform[iid] * float4(in.position, 1),
         .worldPosition = worldTransform[iid] * float4(in.position, 1),
         .uv = select_sprite(in.texcoord, spriteSheet, textureId[iid]),
-        // At some it seems like this should be transformed into world space...
         .normal = worldTransform[iid] * float4(in.normal, 1)
     };
 
@@ -332,9 +335,11 @@ fragment float4 fragment_simple_light(VertexOutSimpleLighting in [[stage_in]],
  - float4 color: Replaces white with this color, useful for troubleshooting.
  */
 fragment float4 fragment_sprite_sheet(
-                                      VertexOutOnlyPositionAndUv in [[stage_in]],
+                                      VertexOutSimpleLighting in [[stage_in]],
                                       texture2d<half> texture [[ texture(0) ]],
-                                      constant float4 &color [[buffer(0)]]
+                                      constant float4 &color [[buffer(0)]],
+                                      constant FragmentUniforms &fragmentUniforms [[buffer(1)]],
+                                      constant Light *lights [[buffer(BufferIndexLights)]]
                                       ) {
 
     // need a color sample to extract color from the texture
@@ -354,6 +359,11 @@ fragment float4 fragment_sprite_sheet(
     if (colorSample.r == 1.0 && colorSample.g == 1.0 && colorSample.b == 1.0) {
         return color;
     }
+                                          float3 normalDirection = normalize(float3(in.normal.x, in.normal.y, in.normal.z));
+  float3 position = float3(in.worldPosition.x, in.worldPosition.y, in.worldPosition.z);
+
+  float3 lightColor = phongLighting(normalDirection, position, fragmentUniforms, lights, float3(colorSample.r, colorSample.g, colorSample.b));
+  return float4(lightColor, 1);
 
     return float4(colorSample);
 }

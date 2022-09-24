@@ -142,14 +142,21 @@ struct RNDRPipelineCatalog {
             $0.colorAttachments[0].pixelFormat = .bgra8Unorm
             $0.depthAttachmentPixelFormat = .depth32Float
             $0.vertexDescriptor = MTLVertexDescriptor().apply {
-                $0.attributes[0].format = MTLVertexFormat.float3
-                $0.attributes[0].bufferIndex = 0
-                $0.attributes[0].offset = 0
-                $0.attributes[1].format = MTLVertexFormat.float2
-                $0.attributes[1].bufferIndex = 1
-                $0.attributes[1].offset = 0
-                $0.layouts[0].stride = MemoryLayout<Float3>.stride
-                $0.layouts[1].stride = MemoryLayout<Float2>.stride
+                // .position
+                $0.attributes[VertexAttribute.position.rawValue].format = MTLVertexFormat.float3
+                $0.attributes[VertexAttribute.position.rawValue].bufferIndex = VertexAttribute.position.rawValue
+                $0.attributes[VertexAttribute.position.rawValue].offset = 0
+                $0.layouts[VertexAttribute.position.rawValue].stride = MemoryLayout<Float3>.stride
+                // .uv
+                $0.attributes[VertexAttribute.uvcoord.rawValue].format = MTLVertexFormat.float2
+                $0.attributes[VertexAttribute.uvcoord.rawValue].bufferIndex = VertexAttribute.uvcoord.rawValue
+                $0.attributes[VertexAttribute.uvcoord.rawValue].offset = 0
+                $0.layouts[VertexAttribute.uvcoord.rawValue].stride = MemoryLayout<Float2>.stride
+                // .normal
+                $0.attributes[VertexAttribute.normal.rawValue].format = MTLVertexFormat.float3
+                $0.attributes[VertexAttribute.normal.rawValue].bufferIndex = VertexAttribute.normal.rawValue
+                $0.attributes[VertexAttribute.normal.rawValue].offset = 0
+                $0.layouts[VertexAttribute.normal.rawValue].stride = MemoryLayout<Float3>.stride
             }
         })
     }

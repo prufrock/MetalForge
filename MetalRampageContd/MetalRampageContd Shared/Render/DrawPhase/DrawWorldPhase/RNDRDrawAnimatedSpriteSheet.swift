@@ -32,14 +32,25 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
     }
 
     private func render(_ renderable: RNDRObject, to model: RNDRModel, from world: GMWorld, with camera: Float4x4, using encoder: MTLRenderCommandEncoder) {
+        // There might be a better place for this...
+        var fragmentUniforms = FragmentUniforms()
+        fragmentUniforms.lightCount = UInt32(world.lighting.lights.count)
+        // The camera is at the players position, but it might be worth generalizing this in case I want to move it around.
+        fragmentUniforms.cameraPosition = Float3(world.player.position)
+        var lights = world.lighting.lights
+        lights[0].position = Float3(world.player.position)
+        lights[0].coneDirection = Float3(world.player.direction) + Float3(0,0, -0.3)
+
         let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
         let coordsBuffer = renderer.device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])!
+        let normalsBuffer = renderer.device.makeBuffer(bytes: model.normals, length: MemoryLayout<Float3>.stride * model.normals.count, options: [])!
 
         let textureComposition = textureController.textureFor(textureType: renderable.textureType!, variant: renderable.textureVariant!)
         var spriteSheet = textureComposition.dimensions
         var textureId: UInt32 = renderable.textureId ?? 0
 
-        var finalTransform = camera * renderable.transform
+        var shaderCamera = camera
+        var transform = renderable.transform
 
         let color = GMColor.black
         var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)
@@ -51,12 +62,16 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
 
         encoder.setVertexBuffer(buffer, offset: 0, index: VertexAttribute.position.rawValue)
         encoder.setVertexBuffer(coordsBuffer, offset: 0, index: VertexAttribute.uvcoord.rawValue)
-        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 3)
-        encoder.setVertexBytes(&textureId, length: MemoryLayout<UInt32>.stride, index: 4)
-        encoder.setVertexBytes(&spriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 5)
+        encoder.setVertexBuffer(normalsBuffer, offset: 0, index: VertexAttribute.normal.rawValue)
+        encoder.setVertexBytes(&shaderCamera, length: MemoryLayout<Float4x4>.stride, index: 3)
+        encoder.setVertexBytes(&transform, length: MemoryLayout<Float4x4>.stride, index: 4)
+        encoder.setVertexBytes(&textureId, length: MemoryLayout<UInt32>.stride, index: 5)
+        encoder.setVertexBytes(&spriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 6)
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+        encoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride, index: 1)
+        encoder.setFragmentBytes(&lights, length: MemoryLayout<Light>.stride * lights.count, index: BufferIndex.lights.rawValue)
 
         // select the texture
         encoder.setFragmentTexture(renderer.spriteSheets[textureComposition.file]!, index: 0)
