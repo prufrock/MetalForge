@@ -59,7 +59,7 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
 
         // select the texture
-     	encoder.setFragmentTexture(renderer.spriteSheets[textureComposition.file]!, index: 0)
+        encoder.setFragmentTexture(renderer.spriteSheets[textureComposition.file]!, index: 0)
 
         encoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: model.allVertices().count)
     }
