@@ -17,12 +17,14 @@ struct RNDRDrawReferenceMarkers: RNDRDrawWorldPhase  {
     func draw(world: GMWorld, encoder: MTLRenderCommandEncoder, camera: Float4x4) {
         var renderables: [RNDRObject] = []
 
+        var lightPosition = Float3(world.player.position) + Float3(1.5, 0.5, 0.5)
+        let spinningLight = Float4x4.identity()
+            * Float4x4.translate(x: lightPosition.x, y: lightPosition.y, z: lightPosition.z)
+            * Float4x4.rotateZ(.pi / 1.5)
+            * Float4x4.rotateX(-(3 * .pi) / 2)
+            * (world.player.direction3d)
         renderables += lineCube(Float4x4.scale(x: 0.1, y: 0.1, z: 0.1))
-        renderables += lineCube(
-            Float4x4.identity()
-                * Float4x4.translate(x: 1.0, y: 0.0, z: 0.0)
-                    .scaledBy(x: 0.1, y: 0.1, z: 0.1)
-        )
+        renderables += lineCube(spinningLight)
         renderables += lineCube(
             Float4x4.identity()
                 * Float4x4.translate(x: -1.0, y: 0.0, z: 0.0)
