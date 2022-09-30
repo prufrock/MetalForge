@@ -44,8 +44,7 @@ struct VertexOutSimpleLighting {
     float4 position [[position]];
     float4 worldPosition;
     float2 uv;
-    //TODO make this a float3 - need to convert the model matrix to a 3x3
-    float4 normal;
+    float3 normal;
 };
 
 float2 select_sprite(float2 uv, SpriteSheet spriteSheet, uint spriteIndex);
@@ -241,15 +240,17 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
 vertex VertexOutSimpleLighting vertex_only_transform(Vertex in [[stage_in]],
                                                         constant matrix_float4x4 &camera [[buffer(3)]],
                                                         constant matrix_float4x4 &worldTransform [[buffer(4)]],
-                                                        constant matrix_float4x4 &normalTransform [[buffer(5)]],
+                                                        constant matrix_float3x3 &normalTransform [[buffer(5)]],
                                                         constant uint &textureId [[buffer(6)]],
                                                         constant SpriteSheet &spriteSheet [[buffer(7)]]
                                                         ) {
+    // why do my normals need to translate? When I don't have 1 in the w the sprites are all black.
+    float4 normal = worldTransform * float4(in.normal, 1);
     VertexOutSimpleLighting vertex_out {
         .position = camera * worldTransform * float4(in.position, 1),
         .worldPosition = worldTransform * float4(in.position, 1),
         .uv = select_sprite(in.texcoord, spriteSheet, textureId),
-        .normal = normalTransform * float4(in.normal, 1)
+        .normal = float3(normal.x, normal.y, normal.z)
     };
 
     return vertex_out;
@@ -273,11 +274,12 @@ vertex VertexOutSimpleLighting vertex_indexed_lighting(Vertex in [[stage_in]],
                                                   uint vid [[vertex_id]],
                                                   uint iid [[instance_id]]
                                                   ) {
+    float4 normal = worldTransform[iid] * float4(in.normal, 1);
     VertexOutSimpleLighting vertex_out {
         .position = camera * worldTransform[iid] * float4(in.position, 1),
         .worldPosition = worldTransform[iid] * float4(in.position, 1),
         .uv = select_sprite(in.texcoord, spriteSheet, textureId[iid]),
-        .normal = worldTransform[iid] * float4(in.normal, 1)
+        .normal = float3(normal.x, normal.y, normal.z)
     };
 
     return vertex_out;
@@ -311,19 +313,8 @@ fragment float4 fragment_simple_light(VertexOutSimpleLighting in [[stage_in]],
         return color;
     }
 
-    float4 sky = float4(0.34, 0.9, 1.0, 1.0);
-    float4 earth = float4(0.29, 0.58, 0.2, 1.0);
-    float4 black = float4(0.0, 0.0, 0.0, 1.0);
-
-    float intensity = in.normal.y * 0.5 + 0.5;
-//    return mix(mix(sky, earth, intensity), float4(colorSample), in.normal.y * 0.5 + 0.5);
-
-    // Lets take a look at the values to understand if the right normal is coming in.
-//     return float4(in.normal.x, in.normal.y, in.normal.z, 1);
-
-    float3 normalDirection = normalize(float3(in.normal.x, in.normal.y, in.normal.z));
+    float3 normalDirection = normalize(in.normal);
     float3 position = float3(in.worldPosition.x, in.worldPosition.y, in.worldPosition.z);
-    float3 baseColor = float3(1.0, 1.0, 1.0);
 
     float3 lightColor = phongLighting(normalDirection, position, fragmentUniforms, lights, float3(colorSample.r, colorSample.g, colorSample.b));
     return float4(lightColor, 1);

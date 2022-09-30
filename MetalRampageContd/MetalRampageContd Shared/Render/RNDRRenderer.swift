@@ -217,12 +217,10 @@ class RNDRRenderer: NSObject {
             drawTitleScreen!.draw(game: game, encoder: encoder, camera: hudCamera)
         } else {
 
-            drawReferenceMarkers!.draw(world: game.world, encoder: encoder, camera: playerCamera)
-
             if game.world.drawWorld {
-//                drawIndexedGameWorld!.draw(world: game.world, encoder: encoder, camera: playerCamera)
                 drawIndexedGameWorldLights!.draw(world: game.world, encoder: encoder, camera: playerCamera)
             } else {
+                drawReferenceMarkers!.draw(world: game.world, encoder: encoder, camera: playerCamera)
                 drawWireFrame!.draw(world: game.world, encoder: encoder, camera: playerCamera)
             }
 

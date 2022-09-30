@@ -129,6 +129,10 @@ extension Float4x4 {
             [x, y, z, 1]
         )
     }
+
+    func upperLeft() -> Float3x3 {
+        Float3x3(columns: (columns.0.xyz, columns.1.xyz, columns.2.xyz))
+    }
 }
 
 extension Float3 {
@@ -215,6 +219,12 @@ extension Float2 {
 extension Float3 {
     init(_ value: Float2) {
         self.init(value.x, value.y, 0.0)
+    }
+}
+
+extension Float4 {
+    var xyz: Float3 {
+        Float3(x: x, y: y, z: z)
     }
 }
 

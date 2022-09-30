@@ -72,8 +72,9 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
         encoder.setVertexBuffer(normalsBuffer, offset: 0, index: VertexAttribute.normal.rawValue)
         encoder.setVertexBytes(&shaderCamera, length: MemoryLayout<Float4x4>.stride, index: 3)
         encoder.setVertexBytes(&transform, length: MemoryLayout<Float4x4>.stride, index: 4)
-        var normalTransform = transform
-        encoder.setVertexBytes(&normalTransform, length: MemoryLayout<Float4x4>.stride, index: 5)
+        // I can't seem to get this to work.
+        var normalTransform = Float3() //transform.inverse.transpose.upperLeft()
+        encoder.setVertexBytes(&normalTransform, length: MemoryLayout<Float3x3>.stride, index: 5)
         encoder.setVertexBytes(&textureId, length: MemoryLayout<UInt32>.stride, index: 6)
         encoder.setVertexBytes(&spriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 7)
 
