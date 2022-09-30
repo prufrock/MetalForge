@@ -74,8 +74,10 @@ struct RNDRDrawWeapon: RNDRDrawWorldPhase {
         encoder.setVertexBuffer(normalsBuffer, offset: 0, index: VertexAttribute.normal.rawValue)
         encoder.setVertexBytes(&shaderCamera, length: MemoryLayout<Float4x4>.stride, index: 3)
         encoder.setVertexBytes(&transform, length: MemoryLayout<Float4x4>.stride, index: 4)
-        encoder.setVertexBytes(&textureId, length: MemoryLayout<UInt32>.stride, index: 5)
-        encoder.setVertexBytes(&wandSpriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 6)
+        var normalTransform = transform.transpose.inverse * -1
+        encoder.setVertexBytes(&normalTransform, length: MemoryLayout<Float4x4>.stride, index: 5)
+        encoder.setVertexBytes(&textureId, length: MemoryLayout<UInt32>.stride, index: 6)
+        encoder.setVertexBytes(&wandSpriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 7)
 
         let color = GMColor.black
         var fragmentColor = Float4(color.rFloat(), color.gFloat(), color.bFloat(), 1.0)

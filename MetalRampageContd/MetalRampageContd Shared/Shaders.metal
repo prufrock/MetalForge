@@ -241,14 +241,15 @@ fragment float4 fragment_with_texture(VertexOut in [[stage_in]],
 vertex VertexOutSimpleLighting vertex_only_transform(Vertex in [[stage_in]],
                                                         constant matrix_float4x4 &camera [[buffer(3)]],
                                                         constant matrix_float4x4 &worldTransform [[buffer(4)]],
-                                                        constant uint &textureId [[buffer(5)]],
-                                                        constant SpriteSheet &spriteSheet [[buffer(6)]]
+                                                        constant matrix_float4x4 &normalTransform [[buffer(5)]],
+                                                        constant uint &textureId [[buffer(6)]],
+                                                        constant SpriteSheet &spriteSheet [[buffer(7)]]
                                                         ) {
     VertexOutSimpleLighting vertex_out {
         .position = camera * worldTransform * float4(in.position, 1),
         .worldPosition = worldTransform * float4(in.position, 1),
         .uv = select_sprite(in.texcoord, spriteSheet, textureId),
-        .normal = worldTransform * float4(in.normal, 1)
+        .normal = normalTransform * float4(in.normal, 1)
     };
 
     return vertex_out;
