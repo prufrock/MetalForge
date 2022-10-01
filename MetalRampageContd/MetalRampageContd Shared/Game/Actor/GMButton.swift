@@ -22,6 +22,9 @@ struct GMButton: GMActor {
 
     var state: GMButtonState = .notClicked
 
+    let screenWidth:Float = 965.0
+    let screenHeight:Float = 680.0
+
     var canClick: Bool {
         switch state {
         case .clicked:
@@ -51,7 +54,8 @@ struct GMButton: GMActor {
         let worldMaxX: Float = 1.0
         let worldMaxY: Float = 1.0
         // -1 on the left because +x to the right
-        let x = ((position.x / worldMaxX) * 2) - 1
+        let x = (((position.x / worldMaxX) * 2) - 1)
+            * (screenWidth / screenHeight) // adjust for the aspect ratio
         // 1 - on the right because +y is down
         let y = 1 - ((position.y / worldMaxY) * 2)
         return Float2(x, y)
@@ -79,15 +83,29 @@ enum GMButtonType {
 
 struct GMTouchCoords {
     let position: Float2
+    let screenWidth:Float = 965.0
+    let screenHeight:Float = 680.0
 
     func toWorldSpace() -> Float2 {
-        let screenWidth:Float = 965.0
-        let screenHeight:Float = 680.0
+
         let x = 1/screenWidth * position.x
         // substract screenHeight - position.y because screen space has a lower left origin
         // while world space has an upper left origin
         let y = 1/screenHeight * (screenHeight - position.y)
         print("worldPosition:", String(format: "%.8f, %.8f", x, y))
+        toNdcSpace(x, y)
+        return Float2(x, y)
+    }
+
+    func toNdcSpace(_ wx: Float, _ wy: Float) -> Float2 {
+        //TODO these should go somewhere more global
+        let worldMaxX: Float = 1.0
+        let worldMaxY: Float = 1.0
+        // -1 on the left because +x to the right
+        let x = ((wx / worldMaxX) * 2) - 1
+        // 1 - on the right because +y is down
+        let y = 1 - ((wy / worldMaxY) * 2)
+        print("ndc:", String(format: "%.8f, %.8f", x, y))
         return Float2(x, y)
     }
 }
