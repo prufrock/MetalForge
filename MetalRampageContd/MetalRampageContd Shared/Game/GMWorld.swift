@@ -14,6 +14,8 @@ struct GMWorld {
     private(set) var pickups: [GMPickup]
     private(set) var effects: [GMEffect]
     private(set) var buttons: [GMButton] = [GMButton(radius: 0.3, position: Float2(0.5, 0.5))]
+    // being lazy for debugging
+    private(set) var touchLocations: [GMButton] = []
     // lights - the renderer needs access
     private(set) var lighting: GMLighting = GMLighting()
     // The list of sounds that should be used for a frame.
@@ -210,6 +212,10 @@ extension GMWorld {
         // after the method returns remove all of the sounds so they won't be played next frame.
         defer { sounds.removeAll() }
         return .playSounds(sounds)
+    }
+
+    mutating func addTouchLocation(position: Float2) {
+        touchLocations.append(GMButton(radius: 0.3, position: position, texture: .squarePurple))
     }
 
     mutating func hurtPlayer(_ damage: Float) {

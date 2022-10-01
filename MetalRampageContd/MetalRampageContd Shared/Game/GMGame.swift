@@ -42,7 +42,7 @@ extension GMGame {
      All of it's values are based on the player's state.
      */
     var hud: GMHud {
-        GMHud(player: world.player, font: font, buttons: world.buttons)
+        GMHud(player: world.player, font: font, buttons: world.buttons, touchLocations: world.touchLocations)
     }
 
     /**

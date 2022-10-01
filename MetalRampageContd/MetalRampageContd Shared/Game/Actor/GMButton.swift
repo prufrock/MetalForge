@@ -36,6 +36,7 @@ struct GMButton: GMActor {
             state = .clicked
             if let touchCoords = input.touchLocation {
                 print("touchLocation:", String(format: "%.1f, %.1f", touchCoords.x, touchCoords.y))
+                world.addTouchLocation(position: touchCoords)
             }
             debounce.time = 0
         }
