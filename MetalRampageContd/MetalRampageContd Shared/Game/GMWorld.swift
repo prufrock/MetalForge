@@ -194,6 +194,18 @@ extension GMWorld {
         lighting.lights[0].position = Float3(spinningLight.x, spinningLight.y, spinningLight.z)
         lighting.lights[0].coneDirection = Float3(player.direction) + Float3(0,0, 0.4)
 
+        // handle buttons
+        for i in buttons.indices {
+            var button = buttons[i]
+
+            button.debounce.time += timeStep
+
+            button.update(with: input, in: &self)
+
+            buttons[i] = button
+        }
+
+
         // Play sounds
         // after the method returns remove all of the sounds so they won't be played next frame.
         defer { sounds.removeAll() }

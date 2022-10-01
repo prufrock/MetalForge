@@ -54,6 +54,10 @@ class GameViewController: NSViewController {
     // lastFrameTime.
     private var lastFiredTime: Double = 0.0
 
+    // The last time the screen was clicked.
+    // Needed so that the mouseLocation isn't constantly sent in as input
+    private var lastClickedTime: Double = 0.0
+
     var mouseLocation: NSPoint { NSEvent.mouseLocation }
 
     override func viewDidLoad() {
@@ -64,6 +68,7 @@ class GameViewController: NSViewController {
 
         NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp]) {
             print("mouseLocation:", String(format: "%.1f, %.1f", self.mouseLocation.x, self.mouseLocation.y))
+            self.lastClickedTime = CACurrentMediaTime()
 
             return $0
         }
@@ -183,13 +188,15 @@ extension GameViewController: MTKViewDelegate {
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
         let inputVector = self.inputVector
         let rotation = inputVector.x * game.world.player.turningSpeed * worldTimeStep
+        let isClicking = lastClickedTime > lastFrameTime
         var input = GMInput(
             speed: -inputVector.y,
             rotation: Float2x2.rotate(rotation),
             rotation3d: Float4x4.rotateY(inputVector.x * game.world.player.turningSpeed * worldTimeStep),
             isFiring: lastFiredTime > lastFrameTime,
             showMap: showMap,
-            drawWorld: drawWorld
+            drawWorld: drawWorld,
+            touchLocation: isClicking ? Float2(0.8, 0.8) : nil
         )
         
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
