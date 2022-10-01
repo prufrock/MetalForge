@@ -54,11 +54,19 @@ class GameViewController: NSViewController {
     // lastFrameTime.
     private var lastFiredTime: Double = 0.0
 
+    var mouseLocation: NSPoint { NSEvent.mouseLocation }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMetalView()
         audioEngine.setUpAudio()
         enableInputMonitors()
+
+        NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp]) {
+            print("mouseLocation:", String(format: "%.1f, %.1f", self.mouseLocation.x, self.mouseLocation.y))
+
+            return $0
+        }
 
         renderer = RNDRRenderer(metalView, width: 8, height: 8)
 
