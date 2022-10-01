@@ -38,15 +38,6 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
         // The camera is at the players position, but it might be worth generalizing this in case I want to move it around.
         fragmentUniforms.cameraPosition = Float3(world.player.position)
         var lights = world.lighting.lights
-        //TODO move this into World
-        let lightPosition = Float3(world.player.position)  + Float3(1.5, 0.5, 0.5)
-        let spinningLight = Float4x4.identity()
-            * Float4x4.translate(x: lightPosition.x, y: lightPosition.y, z: lightPosition.z)
-            * Float4x4.rotateZ(.pi / 1.5)
-            * Float4x4.rotateX(-(3 * .pi) / 2)
-            * (world.player.direction3d) * Float4(-1.0, -1.0, -1.0, 1.0)
-        lights[0].position = Float3(spinningLight.x, spinningLight.y, spinningLight.z)
-        lights[0].coneDirection = Float3(world.player.direction) + Float3(0,0, 0.4)
 
         let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
         let coordsBuffer = renderer.device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])!
@@ -73,7 +64,10 @@ struct RNDRDrawAnimatedSpriteSheet: RNDRDrawWorldPhase {
         encoder.setVertexBytes(&shaderCamera, length: MemoryLayout<Float4x4>.stride, index: 3)
         encoder.setVertexBytes(&transform, length: MemoryLayout<Float4x4>.stride, index: 4)
         // I can't seem to get this to work.
-        var normalTransform = Float3() //transform.inverse.transpose.upperLeft()
+        // I might have hit on something when trying to get the wand to light properly.
+        // I don't think the normals are getting rotated fully because when I use this with the world transforms
+        // and set the z to 1.0 on the normals the floor is fully lit all the time and everything else is dark!
+        var normalTransform = transform.inverse.transpose.upperLeft()
         encoder.setVertexBytes(&normalTransform, length: MemoryLayout<Float3x3>.stride, index: 5)
         encoder.setVertexBytes(&textureId, length: MemoryLayout<UInt32>.stride, index: 6)
         encoder.setVertexBytes(&spriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 7)

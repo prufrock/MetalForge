@@ -26,12 +26,10 @@ struct RNDRDrawWeapon: RNDRDrawWorldPhase {
         // The camera is at the players position, but it might be worth generalizing this in case I want to move it around.
         fragmentUniforms.cameraPosition = Float3(world.player.position)
         var lights = world.lighting.lights
-        lights[0].position = Float3(world.player.position)
-        lights[0].coneDirection = Float3(world.player.direction) + Float3(0,0, -0.3)
 
         let buffer = renderer.device.makeBuffer(bytes: model.allVertices(), length: MemoryLayout<Float3>.stride * model.allVertices().count, options: [])
         let coordsBuffer = renderer.device.makeBuffer(bytes: model.allUv(), length: MemoryLayout<Float2>.stride * model.allUv().count, options: [])!
-        let normalsBuffer = renderer.device.makeBuffer(bytes: model.normals, length: MemoryLayout<Float3>.stride * model.normals.count, options: [])!
+        let normalsBuffer = renderer.device.makeBuffer(bytes: model.normals.map { _ in Float3(1, 1, 1) }, length: MemoryLayout<Float3>.stride * model.normals.count, options: [])!
 
         var wandSpriteSheet = SpriteSheet(textureWidth: 80, textureHeight: 16, spriteWidth: 16, spriteHeight: 16)
 

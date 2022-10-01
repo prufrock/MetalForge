@@ -183,6 +183,16 @@ extension GMWorld {
         // check if the player intersects with the world
         player.avoidWalls(in: self)
 
+        // update lights
+        let lightPosition = Float3(player.position) + Float3(1.5, 0.5, 0.5)
+        let spinningLight = Float4x4.identity()
+            * Float4x4.translate(x: lightPosition.x, y: lightPosition.y, z: lightPosition.z)
+            * Float4x4.rotateZ(.pi / 1.5)
+            * Float4x4.rotateX(-(3 * .pi) / 2)
+            * (player.direction3d) * Float4(-1.0, -1.0, -1.0, 1.0)
+        lighting.lights[0].position = Float3(spinningLight.x, spinningLight.y, spinningLight.z)
+        lighting.lights[0].coneDirection = Float3(player.direction) + Float3(0,0, 0.4)
+
         // Play sounds
         // after the method returns remove all of the sounds so they won't be played next frame.
         defer { sounds.removeAll() }

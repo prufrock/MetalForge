@@ -37,15 +37,6 @@ struct RNDRDrawIndexedGameWorldLighting: RNDRDrawWorldPhase {
             // The camera is at the players position, but it might be worth generalizing this in case I want to move it around.
             fragmentUniforms.cameraPosition = Float3(world.player.position)
             var lights = world.lighting.lights
-            //TODO move this into World
-            let lightPosition = Float3(world.player.position)  + Float3(0.5, 1.5, 1.0)
-            let spinningLight = Float4x4.identity()
-                * Float4x4.translate(x: lightPosition.x, y: lightPosition.y, z: lightPosition.z)
-                * Float4x4.rotateZ(.pi / 1.5)
-                * Float4x4.rotateX(-(3 * .pi) / 2)
-                * (world.player.direction3d) * Float4(-1.0, -1.0, -1.0, 1.0)
-            lights[0].position = Float3(spinningLight.x, spinningLight.y, spinningLight.z)
-            lights[0].coneDirection = Float3(world.player.direction) + Float3(0,0, 0.4)
 
             let buffer = buffers.vertexBuffer
             let indexBuffer = buffers.indexBuffer
@@ -120,6 +111,7 @@ struct RNDRDrawIndexedGameWorldLighting: RNDRDrawWorldPhase {
             encoder.setVertexBytes(indexedModelTransform, length: MemoryLayout<Float4x4>.stride * indexedModelTransform.count, index: 4)
             encoder.setVertexBytes(indexedTextureId, length: MemoryLayout<UInt32>.stride * indexedTextureId.count, index: 5)
             encoder.setVertexBytes(&spriteSheet, length: MemoryLayout<SpriteSheet>.stride, index: 6)
+            encoder.setVertexBytes(indexedModelTransform.map { $0.inverse.transpose.upperLeft() }, length: MemoryLayout<Float4x4>.stride * indexedModelTransform.count, index: 7)
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)

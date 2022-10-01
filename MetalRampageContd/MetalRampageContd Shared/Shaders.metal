@@ -271,6 +271,7 @@ vertex VertexOutSimpleLighting vertex_indexed_lighting(Vertex in [[stage_in]],
                                                   constant matrix_float4x4 *worldTransform [[buffer(4)]],
                                                   constant uint *textureId [[buffer(5)]],
                                                   constant SpriteSheet &spriteSheet [[buffer(6)]],
+                                                  constant matrix_float3x3 *normalTransform[[buffer(7)]],
                                                   uint vid [[vertex_id]],
                                                   uint iid [[instance_id]]
                                                   ) {
