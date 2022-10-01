@@ -72,9 +72,20 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
             texture: nil
         ), hud.weaponIcon, 100)
 
+        let button: (RNDRObject, GMTexture, UInt32) = (RNDRObject(
+            vertices: model.allVertices(),
+            uv: model.allUv(),
+            transform: Float4x4.translate(x: hud.buttons[0].position.x, y: hud.buttons[0].position.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+            color: .red,
+            primitiveType: .triangle,
+            position: Int2(0, 0),
+            texture: nil
+        ), hud.buttons[0].texture, 100)
+
         renderables.append(charges1)
         renderables.append(charges2)
         renderables.append(chargesIcon)
+        renderables.append(button)
 
         let indexedObjTransform = renderables.map { (object, _, _) -> Float4x4 in object.transform }
         let indexedTextureId: [UInt32] = renderables.map { (_, texture, _) -> UInt32 in
@@ -89,6 +100,10 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
                 return 4
             case .wandIcon:
                 return 5
+            case .squareGreen:
+                return 6
+            case .squarePurple:
+                return 7
             default:
                 return 0
             }
@@ -130,6 +145,8 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
         encoder.setFragmentTexture(renderer.hud[.font]!, index: 3)
         encoder.setFragmentTexture(renderer.fireBlast[.fireBlastIcon]!, index: 4)
         encoder.setFragmentTexture(renderer.wand[.wandIcon]!, index: 5)
+        encoder.setFragmentTexture(renderer.squareGreen, index: 6)
+        encoder.setFragmentTexture(renderer.squarePurple, index: 7)
 
         encoder.drawIndexedPrimitives(
             type: primitiveType,

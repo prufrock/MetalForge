@@ -181,6 +181,9 @@
 		63B33F39280B527000734353 /* fireBlastFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 63B33F38280B527000734353 /* fireBlastFire.mp3 */; };
 		63B33F3A280B527000734353 /* fireBlastFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 63B33F38280B527000734353 /* fireBlastFire.mp3 */; };
 		63B33F3B280B527000734353 /* fireBlastFire.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 63B33F38280B527000734353 /* fireBlastFire.mp3 */; };
+		63B38B6628E886D4009654EA /* GMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B38B6528E886D4009654EA /* GMButton.swift */; };
+		63B38B6728E886D4009654EA /* GMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B38B6528E886D4009654EA /* GMButton.swift */; };
+		63B38B6828E886D4009654EA /* GMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B38B6528E886D4009654EA /* GMButton.swift */; };
 		63C64C8A28A49FAE0063C1AE /* RNDRBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C64C8928A49FAE0063C1AE /* RNDRBillboard.swift */; };
 		63C64C8B28A49FAE0063C1AE /* RNDRBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C64C8928A49FAE0063C1AE /* RNDRBillboard.swift */; };
 		63C64C8C28A49FAE0063C1AE /* RNDRBillboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C64C8928A49FAE0063C1AE /* RNDRBillboard.swift */; };
@@ -336,6 +339,7 @@
 		63B33F2C2809C25000734353 /* castSpell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = castSpell.mp3; sourceTree = "<group>"; };
 		63B33F34280AFC9600734353 /* medkit.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = medkit.mp3; sourceTree = "<group>"; };
 		63B33F38280B527000734353 /* fireBlastFire.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireBlastFire.mp3; sourceTree = "<group>"; };
+		63B38B6528E886D4009654EA /* GMButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMButton.swift; sourceTree = "<group>"; };
 		63C64C8928A49FAE0063C1AE /* RNDRBillboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRBillboard.swift; sourceTree = "<group>"; };
 		63D44B1B27D427CD00D4BE7D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		63D44B1C27D427CD00D4BE7D /* RNDRRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRRenderer.swift; sourceTree = "<group>"; };
@@ -437,6 +441,7 @@
 				5AF0E3B7F2459B2F17762B8B /* GMMonster.swift */,
 				5AF0E73A9365E80E6320A300 /* GMPushWall.swift */,
 				5AF0E7353A28D077F741C2EA /* GMPickup.swift */,
+				63B38B6528E886D4009654EA /* GMButton.swift */,
 			);
 			path = Actor;
 			sourceTree = "<group>";
@@ -826,6 +831,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D44BDA27D42B0C00D4BE7D /* ScopeFunc.swift in Sources */,
+				63B38B6628E886D4009654EA /* GMButton.swift in Sources */,
 				63D44BB627D42A1B00D4BE7D /* MathUtils.swift in Sources */,
 				63D44BE627D42B6500D4BE7D /* ArrayExt.swift in Sources */,
 				63D44B5127D427CF00D4BE7D /* RNDRRenderer.swift in Sources */,
@@ -893,6 +899,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D44BDB27D42B0C00D4BE7D /* ScopeFunc.swift in Sources */,
+				63B38B6728E886D4009654EA /* GMButton.swift in Sources */,
 				63D44BB727D42A1B00D4BE7D /* MathUtils.swift in Sources */,
 				63D44BE727D42B6500D4BE7D /* ArrayExt.swift in Sources */,
 				63D44B5227D427CF00D4BE7D /* RNDRRenderer.swift in Sources */,
@@ -960,6 +967,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63D44BDC27D42B0C00D4BE7D /* ScopeFunc.swift in Sources */,
+				63B38B6828E886D4009654EA /* GMButton.swift in Sources */,
 				63D44BB827D42A1B00D4BE7D /* MathUtils.swift in Sources */,
 				63D44BE827D42B6500D4BE7D /* ArrayExt.swift in Sources */,
 				63D44B5327D427CF00D4BE7D /* RNDRRenderer.swift in Sources */,

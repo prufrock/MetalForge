@@ -17,6 +17,8 @@ class RNDRRenderer: NSObject {
     // textures
     private(set) var ceiling: MTLTexture!
     private(set) var colorMapTexture: MTLTexture!
+    private(set) var squareGreen: MTLTexture!
+    private(set) var squarePurple: MTLTexture!
     private(set) var crackedFloor: MTLTexture!
     private(set) var crackedWallTexture: MTLTexture!
     private(set) var floor: MTLTexture!
@@ -131,6 +133,8 @@ class RNDRRenderer: NSObject {
 
         ceiling = loadTexture(name: "Ceiling")!
         colorMapTexture = loadTexture(name: "ColorMap")!
+        squareGreen = loadTexture(name: "SquareGreen")!
+        squarePurple = loadTexture(name: "SquarePurple")!
         crackedFloor = loadTexture(name: "CrackedFloor")!
         crackedWallTexture = loadTexture(name: "CrackedWall")!
         floor = loadTexture(name: "Floor")!
