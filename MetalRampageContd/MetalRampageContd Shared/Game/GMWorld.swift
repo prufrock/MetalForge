@@ -23,6 +23,8 @@ struct GMWorld {
     private(set) var isLevelEnded: Bool
     var showMap: Bool = false
     var drawWorld: Bool = true
+    // ugly but quick solution to turning the light on and off with a button
+    private var originalLightColor: Float3? = nil
 
     init(map: GMTilemap) {
         self.map = map
@@ -218,6 +220,17 @@ extension GMWorld {
         // after the method returns remove all of the sounds so they won't be played next frame.
         defer { sounds.removeAll() }
         return .playSounds(sounds)
+    }
+
+    mutating func toggleLight() {
+        if originalLightColor == nil {
+            originalLightColor = lighting.lights[0].color
+        }
+        if (lighting.lights[0].color != [0.1, 0.1, 0.1]) {
+            lighting.lights[0].color = [0.1, 0.1, 0.1];
+        } else {
+            lighting.lights[0].color = originalLightColor!
+        }
     }
 
     mutating func addTouchLocation(position: Float2) {

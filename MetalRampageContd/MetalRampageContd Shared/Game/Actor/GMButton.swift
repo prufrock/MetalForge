@@ -35,9 +35,9 @@ struct GMButton: GMActor {
         if canClick {
             state = .clicked
 
-
-            if let touchLocation: GMButton = world.touchLocation, let intersection = intersection(with: touchLocation) {
+            if input.isTouching, let touchLocation: GMButton = world.touchLocation, let intersection = intersection(with: touchLocation) {
                 texture = .squarePurple
+                world.toggleLight()
             }
             debounce.time = 0
         }
