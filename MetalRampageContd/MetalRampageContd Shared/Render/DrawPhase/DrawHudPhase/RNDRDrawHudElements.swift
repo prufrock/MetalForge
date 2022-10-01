@@ -87,7 +87,7 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
 
         for i in hud.touchLocations.indices {
             let touchLocation = hud.touchLocations[i]
-            let ndcPosition = touchLocation.toNdcSpace()
+            let ndcPosition = touchLocation.toNdcSpace(aspect: renderer.aspect)
             renderables.append((RNDRObject(
                 vertices: model.allVertices(),
                 uv: model.allUv(),

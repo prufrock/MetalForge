@@ -61,6 +61,9 @@ class GameViewController: NSViewController {
 
     var mouseLocation: NSPoint { window.convertPoint(fromScreen: NSEvent.mouseLocation) }
 
+    private var viewWidth: Float = 0
+    private var viewHeight: Float = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMetalView()
@@ -179,6 +182,8 @@ extension GameViewController: MTKViewDelegate {
         print("height: \(size.height) width: \(size.width)")
         print("height: \(view.frame.height) width: \(view.frame.width)")
 
+        viewWidth = Float(size.width)
+        viewHeight = Float(size.height)
         renderer.updateAspect(width: Float(size.width), height: Float(size.height))
     }
 
@@ -197,13 +202,13 @@ extension GameViewController: MTKViewDelegate {
             isFiring: lastFiredTime > lastFrameTime,
             showMap: showMap,
             drawWorld: drawWorld,
-            touchLocation: isClicking ? GMTouchCoords(position: Float2(Float(self.mouseLocation.x), Float(self.mouseLocation.y))): nil
+            touchLocation: isClicking ? GMTouchCoords(position: Float2(Float(self.mouseLocation.x), Float(self.mouseLocation.y))).toWorldSpace(screenWidth: viewWidth, screenHeight: viewHeight) : nil
         )
         
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {
             game.update(timeStep: timeStep / worldSteps, input: input)
-            // the world advances faster than draw calls are made so to ensure "isFiring is only applied once it gets set to false. Especailly helpful when going from the title screen into the game.
+            // the world advances faster than draw calls are made so to ensure "isFiring is only applied once it gets set to false. Especially helpful when going from the title screen into the game.
             input.isFiring = false
         }
         lastFrameTime = time
