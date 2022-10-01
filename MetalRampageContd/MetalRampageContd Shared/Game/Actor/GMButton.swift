@@ -34,7 +34,7 @@ struct GMButton: GMActor {
     mutating func update(with input: GMInput, in world: inout GMWorld) {
         if canClick {
             state = .clicked
-            if let touchCoords = input.toucCoords {
+            if let touchCoords = input.touchCoords {
                 print("touchLocation:", String(format: "%.1f, %.1f", touchCoords.x, touchCoords.y))
                 world.addTouchLocation(position: touchCoords)
             }
