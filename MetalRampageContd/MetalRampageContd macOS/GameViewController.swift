@@ -202,7 +202,7 @@ extension GameViewController: MTKViewDelegate {
             isFiring: lastFiredTime > lastFrameTime,
             showMap: showMap,
             drawWorld: drawWorld,
-            touchLocation: isClicking ? GMTouchCoords(position: Float2(Float(self.mouseLocation.x), Float(self.mouseLocation.y))).toWorldSpace(screenWidth: viewWidth, screenHeight: viewHeight) : nil
+            touchCoords: isClicking ? GMTouchCoords(position: Float2(Float(self.mouseLocation.x), Float(self.mouseLocation.y))).toWorldSpace(screenWidth: viewWidth, screenHeight: viewHeight) : nil
         )
         
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
