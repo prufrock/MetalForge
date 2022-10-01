@@ -9,6 +9,7 @@ import Cocoa
 import MetalKit
 
 class GameViewController: NSViewController {
+    lazy var window: NSWindow = self.view.window!
     private let metalView = MTKView()
     private var renderer: RNDRRenderer!
     private var audioEngine = AudioEngine()
@@ -58,7 +59,7 @@ class GameViewController: NSViewController {
     // Needed so that the mouseLocation isn't constantly sent in as input
     private var lastClickedTime: Double = 0.0
 
-    var mouseLocation: NSPoint { NSEvent.mouseLocation }
+    var mouseLocation: NSPoint { window.convertPoint(fromScreen: NSEvent.mouseLocation) }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -196,7 +197,7 @@ extension GameViewController: MTKViewDelegate {
             isFiring: lastFiredTime > lastFrameTime,
             showMap: showMap,
             drawWorld: drawWorld,
-            touchLocation: isClicking ? Float2(0.8, 0.8) : nil
+            touchLocation: isClicking ? GMTouchCoords(position: Float2(Float(self.mouseLocation.x), Float(self.mouseLocation.y))): nil
         )
         
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)

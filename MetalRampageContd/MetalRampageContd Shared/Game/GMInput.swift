@@ -11,7 +11,7 @@ struct GMInput {
     var showMap: Bool
     var drawWorld: Bool
     var isFiring: Bool
-    var touchLocation: Float2?
+    var touchLocation: GMTouchCoords?
 
     init(
         speed: Float,
@@ -20,7 +20,7 @@ struct GMInput {
         isFiring: Bool,
         showMap: Bool,
         drawWorld: Bool,
-        touchLocation: Float2? = nil
+        touchLocation: GMTouchCoords? = nil
     ) {
         self.speed = speed
         self.rotation = rotation

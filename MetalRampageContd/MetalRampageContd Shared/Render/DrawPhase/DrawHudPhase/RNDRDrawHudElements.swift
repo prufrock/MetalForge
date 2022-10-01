@@ -87,10 +87,11 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
 
         for i in hud.touchLocations.indices {
             let touchLocation = hud.touchLocations[i]
+            let ndcPosition = touchLocation.toNdcSpace()
             renderables.append((RNDRObject(
                 vertices: model.allVertices(),
                 uv: model.allUv(),
-                transform: Float4x4.translate(x: touchLocation.position.x, y: touchLocation.position.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+                transform: Float4x4.translate(x: ndcPosition.x, y: ndcPosition.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
                 color: .red,
                 primitiveType: .triangle,
                 position: Int2(0, 0),
