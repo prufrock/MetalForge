@@ -196,6 +196,12 @@ extension GMWorld {
         lighting.lights[0].position = Float3(spinningLight.x, spinningLight.y, spinningLight.z)
         lighting.lights[0].coneDirection = Float3(player.direction) + Float3(0,0, 0.4)
 
+        // handle touches/clicks
+        if input.isTouching, let touchCoords = input.touchCoords {
+            print("touchLocation:", String(format: "%.1f, %.1f", touchCoords.x, touchCoords.y))
+            addTouchLocation(position: touchCoords)
+        }
+
         // handle buttons
         for i in buttons.indices {
             var button = buttons[i]

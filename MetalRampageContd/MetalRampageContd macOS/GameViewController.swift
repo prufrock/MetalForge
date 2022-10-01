@@ -194,7 +194,7 @@ extension GameViewController: MTKViewDelegate {
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
         let inputVector = self.inputVector
         let rotation = inputVector.x * game.world.player.turningSpeed * worldTimeStep
-        let isClicking = lastClickedTime > lastFrameTime
+        let isTouching = lastClickedTime > lastFrameTime
         var input = GMInput(
             speed: -inputVector.y,
             rotation: Float2x2.rotate(rotation),
@@ -202,7 +202,8 @@ extension GameViewController: MTKViewDelegate {
             isFiring: lastFiredTime > lastFrameTime,
             showMap: showMap,
             drawWorld: drawWorld,
-            touchCoords: isClicking ? GMTouchCoords(position: Float2(Float(self.mouseLocation.x), Float(self.mouseLocation.y))).toWorldSpace(screenWidth: viewWidth, screenHeight: viewHeight) : nil
+            isTouching: isTouching,
+            touchCoords: isTouching ? GMTouchCoords(position: Float2(Float(self.mouseLocation.x), Float(self.mouseLocation.y))).toWorldSpace(screenWidth: viewWidth, screenHeight: viewHeight) : nil
         )
         
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
