@@ -10,9 +10,9 @@ struct GMHud {
     let weaponIcon: GMTexture
     let font: GMFont
     let buttons: [GMButton]
-    let touchLocations: [GMButton]
+    let touchLocation: GMButton?
 
-    init(player: GMPlayer, font: GMFont, buttons: [GMButton], touchLocations: [GMButton]) {
+    init(player: GMPlayer, font: GMFont, buttons: [GMButton], touchLocation: GMButton?) {
         let health = Int(max(0, player.health))
         switch health {
         case ...10:
@@ -28,6 +28,6 @@ struct GMHud {
         self.weaponIcon = player.weapon.attributes.hudIcon
         self.font = font
         self.buttons = buttons
-        self.touchLocations = touchLocations
+        self.touchLocation = touchLocation
     }
 }

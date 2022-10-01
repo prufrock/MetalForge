@@ -74,10 +74,13 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
 
         for i in hud.buttons.indices {
             let button = hud.buttons[i]
+            // 2 * radius is the linear scale but the button needs to scale in 2 dimensions so 2 x 2 = 4
+            let scale: Float = button.radius * 4.0
+            let ndcPosition = button.toNdcSpace(aspect: renderer.aspect)
             renderables.append((RNDRObject(
                 vertices: model.allVertices(),
                 uv: model.allUv(),
-                transform: Float4x4.translate(x: button.position.x, y: button.position.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+                transform: Float4x4.translate(x: ndcPosition.x, y: ndcPosition.y, z: 0.0) * Float4x4.scale(x: scale * renderer.aspect, y: scale, z: 0.0),
                 color: .red,
                 primitiveType: .triangle,
                 position: Int2(0, 0),
@@ -85,13 +88,14 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
             ), button.texture, 100))
         }
 
-        for i in hud.touchLocations.indices {
-            let touchLocation = hud.touchLocations[i]
+        if let touchLocation = hud.touchLocation {
+            // 2 * radius is the linear scale but the button needs to scale in 2 dimensions so 2 x 2 = 4
+            let scale: Float = touchLocation.radius * 4.0
             let ndcPosition = touchLocation.toNdcSpace(aspect: renderer.aspect)
             renderables.append((RNDRObject(
                 vertices: model.allVertices(),
                 uv: model.allUv(),
-                transform: Float4x4.translate(x: ndcPosition.x, y: ndcPosition.y, z: 0.0) * Float4x4.scale(x: 0.1, y: 0.1, z: 0.0),
+                transform: Float4x4.translate(x: ndcPosition.x, y: ndcPosition.y, z: 0.0) * Float4x4.scale(x: scale * renderer.aspect, y: scale, z: scale),
                 color: .red,
                 primitiveType: .triangle,
                 position: Int2(0, 0),

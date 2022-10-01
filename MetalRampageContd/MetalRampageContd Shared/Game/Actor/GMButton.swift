@@ -38,11 +38,16 @@ struct GMButton: GMActor {
                 print("touchLocation:", String(format: "%.1f, %.1f", touchCoords.x, touchCoords.y))
                 world.addTouchLocation(position: touchCoords)
             }
+
+            if let touchLocation: GMButton = world.touchLocation, let intersection = intersection(with: touchLocation) {
+                texture = .squarePurple
+            }
             debounce.time = 0
         }
 
         if !debounce.isActive {
             state = .notClicked
+            texture = .squareGreen
         }
     }
 
