@@ -50,6 +50,8 @@ extension GMWorld {
      - Returns: An action the caller can execute if needed.
      */
     mutating func update(timeStep: Float, input: GMInput) -> GMWorldAction? {
+        // Tracks whether a button is clicked so it can block the weapon from firing.
+        var buttonClicked = false
         //update effects
         effects = effects.compactMap { effect  in
             if effect.isCompleted {
@@ -73,6 +75,24 @@ extension GMWorld {
             return nil
         }
 
+        // handle touches/clicks
+        if input.isTouching, let touchCoords = input.touchCoords {
+            print("touchLocation:", String(format: "%.1f, %.1f", touchCoords.x, touchCoords.y))
+            addTouchLocation(position: touchCoords)
+        }
+
+        // handle buttons
+        // Need to do this before player because if a button is pressed then their weapon should not fire.
+        for i in buttons.indices {
+            var button = buttons[i]
+
+            button.debounce.time += timeStep
+
+            buttonClicked.leaveOn(button.update(with: input, in: &self))
+
+            buttons[i] = button
+        }
+
         //update player
         if player.isDead, effects.isEmpty {
             reset()
@@ -85,7 +105,7 @@ extension GMWorld {
                 var updatedPlayer = $0
 
                 updatedPlayer.animation.time += timeStep
-                updatedPlayer.update(with: input, in: &self)
+                updatedPlayer.update(with: input, in: &self, buttonClicked: buttonClicked)
 
                 // Is there way to move position changes into player.update()?
                 updatedPlayer.position += player.velocity * timeStep
@@ -197,24 +217,6 @@ extension GMWorld {
             * (player.direction3d) * Float4(-1.0, -1.0, -1.0, 1.0)
         lighting.lights[0].position = Float3(spinningLight.x, spinningLight.y, spinningLight.z)
         lighting.lights[0].coneDirection = Float3(player.direction) + Float3(0,0, 0.4)
-
-        // handle touches/clicks
-        if input.isTouching, let touchCoords = input.touchCoords {
-            print("touchLocation:", String(format: "%.1f, %.1f", touchCoords.x, touchCoords.y))
-            addTouchLocation(position: touchCoords)
-        }
-
-        // handle buttons
-        for i in buttons.indices {
-            var button = buttons[i]
-
-            button.debounce.time += timeStep
-
-            button.update(with: input, in: &self)
-
-            buttons[i] = button
-        }
-
 
         // Play sounds
         // after the method returns remove all of the sounds so they won't be played next frame.
@@ -651,5 +653,18 @@ extension GMWorld: GMGraph {
 
         // uniform square tiles always 1 apart
         return 1
+    }
+}
+
+extension Bool {
+    /**
+     If the Bool is set to true it leaves it true otherwise it takes the value.
+     - Parameter changingValue:
+     - Returns:
+     */
+    mutating func leaveOn(_ changingValue: Bool) {
+        if(self != true) {
+            self = changingValue
+        }
     }
 }

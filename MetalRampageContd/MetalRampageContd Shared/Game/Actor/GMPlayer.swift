@@ -86,8 +86,9 @@ extension GMPlayer {
      - Parameters:
        - input: Input
        - world: World
+       - buttonClicked: Bool whether or not a button was clicked. Prevents the firing of the weapon.
      */
-    mutating func update(with input: GMInput, in world: inout GMWorld) {
+    mutating func update(with input: GMInput, in world: inout GMWorld, buttonClicked: Bool) {
         // like in push wall allows `update` to determine the moment when the player starts or stops moving.
         let wasMoving = isMoving
 
@@ -95,8 +96,12 @@ extension GMPlayer {
         direction3d = direction3d * input.rotation3d
         velocity = direction * Float(input.speed) * speed
 
+        if buttonClicked {
+            print("button clicked")
+        }
+
         // you can keep firing as long as you *canFire*
-        if input.isFiring, canFire {
+        if input.isFiring, canFire, !buttonClicked {
             state = .firing
             // take away a charge after firing
             charges -= 1

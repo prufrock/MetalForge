@@ -31,21 +31,30 @@ struct GMButton: GMActor {
         }
     }
 
-    mutating func update(with input: GMInput, in world: inout GMWorld) {
+    /**
+     * Updates the button and lets you know if a button was clicked on this update.
+     - Parameters:
+       - input:
+       - world:
+     */
+    mutating func update(with input: GMInput, in world: inout GMWorld) -> Bool {
+        var clicked = false
         if canClick {
-            state = .clicked
-
-            if input.isTouching, let touchLocation: GMButton = world.touchLocation, let intersection = intersection(with: touchLocation) {
+            if input.isTouching, let touchLocation: GMButton = world.touchLocation, let _ = intersection(with: touchLocation) {
+                state = .clicked
                 texture = .squarePurple
                 world.toggleLight()
+                debounce.time = 0
+                clicked = true
             }
-            debounce.time = 0
         }
 
         if !debounce.isActive {
             state = .notClicked
             texture = .squareGreen
         }
+
+        return clicked
     }
 
     func toNdcSpace(aspect: Float) -> Float2 {
