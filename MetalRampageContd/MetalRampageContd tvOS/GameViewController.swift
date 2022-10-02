@@ -96,7 +96,8 @@ extension GameViewController: MTKViewDelegate {
             // Holding off on implementing this for tvOS
             isFiring: false,
             showMap: showMap,
-            drawWorld: drawWorld
+            drawWorld: drawWorld,
+            isTouching: false
         )
 
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
