@@ -51,6 +51,11 @@ class GameViewController: UIViewController {
     private let tapGesture = UITapGestureRecognizer()
     private var lastFiredTime: Double = 0.0
 
+    var touchCoords: Float2 = Float2()
+
+    private var viewWidth: Float = 0
+    private var viewHeight: Float = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         audioEngine.setUpAudio()
@@ -88,16 +93,23 @@ class GameViewController: UIViewController {
 extension GameViewController {
     @objc func fire(_ gestureRecognizer: UITapGestureRecognizer) {
         lastFiredTime = CACurrentMediaTime()
+        let location = gestureRecognizer.location(in: view)
+        touchCoords = Float2(Float(location.x), Float(location.y))
+        print("touchCoords:", String(format: "%.1f, %.1f", touchCoords.x, touchCoords.y))
     }
 }
 
 extension GameViewController: MTKViewDelegate {
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function)
-        print("height: \(size.height) width: \(size.width)")
-        print("height: \(view.frame.height) width: \(view.frame.width)")
+        print("size height: \(size.height) width: \(size.width)")
+        print("frame height: \(view.frame.height) width: \(view.frame.width)")
 
-        renderer.updateAspect(width: Float(size.width), height: Float(size.height))
+        // Use the frame.width and height because tap coordinates are relative to them.
+        viewWidth = Float(view.frame.width)
+        viewHeight = Float(view.frame.height)
+
+        renderer.updateAspect(width: Float(view.frame.width), height: Float(view.frame.height))
     }
 
     public func draw(in view: MTKView) {
@@ -107,6 +119,7 @@ extension GameViewController: MTKViewDelegate {
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
         let inputVector = self.inputVector
         let rotation = inputVector.x * game.world.player.turningSpeed * worldTimeStep
+        let isFiring = lastFiredTime > lastFrameTime
         var input = GMInput(
             speed: -inputVector.y,
             rotation: Float2x2.rotate(rotation),
@@ -115,7 +128,9 @@ extension GameViewController: MTKViewDelegate {
             // the last frame was rendered.
             isFiring: lastFiredTime > lastFrameTime,
             showMap: false,
-            drawWorld: true
+            drawWorld: true,
+            isTouching: isFiring,
+            touchCoords: isFiring ? GMTouchCoords(position: touchCoords).toWorldSpace(screenWidth: viewWidth, screenHeight: viewHeight, flipY: false) : nil
         )
 
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)

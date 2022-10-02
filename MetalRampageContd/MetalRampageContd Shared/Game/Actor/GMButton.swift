@@ -82,14 +82,19 @@ enum GMButtonType {
 
 struct GMTouchCoords {
     let position: Float2
-//    let screenWidth:Float = 965.0
-//    let screenHeight:Float = 680.0
 
-    func toWorldSpace(screenWidth: Float, screenHeight: Float) -> Float2 {
+    /**
+
+     - Parameters:
+       - screenWidth: The width of the screen that corresponds with the coordinates.
+       - screenHeight: The height of the screen that corresponds with the coordinates.
+       - flipY: macOS has an origin in the lower left while iOS has the origin in the upper right so you need to flip y.
+     - Returns:
+     */
+    func toWorldSpace(screenWidth: Float, screenHeight: Float, flipY: Bool = true) -> Float2 {
+        print("screen position:", String(format: "%.8f, %.8f", position.x, position.y))
         let x = 1/screenWidth * position.x
-        // subtract screenHeight - position.y because screen space has a lower left origin
-        // while world space has an upper left origin
-        let y = 1/screenHeight * (screenHeight - position.y)
+        let y = 1/screenHeight * ((position.y * (flipY ? -1 : 1)) + (screenHeight * (flipY ? 1 : 0)))
         print("h w:", String(format: "%.8f, %.8f", screenHeight, screenWidth))
         print("worldPosition:", String(format: "%.8f, %.8f", x, y))
         return Float2(x, y)
