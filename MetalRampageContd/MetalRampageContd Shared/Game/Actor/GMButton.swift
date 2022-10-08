@@ -11,6 +11,7 @@
 struct GMButton: GMActor {
     var radius: Float
 
+    // TODO: Find a way to change the position in world space when the aspect ratio changes: portrait <-> landscape.
     var position: Float2
 
     // You can't kill a button

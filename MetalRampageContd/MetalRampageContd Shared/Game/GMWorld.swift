@@ -13,7 +13,7 @@ struct GMWorld {
     private(set) var switches: [GMSwitch]
     private(set) var pickups: [GMPickup]
     private(set) var effects: [GMEffect]
-    private(set) var buttons: [GMButton] = [GMButton(radius: 0.04, position: Float2(0.9, 0.3))]
+    private(set) var buttons: [GMButton] = [GMButton(radius: 0.04, position: Float2(0.3, 0.2))]
     // being lazy for debugging
     private(set) var touchLocation: GMButton? = nil
     // lights - the renderer needs access
