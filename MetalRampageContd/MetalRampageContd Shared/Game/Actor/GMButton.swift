@@ -100,12 +100,16 @@ struct GMTouchCoords {
      - Returns:
      */
     func toWorldSpace(screenWidth: Float, screenHeight: Float, flipY: Bool = true) -> Float2 {
-        print("screen position:", String(format: "%.8f, %.8f", position.x, position.y))
-        let x = 1/screenWidth * position.x
-        let y = 1/screenHeight * ((position.y * (flipY ? -1 : 1)) + (screenHeight * (flipY ? 1 : 0)))
-        print("h w:", String(format: "%.8f, %.8f", screenHeight, screenWidth))
-        print("worldPosition:", String(format: "%.8f, %.8f", x, y))
-        return Float2(x, y)
+        let ndcPosition = toNdcSpace(screenWidth: screenWidth, screenHeight: screenHeight)
+        let aspect = screenWidth / screenHeight
+        //TODO find a way to share `hudCamera` between here and the renderer.
+        let hudCamera = Float4x4.identity()
+                .scaledX(by: 1/aspect)
+        // Invert the Camera so that the position can go from NDC space to world space.
+        // The camera normally takes a coordinate from world space to NDC space.
+        let position4 = Float4(position: ndcPosition) * hudCamera.inverse
+        print("touch world:", String(format: "%.8f, %.8f", position4.x, position4.y))
+        return Float2(position4.x, position4.y)
     }
 
     /**
