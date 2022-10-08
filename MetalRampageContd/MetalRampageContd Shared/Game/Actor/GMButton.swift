@@ -56,18 +56,6 @@ struct GMButton: GMActor {
 
         return clicked
     }
-
-    func toNdcSpace(aspect: Float) -> Float2 {
-        //TODO these should go somewhere more global
-        let worldMaxX: Float = 1.0
-        let worldMaxY: Float = 1.0
-        // -1 on the left because +x to the right
-        let x = (((position.x / worldMaxX) * 2) - 1)
-            * (aspect) // adjust for the aspect ratio
-        // 1 - on the right because +y is down
-        let y = 1 - ((position.y / worldMaxY) * 2)
-        return Float2(x, y)
-    }
 }
 
 struct GMDebounce {

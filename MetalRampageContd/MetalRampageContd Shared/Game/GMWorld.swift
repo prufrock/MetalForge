@@ -236,7 +236,7 @@ extension GMWorld {
     }
 
     mutating func addTouchLocation(position: Float2) {
-        touchLocation = GMButton(radius: 0.005, position: position, texture: .squarePurple)
+        touchLocation = GMButton(radius: 0.01, position: position, texture: .squarePurple)
     }
 
     mutating func hurtPlayer(_ damage: Float) {
