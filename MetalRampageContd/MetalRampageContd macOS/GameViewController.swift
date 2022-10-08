@@ -179,11 +179,11 @@ class GameViewController: NSViewController {
 extension GameViewController: MTKViewDelegate {
     public func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         print(#function)
-        print("height: \(size.height) width: \(size.width)")
-        print("height: \(view.frame.height) width: \(view.frame.width)")
+        print("size height: \(size.height) width: \(size.width)")
+        print("frame height: \(view.frame.height) width: \(view.frame.width)")
 
-        viewWidth = Float(size.width)
-        viewHeight = Float(size.height)
+        viewWidth = Float(view.frame.width)
+        viewHeight = Float(view.frame.height)
         renderer.updateAspect(width: Float(size.width), height: Float(size.height))
     }
 
@@ -203,7 +203,7 @@ extension GameViewController: MTKViewDelegate {
             showMap: showMap,
             drawWorld: drawWorld,
             isTouching: isTouching,
-            touchCoords: isTouching ? GMTouchCoords(position: Float2(Float(self.mouseLocation.x), Float(self.mouseLocation.y))).toWorldSpace(screenWidth: viewWidth, screenHeight: viewHeight) : nil
+            touchCoords: isTouching ? GMTouchCoords(position: Float2(Float(self.mouseLocation.x), Float(self.mouseLocation.y))).toNdcSpace(screenWidth: viewWidth, screenHeight: viewHeight) : nil
         )
         
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)

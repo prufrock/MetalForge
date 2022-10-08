@@ -93,7 +93,6 @@ struct GMTouchCoords {
     let position: Float2
 
     /**
-
      - Parameters:
        - screenWidth: The width of the screen that corresponds with the coordinates.
        - screenHeight: The height of the screen that corresponds with the coordinates.
@@ -106,6 +105,27 @@ struct GMTouchCoords {
         let y = 1/screenHeight * ((position.y * (flipY ? -1 : 1)) + (screenHeight * (flipY ? 1 : 0)))
         print("h w:", String(format: "%.8f, %.8f", screenHeight, screenWidth))
         print("worldPosition:", String(format: "%.8f, %.8f", x, y))
+        return Float2(x, y)
+    }
+
+    /**
+     - Parameters:
+       - screenWidth: The width of the screen that corresponds with the coordinates.
+       - screenHeight: The height of the screen that corresponds with the coordinates.
+       - flipY: macOS has an origin in the lower left while iOS has the origin in the upper right so you need to flip y.
+     - Returns:
+     */
+    func toNdcSpace(screenWidth: Float, screenHeight: Float, flipY: Bool = true) -> Float2 {
+        // divide position.x by the screenWidth so number varies between 0 and 1
+        // multiply that by 2 so that it varies between 0 and 2
+        // subtract 1 because NDC x increases as you go to the right and this moves the value between -1 and 1.
+        // remember the abs(-1 - 1) = 2 so multiplying by 2 is important
+        let x = ((position.x / screenWidth) * 2) - 1
+        // converting position.y is like converting position.x
+        // I think I may need to flip the y for iOS when I get there
+        let y = ((position.y / screenHeight) * 2) - 1
+        print("touch screen:", String(format: "%.8f, %.8f", position.x, position.y))
+        print("touch NDC:", String(format: "%.8f, %.8f", x, y))
         return Float2(x, y)
     }
 }

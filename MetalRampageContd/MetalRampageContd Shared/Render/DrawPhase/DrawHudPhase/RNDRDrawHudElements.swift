@@ -91,7 +91,7 @@ struct RNDRDrawHudElements: RNDRDrawHudPhase {
         if let touchLocation = hud.touchLocation {
             // 2 * radius is the linear scale but the button needs to scale in 2 dimensions so 2 x 2 = 4
             let scale: Float = touchLocation.radius * 4.0
-            let ndcPosition = touchLocation.toNdcSpace(aspect: renderer.aspect)
+            let ndcPosition = touchLocation.position
             renderables.append((RNDRObject(
                 vertices: model.allVertices(),
                 uv: model.allUv(),
