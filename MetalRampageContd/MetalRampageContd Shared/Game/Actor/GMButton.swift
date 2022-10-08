@@ -114,8 +114,8 @@ struct GMTouchCoords {
         // remember the abs(-1 - 1) = 2 so multiplying by 2 is important
         let x = ((position.x / screenWidth) * 2) - 1
         // converting position.y is like converting position.x
-        // I think I may need to flip the y for iOS when I get there
-        let y = ((position.y / screenHeight) * 2) - 1
+        // multiply by -1 when flipY is set because on iOS the origin is in the upper left
+        let y = (flipY ? -1 : 1) * (((position.y / screenHeight) * 2) - 1)
         print("touch screen:", String(format: "%.8f, %.8f", position.x, position.y))
         print("touch NDC:", String(format: "%.8f, %.8f", x, y))
         return Float2(x, y)
