@@ -21,6 +21,9 @@
 		630C312029249B58001A6952 /* MFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C311F29249B58001A6952 /* MFloat.swift */; };
 		630C312229249B80001A6952 /* MSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C312129249B80001A6952 /* MSpaces.swift */; };
 		630C312429249C3D001A6952 /* MFloat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C312329249C3D001A6952 /* MFloat2.swift */; };
+		63342EA92925D64200D345B1 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63342EA82925D64200D345B1 /* Shaders.metal */; };
+		63342EAB2925DF9700D345B1 /* MFloat4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63342EAA2925DF9700D345B1 /* MFloat4.swift */; };
+		63342EAD2925DFC300D345B1 /* MFloat3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63342EAC2925DFC300D345B1 /* MFloat3.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,9 @@
 		630C311F29249B58001A6952 /* MFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat.swift; sourceTree = "<group>"; };
 		630C312129249B80001A6952 /* MSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSpaces.swift; sourceTree = "<group>"; };
 		630C312329249C3D001A6952 /* MFloat2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat2.swift; sourceTree = "<group>"; };
+		63342EA82925D64200D345B1 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = SOURCE_ROOT; };
+		63342EAA2925DF9700D345B1 /* MFloat4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat4.swift; sourceTree = "<group>"; };
+		63342EAC2925DFC300D345B1 /* MFloat3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat3.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +124,7 @@
 				630C30EA29248EC2001A6952 /* Assets.xcassets */,
 				630C30EC29248EC2001A6952 /* Main.storyboard */,
 				630C30EF29248EC2001A6952 /* SpaceTransforms.entitlements */,
+				63342EA82925D64200D345B1 /* Shaders.metal */,
 			);
 			path = SpaceTransforms;
 			sourceTree = "<group>";
@@ -170,6 +177,8 @@
 				630C311F29249B58001A6952 /* MFloat.swift */,
 				630C312329249C3D001A6952 /* MFloat2.swift */,
 				630C312129249B80001A6952 /* MSpaces.swift */,
+				63342EAC2925DFC300D345B1 /* MFloat3.swift */,
+				63342EAA2925DF9700D345B1 /* MFloat4.swift */,
 			);
 			path = Math;
 			sourceTree = "<group>";
@@ -307,7 +316,10 @@
 				630C30E929248EC2001A6952 /* ViewController.swift in Sources */,
 				630C311429249126001A6952 /* Game.swift in Sources */,
 				630C311B2924968B001A6952 /* ScopeFunctions.swift in Sources */,
+				63342EAB2925DF9700D345B1 /* MFloat4.swift in Sources */,
 				630C312429249C3D001A6952 /* MFloat2.swift in Sources */,
+				63342EA92925D64200D345B1 /* Shaders.metal in Sources */,
+				63342EAD2925DFC300D345B1 /* MFloat3.swift in Sources */,
 				630C3116292492B7001A6952 /* World.swift in Sources */,
 				630C3118292493A7001A6952 /* Renderer.swift in Sources */,
 				630C30E729248EC2001A6952 /* AppDelegate.swift in Sources */,

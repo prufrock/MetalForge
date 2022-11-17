@@ -13,6 +13,7 @@ struct Renderer {
     private let device: MTLDevice
     private let commandQueue: MTLCommandQueue
     private let depthStencilState: MTLDepthStencilState
+    private let vertexPipeline: MTLRenderPipelineState
     private(set) var aspect: Float = 1.0
 
     init(_ view: MTKView, width: Int, height: Int) {
@@ -48,6 +49,26 @@ struct Renderer {
         }
 
         self.depthStencilState = depthStencilState
+
+        guard let library = device.makeDefaultLibrary() else {
+            fatalError("""
+                       What in the what?! The library couldn't be loaded.
+                       """)
+        }
+
+        self.vertexPipeline = try! device.makeRenderPipelineState(descriptor: MTLRenderPipelineDescriptor().apply {
+            $0.vertexFunction = library.makeFunction(name: "vertex_main")
+            $0.fragmentFunction = library.makeFunction(name: "fragment_main")
+            $0.colorAttachments[0].pixelFormat = .bgra8Unorm
+            $0.depthAttachmentPixelFormat = .depth32Float
+            $0.vertexDescriptor = MTLVertexDescriptor().apply {
+                // .position
+                $0.attributes[0].format = MTLVertexFormat.float3
+                $0.attributes[0].bufferIndex = 0
+                $0.attributes[0].offset = 0
+                $0.layouts[0].stride = MemoryLayout<Float3>.stride
+            }
+        })
     }
 
     mutating func updateAspect(width: Float, height: Float) {
@@ -67,6 +88,23 @@ struct Renderer {
                        Dang it, couldn't create a command encoder.
                        """)
         }
+
+        let vertices: [Float3] = [Float3(0.0, 0.0, 0.0)]
+
+        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+
+        var finalTransform = matrix_identity_float4x4
+
+        encoder.setRenderPipelineState(vertexPipeline)
+        encoder.setDepthStencilState(depthStencilState)
+        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
+
+        var fragmentColor = Float3(1.0, 0.0, 0.0)
+
+        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+        encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
 
         encoder.endEncoding()
 
