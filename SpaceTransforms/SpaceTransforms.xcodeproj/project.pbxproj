@@ -176,9 +176,9 @@
 			children = (
 				630C311F29249B58001A6952 /* MFloat.swift */,
 				630C312329249C3D001A6952 /* MFloat2.swift */,
-				630C312129249B80001A6952 /* MSpaces.swift */,
 				63342EAC2925DFC300D345B1 /* MFloat3.swift */,
 				63342EAA2925DF9700D345B1 /* MFloat4.swift */,
+				630C312129249B80001A6952 /* MSpaces.swift */,
 			);
 			path = Math;
 			sourceTree = "<group>";

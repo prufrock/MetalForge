@@ -10,5 +10,8 @@ import simd
 
 struct MFloat2 {
     let s: MSpaces
-    let v: SIMD2<Float>
+    let v: Float2
 }
+
+typealias Float2 = SIMD2<Float>
+

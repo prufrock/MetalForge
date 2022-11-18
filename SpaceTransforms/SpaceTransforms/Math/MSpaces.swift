@@ -10,6 +10,7 @@ import Foundation
 enum MSpaces {
     case screen
     case ndc
+    case clip
     case view
     case world
     case upright

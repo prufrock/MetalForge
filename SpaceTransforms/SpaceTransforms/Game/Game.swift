@@ -10,9 +10,9 @@ import Foundation
 struct Game {
     private(set) var world: World
 
+
     init() {
         // Game manages the world
-        // Seems like we should start at level 0
         self.world = World()
     }
 
@@ -22,6 +22,6 @@ struct Game {
        - timeStep: The amount of time to move it forward.
      */
     mutating func update(timeStep: Float) {
-
+        world.update(timeStep: timeStep)
     }
 }

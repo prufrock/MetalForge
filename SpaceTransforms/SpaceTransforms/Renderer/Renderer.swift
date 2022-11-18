@@ -89,7 +89,7 @@ struct Renderer {
                        """)
         }
 
-        let vertices: [Float3] = [Float3(0.0, 0.0, 0.0)]
+        let vertices: [Float3] = game.world.vertices.map { $0.v }
 
         let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
 
