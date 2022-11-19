@@ -21,6 +21,8 @@
 		630C312029249B58001A6952 /* MFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C311F29249B58001A6952 /* MFloat.swift */; };
 		630C312229249B80001A6952 /* MSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C312129249B80001A6952 /* MSpaces.swift */; };
 		630C312429249C3D001A6952 /* MFloat2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C312329249C3D001A6952 /* MFloat2.swift */; };
+		6313CC1829294CCA008F551B /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6313CC1729294CCA008F551B /* Actor.swift */; };
+		6313CC1A29294E9E008F551B /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6313CC1929294E9E008F551B /* Model.swift */; };
 		63342EA92925D64200D345B1 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63342EA82925D64200D345B1 /* Shaders.metal */; };
 		63342EAB2925DF9700D345B1 /* MFloat4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63342EAA2925DF9700D345B1 /* MFloat4.swift */; };
 		63342EAD2925DFC300D345B1 /* MFloat3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63342EAC2925DFC300D345B1 /* MFloat3.swift */; };
@@ -62,6 +64,8 @@
 		630C311F29249B58001A6952 /* MFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat.swift; sourceTree = "<group>"; };
 		630C312129249B80001A6952 /* MSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSpaces.swift; sourceTree = "<group>"; };
 		630C312329249C3D001A6952 /* MFloat2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat2.swift; sourceTree = "<group>"; };
+		6313CC1729294CCA008F551B /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
+		6313CC1929294E9E008F551B /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		63342EA82925D64200D345B1 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = SOURCE_ROOT; };
 		63342EAA2925DF9700D345B1 /* MFloat4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat4.swift; sourceTree = "<group>"; };
 		63342EAC2925DFC300D345B1 /* MFloat3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat3.swift; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 			children = (
 				630C311329249126001A6952 /* Game.swift */,
 				630C3115292492B7001A6952 /* World.swift */,
+				6313CC1729294CCA008F551B /* Actor.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				630C3117292493A7001A6952 /* Renderer.swift */,
+				6313CC1929294E9E008F551B /* Model.swift */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -317,8 +323,10 @@
 				630C311429249126001A6952 /* Game.swift in Sources */,
 				630C311B2924968B001A6952 /* ScopeFunctions.swift in Sources */,
 				63342EAB2925DF9700D345B1 /* MFloat4.swift in Sources */,
+				6313CC1829294CCA008F551B /* Actor.swift in Sources */,
 				630C312429249C3D001A6952 /* MFloat2.swift in Sources */,
 				63342EA92925D64200D345B1 /* Shaders.metal in Sources */,
+				6313CC1A29294E9E008F551B /* Model.swift in Sources */,
 				63342EAD2925DFC300D345B1 /* MFloat3.swift in Sources */,
 				630C3116292492B7001A6952 /* World.swift in Sources */,
 				630C3118292493A7001A6952 /* Renderer.swift in Sources */,

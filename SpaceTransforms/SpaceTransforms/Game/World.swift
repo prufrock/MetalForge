@@ -10,9 +10,11 @@ import Foundation
 struct World {
 
     var vertices: [MFloat3]
+    var actors: [Actor]
 
     init() {
         vertices = []
+        actors = []
         reset()
     }
 
@@ -20,7 +22,10 @@ struct World {
      Set the world back to how it all began...
      */
     private mutating func reset() {
-        vertices = [MFloat3(s: .world, v: Float3(0.0, 0.0, 0.0))]
+        vertices = [MFloat3(space: .world, value: Float3(0.0, 0.0, 0.0))]
+        actors.append(
+            Actor(position: MFloat2(space: .world, value: Float2(0.0, 0.0)), model: .dot)
+        )
     }
 
     /**

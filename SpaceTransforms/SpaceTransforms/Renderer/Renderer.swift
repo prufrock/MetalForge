@@ -89,9 +89,11 @@ struct Renderer {
                        """)
         }
 
-        let vertices: [Float3] = game.world.vertices.map { $0.v }
+        let vertices: [Float3] = game.world.vertices.map { $0.value }
+        let actor = game.world.actors.first!
+        let model = Dot()
 
-        let buffer = device.makeBuffer(bytes: vertices, length: MemoryLayout<Float3>.stride * vertices.count, options: [])
+        let buffer = device.makeBuffer(bytes: model.v, length: MemoryLayout<Float3>.stride * model.v.count, options: [])
 
         var finalTransform = matrix_identity_float4x4
 
@@ -104,7 +106,7 @@ struct Renderer {
 
         encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
         encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: vertices.count)
+        encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: model.v.count)
 
         encoder.endEncoding()
 

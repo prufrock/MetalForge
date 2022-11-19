@@ -8,13 +8,16 @@
 import Foundation
 
 struct MFloat3 {
-    let s: MSpaces
-    let v: Float3
+    let space: MSpaces
+    let value: Float3
 
     static func +(left: MFloat3, right: Float3) -> MFloat3 {
-        let v = left.v + right
-        return MFloat3(s: left.s, v: v)
+        let v = left.value + right
+        return MFloat3(space: left.space, value: v)
     }
 }
 
+typealias MF3 = MFloat3
+
 typealias Float3 = SIMD3<Float>
+typealias F3 = Float3
