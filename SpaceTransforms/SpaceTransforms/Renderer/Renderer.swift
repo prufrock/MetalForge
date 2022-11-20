@@ -89,34 +89,38 @@ struct Renderer {
                        """)
         }
 
-        let vertices: [Float3] = game.world.vertices.map { $0.value }
-        let actor = game.world.actors.first!
-        let model = Dot()
+        game.world.actors.forEach { actor in
+            let model: Model
+            switch actor.model {
+            case .dot:
+                model = Dot()
+            }
 
-        let buffer = device.makeBuffer(bytes: model.v, length: MemoryLayout<Float3>.stride * model.v.count, options: [])
+            let buffer = device.makeBuffer(bytes: model.v, length: MemoryLayout<Float3>.stride * model.v.count, options: [])
 
-        var finalTransform = matrix_identity_float4x4
+            var finalTransform = matrix_identity_float4x4
 
-        encoder.setRenderPipelineState(vertexPipeline)
-        encoder.setDepthStencilState(depthStencilState)
-        encoder.setVertexBuffer(buffer, offset: 0, index: 0)
-        encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
+            encoder.setRenderPipelineState(vertexPipeline)
+            encoder.setDepthStencilState(depthStencilState)
+            encoder.setVertexBuffer(buffer, offset: 0, index: 0)
+            encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
 
-        var fragmentColor = Float3(1.0, 0.0, 0.0)
+            var fragmentColor = Float3(1.0, 0.0, 0.0)
 
-        encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
-        encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-        encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: model.v.count)
+            encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
+            encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
+            encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: model.v.count)
 
-        encoder.endEncoding()
+            encoder.endEncoding()
 
-        guard let drawable = view.currentDrawable else {
-            fatalError("""
-                       Wakoom! Attempted to get the view's drawable and everything fell apart! Boo!
-                       """)
+            guard let drawable = view.currentDrawable else {
+                fatalError("""
+                           Wakoom! Attempted to get the view's drawable and everything fell apart! Boo!
+                           """)
+            }
+
+            commandBuffer.present(drawable)
+            commandBuffer.commit()
         }
-
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
     }
 }
