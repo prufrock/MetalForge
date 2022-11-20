@@ -98,7 +98,17 @@ struct Renderer {
 
             let buffer = device.makeBuffer(bytes: model.v, length: MemoryLayout<Float3>.stride * model.v.count, options: [])
 
-            var finalTransform = matrix_identity_float4x4
+            let worldToView = Float4x4.identity()
+            let viewToClip = Float4x4.identity()
+            let clipToNdc = Float4x4.identity()
+            let ndcToScreen = Float4x4.identity()
+
+            var finalTransform = ndcToScreen
+            * clipToNdc
+            * viewToClip
+            * worldToView
+            * actor.uprightToWorld
+            * actor.modelToUpright
 
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setDepthStencilState(depthStencilState)

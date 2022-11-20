@@ -24,7 +24,7 @@ struct World {
     private mutating func reset() {
         vertices = [MFloat3(space: .world, value: Float3(0.0, 0.0, 0.0))]
         actors.append(
-            Actor(position: MFloat2(space: .world, value: Float2(0.0, 0.0)), model: .dot)
+            Actor(position: MFloat2(space: .world, value: Float2(0.2, 0.4)), model: .dot)
         )
     }
 
@@ -35,5 +35,8 @@ struct World {
      */
     mutating func update(timeStep: Float) {
         vertices[0] = vertices[0] + Float3(timeStep, 0.0, 0.0)
+        var actor = actors[0]
+        actor.position = actor.position + Float2(timeStep, 0.0)
+        actors[0] = actor
     }
 }
