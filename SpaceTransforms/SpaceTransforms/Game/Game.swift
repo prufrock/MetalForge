@@ -21,7 +21,7 @@ struct Game {
      - Parameters:
        - timeStep: The amount of time to move it forward.
      */
-    mutating func update(timeStep: Float) {
-        world.update(timeStep: timeStep)
+    mutating func update(timeStep: Float, input: Input) {
+        world.update(timeStep: timeStep, input: input)
     }
 }

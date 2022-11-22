@@ -33,10 +33,10 @@ struct World {
      - Parameters:
        - timeStep: The amount of time to move it forward.
      */
-    mutating func update(timeStep: Float) {
+    mutating func update(timeStep: Float, input: Input) {
         vertices[0] = vertices[0] + Float3(timeStep, 0.0, 0.0)
         var actor = actors[0]
-        actor.position = actor.position + Float2(timeStep, 0.0)
+        actor.position = actor.position + input.movement
         actors[0] = actor
     }
 }

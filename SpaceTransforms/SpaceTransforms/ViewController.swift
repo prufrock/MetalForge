@@ -22,11 +22,43 @@ class ViewController: NSViewController {
 
     private var renderer: Renderer!
 
+    // Keyboard input handling
+    private var keyDownHandler: Any?
+    private var keyUpHandler: Any?
+    private var moveForward = false
+    private var moveBackward = false
+    private var moveLeft = false
+    private var moveRight = false
+
+    private var inputVector: Float2 {
+        var vector = Float2()
+        let rate: Float = 0.005
+        if moveForward {
+            vector += Float2(0, rate)
+        }
+        if moveBackward {
+            vector += Float2(0, -1 * rate)
+        }
+        if moveLeft {
+            vector += Float2(-1 * rate, 0)
+        }
+        if moveRight {
+            vector += Float2(rate, 0)
+        }
+
+        return vector
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMetalView()
+        enableInputMonitors()
 
         renderer = Renderer(metalView, width: 8, height: 8)
+    }
+
+    override func viewDidDisappear() {
+        disableInputMonitors()
     }
 
     override var representedObject: Any? {
@@ -64,11 +96,89 @@ extension ViewController: MTKViewDelegate {
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
 
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
+        let input = Input(movement: inputVector)
         for _ in 0 ..< Int(worldSteps) {
-            game.update(timeStep: timeStep / worldSteps)
+            game.update(timeStep: timeStep / worldSteps, input: input)
         }
         lastFrameTime = time
 
         renderer.render(game)
+    }
+}
+
+extension ViewController {
+    private func enableInputMonitors() {
+        //return nil to turn off beep
+        keyDownHandler = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [unowned self] in
+            self.keyDown(with: $0)
+            return nil
+        }
+
+        keyUpHandler = NSEvent.addLocalMonitorForEvents(matching: .keyUp) { [unowned self] in
+            self.keyUp(with: $0)
+            return nil
+        }
+    }
+
+    override func keyDown(with event: NSEvent) {
+        switch event.characters {
+        case "w":
+            print(event.characters!)
+            moveForward = true
+        case "s":
+            print(event.characters!)
+            moveBackward = true
+        case "a":
+            print(event.characters!)
+            moveLeft = true
+        case "d":
+            print(event.characters!)
+            moveRight = true
+        case "x":
+            print(event.characters!)
+        case "c":
+            print(event.characters!)
+        case "m":
+            print(event.characters!)
+        case "W":
+            print(event.characters!)
+        case "S":
+            print(event.characters!)
+        case " ":
+            print("space!")
+        default:
+            return
+        }
+    }
+
+    override func keyUp(with event: NSEvent) {
+        switch event.characters {
+        case "w":
+            print(event.characters!)
+            moveForward = false
+        case "s":
+            print(event.characters!)
+            moveBackward = false
+        case "a":
+            print(event.characters!)
+            moveLeft = false
+        case "d":
+            print(event.characters!)
+            moveRight = false
+        case "W":
+            print(event.characters!)
+        case "S":
+            print(event.characters!)
+        default:
+            return
+        }
+    }
+
+    private func disableInputMonitors() {
+        guard let keyDownHandler = keyDownHandler else { return }
+        NSEvent.removeMonitor(keyDownHandler)
+
+        guard let keyUpHandler = keyUpHandler else { return }
+        NSEvent.removeMonitor(keyUpHandler)
     }
 }
