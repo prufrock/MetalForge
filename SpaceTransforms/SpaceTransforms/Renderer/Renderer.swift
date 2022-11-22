@@ -94,6 +94,10 @@ struct Renderer {
             switch actor.model {
             case .dot:
                 model = Dot()
+            case .square:
+                model = Square()
+            case .wfSquare:
+                model = WireframeSquare()
             }
 
             let buffer = device.makeBuffer(bytes: model.v, length: MemoryLayout<Float3>.stride * model.v.count, options: [])
@@ -119,7 +123,7 @@ struct Renderer {
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
-            encoder.drawPrimitives(type: .point, vertexStart: 0, vertexCount: model.v.count)
+            encoder.drawPrimitives(type: model.primitiveType, vertexStart: 0, vertexCount: model.v.count)
 
             encoder.endEncoding()
 

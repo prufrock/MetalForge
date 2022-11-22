@@ -13,7 +13,7 @@ struct Actor {
 
     var modelToUpright:Float4x4 {
         get {
-            Float4x4.identity()
+            Float4x4.scale(x: 0.01, y: 0.01, z: 0.0)
         }
     }
 

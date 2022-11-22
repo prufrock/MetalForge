@@ -35,4 +35,13 @@ extension Float4x4 {
             [mf2.value.x, mf2.value.x, 1, 1]
         )
     }
+
+    static func scale(x: Float, y: Float, z: Float) -> Self {
+        Self(
+            [x, 0, 0, 0],
+            [0, y, 0, 0],
+            [0, 0, z, 0],
+            [0, 0, 0, 1]
+        )
+    }
 }
