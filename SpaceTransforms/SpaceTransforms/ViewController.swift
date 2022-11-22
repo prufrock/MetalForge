@@ -29,6 +29,10 @@ class ViewController: NSViewController {
     private var moveBackward = false
     private var moveLeft = false
     private var moveRight = false
+    private var moveCameraUp = false
+    private var moveCameraDown = false
+    private var moveCameraLeft = false
+    private var moveCameraRight = false
 
     private var inputVector: Float2 {
         var vector = Float2()
@@ -44,6 +48,25 @@ class ViewController: NSViewController {
         }
         if moveRight {
             vector += Float2(rate, 0)
+        }
+
+        return vector
+    }
+
+    private var cameraInputVector: Float3 {
+        var vector = Float3()
+        let rate: Float = 0.005
+        if moveCameraUp {
+            vector += Float3(0, rate, 0)
+        }
+        if moveCameraDown {
+            vector += Float3(0, -1 * rate, 0)
+        }
+        if moveCameraLeft {
+            vector += Float3(-1 * rate, 0, 0)
+        }
+        if moveCameraRight {
+            vector += Float3(rate, 0, 0)
         }
 
         return vector
@@ -96,7 +119,7 @@ extension ViewController: MTKViewDelegate {
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
 
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
-        let input = Input(movement: inputVector)
+        let input = Input(movement: inputVector, cameraMovement: cameraInputVector)
         for _ in 0 ..< Int(worldSteps) {
             game.update(timeStep: timeStep / worldSteps, input: input)
         }
@@ -121,56 +144,98 @@ extension ViewController {
     }
 
     override func keyDown(with event: NSEvent) {
-        switch event.characters {
-        case "w":
+    // KeyCodes https://gist.github.com/swillits/df648e87016772c7f7e5dbed2b345066
+        switch event.keyCode {
+        case 0x0D: // w
             print(event.characters!)
             moveForward = true
-        case "s":
+        case 0x01: // s
             print(event.characters!)
             moveBackward = true
-        case "a":
+        case 0x00: // a
             print(event.characters!)
             moveLeft = true
-        case "d":
+        case 0x02: // d
             print(event.characters!)
             moveRight = true
-        case "x":
-            print(event.characters!)
-        case "c":
-            print(event.characters!)
-        case "m":
-            print(event.characters!)
-        case "W":
-            print(event.characters!)
-        case "S":
-            print(event.characters!)
-        case " ":
-            print("space!")
+        case 0x7E:
+            print("up arrow")
+        case 0x7D:
+            print("down arrow")
+        case 0x7B:
+            print("left arrow")
+        case 0x7C:
+            print("right arrow")
+        case 0x53:
+            print("numpad 1")
+        case 0x54:
+            print("numpad 2")
+            moveCameraDown = true
+        case 0x55:
+            print("numpad 3")
+        case 0x56:
+            print("numpad 4")
+            moveCameraLeft = true
+        case 0x57:
+            print("numpad 5")
+        case 0x58:
+            print("numpad 6")
+            moveCameraRight = true
+        case 0x59:
+            print("numpad 7")
+        case 0x5B:
+            print("numpad 8")
+            moveCameraUp = true
+        case 0x5C:
+            print("numpad 9")
         default:
-            return
+            print(event.keyCode)
         }
     }
 
     override func keyUp(with event: NSEvent) {
-        switch event.characters {
-        case "w":
+        switch event.keyCode {
+        case 0x0D: // w
             print(event.characters!)
             moveForward = false
-        case "s":
+        case 0x01: // s
             print(event.characters!)
             moveBackward = false
-        case "a":
+        case 0x00: // a
             print(event.characters!)
             moveLeft = false
-        case "d":
+        case 0x02: // d
             print(event.characters!)
             moveRight = false
-        case "W":
-            print(event.characters!)
-        case "S":
-            print(event.characters!)
+        case 0x7E: // up arrow
+            break
+        case 0x7D: // down arrow
+            break
+        case 0x7B: // left arrow
+            break
+        case 0x7C: // right arrow
+            break
+        case 0x53: // numpad 1
+            break
+        case 0x54: // numpad 2
+            moveCameraDown = false
+        case 0x55: // numpad 3
+            break
+        case 0x56: // numpad 4
+            moveCameraLeft = false
+        case 0x57: // numpad 5
+            break
+        case 0x58: // numpad 6
+            moveCameraRight = false
+        case 0x59: // numpad 7
+            break
+        case 0x5B: // numpad 8
+            moveCameraUp = false
+            break
+        case 0x5C: // numpad 9
+            break
         default:
-            return
+            print(event.keyCode)
         }
     }
 

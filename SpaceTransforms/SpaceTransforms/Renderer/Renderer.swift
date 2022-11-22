@@ -110,7 +110,7 @@ struct Renderer {
             var finalTransform = ndcToScreen
             * clipToNdc
             * viewToClip
-            * worldToView
+            * game.world.camera!.worldToView(fov: .pi/2, aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
             * actor.uprightToWorld
             * actor.modelToUpright
 

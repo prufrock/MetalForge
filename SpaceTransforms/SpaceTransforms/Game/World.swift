@@ -26,6 +26,8 @@ struct World {
 
     var walls: [Wall]
 
+    var camera: Camera?
+
     init(map:  TileMap) {
         self.map = map
         walls = []
@@ -36,6 +38,8 @@ struct World {
      Set the world back to how it all began...
      */
     private mutating func reset() {
+        camera = Camera(position: MFloat2(space: .world, value: Float2(0.0, 0.0)), model: .square)
+
         for y in 0..<map.height {
             for x in 0..<map.width {
                 let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5) // in the center of the tile
@@ -72,6 +76,11 @@ struct World {
         if var player = player {
             player.position = player.position + input.movement
             self.player = player
+        }
+
+        if var camera = camera {
+            camera.position3d = camera.position3d + input.cameraMovement
+            self.camera = camera
         }
     }
 }
