@@ -119,22 +119,23 @@ struct Renderer {
             encoder.setVertexBuffer(buffer, offset: 0, index: 0)
             encoder.setVertexBytes(&finalTransform, length: MemoryLayout<Float4x4>.stride, index: 1)
 
-            var fragmentColor = Float3(1.0, 0.0, 0.0)
+            var fragmentColor = actor.color
 
             encoder.setFragmentBuffer(buffer, offset: 0, index: 0)
             encoder.setFragmentBytes(&fragmentColor, length: MemoryLayout<Float3>.stride, index: 0)
             encoder.drawPrimitives(type: model.primitiveType, vertexStart: 0, vertexCount: model.v.count)
 
-            encoder.endEncoding()
 
-            guard let drawable = view.currentDrawable else {
-                fatalError("""
-                           Wakoom! Attempted to get the view's drawable and everything fell apart! Boo!
-                           """)
-            }
-
-            commandBuffer.present(drawable)
-            commandBuffer.commit()
         }
+        encoder.endEncoding()
+
+        guard let drawable = view.currentDrawable else {
+            fatalError("""
+                       Wakoom! Attempted to get the view's drawable and everything fell apart! Boo!
+                       """)
+        }
+
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
     }
 }

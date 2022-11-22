@@ -29,6 +29,8 @@
 		6313CC1E292D64B9008F551B /* MapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6313CC1D292D64B9008F551B /* MapData.swift */; };
 		6313CC20292D64F7008F551B /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6313CC1F292D64F7008F551B /* Tile.swift */; };
 		6313CC22292D6577008F551B /* Thing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6313CC21292D6577008F551B /* Thing.swift */; };
+		6322C4CE292D74FA008F539E /* Wall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6322C4CD292D74FA008F539E /* Wall.swift */; };
+		6322C4D1292D755F008F539E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6322C4D0292D755F008F539E /* Player.swift */; };
 		63342EA92925D64200D345B1 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 63342EA82925D64200D345B1 /* Shaders.metal */; };
 		63342EAB2925DF9700D345B1 /* MFloat4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63342EAA2925DF9700D345B1 /* MFloat4.swift */; };
 		63342EAD2925DFC300D345B1 /* MFloat3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63342EAC2925DFC300D345B1 /* MFloat3.swift */; };
@@ -78,6 +80,8 @@
 		6313CC1D292D64B9008F551B /* MapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapData.swift; sourceTree = "<group>"; };
 		6313CC1F292D64F7008F551B /* Tile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		6313CC21292D6577008F551B /* Thing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thing.swift; sourceTree = "<group>"; };
+		6322C4CD292D74FA008F539E /* Wall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wall.swift; sourceTree = "<group>"; };
+		6322C4D0292D755F008F539E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		63342EA82925D64200D345B1 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = SOURCE_ROOT; };
 		63342EAA2925DF9700D345B1 /* MFloat4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat4.swift; sourceTree = "<group>"; };
 		63342EAC2925DFC300D345B1 /* MFloat3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFloat3.swift; sourceTree = "<group>"; };
@@ -166,9 +170,9 @@
 		630C3111292490DA001A6952 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				6322C4CF292D7535008F539E /* Actor */,
 				630C311329249126001A6952 /* Game.swift */,
 				630C3115292492B7001A6952 /* World.swift */,
-				6313CC1729294CCA008F551B /* Actor.swift */,
 				5AF0E34646A457C1C75FA4FE /* Input.swift */,
 				6313CC1B292D645A008F551B /* TileMap.swift */,
 				6313CC1D292D64B9008F551B /* MapData.swift */,
@@ -205,6 +209,16 @@
 				630C312129249B80001A6952 /* MSpaces.swift */,
 			);
 			path = Math;
+			sourceTree = "<group>";
+		};
+		6322C4CF292D7535008F539E /* Actor */ = {
+			isa = PBXGroup;
+			children = (
+				6313CC1729294CCA008F551B /* Actor.swift */,
+				6322C4CD292D74FA008F539E /* Wall.swift */,
+				6322C4D0292D755F008F539E /* Player.swift */,
+			);
+			path = Actor;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,6 +356,7 @@
 				630C30E929248EC2001A6952 /* ViewController.swift in Sources */,
 				630C311429249126001A6952 /* Game.swift in Sources */,
 				630C311B2924968B001A6952 /* ScopeFunctions.swift in Sources */,
+				6322C4D1292D755F008F539E /* Player.swift in Sources */,
 				63342EAB2925DF9700D345B1 /* MFloat4.swift in Sources */,
 				6313CC1C292D645A008F551B /* TileMap.swift in Sources */,
 				6313CC1829294CCA008F551B /* Actor.swift in Sources */,
@@ -355,6 +370,7 @@
 				630C30E729248EC2001A6952 /* AppDelegate.swift in Sources */,
 				630C312229249B80001A6952 /* MSpaces.swift in Sources */,
 				6313CC20292D64F7008F551B /* Tile.swift in Sources */,
+				6322C4CE292D74FA008F539E /* Wall.swift in Sources */,
 				630C312029249B58001A6952 /* MFloat.swift in Sources */,
 				5AF0E13FE13D033F54029FFC /* Input.swift in Sources */,
 			);

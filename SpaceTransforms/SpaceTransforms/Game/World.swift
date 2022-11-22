@@ -16,16 +16,19 @@ struct World {
             if let player = player {
                 list.append(player)
             }
+            list.append(contentsOf: walls)
 
             return list
         }
     }
 
-    var player: Actor?
+    var player: Player?
+
+    var walls: [Wall]
 
     init(map:  TileMap) {
         self.map = map
-        player = Actor(position: MFloat2(space: .world, value: Float2(0.2, 0.4)), model: .square)
+        walls = []
         reset()
     }
 
@@ -36,14 +39,25 @@ struct World {
         for y in 0..<map.height {
             for x in 0..<map.width {
                 let position = Float2(x: Float(x) + 0.5, y: Float(y) + 0.5) // in the center of the tile
+                let tile = map[x, y]
+                switch tile {
+                case .floor:
+                    // not going to render walls for now
+                    break
+                case .wall:
+                    walls.append(Wall(position: MFloat2(space: .world, value: position), model: .square))
+                }
+
+
                 let thing = map[thing: x, y]
                 switch thing {
                 case .nothing:
                     break
                 case .player:
-                    player = Actor(position: MFloat2(space: .world, value: position), model: .square)
+                    player = Player(position: MFloat2(space: .world, value: position), model: .square)
                     print(position)
                 }
+
             }
         }
     }

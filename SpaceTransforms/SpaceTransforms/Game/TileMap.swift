@@ -28,7 +28,10 @@ struct TileMap {
      Also, it's 1D array posing as a 2D array so hide that.
      */
     subscript(thing x: Int, y: Int) -> Thing {
-        get { things[y * width + x]}
-        set { things[y * width + x] = newValue}
+        get { things[y * width + x] }
+    }
+
+    subscript(x: Int, y: Int) -> Tile {
+        get { tiles[y * width + x ] }
     }
 }
