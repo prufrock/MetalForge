@@ -9,10 +9,21 @@ import Foundation
 
 struct World {
 
-    var actors: [Actor]
+    var actors: [Actor] {
+        get {
+            var list: [Actor] = []
+            if let player = player {
+                list.append(player)
+            }
+
+            return list
+        }
+    }
+
+    var player: Actor?
 
     init() {
-        actors = []
+        player = Actor(position: MFloat2(space: .world, value: Float2(0.2, 0.4)), model: .square)
         reset()
     }
 
@@ -20,9 +31,7 @@ struct World {
      Set the world back to how it all began...
      */
     private mutating func reset() {
-        actors.append(
-            Actor(position: MFloat2(space: .world, value: Float2(0.2, 0.4)), model: .square)
-        )
+        player = Actor(position: MFloat2(space: .world, value: Float2(0.2, 0.4)), model: .square)
     }
 
     /**
@@ -31,8 +40,10 @@ struct World {
        - timeStep: The amount of time to move it forward.
      */
     mutating func update(timeStep: Float, input: Input) {
-        var actor = actors[0]
-        actor.position = actor.position + input.movement
-        actors[0] = actor
+        
+        if var player = player {
+            player.position = player.position + input.movement
+            self.player = player
+        }
     }
 }
