@@ -9,11 +9,14 @@ import Foundation
 
 struct Game {
     private(set) var world: World
+    private let levels: [TileMap]
 
 
-    init() {
+    init(levels: [TileMap]) {
+        self.levels = levels
         // Game manages the world
-        self.world = World()
+        // Seems like we should start at level 0
+        world = World(map: levels[0])
     }
 
     /**

@@ -18,7 +18,7 @@ class ViewController: NSViewController {
     private var viewWidth: Float = 0
     private var viewHeight: Float = 0
 
-    private var game = Game()
+    private var game = Game(levels: loadLevels())
 
     private var renderer: Renderer!
 
@@ -180,5 +180,19 @@ extension ViewController {
 
         guard let keyUpHandler = keyUpHandler else { return }
         NSEvent.removeMonitor(keyUpHandler)
+    }
+}
+
+/**
+Loads levels from Levels.json and creating a Tilemap for each level and returning the array of Tilemaps.
+- Returns: [Tilemap]
+*/
+private func loadLevels() -> [TileMap] {
+    let jsonUrl = Bundle.main.url(forResource: "Levels", withExtension: "json")!
+    let jsonData = try! Data(contentsOf: jsonUrl)
+    let levels = try! JSONDecoder().decode([MapData].self, from: jsonData)
+    return levels.enumerated().map { index, mapData in
+        // The MapGenerator is going to generate the maps so it's taking over.
+        TileMap(mapData, index: index)
     }
 }
