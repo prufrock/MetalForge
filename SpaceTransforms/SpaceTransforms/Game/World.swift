@@ -28,6 +28,8 @@ struct World {
     var walls: [Wall]
 
     var camera: Camera?
+    var overHeadCamera: Camera?
+    var floatingCamera: Camera?
 
     init(map:  TileMap) {
         self.map = map
@@ -39,7 +41,9 @@ struct World {
      Set the world back to how it all began...
      */
     private mutating func reset() {
-        camera = Camera(position: MFloat2(space: .world, value: Float2(0.0, 0.0)), model: .square)
+        overHeadCamera = CameraOverhead(position: MFloat2(space: .world, value: Float2(0.0, 0.0)), model: .square)
+        floatingCamera = CameraFloating(position: MFloat2(space: .world, value: Float2(0.0, 0.0)), model: .square)
+        camera = overHeadCamera
 
         for y in 0..<map.height {
             for x in 0..<map.width {
@@ -52,7 +56,6 @@ struct World {
                 case .wall:
                     walls.append(Wall(position: MFloat2(space: .world, value: position), model: .wfSquare))
                 }
-
 
                 let thing = map[thing: x, y]
                 switch thing {
@@ -73,16 +76,33 @@ struct World {
        - timeStep: The amount of time to move it forward.
      */
     mutating func update(timeStep: Float, input: Input) {
-        
+
+        //TODO The input vector needs a special world space transform.
+        var vectorTransform = Float2(1, -1)
+        switch input.camera {
+        case .overhead:
+            if camera is CameraOverhead {
+                overHeadCamera = camera
+                break
+            }
+
+            camera = overHeadCamera
+        case .floatingCamera:
+            vectorTransform = Float2(1, 1)
+            if camera is CameraFloating {
+                floatingCamera = camera
+                break
+            }
+            camera = floatingCamera
+        }
+
         if var player = player {
-            //TODO The input vector needs a special world space transform.
-            player.position = player.position + (input.movement * Float2(1, -1))
+            player.position = player.position + (input.movement * vectorTransform)
             self.player = player
         }
 
         if var camera = camera {
-            //TODO The input vector needs a special world space transform.
-            camera.position3d = camera.position3d + (input.cameraMovement * Float3(1, -1, 1))
+            camera.position3d = camera.position3d + (input.cameraMovement * Float3(vectorTransform.x, vectorTransform.y, 1))
             self.camera = camera
         }
     }

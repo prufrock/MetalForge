@@ -33,6 +33,7 @@ class ViewController: NSViewController {
     private var moveCameraDown = false
     private var moveCameraLeft = false
     private var moveCameraRight = false
+    private var camera: AvailableCameras = .overhead
 
     private var inputVector: Float2 {
         var vector = Float2()
@@ -119,7 +120,11 @@ extension ViewController: MTKViewDelegate {
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
 
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
-        let input = Input(movement: inputVector, cameraMovement: cameraInputVector)
+        let input = Input(
+            movement: inputVector,
+            cameraMovement: cameraInputVector,
+            camera: camera
+        )
         for _ in 0 ..< Int(worldSteps) {
             game.update(timeStep: timeStep / worldSteps, input: input)
         }
@@ -158,6 +163,10 @@ extension ViewController {
         case 0x02: // d
             print(event.characters!)
             moveRight = true
+        case 18: // 1
+            camera = .overhead
+        case 19: // 2
+            camera = .floatingCamera
         case 0x7E:
             print("up arrow")
         case 0x7D:
@@ -207,6 +216,10 @@ extension ViewController {
         case 0x02: // d
             print(event.characters!)
             moveRight = false
+        case 18: // 1
+            break;
+        case 19: // 2
+            break;
         case 0x7E: // up arrow
             break
         case 0x7D: // down arrow
