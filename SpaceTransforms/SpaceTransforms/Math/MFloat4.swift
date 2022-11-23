@@ -45,6 +45,33 @@ extension Float4x4 {
         )
     }
 
+    static func rotateX(_ angle: Float) -> Self {
+        Self(
+            [1,           0,          0, 0],
+            [0,  cos(angle), sin(angle), 0],
+            [0, -sin(angle), cos(angle), 0],
+            [0,           0,          0, 1]
+        )
+    }
+
+    static func rotateY(_ angle: Float) -> Self {
+        Self(
+            [cos(angle), 0, -sin(angle), 0],
+            [         0, 1,           0, 0],
+            [sin(angle), 0,  cos(angle), 0],
+            [         0, 0,           0, 1]
+        )
+    }
+
+    static func rotateZ(_ angle: Float) -> Self {
+        Self(
+            [ cos(angle), sin(angle), 0, 0],
+            [-sin(angle), cos(angle), 0, 0],
+            [          0,          0, 1, 0],
+            [          0,          0, 0, 1]
+        )
+    }
+
     static func perspectiveProjection(fov: Float, aspect: Float, nearPlane: Float, farPlane: Float) -> Self {
         let zoom = 1 / tan(fov / 2) // objects get smaller as fov increases
 

@@ -9,7 +9,7 @@ import simd
 
 struct Camera: Actor {
     var position: MF2 = MF2(space: .world, value: F2(0.0, 0.0))
-    var position3d: MF3 = MF3(space: .world, value: F3(2.0, 2.0, -1.5))
+    var position3d: MF3 = MF3(space: .world, value: F3(0.0, 0.0, -1.5))
     var model: BasicModels
 
     var color: Float3 = Float3(0.0, 1.0, 0.0)
@@ -28,6 +28,7 @@ struct Camera: Actor {
 
     func worldToView(fov: Float, aspect: Float, nearPlane: Float, farPlane: Float) -> Float4x4 {
         Float4x4.perspectiveProjection(fov: fov, aspect: aspect, nearPlane: nearPlane, farPlane: farPlane)
+        * Float4x4.scale(x: 1.0, y: -1.0, z: 1.0) // flip the on the y-axis so the origin is the upper-left
         * Float4x4.translate(x: position3d.value.x, y: position3d.value.y, z: position3d.value.z).inverse //invert because we look out of the camera
     }
 }

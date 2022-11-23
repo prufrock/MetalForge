@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import simd
 
 struct World {
     private(set) var map: TileMap
@@ -49,7 +50,7 @@ struct World {
                     // not going to render walls for now
                     break
                 case .wall:
-                    walls.append(Wall(position: MFloat2(space: .world, value: position), model: .square))
+                    walls.append(Wall(position: MFloat2(space: .world, value: position), model: .wfSquare))
                 }
 
 
@@ -74,12 +75,14 @@ struct World {
     mutating func update(timeStep: Float, input: Input) {
         
         if var player = player {
-            player.position = player.position + input.movement
+            //TODO The input vector needs a special world space transform.
+            player.position = player.position + (input.movement * Float2(1, -1))
             self.player = player
         }
 
         if var camera = camera {
-            camera.position3d = camera.position3d + input.cameraMovement
+            //TODO The input vector needs a special world space transform.
+            camera.position3d = camera.position3d + (input.cameraMovement * Float3(1, -1, 1))
             self.camera = camera
         }
     }

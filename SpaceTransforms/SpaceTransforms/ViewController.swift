@@ -168,23 +168,23 @@ extension ViewController {
             print("right arrow")
         case 0x53:
             print("numpad 1")
-        case 0x54:
-            print("numpad 2")
+        case 0x54, 0x2D:
+            print("numpad 2 or n")
             moveCameraDown = true
         case 0x55:
             print("numpad 3")
-        case 0x56:
-            print("numpad 4")
+        case 0x56, 0x4:
+            print("numpad 4 or h")
             moveCameraLeft = true
         case 0x57:
             print("numpad 5")
-        case 0x58:
-            print("numpad 6")
+        case 0x58, 0x26:
+            print("numpad 6 or j")
             moveCameraRight = true
         case 0x59:
             print("numpad 7")
-        case 0x5B:
-            print("numpad 8")
+        case 0x5B, 0x20:
+            print("numpad 8 or u")
             moveCameraUp = true
         case 0x5C:
             print("numpad 9")
@@ -217,19 +217,19 @@ extension ViewController {
             break
         case 0x53: // numpad 1
             break
-        case 0x54: // numpad 2
+        case 0x54, 0x2D: // numpad 2
             moveCameraDown = false
         case 0x55: // numpad 3
             break
-        case 0x56: // numpad 4
+        case 0x56, 0x4: // numpad 4
             moveCameraLeft = false
         case 0x57: // numpad 5
             break
-        case 0x58: // numpad 6
+        case 0x58, 0x26: // numpad 6
             moveCameraRight = false
         case 0x59: // numpad 7
             break
-        case 0x5B: // numpad 8
+        case 0x5B, 0x20: // numpad 8
             moveCameraUp = false
             break
         case 0x5C: // numpad 9
