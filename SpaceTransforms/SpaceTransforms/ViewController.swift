@@ -9,6 +9,7 @@ import Cocoa
 import MetalKit
 
 class ViewController: NSViewController {
+    lazy var window: NSWindow = self.view.window!
     private let metalView = MTKView()
 
     private let maximumTimeStep: Float = 1 / 20 // cap at a minimum of 20 FPS
@@ -34,6 +35,12 @@ class ViewController: NSViewController {
     private var moveCameraLeft = false
     private var moveCameraRight = false
     private var camera: AvailableCameras = .overhead
+
+    // Mouse input handling
+    // The last time the screen was clicked.
+    // Needed so that the mouseLocation isn't constantly sent in as input
+    private var lastClickedTime: Double = 0.0
+    var mouseLocation: NSPoint { window.convertPoint(fromScreen: NSEvent.mouseLocation) }
 
     private var inputVector: Float2 {
         var vector = Float2()
@@ -78,6 +85,13 @@ class ViewController: NSViewController {
         setupMetalView()
         enableInputMonitors()
 
+        NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp]) {
+            print("mouseLocation:", String(format: "%.1f, %.1f", self.mouseLocation.x, self.mouseLocation.y))
+            self.lastClickedTime = CACurrentMediaTime()
+
+            return $0
+        }
+
         renderer = Renderer(metalView, width: 8, height: 8)
     }
 
@@ -118,12 +132,16 @@ extension ViewController: MTKViewDelegate {
         // also avoid spiralling when world updates take longer than frame step
         let time = CACurrentMediaTime()
         let timeStep = min(maximumTimeStep, Float(CACurrentMediaTime() - lastFrameTime))
-
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
+
+        let isClicked = lastClickedTime > lastFrameTime
+
         let input = Input(
             movement: inputVector,
             cameraMovement: cameraInputVector,
-            camera: camera
+            camera: camera,
+            isClicked: isClicked,
+            clickCoordinates: MFloat2(space: .screen, value: mouseLocation.f2)
         )
         for _ in 0 ..< Int(worldSteps) {
             game.update(timeStep: timeStep / worldSteps, input: input)
@@ -272,5 +290,13 @@ private func loadLevels() -> [TileMap] {
     return levels.enumerated().map { index, mapData in
         // The MapGenerator is going to generate the maps so it's taking over.
         TileMap(mapData, index: index)
+    }
+}
+
+extension NSPoint {
+    var f2: Float2 {
+        get {
+            Float2(Float(x), Float(y))
+        }
     }
 }
