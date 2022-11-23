@@ -15,21 +15,22 @@ protocol Camera: Actor {
 
 
 struct CameraOverhead: Camera {
+    var radius: Float = 0.0
     var position: MF2 = MF2(space: .world, value: F2(0.0, 0.0))
-    var position3d: MF3 = MF3(space: .world, value: F3(0.0, 0.0, -1.5))
+    var position3d: MF3 = MF3(space: .world, value: F3(0.0, 0.0, -10.5))
     var model: BasicModels
 
     var color: Float3 = Float3(0.0, 1.0, 0.0)
 
     var modelToUpright:Float4x4 {
         get {
-            Float4x4.scale(x: 0.01, y: 0.01, z: 0.0)
+            Float4x4.identity()
         }
     }
 
     var uprightToWorld:Float4x4 {
         get {
-            Float4x4.translate(x: position.value.x, y: position.value.y, z: 0.0)
+            Float4x4.identity()
         }
     }
 
@@ -41,6 +42,7 @@ struct CameraOverhead: Camera {
 }
 
 struct CameraFloating: Camera {
+    var radius: Float = 0.0
     var position: MF2 = MF2(space: .world, value: F2(0.0, 0.0))
     var position3d: MF3 = MF3(space: .world, value: F3(0.0, 0.0, 1.5))
     var model: BasicModels

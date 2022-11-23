@@ -11,4 +11,13 @@ enum Tile: Int, Decodable, CaseIterable {
 
     // Walls
     case wall = 1
+
+    var isWall: Bool {
+        switch self {
+        case .wall:
+            return true
+        case .floor:
+            return false
+        }
+    }
 }

@@ -9,6 +9,7 @@
 import simd
 
 struct Wall: Actor {
+    var radius: Float = 0.5
     var position: MF2 = MF2(space: .world, value: F2(0.0, 0.0))
     var model: BasicModels
 

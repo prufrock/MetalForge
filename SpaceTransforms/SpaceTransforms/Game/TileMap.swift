@@ -12,6 +12,9 @@ struct TileMap {
     var height: Int {
         tiles.count / width
     }
+    var size: Float2 {
+        return Float2(x: Float(width), y: Float(height))
+    }
 
     // for switching between levels
     let index: Int

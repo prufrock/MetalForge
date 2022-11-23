@@ -54,7 +54,7 @@ struct World {
                     // not going to render walls for now
                     break
                 case .wall:
-                    walls.append(Wall(position: MFloat2(space: .world, value: position), model: .wfSquare))
+                    walls.append(Wall(position: MFloat2(space: .world, value: position), model: .square))
                 }
 
                 let thing = map[thing: x, y]
@@ -99,6 +99,18 @@ struct World {
         if var player = player {
             player.position = player.position + (input.movement * vectorTransform)
             self.player = player
+        }
+
+        player = player?.run {
+            var updatedPlayer = $0
+            updatedPlayer.position = updatedPlayer.position + (input.movement * vectorTransform)
+            // Don't let the player's position get way too big or way too small
+            updatedPlayer.position.value.x.formTruncatingRemainder(dividingBy: map.size.x - 1)
+            updatedPlayer.position.value.y.formTruncatingRemainder(dividingBy: map.size.y - 1)
+
+            // check if the player intersects with the world
+            updatedPlayer.avoidWalls(in: self)
+            return updatedPlayer
         }
 
         if var camera = camera {

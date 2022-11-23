@@ -51,7 +51,7 @@ extension GMActor {
 
     /**
      Checks for intersection with the world and doors and push walls and returns a response vector if it does.
-     - Parameter world: Door
+     - Parameter world: GMWorld
      - Returns: Float2
      */
     func intersection(with world: GMWorld) -> Float2? {

@@ -10,7 +10,7 @@ import simd
 
 struct MFloat2 {
     let space: MSpaces
-    let value: Float2
+    var value: Float2
 
     static func +(left: MFloat2, right: Float2) -> MFloat2 {
         let v = left.value + right
@@ -22,3 +22,9 @@ typealias MF2 = MFloat2
 
 typealias Float2 = SIMD2<Float>
 typealias F2 = Float2
+
+extension Float2 {
+    var length : Float {
+        (x * x + y * y).squareRoot()
+    }
+}
