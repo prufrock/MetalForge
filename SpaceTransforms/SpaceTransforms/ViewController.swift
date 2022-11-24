@@ -141,7 +141,10 @@ extension ViewController: MTKViewDelegate {
             cameraMovement: cameraInputVector,
             camera: camera,
             isClicked: isClicked,
-            clickCoordinates: MFloat2(space: .screen, value: mouseLocation.f2)
+            clickCoordinates: MFloat2(space: .screen, value: mouseLocation.f2),
+            aspect: (viewWidth / viewHeight),
+            viewWidth: viewWidth,
+            viewHeight: viewHeight
         )
         for _ in 0 ..< Int(worldSteps) {
             game.update(timeStep: timeStep / worldSteps, input: input)

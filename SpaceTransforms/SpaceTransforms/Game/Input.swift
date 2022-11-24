@@ -10,4 +10,7 @@ struct Input {
     var camera: AvailableCameras
     var isClicked: Bool
     var clickCoordinates: MFloat2
+    var aspect: Float
+    var viewWidth: Float
+    var viewHeight: Float
 }

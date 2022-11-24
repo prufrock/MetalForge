@@ -11,3 +11,17 @@ struct MFloat {
     let s: MSpaces
     let v: Float
 }
+
+extension Double {
+    var f: Float {
+        get {
+            Float(self)
+        }
+    }
+}
+
+extension Float {
+    func toRadians() -> Float {
+        self * (.pi / 180)
+    }
+}

@@ -74,8 +74,13 @@ struct World {
      Update the game.
      - Parameters:
        - timeStep: The amount of time to move it forward.
+       - input: The actionable changes in the game from the ViewController.
      */
     mutating func update(timeStep: Float, input: Input) {
+
+        if (input.isClicked) {
+            let ndcPosition = input.clickCoordinates.toNdcSpace(screenWidth: input.viewWidth, screenHeight: input.viewHeight, flipY: false)
+        }
 
         //TODO The input vector needs a special world space transform.
         var vectorTransform = Float2(1, -1)
