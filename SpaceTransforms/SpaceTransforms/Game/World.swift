@@ -36,6 +36,7 @@ struct World {
     var camera: Camera?
     var overHeadCamera: Camera?
     var floatingCamera: Camera?
+    var hudCamera = HudCamera(model: .square)
 
     init(map:  TileMap) {
         self.map = map
@@ -87,7 +88,7 @@ struct World {
         var worldPosition: MFloat2? = nil
         if (input.isClicked) {
             let ndcPosition = input.clickCoordinates.toNdcSpace(screenWidth: input.viewWidth, screenHeight: input.viewHeight, flipY: false)
-            worldPosition = ndcPosition.toWorldSpace(camera: camera!, aspect: input.aspect)
+            worldPosition = ndcPosition.toWorldSpace(camera: hudCamera, aspect: input.aspect)
             clickLocation = ClickLocation(model: .square).run { location in
                 var newLocation = location
                 newLocation.position = worldPosition!
@@ -112,6 +113,8 @@ struct World {
                 break
             }
             camera = floatingCamera
+        default:
+            break
         }
 
 //        if var player = player {

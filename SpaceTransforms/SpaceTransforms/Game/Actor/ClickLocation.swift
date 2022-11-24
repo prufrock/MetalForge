@@ -10,7 +10,7 @@ import simd
 struct ClickLocation: Actor {
     var position: MF2 = MF2(space: .world, value: F2(0.0, 0.0))
     var model: BasicModels
-    var radius: Float = 0.125
+    var radius: Float = 0.02
 
     var color: Float3 = Float3(0.5, 0.5, 0.0)
 
@@ -23,7 +23,7 @@ struct ClickLocation: Actor {
     var uprightToWorld:Float4x4 {
         get {
             Float4x4.translate(x: position.value.x, y: position.value.y, z: 0.0)
-            * Float4x4.scale(x: 0.125, y: 0.125, z: 0.125)
+            * Float4x4.scale(x: radius, y: radius, z: 0.0)
         }
     }
 

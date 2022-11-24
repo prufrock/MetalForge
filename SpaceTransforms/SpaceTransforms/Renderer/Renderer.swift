@@ -100,18 +100,31 @@ struct Renderer {
                 model = WireframeSquare()
             }
 
-            let buffer = device.makeBuffer(bytes: model.v, length: MemoryLayout<Float3>.stride * model.v.count, options: [])
-
             let viewToClip = Float4x4.identity()
             let clipToNdc = Float4x4.identity()
             let ndcToScreen = Float4x4.identity()
 
-            var finalTransform = ndcToScreen
-            * clipToNdc
-            * viewToClip
-            * game.world.camera!.worldToView(fov: .pi/2, aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
-            * actor.uprightToWorld
-            * actor.modelToUpright
+
+            var finalTransform: Float4x4
+            if actor is ClickLocation {
+                finalTransform = ndcToScreen
+                * clipToNdc
+                * viewToClip
+                * game.world.hudCamera.worldToView(fov: .pi/2, aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
+                * actor.uprightToWorld
+                * actor.modelToUpright
+            } else {
+                finalTransform = ndcToScreen
+                * clipToNdc
+                * viewToClip
+                * game.world.camera!.worldToView(fov: .pi/2, aspect: aspect, nearPlane: 0.1, farPlane: 20.0)
+                * actor.uprightToWorld
+                * actor.modelToUpright
+            }
+
+            let buffer = device.makeBuffer(bytes: model.v, length: MemoryLayout<Float3>.stride * model.v.count, options: [])
+
+
 
             encoder.setRenderPipelineState(vertexPipeline)
             encoder.setDepthStencilState(depthStencilState)
