@@ -17,6 +17,19 @@ struct MFloat2 {
         return MFloat2(space: left.space, value: v)
     }
 
+    /**
+     - Parameters:
+       - camera:  The camera to convert the point through.
+       - aspect: The aspect ratio of the screen to adjust the camera for.
+     - Returns:
+     */
+    func toWorldSpace(camera: Camera, aspect: Float) -> MFloat2 {
+        // Invert the Camera so that the position can go from NDC space to world space.
+        // TODO need to share the camera values used by the renderer
+        let position4 = Float4(position: self) * (camera.worldToView(fov: .pi/2, aspect: aspect, nearPlane: 0.1, farPlane: 20.0)).inverse
+        print("click world:", String(format: "%.8f, %.8f", position4.x, position4.y))
+        return MFloat2(space: .world, value: Float2(position4.x, position4.y))
+    }
 
     /**
      - Parameters:

@@ -10,8 +10,17 @@ import simd
 
 
 typealias Float4 = SIMD4<Float>
-
 typealias Float4x4 = simd_float4x4
+
+extension Float4 {
+    /**
+     * Converts a position from an MFloat2.
+     * w=1.0 so that it can be translated.
+     */
+    init(position value: MFloat2) {
+        self.init(value.value.x, value.value.y, 0.0, 1.0)
+    }
+}
 
 extension Float4x4 {
     static func identity() -> Self {

@@ -228,7 +228,7 @@ extension Float4 {
     }
 
     /**
-     * Converts a position to a Float2.
+     * Converts a position from a Float2.
      * w=1.0 so that it can be translated.
      */
     init(position value: Float2) {

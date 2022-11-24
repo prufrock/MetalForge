@@ -17,6 +17,10 @@ struct World {
             if let player = player {
                 list.append(player)
             }
+
+            if let clicked = clickLocation {
+                list.append(clicked)
+            }
             list.append(contentsOf: walls)
 
             return list
@@ -26,6 +30,8 @@ struct World {
     var player: Player?
 
     var walls: [Wall]
+
+    var clickLocation: ClickLocation?
 
     var camera: Camera?
     var overHeadCamera: Camera?
@@ -78,8 +84,15 @@ struct World {
      */
     mutating func update(timeStep: Float, input: Input) {
 
+        var worldPosition: MFloat2? = nil
         if (input.isClicked) {
             let ndcPosition = input.clickCoordinates.toNdcSpace(screenWidth: input.viewWidth, screenHeight: input.viewHeight, flipY: false)
+            worldPosition = ndcPosition.toWorldSpace(camera: camera!, aspect: input.aspect)
+            clickLocation = ClickLocation(model: .square).run { location in
+                var newLocation = location
+                newLocation.position = worldPosition!
+                return newLocation
+            }
         }
 
         //TODO The input vector needs a special world space transform.
@@ -101,10 +114,10 @@ struct World {
             camera = floatingCamera
         }
 
-        if var player = player {
-            player.position = player.position + (input.movement * vectorTransform)
-            self.player = player
-        }
+//        if var player = player {
+//            player.position = player.position + (input.movement * vectorTransform)
+//            self.player = player
+//        }
 
         player = player?.run {
             var updatedPlayer = $0

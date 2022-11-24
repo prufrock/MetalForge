@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5AF0E13FE13D033F54029FFC /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0E34646A457C1C75FA4FE /* Input.swift */; };
+		5AF0E7937F4917CAB0E6D43E /* ClickLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0EBDF992B505BD48FAA13 /* ClickLocation.swift */; };
 		5AF0E7FF016FAA0044C78931 /* Levels.json in Resources */ = {isa = PBXBuildFile; fileRef = 5AF0E682AC327496AE2E9AF3 /* Levels.json */; };
 		630C30E729248EC2001A6952 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C30E629248EC2001A6952 /* AppDelegate.swift */; };
 		630C30E929248EC2001A6952 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C30E829248EC2001A6952 /* ViewController.swift */; };
@@ -58,6 +59,7 @@
 /* Begin PBXFileReference section */
 		5AF0E34646A457C1C75FA4FE /* Input.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		5AF0E682AC327496AE2E9AF3 /* Levels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Levels.json; sourceTree = "<group>"; };
+		5AF0EBDF992B505BD48FAA13 /* ClickLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClickLocation.swift; sourceTree = "<group>"; };
 		630C30E329248EC2001A6952 /* SpaceTransforms.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceTransforms.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		630C30E629248EC2001A6952 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		630C30E829248EC2001A6952 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 				6322C4CD292D74FA008F539E /* Wall.swift */,
 				6322C4D0292D755F008F539E /* Player.swift */,
 				6322C4D2292D7C2B008F539E /* Camera.swift */,
+				5AF0EBDF992B505BD48FAA13 /* ClickLocation.swift */,
 			);
 			path = Actor;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				630C312029249B58001A6952 /* MFloat.swift in Sources */,
 				5AF0E13FE13D033F54029FFC /* Input.swift in Sources */,
 				6367B781292EC42900701AFC /* Rect.swift in Sources */,
+				5AF0E7937F4917CAB0E6D43E /* ClickLocation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

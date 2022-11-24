@@ -102,7 +102,6 @@ struct Renderer {
 
             let buffer = device.makeBuffer(bytes: model.v, length: MemoryLayout<Float3>.stride * model.v.count, options: [])
 
-            let worldToView = Float4x4.identity()
             let viewToClip = Float4x4.identity()
             let clipToNdc = Float4x4.identity()
             let ndcToScreen = Float4x4.identity()

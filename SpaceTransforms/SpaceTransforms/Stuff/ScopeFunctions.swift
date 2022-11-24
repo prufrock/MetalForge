@@ -32,3 +32,4 @@ extension ScopeFunction {
 extension NSObject: ScopeFunction {}
 
 extension Player: ScopeFunction {}
+extension ClickLocation: ScopeFunction {}
