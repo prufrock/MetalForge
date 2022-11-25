@@ -10,7 +10,7 @@ import simd
 struct ClickLocation: Actor {
     var position: MF2 = MF2(space: .world, value: F2(0.0, 0.0))
     var model: BasicModels
-    var radius: Float = 0.02
+    var radius: Float = 0.12
 
     var color: Float3 = Float3(0.5, 0.5, 0.0)
 

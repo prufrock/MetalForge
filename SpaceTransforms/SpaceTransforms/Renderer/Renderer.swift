@@ -106,7 +106,7 @@ struct Renderer {
 
 
             var finalTransform: Float4x4
-            if actor is ClickLocation {
+            if actor is ClickLocation || actor is Button {
                 finalTransform = ndcToScreen
                 * clipToNdc
                 * viewToClip

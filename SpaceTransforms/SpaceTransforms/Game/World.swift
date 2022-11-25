@@ -22,6 +22,7 @@ struct World {
                 list.append(clicked)
             }
             list.append(contentsOf: walls)
+            list.append(contentsOf: buttons)
 
             return list
         }
@@ -30,6 +31,7 @@ struct World {
     var player: Player?
 
     var walls: [Wall]
+    var buttons: [Button]
 
     var clickLocation: ClickLocation?
 
@@ -41,6 +43,7 @@ struct World {
     init(map:  TileMap) {
         self.map = map
         walls = []
+        buttons = []
         reset()
     }
 
@@ -64,6 +67,15 @@ struct World {
                     walls.append(Wall(position: MFloat2(space: .world, value: position), model: .square))
                 }
 
+                let button = map[hud: x, y]
+                switch button {
+                case .floor:
+                    // not going to render walls for now
+                    break
+                case .wall:
+                    buttons.append(Button(position: MFloat2(space: .world, value: position), model: .square))
+                }
+
                 let thing = map[thing: x, y]
                 switch thing {
                 case .nothing:
@@ -72,7 +84,6 @@ struct World {
                     player = Player(position: MFloat2(space: .world, value: position), model: .square)
                     print(position)
                 }
-
             }
         }
     }

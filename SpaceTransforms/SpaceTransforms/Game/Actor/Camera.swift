@@ -72,7 +72,7 @@ struct CameraFloating: Camera {
 struct HudCamera: Camera {
     var radius: Float = 0.0
     var position: MF2 = MF2(space: .world, value: F2(0.0, 0.0))
-    var position3d: MF3 = MF3(space: .world, value: F3(0.0, 0.0, 1.5))
+    var position3d: MF3 = MF3(space: .world, value: F3(-3.5, -3.5, 0.0))
     var model: BasicModels
 
     var color: Float3 = Float3(0.0, 1.0, 0.0)
@@ -90,7 +90,16 @@ struct HudCamera: Camera {
     }
 
     func worldToView(fov: Float, aspect: Float, nearPlane: Float, farPlane: Float) -> Float4x4 {
-            Float4x4.scale(x: 1/aspect, y: 1.0, z: 1.0)
+        Float4x4.scale(x: 0.1, y: 0.1, z: 1.0) *
+            Float4x4.scale(x: 1/aspect, y: -1.0, z: 1.0)
+            * translate()
+    }
+}
+
+extension Camera {
+
+    func translate() -> Float4x4 {
+        Float4x4.translate(x: position3d.value.x, y: position3d.value.y, z: position3d.value.z)
     }
 }
 
