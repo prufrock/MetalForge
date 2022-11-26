@@ -25,3 +25,9 @@ extension Float {
         self * (.pi / 180)
     }
 }
+
+extension Int {
+    var f: Float {
+        Float(self)
+    }
+}

@@ -60,4 +60,8 @@ extension Actor {
 
         return largestIntersection
     }
+
+    func intersection(with actor: Actor) -> Float2? {
+        rect.intersection(with: actor.rect)
+    }
 }
