@@ -163,6 +163,7 @@
 		636D7AEE283DA29100E4B044 /* RNDRDrawPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636D7AED283DA29100E4B044 /* RNDRDrawPhase.swift */; };
 		636D7AEF283DA29100E4B044 /* RNDRDrawPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636D7AED283DA29100E4B044 /* RNDRDrawPhase.swift */; };
 		636D7AF0283DA29100E4B044 /* RNDRDrawPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636D7AED283DA29100E4B044 /* RNDRDrawPhase.swift */; };
+		6370FB922964912300D8CB35 /* GameControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6370FB912964912300D8CB35 /* GameControllerManager.swift */; };
 		63750CE1281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
 		63750CE2281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
 		63750CE3281398F800DC4937 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63750CE0281398F800DC4937 /* StringExt.swift */; };
@@ -330,6 +331,7 @@
 		632BBB7C280BBBB400E1E4C3 /* fireBlastPickup.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireBlastPickup.mp3; sourceTree = "<group>"; };
 		6351463528270E0900CA6C32 /* Font.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Font.json; sourceTree = "<group>"; };
 		636D7AED283DA29100E4B044 /* RNDRDrawPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRDrawPhase.swift; sourceTree = "<group>"; };
+		6370FB912964912300D8CB35 /* GameControllerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControllerManager.swift; sourceTree = "<group>"; };
 		63750CE0281398F800DC4937 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		63A9270D285D7311005CF172 /* RNDRModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RNDRModels.swift; sourceTree = "<group>"; };
 		63B33F212807C08D00734353 /* spellMiss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spellMiss.mp3; sourceTree = "<group>"; };
@@ -579,6 +581,7 @@
 				63D44B3827D427CF00D4BE7D /* GameViewController.swift */,
 				63D44B3A27D427CF00D4BE7D /* Main.storyboard */,
 				63D44B3D27D427CF00D4BE7D /* LaunchScreen.storyboard */,
+				6370FB912964912300D8CB35 /* GameControllerManager.swift */,
 			);
 			path = "MetalRampageContd tvOS";
 			sourceTree = "<group>";
@@ -921,6 +924,7 @@
 				5AF0EB608074A31F545E7C13 /* RNDRDrawHudElements.swift in Sources */,
 				5AF0EEC43018939944B13DB9 /* RNDRDrawEffects.swift in Sources */,
 				632A077528DAB2560041747E /* Lighting.metal in Sources */,
+				6370FB922964912300D8CB35 /* GameControllerManager.swift in Sources */,
 				5AF0E4F511DCECFFC79C4C62 /* RNDRDrawTitleScreen.swift in Sources */,
 				5AF0EE74C395E4BD3CF2FF86 /* RNDRModel.swift in Sources */,
 				5AF0E9F5203FECCF380F937F /* RNDRTileImage.swift in Sources */,

@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     private var renderer: RNDRRenderer!
     private var audioEngine = AudioEngine()
 
+    private let gameControllerManager = GameControllerManager()
     private var keyDownHandler: Any?
     private var keyUpHandler: Any?
 
@@ -99,6 +100,13 @@ extension GameViewController: MTKViewDelegate {
             drawWorld: drawWorld,
             isTouching: false
         )
+        if let controllerInput = gameControllerManager.input(turningSpeed: game.world.player.turningSpeed, worldTimeStep: worldTimeStep) {
+            input.speed = controllerInput.speed
+            input.rotation = controllerInput.rotation
+            input.rotation3d = controllerInput.rotation3d
+            input.isFiring = controllerInput.isFiring
+        }
+
 
         let worldSteps = (timeStep / worldTimeStep).rounded(.up)
         for _ in 0 ..< Int(worldSteps) {

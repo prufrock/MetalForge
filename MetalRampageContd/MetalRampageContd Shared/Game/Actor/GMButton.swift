@@ -89,7 +89,7 @@ struct GMTouchCoords {
      - Returns:
      */
     func toWorldSpace(screenWidth: Float, screenHeight: Float, flipY: Bool = true) -> Float2 {
-        let ndcPosition = toNdcSpace(screenWidth: screenWidth, screenHeight: screenHeight)
+        let ndcPosition = toNdcSpace(screenWidth: screenWidth, screenHeight: screenHeight, flipY: flipY)
         let aspect = screenWidth / screenHeight
         //TODO find a way to share `hudCamera` between here and the renderer.
         let hudCamera = Float4x4.identity()
