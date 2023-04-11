@@ -41,7 +41,7 @@ extension Float4x4 {
             [1, 0, 0, 0],
             [0, 1, 0, 0],
             [0, 0, 1, 0],
-            [mf2.value.x, mf2.value.x, 1, 1]
+            [mf2.value.x, mf2.value.y, 1, 1]
         )
     }
 

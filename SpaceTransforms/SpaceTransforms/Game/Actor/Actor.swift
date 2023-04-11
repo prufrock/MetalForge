@@ -10,6 +10,9 @@ import Foundation
 protocol Actor {
     var position: MF2 {get set}
 
+    // Give the model more meta information.
+    // Move modelToUpright and uprightToWorld into model.
+    // Allow for dynamic control of the primitive type - switch to wf for debugging
     var model: BasicModels {get}
     var color: Float3 {get set}
     var radius: Float {get}

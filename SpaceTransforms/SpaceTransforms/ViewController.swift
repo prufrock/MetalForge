@@ -140,7 +140,7 @@ extension ViewController: MTKViewDelegate {
             movement: inputVector,
             cameraMovement: cameraInputVector,
             camera: camera,
-            isClicked: isClicked,
+            isTouched: isClicked,
             clickCoordinates: MFloat2(space: .screen, value: mouseLocation.f2),
             aspect: (viewWidth / viewHeight),
             viewWidth: viewWidth,
@@ -284,14 +284,13 @@ extension ViewController {
 
 /**
 Loads levels from Levels.json and creating a Tilemap for each level and returning the array of Tilemaps.
-- Returns: [Tilemap]
+- Returns: [TileMap]
 */
 private func loadLevels() -> [TileMap] {
     let jsonUrl = Bundle.main.url(forResource: "Levels", withExtension: "json")!
     let jsonData = try! Data(contentsOf: jsonUrl)
     let levels = try! JSONDecoder().decode([MapData].self, from: jsonData)
     return levels.enumerated().map { index, mapData in
-        // The MapGenerator is going to generate the maps so it's taking over.
         TileMap(mapData, index: index)
     }
 }

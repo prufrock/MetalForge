@@ -312,7 +312,7 @@ extension GMWorld {
         let delta = position - player.position
         let distance = delta.length
 
-        // use a drop off to prevent it from getting to quiet
+        // use a drop off to prevent it from getting too quiet
         let dropOff: Float = 0.5
         // use the inverse square law to find the volume
         // the +1 ensures the volume is 1.0 and not infinity when distance is 0
